@@ -837,6 +837,7 @@ cases() {
       + '<span style="margin-left:auto;font-size:13px;font-weight:700;color:'+col+'" class="amount">NT$ '+fmt(tr.amount)+'</span>'
       + '</div>'
       + (deadlineRow||plannedRow ? '<div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap">'+deadlineRow+plannedRow+'</div>' : '')
+      + (tr.contact ? '<div style="margin-top:8px;font-size:12px;color:var(--text-2)">👤 承辦：<strong>'+tr.contact+'</strong>'+(tr.contactPhone?' ☎ '+tr.contactPhone:'')+'</div>' : '')
       + '</div>'
       + '<div class="card-body" style="padding:16px 20px">'
       + '<div style="display:grid;grid-template-columns:1fr 260px;gap:16px">'
@@ -1726,6 +1727,10 @@ function openAddTrack(caseId) {
     </div>
     <div class="form-grid">
       <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="ft-insurer" list="insurer-dl" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('ft-insurer').value='';document.getElementById('ft-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
+      <div class="field"><label>承辦人員</label><input type="text" id="ft-contact" placeholder="保險公司/機關承辦人姓名"></div>
+    </div>
+    <div class="form-grid">
+      <div class="field"><label>承辦人電話</label><input type="text" id="ft-contact-phone" placeholder="分機或手機"></div>
       <div class="field"><label>預估金額（元）</label><input type="number" id="ft-amount" placeholder="0"></div>
     </div>
     <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
@@ -1750,6 +1755,8 @@ function openAddTrack(caseId) {
       id: genTrackId(caseId), caseId: caseId, name: name,
       type: document.getElementById('ft-type').value,
       insurer: document.getElementById('ft-insurer').value,
+      contact: document.getElementById('ft-contact').value,
+      contactPhone: document.getElementById('ft-contact-phone').value,
       status: document.getElementById('ft-status').value,
       deadline: document.getElementById('ft-deadline').value,
       deadlineNote: document.getElementById('ft-deadline-note').value,
@@ -1811,6 +1818,10 @@ function openEditTrack(trackId) {
     </div>
     <div class="form-grid">
       <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="ft-insurer" list="insurer-dl" value="${tr.insurer||''}" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('ft-insurer').value='';document.getElementById('ft-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
+      <div class="field"><label>承辦人員</label><input type="text" id="ft-contact" value="${tr.contact||''}" placeholder="保險公司/機關承辦人姓名"></div>
+    </div>
+    <div class="form-grid">
+      <div class="field"><label>承辦人電話</label><input type="text" id="ft-contact-phone" value="${tr.contactPhone||''}" placeholder="分機或手機"></div>
       <div class="field"><label>預估金額（元）</label><input type="number" id="ft-amount" value="${tr.amount||''}"></div>
     </div>
     <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
@@ -1834,6 +1845,8 @@ function openEditTrack(trackId) {
     tr.name = document.getElementById('ft-name').value;
     tr.type = document.getElementById('ft-type').value;
     tr.insurer = document.getElementById('ft-insurer').value;
+    tr.contact = document.getElementById('ft-contact').value;
+    tr.contactPhone = document.getElementById('ft-contact-phone').value;
     tr.status = document.getElementById('ft-status').value;
     var tcd = document.getElementById('ft-closed-date'); if (tcd) tr.closedDate = tcd.value || '';
     var tcn = document.getElementById('ft-closed-note'); if (tcn) tr.closedNote = tcn.value || '';
