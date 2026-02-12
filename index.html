@@ -2072,7 +2072,7 @@ function restoreArchive(input) {
 
 // ─── Todo Functions ────────────────────────────────────────────
 function openAddTodo() {
-  openModal('新增待辦事項', `
+  showModal('新增待辦事項', `
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" placeholder="輸入待辦事項..."></div>
       <div class="form-grid">
@@ -2109,7 +2109,7 @@ function openAddTodo() {
 function openEditTodo(id) {
   const t = db.todos.find(x => x.id === id);
   if (!t) return;
-  openModal('編輯待辦事項', `
+  showModal('編輯待辦事項', `
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" value="${t.title}"></div>
       <div class="form-grid">
