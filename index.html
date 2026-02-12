@@ -398,7 +398,7 @@ const defaultCases = [
     receiveDate:'2025-11-01', deadline:'2026-02-28', deadlineNote:'勞保局補件法定截止',
     plannedDate:'2026-02-10', plannedDateNote:'預計備齊所有文件送出',
     amount:350000, note:'需補就醫證明，已向勞保局確認收件號碼 123456789', created:'2025-11-01', updated:'2026-01-10' },
-  { id:'A002', type:'職災補償爭議', name:'李大華', phone:'0923-456-789',
+  { id:'A002', type:'職災補償賠償', name:'李大華', phone:'0923-456-789',
     employer:'建設工程有限公司', insurer:'勞動部勞工保險局',  accidentDate:'2025-08-20', status:'審核中',
     receiveDate:'2025-09-05', deadline:'2026-03-15', deadlineNote:'勞動局調解截止',
     plannedDate:'2026-03-01', plannedDateNote:'預計準備好調解文件',
@@ -408,7 +408,7 @@ const defaultCases = [
     receiveDate:'2025-12-10', deadline:'2026-02-20', deadlineNote:'保險公司補件法定截止',
     plannedDate:'2026-02-10', plannedDateNote:'預計取得診斷書並補件',
     amount:180000, note:'保險公司拒賠，要求補診斷書', created:'2025-12-10', updated:'2026-01-20' },
-  { id:'A004', type:'勞資爭議/訴訟', name:'陳建國', phone:'0945-678-901',
+  { id:'A004', type:'勞資爭議事項', name:'陳建國', phone:'0945-678-901',
     employer:'科技公司', insurer:'勞動部勞工保險局',  accidentDate:'2025-07-01', status:'訴訟中',
     receiveDate:'2025-08-01', deadline:'2026-04-10', deadlineNote:'法院開庭（不可更動）',
     plannedDate:'2026-03-25', plannedDateNote:'預計備好答辯狀送法院',
@@ -426,15 +426,15 @@ const defaultTracks = [
     deadline:'2026-02-28', deadlineNote:'勞保局補件截止', plannedDate:'2026-02-10', plannedDateNote:'預計備齊文件', amount:150000, note:'' },
   { id:'TR-A001-2', caseId:'A001', name:'職災醫療給付', type:'職災保險給付', status:'進行中',
     deadline:'', deadlineNote:'', plannedDate:'2026-03-01', plannedDateNote:'預計申請完成', amount:80000, note:'同步申請職災保險' },
-  { id:'TR-A001-3', caseId:'A001', name:'雇主職災補償', type:'職災補償爭議', status:'進行中',
+  { id:'TR-A001-3', caseId:'A001', name:'雇主職災補償', type:'職災補償賠償', status:'進行中',
     deadline:'', deadlineNote:'', plannedDate:'2026-04-01', plannedDateNote:'協商目標', amount:120000, note:'另向雇主求償差額' },
   { id:'TR-A002-1', caseId:'A002', name:'職災認定申請', type:'職災保險給付', status:'審核中',
     deadline:'2026-03-15', deadlineNote:'勞動局調解截止', plannedDate:'2026-03-01', plannedDateNote:'準備調解文件', amount:350000, note:'' },
-  { id:'TR-A002-2', caseId:'A002', name:'雇主補償爭議', type:'職災補償爭議', status:'調解中',
+  { id:'TR-A002-2', caseId:'A002', name:'雇主補償爭議', type:'職災補償賠償', status:'調解中',
     deadline:'', deadlineNote:'', plannedDate:'2026-04-01', plannedDateNote:'協商期限', amount:200000, note:'調解不成將提訴訟' },
   { id:'TR-A003-1', caseId:'A003', name:'商業保險理賠', type:'商業保險理賠', status:'待補件',
     deadline:'2026-02-20', deadlineNote:'保險公司補件截止', plannedDate:'2026-02-10', plannedDateNote:'取得診斷書', amount:180000, note:'' },
-  { id:'TR-A004-1', caseId:'A004', name:'資遣費訴訟', type:'勞資爭議/訴訟', status:'訴訟中',
+  { id:'TR-A004-1', caseId:'A004', name:'資遣費訴訟', type:'勞資爭議事項', status:'訴訟中',
     deadline:'2026-04-10', deadlineNote:'法院開庭', plannedDate:'2026-03-25', plannedDateNote:'備好答辯狀', amount:450000, note:'' },
   { id:'TR-A005-1', caseId:'A005', name:'老年給付申請', type:'勞工保險給付', status:'已結案',
     deadline:'', deadlineNote:'', plannedDate:'', plannedDateNote:'', amount:210000, note:'已核定結案' },
@@ -492,11 +492,11 @@ function genTodoId() {
 
 // ─── Helpers ───────────────────────────────────────────────────
 const typeColor = {
-  '勞工保險給付':'badge-blue','職災保險給付':'badge-red','農民保險給付':'badge-green','公教保險給付':'badge-teal',
-  '職災補償爭議':'badge-orange','商業保險理賠':'badge-purple','勞資爭議/訴訟':'badge-gray',
+  '勞工保險給付':'badge-blue','職災保險給付':'badge-red','農保給付':'badge-green','公保給付':'badge-teal',
+  '職災補償賠償':'badge-orange','商業保險理賠':'badge-purple','勞資爭議事項':'badge-gray',
   '勞保生育給付':'badge-blue','勞保傷病給付':'badge-blue','勞保失能給付':'badge-blue','勞保老年給付':'badge-blue','勞保死亡給付':'badge-blue',
   '職保醫療給付':'badge-red','職保傷病給付':'badge-red','職保失能給付':'badge-red','職保死亡給付':'badge-red',
-  '爭議審議訴願':'badge-gray','職災補償賠償':'badge-orange','勞資爭議事項':'badge-gray',
+  '爭議審議訴願':'badge-gray','車禍處理程序':'badge-red','職災補償賠償':'badge-orange','勞資爭議事項':'badge-gray',
   '壽險':'badge-purple','醫療險':'badge-purple','意外險':'badge-purple','失能險':'badge-purple','長照險':'badge-purple'
 };
 const statusColor = {
@@ -600,8 +600,8 @@ dashboard() {
   const typeGroups = [
     { label:'勞工保險', cls:'labor', types:['勞保生育給付','勞保傷病給付','勞保失能給付','勞保老年給付','勞保死亡給付'] },
     { label:'職災保險', cls:'injury-ins', types:['職保醫療給付','職保傷病給付','職保失能給付','職保死亡給付'] },
-    { label:'農民/公教保險', cls:'farmer', types:['農民保險給付','公教保險給付'] },
-    { label:'爭議/審議/訴願', cls:'dispute', types:['爭議審議訴願','職災補償賠償','勞資爭議事項'] },
+    { label:'公保農保', cls:'farmer', types:['農保給付','公保給付'] },
+    { label:'車禍職災爭議', cls:'dispute', types:['車禍處理程序','爭議審議訴願','職災補償賠償','勞資爭議事項'] },
     { label:'商業保險', cls:'commercial', types:['壽險','醫療險','意外險','失能險','長照險'] },
   ];
   
@@ -738,8 +738,8 @@ cases() {
   const typeFilterGroups = [
     { label:'勞工保險', types:['勞工保險給付','勞保生育給付','勞保傷病給付','勞保失能給付','勞保老年給付','勞保死亡給付'] },
     { label:'職災保險', types:['職災保險給付','職保醫療給付','職保傷病給付','職保失能給付','職保死亡給付'] },
-    { label:'公農教', types:['農民保險給付','公教保險給付'] },
-    { label:'爭議/訴訟', types:['爭議審議訴願','職災補償爭議','職災補償賠償','勞資爭議/訴訟','勞資爭議事項'] },
+    { label:'公保農保', types:['農保給付','公保給付'] },
+    { label:'車禍職災爭議', types:['車禍處理程序','爭議審議訴願','職災補償賠償','勞資爭議事項'] },
     { label:'商業保險', types:['商業保險理賠','壽險','醫療險','意外險','失能險','長照險'] },
   ];
   const statusLabel = filterStatus ? ' · 篩選：'+filterStatus : '';
@@ -1452,11 +1452,12 @@ function openNewCase() {
             <option>職保失能給付</option>
             <option>職保死亡給付</option>
           </optgroup>
-          <optgroup label="公農教保險">
-            <option>農民保險給付</option>
-            <option>公教保險給付</option>
+          <optgroup label="公保農保">
+            <option>農保給付</option>
+            <option>公保給付</option>
           </optgroup>
-          <optgroup label="爭議/審議">
+          <optgroup label="車禍職災爭議">
+            <option>車禍處理程序</option>
             <option>爭議審議訴願</option>
             <option>職災補償賠償</option>
             <option>勞資爭議事項</option>
@@ -1551,11 +1552,11 @@ function openEditCase(id) {
           <optgroup label="職災保險">
             ${['職保醫療給付','職保傷病給付','職保失能給付','職保死亡給付'].map(t=>`<option ${t===c.type?'selected':''}>${t}</option>`).join('')}
           </optgroup>
-          <optgroup label="公農教保險">
-            ${['農民保險給付','公教保險給付'].map(t=>`<option ${t===c.type?'selected':''}>${t}</option>`).join('')}
+          <optgroup label="公保農保">
+            ${['農保給付','公保給付'].map(t=>`<option ${t===c.type?'selected':''}>${t}</option>`).join('')}
           </optgroup>
-          <optgroup label="爭議/審議">
-            ${['爭議審議訴願','職災補償賠償','勞資爭議事項'].map(t=>`<option ${t===c.type?'selected':''}>${t}</option>`).join('')}
+          <optgroup label="車禍職災爭議">
+            ${['車禍處理程序','爭議審議訴願','職災補償賠償','勞資爭議事項'].map(t=>`<option ${t===c.type?'selected':''}>${t}</option>`).join('')}
           </optgroup>
           <optgroup label="商業保險">
             ${['壽險','醫療險','意外險','失能險','長照險'].map(t=>`<option ${t===c.type?'selected':''}>${t}</option>`).join('')}
@@ -1694,11 +1695,11 @@ function openAddTrack(caseId) {
             <option>職保醫療給付</option><option>職保傷病給付</option><option>職保失能給付</option>
             <option>職保死亡給付</option>
           </optgroup>
-          <optgroup label="公農教保險">
-            <option>農民保險給付</option><option>公教保險給付</option>
+          <optgroup label="公保農保">
+            <option>農保給付</option><option>公保給付</option>
           </optgroup>
-          <optgroup label="爭議/審議">
-            <option>爭議審議訴願</option><option>職災補償賠償</option><option>勞資爭議事項</option>
+          <optgroup label="車禍職災爭議">
+            <option>車禍處理程序</option><option>爭議審議訴願</option><option>職災補償賠償</option><option>勞資爭議事項</option>
           </optgroup>
           <optgroup label="商業保險">
             <option>壽險</option><option>醫療險</option><option>意外險</option>
@@ -1779,11 +1780,11 @@ function openEditTrack(trackId) {
           <optgroup label="職災保險">
             ${['職保醫療給付','職保傷病給付','職保失能給付','職保死亡給付'].map(t=>`<option ${t===tr.type?'selected':''}>${t}</option>`).join('')}
           </optgroup>
-          <optgroup label="公農教保險">
-            ${['農民保險給付','公教保險給付'].map(t=>`<option ${t===tr.type?'selected':''}>${t}</option>`).join('')}
+          <optgroup label="公保農保">
+            ${['農保給付','公保給付'].map(t=>`<option ${t===tr.type?'selected':''}>${t}</option>`).join('')}
           </optgroup>
-          <optgroup label="爭議/審議">
-            ${['爭議審議訴願','職災補償賠償','勞資爭議事項'].map(t=>`<option ${t===tr.type?'selected':''}>${t}</option>`).join('')}
+          <optgroup label="車禍職災爭議">
+            ${['車禍處理程序','爭議審議訴願','職災補償賠償','勞資爭議事項'].map(t=>`<option ${t===tr.type?'selected':''}>${t}</option>`).join('')}
           </optgroup>
           <optgroup label="商業保險">
             ${['壽險','醫療險','意外險','失能險','長照險'].map(t=>`<option ${t===tr.type?'selected':''}>${t}</option>`).join('')}
