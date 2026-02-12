@@ -1627,7 +1627,7 @@ function openEditTrack(trackId) {
     </div>
     <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note" value="${tr.note||''}"></div>
     <div class="divider"></div>
-    <button class="btn btn-danger btn-sm" onclick="if(confirm('確定刪除此追蹤軸？進度記錄也會一併刪除。'))deleteTrack('${tr.id}')">刪除此追蹤軸</button>
+    <button class="btn btn-danger btn-sm" onclick="if(confirm('確定刪除此追蹤軸？'))deleteTrack('${tr.id}')">刪除此追蹤軸</button>
   `, () => {
     tr.name = document.getElementById('ft-name').value;
     tr.type = document.getElementById('ft-type').value;
@@ -1738,8 +1738,7 @@ function exportAllJson() {
     _type: 'full_backup',
     _date: new Date().toISOString(),
     cases: db.cases,
-    tracks: db.tracks,
-    progress: db.progress
+    tracks: db.tracks
   };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -1761,9 +1760,6 @@ function importJson(input) {
       if (!confirm('匯入會覆蓋目前所有資料（' + db.cases.length + ' 筆個案），確定繼續？')) return;
       db.cases = data.cases || [];
       db.tracks = data.tracks || [];
-      db.progress = data.progress || [];
-      var _pid2 = 1;
-      db.progress.forEach(function(p){ if (!p.id) p.id = 'P' + String(_pid2++).padStart(4,'0'); });
       saveData(db);
       alert('✅ 匯入完成！共 ' + db.cases.length + ' 筆個案。');
       render();
@@ -1794,11 +1790,6 @@ function restoreArchive(input) {
       (data.tracks || []).forEach(function(t) {
         const idx = db.tracks.findIndex(x => x.id === t.id);
         if (idx >= 0) db.tracks[idx] = t; else db.tracks.push(t);
-      });
-      (data.progress || []).forEach(function(p) {
-        if (!p.id) return;
-        const idx = db.progress.findIndex(x => x.id === p.id);
-        if (idx >= 0) db.progress[idx] = p; else db.progress.push(p);
       });
       saveData(db);
       alert('✅ 還原完成！已加回 ' + data.cases.length + ' 個個案。');
