@@ -871,7 +871,7 @@ progress() {
   function calendarView() {
     const y = calYear, m = calMonth;
     const rocY = y - 1911;
-    const monthNames = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+    const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
     const firstDaySun = new Date(y, m, 1).getDay(); // 0=Sun
     const firstDay = (firstDaySun + 6) % 7; // convert: Mon=0, Tue=1, ... Sun=6
     const daysInMonth = new Date(y, m+1, 0).getDate();
