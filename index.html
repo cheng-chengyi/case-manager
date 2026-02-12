@@ -309,6 +309,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         期限管理
       </div>
+      <div class="nav-item" onclick="navigate('todos')" id="nav-todos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        待辦事項
+      </div>
     </div>
     <div class="nav-section">
       <div class="nav-label">資料管理</div>
@@ -413,6 +417,7 @@ let db = loadData();
 if (!db.cases) db.cases = defaultCases;
 if (!db.tracks) db.tracks = defaultTracks;
 if (!db.progress) db.progress = defaultProgress;
+if (!db.todos) db.todos = [];
 var _pid = 1;
 db.progress.forEach(function(p){ if (!p.id) p.id = 'P' + String(_pid++).padStart(4,'0'); });
 function genProgressId() {
@@ -424,6 +429,10 @@ function genTrackId(caseId) {
   const nums = db.tracks.filter(t => t.id.startsWith(prefix)).map(t => parseInt(t.id.slice(prefix.length))||0);
   const max = nums.length ? Math.max(...nums) : 0;
   return prefix + (max + 1);
+}
+function genTodoId() {
+  const nums = db.todos.map(t => parseInt((t.id||'').slice(1))||0);
+  return 'T' + String((nums.length ? Math.max(...nums) : 0) + 1).padStart(4,'0');
 }
 
 // ─── Helpers ───────────────────────────────────────────────────
@@ -1165,6 +1174,93 @@ deadlines() {
         ${section('📌 30天以上', '#4a5568', 'var(--surface-2)', pLater, plannedCard, '無')}
       </div>
     </div>
+  </div>`;
+},
+
+// ── Todos ─────────────────────────────────────────────────────
+todos() {
+  const todos = db.todos || [];
+  const pending = todos.filter(t => !t.done);
+  const done = todos.filter(t => t.done);
+
+  // 檢查提醒
+  const now = new Date();
+  const alerts = pending.filter(t => t.remind && new Date(t.remind) <= now);
+
+  function prioLabel(p) { return p==='high'?'🔴 高':p==='medium'?'🟡 中':''; }
+  function prioSort(a,b) {
+    const order = {high:0,medium:1,low:2,undefined:2};
+    return (order[a.priority]||2) - (order[b.priority]||2);
+  }
+
+  const sortedPending = [...pending].sort((a,b) => {
+    // 有到期提醒的排最前
+    const aAlert = a.remind && new Date(a.remind) <= now ? 0 : 1;
+    const bAlert = b.remind && new Date(b.remind) <= now ? 0 : 1;
+    if (aAlert !== bAlert) return aAlert - bAlert;
+    return prioSort(a,b) || (a.dueDate||'').localeCompare(b.dueDate||'');
+  });
+
+  return `
+  <div class="topbar">
+    <div class="topbar-title">待辦事項 <span class="text-muted">（${pending.length} 項未完成）</span></div>
+    <div class="topbar-actions">
+      <button class="btn btn-gold" onclick="openAddTodo()">＋ 新增待辦</button>
+    </div>
+  </div>
+  <div class="content">
+    ${alerts.length ? `<div style="padding:12px 16px;background:rgba(213,94,0,0.08);border:1px solid rgba(213,94,0,0.2);border-radius:10px;margin-bottom:16px;font-size:13px;color:#D55E00">
+      ⏰ 有 <strong>${alerts.length}</strong> 項待辦已到提醒時間！
+    </div>` : ''}
+
+    <!-- 未完成 -->
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-head">未完成 <span class="badge badge-blue">${pending.length}</span></div>
+      <div class="card-body" style="padding:0">
+        ${sortedPending.length === 0 ? '<div style="padding:30px;text-align:center;color:var(--text-3);font-size:13px">沒有待辦事項 🎉</div>' :
+          sortedPending.map(t => {
+            const isOverdue = t.dueDate && t.dueDate < now.toISOString().slice(0,10);
+            const isAlerted = t.remind && new Date(t.remind) <= now;
+            return `<div style="display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);${isAlerted?'background:rgba(213,94,0,0.04)':''}">
+              <input type="checkbox" onchange="toggleTodo('${t.id}')" style="width:18px;height:18px;margin-top:2px;cursor:pointer;flex-shrink:0;accent-color:#0072B2">
+              <div style="flex:1;min-width:0">
+                <div style="font-size:13px;font-weight:600;${isOverdue?'color:#D55E00':''}">
+                  ${isAlerted?'⏰ ':''}${t.title}
+                  ${t.priority&&t.priority!=='low'?'<span style="font-size:11px;font-weight:400;margin-left:6px">'+prioLabel(t.priority)+'</span>':''}
+                </div>
+                ${t.note?'<div style="font-size:12px;color:var(--text-3);margin-top:3px;white-space:pre-line">'+t.note+'</div>':''}
+                <div style="display:flex;gap:12px;margin-top:6px;font-size:11px;color:var(--text-3);flex-wrap:wrap">
+                  ${t.dueDate?'<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
+                  ${t.remind?'<span>⏰ '+t.remind.replace('T',' ')+'</span>':''}
+                  ${t.caseId?'<span>📎 '+t.caseId+'</span>':''}
+                </div>
+              </div>
+              <div style="display:flex;gap:4px;flex-shrink:0">
+                <button class="btn btn-sm btn-outline" onclick="copyTodo('${t.id}')" title="複製">📋</button>
+                <button class="btn btn-sm btn-outline" onclick="openEditTodo('${t.id}')" title="編輯">✏️</button>
+                <button class="btn btn-sm btn-outline" onclick="deleteTodo('${t.id}')" title="刪除" style="color:#D55E00">🗑</button>
+              </div>
+            </div>`;
+          }).join('')}
+      </div>
+    </div>
+
+    <!-- 已完成 -->
+    ${done.length ? `
+    <div class="card">
+      <div class="card-head" style="cursor:pointer" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+        已完成 <span class="badge badge-gray">${done.length}</span>
+        <span style="font-size:11px;color:var(--text-3);margin-left:8px">點擊展開/收合</span>
+      </div>
+      <div class="card-body" style="padding:0;display:none">
+        ${done.map(t => `<div style="display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid var(--border);opacity:0.6">
+          <input type="checkbox" checked onchange="toggleTodo('${t.id}')" style="width:18px;height:18px;cursor:pointer;flex-shrink:0;accent-color:#0072B2">
+          <div style="flex:1;font-size:13px;text-decoration:line-through;color:var(--text-3)">${t.title}</div>
+          <div style="font-size:11px;color:var(--text-3)">${t.doneDate||''}</div>
+          <button class="btn btn-sm btn-outline" onclick="deleteTodo('${t.id}')" title="刪除" style="color:#D55E00;font-size:10px">🗑</button>
+        </div>`).join('')}
+      </div>
+    </div>` : ''}
   </div>`;
 },
 
@@ -1973,6 +2069,124 @@ function restoreArchive(input) {
   reader.readAsText(file);
   input.value = '';
 }
+
+// ─── Todo Functions ────────────────────────────────────────────
+function openAddTodo() {
+  openModal('新增待辦事項', `
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" placeholder="輸入待辦事項..."></div>
+      <div class="form-grid">
+        <div class="field"><label>到期日</label><input type="date" id="td-due"></div>
+        <div class="field"><label>提醒時間</label><input type="datetime-local" id="td-remind"></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>優先順序</label>
+          <select id="td-prio"><option value="low">低</option><option value="medium">中</option><option value="high">高</option></select>
+        </div>
+        <div class="field"><label>關聯個案</label>
+          <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'">'+c.id+' '+c.name+'</option>').join('')}</select>
+        </div>
+      </div>
+      <div class="field"><label>備註</label><textarea id="td-note" rows="2" placeholder="備註說明..."></textarea></div>
+    </div>
+  `, function() {
+    const title = document.getElementById('td-title').value.trim();
+    if (!title) { alert('請輸入待辦內容！'); return false; }
+    db.todos.push({
+      id: genTodoId(), title: title,
+      dueDate: document.getElementById('td-due').value,
+      remind: document.getElementById('td-remind').value,
+      priority: document.getElementById('td-prio').value,
+      caseId: document.getElementById('td-case').value,
+      note: document.getElementById('td-note').value,
+      done: false, doneDate: null,
+      created: new Date().toISOString().slice(0,10)
+    });
+    saveData(db); return true;
+  });
+}
+
+function openEditTodo(id) {
+  const t = db.todos.find(x => x.id === id);
+  if (!t) return;
+  openModal('編輯待辦事項', `
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" value="${t.title}"></div>
+      <div class="form-grid">
+        <div class="field"><label>到期日</label><input type="date" id="td-due" value="${t.dueDate||''}"></div>
+        <div class="field"><label>提醒時間</label><input type="datetime-local" id="td-remind" value="${t.remind||''}"></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>優先順序</label>
+          <select id="td-prio"><option value="low" ${t.priority==='low'?'selected':''}>低</option><option value="medium" ${t.priority==='medium'?'selected':''}>中</option><option value="high" ${t.priority==='high'?'selected':''}>高</option></select>
+        </div>
+        <div class="field"><label>關聯個案</label>
+          <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'" '+(t.caseId===c.id?'selected':'')+'>'+c.id+' '+c.name+'</option>').join('')}</select>
+        </div>
+      </div>
+      <div class="field"><label>備註</label><textarea id="td-note" rows="2">${t.note||''}</textarea></div>
+    </div>
+  `, function() {
+    const title = document.getElementById('td-title').value.trim();
+    if (!title) { alert('請輸入待辦內容！'); return false; }
+    t.title = title;
+    t.dueDate = document.getElementById('td-due').value;
+    t.remind = document.getElementById('td-remind').value;
+    t.priority = document.getElementById('td-prio').value;
+    t.caseId = document.getElementById('td-case').value;
+    t.note = document.getElementById('td-note').value;
+    saveData(db); return true;
+  });
+}
+
+function toggleTodo(id) {
+  const t = db.todos.find(x => x.id === id);
+  if (!t) return;
+  t.done = !t.done;
+  t.doneDate = t.done ? new Date().toISOString().slice(0,10) : null;
+  saveData(db);
+  render();
+}
+
+function copyTodo(id) {
+  const t = db.todos.find(x => x.id === id);
+  if (!t) return;
+  db.todos.push({
+    id: genTodoId(), title: t.title + '（副本）',
+    dueDate: t.dueDate, remind: '', priority: t.priority,
+    caseId: t.caseId, note: t.note,
+    done: false, doneDate: null,
+    created: new Date().toISOString().slice(0,10)
+  });
+  saveData(db);
+  render();
+}
+
+function deleteTodo(id) {
+  if (!confirm('確定刪除這項待辦？')) return;
+  db.todos = db.todos.filter(t => t.id !== id);
+  saveData(db);
+  render();
+}
+
+// ─── Todo Reminder Check ──────────────────────────────────────
+function checkTodoReminders() {
+  if (!db.todos) return;
+  const now = new Date();
+  db.todos.filter(t => !t.done && t.remind && !t._notified).forEach(t => {
+    if (new Date(t.remind) <= now) {
+      t._notified = true;
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('待辦提醒', { body: t.title, icon: '📋' });
+      }
+    }
+  });
+}
+// 請求通知權限
+if ('Notification' in window && Notification.permission === 'default') {
+  Notification.requestPermission();
+}
+setInterval(checkTodoReminders, 60000);
 
 // ─── Init ──────────────────────────────────────────────────────
 render();
