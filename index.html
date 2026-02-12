@@ -393,28 +393,28 @@
 const STORAGE_KEY = 'case_mgmt_v4';
 
 const defaultCases = [
-  { id:'A001', type:'勞工保險給付', name:'王小明', idNum:'A123456789', phone:'0912-345-678',
-    employer:'台灣製造股份有限公司', insurer:'勞動部勞工保險局', wage: 45800, accidentDate:'2025-10-15', status:'進行中',
+  { id:'A001', type:'勞工保險給付', name:'王小明', phone:'0912-345-678',
+    employer:'台灣製造股份有限公司', insurer:'勞動部勞工保險局',  accidentDate:'2025-10-15', status:'進行中',
     receiveDate:'2025-11-01', deadline:'2026-02-28', deadlineNote:'勞保局補件法定截止',
     plannedDate:'2026-02-10', plannedDateNote:'預計備齊所有文件送出',
     amount:350000, note:'需補就醫證明，已向勞保局確認收件號碼 123456789', created:'2025-11-01', updated:'2026-01-10' },
-  { id:'A002', type:'職災補償爭議', name:'李大華', idNum:'B234567890', phone:'0923-456-789',
-    employer:'建設工程有限公司', insurer:'勞動部勞工保險局', wage: 52000, accidentDate:'2025-08-20', status:'審核中',
+  { id:'A002', type:'職災補償爭議', name:'李大華', phone:'0923-456-789',
+    employer:'建設工程有限公司', insurer:'勞動部勞工保險局',  accidentDate:'2025-08-20', status:'審核中',
     receiveDate:'2025-09-05', deadline:'2026-03-15', deadlineNote:'勞動局調解截止',
     plannedDate:'2026-03-01', plannedDateNote:'預計準備好調解文件',
     amount:550000, note:'雇主否認職災，已向勞動局申請職災認定', created:'2025-09-05', updated:'2026-01-15' },
-  { id:'A003', type:'商業保險理賠', name:'張美玲', idNum:'C345678901', phone:'0934-567-890',
-    employer:'個人（服務業）', insurer:'富邦人壽', wage: 35000, accidentDate:'2025-11-30', status:'待補件',
+  { id:'A003', type:'商業保險理賠', name:'張美玲', phone:'0934-567-890',
+    employer:'個人（服務業）', insurer:'富邦人壽',  accidentDate:'2025-11-30', status:'待補件',
     receiveDate:'2025-12-10', deadline:'2026-02-20', deadlineNote:'保險公司補件法定截止',
     plannedDate:'2026-02-10', plannedDateNote:'預計取得診斷書並補件',
     amount:180000, note:'保險公司拒賠，要求補診斷書', created:'2025-12-10', updated:'2026-01-20' },
-  { id:'A004', type:'勞資爭議/訴訟', name:'陳建國', idNum:'D456789012', phone:'0945-678-901',
-    employer:'科技公司', insurer:'勞動部勞工保險局', wage: 65000, accidentDate:'2025-07-01', status:'訴訟中',
+  { id:'A004', type:'勞資爭議/訴訟', name:'陳建國', phone:'0945-678-901',
+    employer:'科技公司', insurer:'勞動部勞工保險局',  accidentDate:'2025-07-01', status:'訴訟中',
     receiveDate:'2025-08-01', deadline:'2026-04-10', deadlineNote:'法院開庭（不可更動）',
     plannedDate:'2026-03-25', plannedDateNote:'預計備好答辯狀送法院',
     amount:450000, note:'資遣費爭議，台南地院第二次庭', created:'2025-08-01', updated:'2026-01-18' },
-  { id:'A005', type:'勞工保險給付', name:'林淑芬', idNum:'E567890123', phone:'0956-789-012',
-    employer:'百貨零售有限公司', insurer:'勞動部勞工保險局', wage: 28000, accidentDate:'2024-06-15', status:'已結案',
+  { id:'A005', type:'勞工保險給付', name:'林淑芬', phone:'0956-789-012',
+    employer:'百貨零售有限公司', insurer:'勞動部勞工保險局',  accidentDate:'2024-06-15', status:'已結案',
     receiveDate:'2024-07-01', deadline:'', deadlineNote:'',
     plannedDate:'', plannedDateNote:'',
     amount:210000, note:'老年給付已核定，案件結案', created:'2024-07-01', updated:'2025-03-15' },
@@ -756,7 +756,7 @@ cases() {
       <div class="table-header">
         <div class="search-box">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" placeholder="搜尋姓名、編號、投保單位、保險公司..." value="${searchQuery}"
+          <input type="text" placeholder="搜尋姓名、編號、受僱公司、保險公司..." value="${searchQuery}"
             oninput="searchQuery=this.value;render()" />
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -770,7 +770,7 @@ cases() {
       <table>
         <thead><tr>
           <th>個案編號</th><th>當事人</th><th>個案類型</th>
-          <th>投保單位/保險公司</th><th>案件狀態</th><th style="color:#D55E00">⚠️ 截止日期</th><th style="color:#0EA5B0">📋 預計完成</th>
+          <th>受僱公司/保險公司</th><th>案件狀態</th><th style="color:#D55E00">⚠️ 截止日期</th><th style="color:#0EA5B0">📋 預計完成</th>
           <th>預估金額</th><th>操作</th>
         </tr></thead>
         <tbody>
@@ -790,7 +790,6 @@ cases() {
               <td class="amount" style="color:var(--navy);font-weight:600">NT$ ${fmt(c.amount)}</td>
               <td onclick="event.stopPropagation()" style="white-space:nowrap">
                 <button class="btn btn-outline btn-sm" onclick="openEditCase('${c.id}');event.stopPropagation()">編輯</button>
-                <button class="btn btn-outline btn-sm" onclick="openNewCase('${c.id}');event.stopPropagation()" style="margin-left:4px" title="複製此個案">複製</button>
               </td>
             </tr>`;
           }).join('')}
@@ -877,6 +876,7 @@ cases() {
       + '<div>'
       + lastProgHtml + noteHtml
       + '<button class="btn btn-outline btn-sm" style="width:100%;margin-top:10px;border-color:'+col+';color:'+col+'" onclick="_trackAction(this)" data-action="addProgress" data-case="'+c.id+'" data-track="'+tr.id+'">＋ 新增進度</button>'
+      + '<button class="btn btn-outline btn-sm" style="width:100%;margin-top:6px;font-size:11px" onclick="_trackAction(this)" data-action="copyTrack" data-track="'+tr.id+'">📋 複製追蹤軸</button>'
       + '<button class="btn btn-outline btn-sm" style="width:100%;margin-top:6px;font-size:11px" onclick="_trackAction(this)" data-action="editTrack" data-track="'+tr.id+'">編輯此追蹤軸</button>'
       + '</div></div></div></div>';
   }
@@ -936,7 +936,6 @@ cases() {
     </div>
     <div class="topbar-actions">
       <button class="btn btn-outline btn-sm" onclick="openEditCase('${c.id}')">編輯個案</button>
-      <button class="btn btn-outline btn-sm" onclick="openNewCase('${c.id}')" title="複製新增">📋 複製新增</button>
       <button class="btn btn-outline btn-sm" onclick="openAddTrack('${c.id}')" style="border-color:var(--teal);color:var(--teal)">＋ 新增追蹤軸</button>
       <button class="btn btn-gold btn-sm" onclick="openAddProgress('${c.id}','')">＋ 新增進度</button>
     </div>
@@ -952,11 +951,10 @@ cases() {
           <div class="card-body">
             <div class="info-grid">
               <div class="info-item"><label>姓名</label><value>${c.name}</value></div>
-              <div class="info-item"><label>身分證號</label><value>${c.idNum}</value></div>
-              <div class="info-item"><label>聯絡電話</label><value>${c.phone}</value></div>
-              <div class="info-item"><label>投保單位</label><value>${c.employer}</value></div>
+              <div class="info-item"><label>行動電話</label><value>${c.phone}</value></div>
+              <div class="info-item"><label>受僱公司</label><value>${c.employer}</value></div>
+              <div class="info-item"><label>地址</label><value>${c.address||'—'}</value></div>
               <div class="info-item"><label>保險公司/主管機關</label><value>${c.insurer||'—'}</value></div>
-              <div class="info-item"><label>投保薪資</label><value>NT$ ${fmt(c.wage)}</value></div>
               <div class="info-item"><label>事故/起始日</label><value>${fmtDate(c.accidentDate)}</value></div>
               <div class="info-item"><label>受理日期</label><value>${fmtDate(c.receiveDate)}</value></div>
             </div>
@@ -1434,64 +1432,9 @@ archive() {
 
 // ─── Modals ────────────────────────────────────────────────────
 
-function fillFromCase(srcId) {
-  if (!srcId) return;
-  const src = db.cases.find(c => c.id === srcId);
-  if (!src) return;
-  // Fill all fields from source case
-  const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
-  const setHint = (id) => { const h = document.getElementById('hint-'+id); const el = document.getElementById(id); if (h && el && el.value) h.textContent = rocHint(id); };
-
-  // Type: find matching option
-  const typeEl = document.getElementById('f-type');
-  if (typeEl) {
-    for (let opt of typeEl.options) { if (opt.value === src.type) { opt.selected = true; break; } }
-  }
-  setVal('f-name', src.name);
-  setVal('f-id-num', src.idNum);
-  setVal('f-phone', src.phone);
-  setVal('f-employer', src.employer);
-  setVal('f-insurer', src.insurer||'');
-  setVal('f-wage', src.wage);
-  setVal('f-accident', src.accidentDate);
-  setVal('f-receive', new Date().toISOString().slice(0,10)); // fresh receive date
-  const statusEl = document.getElementById('f-status');
-  if (statusEl) { for (let opt of statusEl.options) { if (opt.value === '進行中') { opt.selected = true; break; } } }
-  setVal('f-amount', src.amount);
-  setVal('f-deadline', '');
-  setVal('f-deadline-note', src.deadlineNote || '');
-  setVal('f-planned', '');
-  setVal('f-planned-note', src.plannedDateNote || '');
-  setVal('f-note', src.note ? '[複製自 ' + src.id + ' ' + src.name + '] ' + src.note : '');
-  // Update ROC hints
-  ['f-accident','f-receive'].forEach(setHint);
-  // Flash feedback
-  const banner = document.getElementById('copy-banner');
-  if (banner) {
-    banner.innerHTML = '✓ 已複製 <strong>' + src.id + ' ' + src.name + '</strong> 的資料，請確認並修改';
-    banner.style.display = 'block';
-  }
-}
-
-function openNewCase(copyFromId) {
+function openNewCase() {
   const id = genId();
   openFormModal('新增個案', `
-    <div id="copy-banner" style="display:none;padding:10px 14px;background:rgba(0,114,178,0.08);border:1px solid rgba(0,114,178,0.25);border-radius:8px;font-size:12px;color:#0072B2;margin-bottom:14px"></div>
-    <div style="padding:12px 14px;background:rgba(201,168,76,0.07);border:1px dashed var(--gold);border-radius:10px;margin-bottom:16px">
-      <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:8px">📋 快速複製現有個案資料（可選）</div>
-      <div class="form-grid">
-        <div class="field">
-          <label>選擇來源個案</label>
-          <select id="f-copy-src" onchange="fillFromCase(this.value)">
-            <option value="">— 不複製，從空白開始 —</option>
-            ${db.cases.map(c => '<option value="' + c.id + '">' + c.id + '　' + c.name + '　（' + c.type + '）</option>').join('')}
-          </select>
-        </div>
-        <div class="field" style="justify-content:flex-end;padding-top:18px">
-          <div style="font-size:11px;color:var(--text-3)">選擇個案後自動填入基本資料<br>日期與編號將自動重設</div>
-        </div>
-      </div>
-    </div>
     <div class="form-grid">
       <div class="field"><label>個案編號</label><input type="text" id="f-id" value="${id}" placeholder="自動編號"></div>
       <div class="field"><label>個案類型 *</label>
@@ -1531,15 +1474,14 @@ function openNewCase(copyFromId) {
     <div class="section-divider">當事人資料</div>
     <div class="form-grid cols-3">
       <div class="field"><label>姓名 *</label><input type="text" id="f-name"></div>
-      <div class="field"><label>身分證號</label><input type="text" id="f-id-num"></div>
-      <div class="field"><label>聯絡電話</label><input type="text" id="f-phone"></div>
+      <div class="field"><label>行動電話</label><input type="text" id="f-phone" placeholder="0912-345-678"></div>
+      <div class="field"><label>受僱公司</label><input type="text" id="f-employer"></div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>投保單位</label><input type="text" id="f-employer"></div>
+      <div class="field"><label>地址</label><input type="text" id="f-address" placeholder="通訊地址"></div>
       <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="f-insurer" list="insurer-dl" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('f-insurer').value='';document.getElementById('f-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
     </div>
     <div class="form-grid cols-3">
-      <div class="field"><label>投保薪資（元）</label><input type="number" id="f-wage"></div>
       <div class="field"><label>事故/起始日期</label><input type="date" id="f-accident" onchange="var h=document.getElementById('hint-f-accident');if(h)h.textContent=rocHint('f-accident');"><div id="hint-f-accident" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
       <div class="field"><label>受理日期</label><input type="date" id="f-receive" value="${new Date().toISOString().slice(0,10)}" onchange="var h=document.getElementById('hint-f-receive');if(h)h.textContent=rocHint('f-receive');"><div id="hint-f-receive" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
     </div>
@@ -1572,11 +1514,10 @@ function openNewCase(copyFromId) {
       id: document.getElementById('f-id').value || id,
       type: document.getElementById('f-type').value,
       name: document.getElementById('f-name').value,
-      idNum: document.getElementById('f-id-num').value,
       phone: document.getElementById('f-phone').value,
       employer: document.getElementById('f-employer').value,
+      address: document.getElementById('f-address').value,
       insurer: document.getElementById('f-insurer').value,
-      wage: document.getElementById('f-wage').value,
       accidentDate: document.getElementById('f-accident').value,
       status: document.getElementById('f-status').value,
       receiveDate: document.getElementById('f-receive').value,
@@ -1594,13 +1535,6 @@ function openNewCase(copyFromId) {
     saveData(db);
     return true;
   });
-  // Pre-select copy source if provided
-  if (copyFromId) {
-    setTimeout(() => {
-      const sel = document.getElementById('f-copy-src');
-      if (sel) { sel.value = copyFromId; fillFromCase(copyFromId); }
-    }, 80);
-  }
 }
 
 function openEditCase(id) {
@@ -1632,15 +1566,14 @@ function openEditCase(id) {
     <div class="section-divider">當事人資料</div>
     <div class="form-grid cols-3">
       <div class="field"><label>姓名</label><input type="text" id="f-name" value="${c.name}"></div>
-      <div class="field"><label>身分證號</label><input type="text" id="f-id-num" value="${c.idNum}"></div>
-      <div class="field"><label>聯絡電話</label><input type="text" id="f-phone" value="${c.phone}"></div>
+      <div class="field"><label>行動電話</label><input type="text" id="f-phone" value="${c.phone}"></div>
+      <div class="field"><label>受僱公司</label><input type="text" id="f-employer" value="${c.employer}"></div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>投保單位</label><input type="text" id="f-employer" value="${c.employer}"></div>
+      <div class="field"><label>地址</label><input type="text" id="f-address" value="${c.address||''}"></div>
       <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="f-insurer" list="insurer-dl" value="${c.insurer||''}" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('f-insurer').value='';document.getElementById('f-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
     </div>
-    <div class="form-grid cols-3">
-      <div class="field"><label>投保薪資（元）</label><input type="number" id="f-wage" value="${c.wage}"></div>
+    <div class="form-grid">
       <div class="field"><label>事故/起始日期</label><input type="date" id="f-accident" value="${c.accidentDate}" onchange="var h=document.getElementById('hint-f-accident');if(h)h.textContent=rocHint('f-accident');"><div id="hint-f-accident" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
       <div class="field"><label>受理日期</label><input type="date" id="f-receive" value="${c.receiveDate}" onchange="var h=document.getElementById('hint-f-receive');if(h)h.textContent=rocHint('f-receive');"><div id="hint-f-receive" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
     </div>
@@ -1673,11 +1606,10 @@ function openEditCase(id) {
   `, () => {
     c.type = document.getElementById('f-type').value;
     c.name = document.getElementById('f-name').value;
-    c.idNum = document.getElementById('f-id-num').value;
     c.phone = document.getElementById('f-phone').value;
     c.employer = document.getElementById('f-employer').value;
+    c.address = document.getElementById('f-address').value;
     c.insurer = document.getElementById('f-insurer').value;
-    c.wage = document.getElementById('f-wage').value;
     c.accidentDate = document.getElementById('f-accident').value;
     c.status = document.getElementById('f-status').value;
     c.receiveDate = document.getElementById('f-receive').value;
@@ -1710,11 +1642,34 @@ function _trackAction(el) {
   var trackId = el.getAttribute('data-track');
   if (action === 'addProgress') openAddProgress(caseId, trackId);
   else if (action === 'editTrack') openEditTrack(trackId);
+  else if (action === 'copyTrack') copyTrack(trackId);
   else if (action === 'addTrack') openAddTrack(caseId);
   else if (action === 'scrollTo') {
     var el2 = document.getElementById('track-' + trackId);
     if (el2) el2.scrollIntoView({behavior: 'smooth'});
   }
+}
+
+function copyTrack(trackId) {
+  var src = db.tracks.find(function(t){ return t.id === trackId; });
+  if (!src) return;
+  var newTr = {
+    id: genTrackId(src.caseId), caseId: src.caseId,
+    name: src.name + '（複製）',
+    type: src.type, insurer: src.insurer,
+    contact: src.contact || '', contactPhone: src.contactPhone || '',
+    status: '進行中',
+    deadline: '', deadlineNote: src.deadlineNote || '',
+    plannedDate: '', plannedDateNote: src.plannedDateNote || '',
+    amount: src.amount, note: src.note || '',
+    created: new Date().toISOString().slice(0,10)
+  };
+  db.tracks.push(newTr);
+  var c = db.cases.find(function(x){ return x.id === src.caseId; });
+  if (c) c.updated = new Date().toISOString().slice(0,10);
+  saveData(db);
+  render();
+  alert('已複製追蹤軸「' + src.name + '」，請編輯修改名稱和日期。');
 }
 
 function openAddTrack(caseId) {
