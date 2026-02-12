@@ -733,7 +733,7 @@ cases() {
   if (filterStatus) list = list.filter(c => c.status === filterStatus);
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
-    list = list.filter(c => c.name.includes(q) || c.id.toLowerCase().includes(q) || c.employer.includes(q) || (c.insurer||'').includes(q));
+    list = list.filter(c => c.name.includes(q) || c.id.toLowerCase().includes(q) || c.employer.includes(q) || (c.insuredUnit||'').includes(q) || (c.insurer||'').includes(q));
   }
   const typeFilterGroups = [
     { label:'勞工保險', types:['勞工保險給付','勞保生育給付','勞保傷病給付','勞保失能給付','勞保老年給付','勞保死亡給付'] },
@@ -756,7 +756,7 @@ cases() {
       <div class="table-header">
         <div class="search-box">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" placeholder="搜尋姓名、編號、受僱公司、保險公司..." value="${searchQuery}"
+          <input type="text" placeholder="搜尋姓名、編號、受僱公司、投保單位..." value="${searchQuery}"
             oninput="searchQuery=this.value;render()" />
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -951,9 +951,10 @@ cases() {
           <div class="card-body">
             <div class="info-grid">
               <div class="info-item"><label>姓名</label><value>${c.name}</value></div>
-              <div class="info-item"><label>行動電話</label><value>${c.phone}</value></div>
-              <div class="info-item"><label>受僱公司</label><value>${c.employer}</value></div>
+              <div class="info-item"><label>連絡電話</label><value>${c.phone}</value></div>
               <div class="info-item"><label>地址</label><value>${c.address||'—'}</value></div>
+              <div class="info-item"><label>受僱公司</label><value>${c.employer}</value></div>
+              <div class="info-item"><label>投保單位</label><value>${c.insuredUnit||c.employer||'—'}</value></div>
               <div class="info-item"><label>保險公司/主管機關</label><value>${c.insurer||'—'}</value></div>
               <div class="info-item"><label>事故/起始日</label><value>${fmtDate(c.accidentDate)}</value></div>
               <div class="info-item"><label>受理日期</label><value>${fmtDate(c.receiveDate)}</value></div>
@@ -1473,13 +1474,16 @@ function openNewCase() {
       </div>
     </div>
     <div class="section-divider">當事人資料</div>
-    <div class="form-grid cols-3">
+    <div class="form-grid">
       <div class="field"><label>姓名 *</label><input type="text" id="f-name"></div>
-      <div class="field"><label>行動電話</label><input type="text" id="f-phone" placeholder="0912-345-678"></div>
-      <div class="field"><label>受僱公司</label><input type="text" id="f-employer"></div>
+      <div class="field"><label>連絡電話</label><input type="text" id="f-phone" placeholder="0912-345-678"></div>
+    </div>
+    <div class="field"><label>地址</label><input type="text" id="f-address" placeholder="通訊地址"></div>
+    <div class="form-grid">
+      <div class="field"><label>受僱公司</label><input type="text" id="f-employer" oninput="var u=document.getElementById('f-insured-unit');if(u&&!u._edited)u.value=this.value" placeholder="公司名稱"></div>
+      <div class="field"><label>投保單位</label><input type="text" id="f-insured-unit" placeholder="預設與受僱公司相同" onfocus="this._edited=true"></div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>地址</label><input type="text" id="f-address" placeholder="通訊地址"></div>
       <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="f-insurer" list="insurer-dl" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('f-insurer').value='';document.getElementById('f-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
     </div>
     <div class="form-grid cols-3">
@@ -1517,6 +1521,7 @@ function openNewCase() {
       name: document.getElementById('f-name').value,
       phone: document.getElementById('f-phone').value,
       employer: document.getElementById('f-employer').value,
+      insuredUnit: document.getElementById('f-insured-unit').value || document.getElementById('f-employer').value,
       address: document.getElementById('f-address').value,
       insurer: document.getElementById('f-insurer').value,
       accidentDate: document.getElementById('f-accident').value,
@@ -1565,13 +1570,16 @@ function openEditCase(id) {
       </div>
     </div>
     <div class="section-divider">當事人資料</div>
-    <div class="form-grid cols-3">
+    <div class="form-grid">
       <div class="field"><label>姓名</label><input type="text" id="f-name" value="${c.name}"></div>
-      <div class="field"><label>行動電話</label><input type="text" id="f-phone" value="${c.phone}"></div>
-      <div class="field"><label>受僱公司</label><input type="text" id="f-employer" value="${c.employer}"></div>
+      <div class="field"><label>連絡電話</label><input type="text" id="f-phone" value="${c.phone}"></div>
+    </div>
+    <div class="field"><label>地址</label><input type="text" id="f-address" value="${c.address||''}"></div>
+    <div class="form-grid">
+      <div class="field"><label>受僱公司</label><input type="text" id="f-employer" value="${c.employer}" oninput="var u=document.getElementById('f-insured-unit');if(u&&!u._edited)u.value=this.value"></div>
+      <div class="field"><label>投保單位</label><input type="text" id="f-insured-unit" value="${c.insuredUnit||c.employer||''}" onfocus="this._edited=true"></div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>地址</label><input type="text" id="f-address" value="${c.address||''}"></div>
       <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="f-insurer" list="insurer-dl" value="${c.insurer||''}" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('f-insurer').value='';document.getElementById('f-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
     </div>
     <div class="form-grid">
@@ -1609,6 +1617,7 @@ function openEditCase(id) {
     c.name = document.getElementById('f-name').value;
     c.phone = document.getElementById('f-phone').value;
     c.employer = document.getElementById('f-employer').value;
+    c.insuredUnit = document.getElementById('f-insured-unit').value || document.getElementById('f-employer').value;
     c.address = document.getElementById('f-address').value;
     c.insurer = document.getElementById('f-insurer').value;
     c.accidentDate = document.getElementById('f-accident').value;
