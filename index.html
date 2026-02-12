@@ -1428,7 +1428,7 @@ function fillFromCase(srcId) {
 
 function openNewCase(copyFromId) {
   const id = genId();
-  showModal('新增個案', `
+  openFormModal('新增個案', `
     <div id="copy-banner" style="display:none;padding:10px 14px;background:rgba(0,114,178,0.08);border:1px solid rgba(0,114,178,0.25);border-radius:8px;font-size:12px;color:#0072B2;margin-bottom:14px"></div>
     <div style="padding:12px 14px;background:rgba(201,168,76,0.07);border:1px dashed var(--gold);border-radius:10px;margin-bottom:16px">
       <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:8px">📋 快速複製現有個案資料（可選）</div>
@@ -1561,7 +1561,7 @@ function openNewCase(copyFromId) {
 function openEditCase(id) {
   const c = db.cases.find(x => x.id === id);
   if (!c) return;
-  showModal(`編輯個案 — ${c.name}`, `
+  openFormModal(`編輯個案 — ${c.name}`, `
     <div class="form-grid">
       <div class="field"><label>個案編號</label><input type="text" id="f-id" value="${c.id}" disabled></div>
       <div class="field"><label>個案類型</label>
@@ -1676,7 +1676,7 @@ function _trackAction(el) {
 
 function openAddTrack(caseId) {
   var c = db.cases.find(function(x){ return x.id === caseId; });
-  showModal('新增追蹤軸 — ' + (c ? c.name : caseId), `
+  openFormModal('新增追蹤軸 — ' + (c ? c.name : caseId), `
     <div style="padding:10px 12px;background:rgba(201,168,76,0.08);border-radius:8px;font-size:12px;color:var(--text-2);margin-bottom:14px">
       同一個案主可同時並行多條追蹤軸，各有自己的進度記錄與期限。
     </div>
@@ -1760,7 +1760,7 @@ function openAddTrack(caseId) {
 function openEditTrack(trackId) {
   var tr = db.tracks.find(function(x){ return x.id === trackId; });
   if (!tr) return;
-  showModal(`編輯追蹤軸 — ${tr.name}`, `
+  openFormModal(`編輯追蹤軸 — ${tr.name}`, `
     <div class="form-grid">
       <div class="field form-full"><label>追蹤軸名稱 *</label>
         <input type="text" id="ft-name" value="${tr.name}">
@@ -1854,7 +1854,7 @@ function updateTrackOptions(caseId) {
 }
 
 function openAddProgress(caseId, trackId) {
-  showModal('新增進度記錄', `
+  openFormModal('新增進度記錄', `
     <div class="form-grid">
       <div class="field"><label>個案 *</label>
         <select id="fp-case" onchange="updateTrackOptions(this.value)">
@@ -1911,7 +1911,7 @@ function openAddProgress(caseId, trackId) {
 }
 
 // ─── Modal Helper ──────────────────────────────────────────────
-function showModal(title, body, onConfirm) {
+function openFormModal(title, body, onConfirm) {
   const overlay = document.createElement('div');
   overlay.className = 'modal-overlay';
   overlay.innerHTML = `
@@ -2072,7 +2072,7 @@ function restoreArchive(input) {
 
 // ─── Todo Functions ────────────────────────────────────────────
 function openAddTodo() {
-  showModal('新增待辦事項', `
+  openFormModal('新增待辦事項', `
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" placeholder="輸入待辦事項..."></div>
       <div class="form-grid">
@@ -2109,7 +2109,7 @@ function openAddTodo() {
 function openEditTodo(id) {
   const t = db.todos.find(x => x.id === id);
   if (!t) return;
-  showModal('編輯待辦事項', `
+  openFormModal('編輯待辦事項', `
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" value="${t.title}"></div>
       <div class="form-grid">
