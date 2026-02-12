@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a365d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="個案管理">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>個案管理系統｜勞保・職災・商業保險・勞資爭議</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -291,6 +297,8 @@
     .topbar-actions { gap: 6px; }
     .topbar-actions .btn { font-size: 14px; padding: 8px 12px; }
   }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 </style>
 </head>
 <body>
@@ -2168,23 +2176,117 @@ function deleteTodo(id) {
 }
 
 // ─── Todo Reminder Check ──────────────────────────────────────
+function playAlertSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const notes = [523.25, 659.25, 783.99, 1046.5]; // C5 E5 G5 C6
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.15);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.15 + 0.4);
+      osc.start(ctx.currentTime + i * 0.15);
+      osc.stop(ctx.currentTime + i * 0.15 + 0.4);
+    });
+    // 再來一輪
+    setTimeout(() => {
+      notes.forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = freq;
+        osc.type = 'sine';
+        gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.15 + 0.4);
+        osc.start(ctx.currentTime + i * 0.15);
+        osc.stop(ctx.currentTime + i * 0.15 + 0.4);
+      });
+    }, 1200);
+  } catch(e) {}
+}
+
+function showReminderAlert(items) {
+  // 移除舊的提醒彈窗
+  document.getElementById('reminder-overlay')?.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'reminder-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn 0.3s ease';
+
+  const itemsHtml = items.map(t => 
+    `<div style="padding:14px 18px;background:rgba(213,94,0,0.06);border-left:4px solid #D55E00;border-radius:0 8px 8px 0;margin-bottom:10px">
+      <div style="font-size:16px;font-weight:700">${t.title}</div>
+      ${t.dueDate ? '<div style="font-size:13px;color:var(--text-3);margin-top:4px">📅 到期：' + fmtDate(t.dueDate) + '</div>' : ''}
+      ${t.note ? '<div style="font-size:13px;color:var(--text-3);margin-top:2px">📝 ' + t.note + '</div>' : ''}
+    </div>`
+  ).join('');
+
+  overlay.innerHTML = `
+    <div style="background:#fff;border-radius:16px;max-width:500px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;animation:slideUp 0.3s ease">
+      <div style="background:linear-gradient(135deg,#D55E00,#e87a30);padding:28px 24px;text-align:center">
+        <div style="font-size:48px;margin-bottom:8px">🔔</div>
+        <div style="font-size:22px;font-weight:700;color:#fff">待辦提醒</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.8);margin-top:4px">您有 ${items.length} 項待辦已到提醒時間</div>
+      </div>
+      <div style="padding:20px 24px;max-height:300px;overflow-y:auto">${itemsHtml}</div>
+      <div style="padding:16px 24px;border-top:1px solid #eee;display:flex;gap:10px;justify-content:center">
+        <button onclick="document.getElementById('reminder-overlay').remove();navigate('todos')" style="padding:12px 28px;background:#0072B2;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">查看待辦</button>
+        <button onclick="document.getElementById('reminder-overlay').remove()" style="padding:12px 28px;background:#f0f0f0;color:#333;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">稍後提醒</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  playAlertSound();
+}
+
 function checkTodoReminders() {
   if (!db.todos) return;
   const now = new Date();
+  const alertItems = [];
   db.todos.filter(t => !t.done && t.remind && !t._notified).forEach(t => {
     if (new Date(t.remind) <= now) {
       t._notified = true;
-      if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('待辦提醒', { body: t.title, icon: '📋' });
-      }
+      alertItems.push(t);
     }
   });
+  if (alertItems.length > 0) {
+    showReminderAlert(alertItems);
+    // 透過 SW 發送背景通知
+    swNotify(alertItems.map(t => t.title).join('、'));
+  }
 }
 // 請求通知權限
 if ('Notification' in window && Notification.permission === 'default') {
   Notification.requestPermission();
 }
-setInterval(checkTodoReminders, 60000);
+setInterval(checkTodoReminders, 30000);
+setTimeout(checkTodoReminders, 2000); // 開頁面 2 秒後先檢查一次
+
+// ─── PWA Service Worker ───────────────────────────────────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    console.log('SW registered');
+    // 接收 SW 的訊息（點通知時跳轉）
+    navigator.serviceWorker.addEventListener('message', event => {
+      if (event.data && event.data.type === 'OPEN_TODOS') {
+        navigate('todos');
+      }
+    });
+  }).catch(err => console.log('SW failed:', err));
+}
+
+// 透過 SW 發送通知（比直接 new Notification 更可靠）
+function swNotify(body) {
+  if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({ type: 'SHOW_NOTIFICATION', body: body });
+  } else if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification('待辦提醒', { body: body });
+  }
+}
 
 // ─── Init ──────────────────────────────────────────────────────
 render();
