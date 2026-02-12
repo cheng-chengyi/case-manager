@@ -360,6 +360,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         期限管理
       </div>
+      <div class="nav-item" onclick="navigate('progress')" id="nav-progress">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        進度追蹤
+      </div>
       <div class="nav-item" onclick="navigate('todos')" id="nav-todos">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
         待辦事項
@@ -524,6 +528,8 @@ let filterStatus = null;
 let searchQuery = '';
 let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth(); // 0-based
+let progressView = 'list';
+let progressFilter = '';
 
 function navigate(view, caseId = null) {
   if (view !== 'cases') filterStatus = null;
@@ -912,6 +918,112 @@ cases() {
     </div>
   </div>`;
 },
+
+// ── Progress ───────────────────────────────────────────────────
+progress() {
+  let progs = db.progress;
+  if (progressFilter) progs = progs.filter(p => p.caseId === progressFilter);
+
+  function listView() {
+    return `<div class="table-card">
+      <table>
+        <thead><tr>
+          <th>個案</th><th>追蹤軸</th><th>日期</th><th>進度階段</th><th>辦理事項說明</th>
+          <th>收/送件</th><th>下一步</th><th>備註</th>
+        </tr></thead>
+        <tbody>
+        ${progs.length === 0 ? `<tr><td colspan="8"><div class="empty"><p>尚無進度記錄</p></div></td></tr>` :
+          [...progs].sort((a,b) => b.date.localeCompare(a.date)).map(p => {
+            const c = db.cases.find(x => x.id === p.caseId);
+            const tr = p.trackId ? db.tracks.find(t => t.id === p.trackId) : null;
+            return `<tr onclick="navigate('case-detail','${p.caseId}')" style="cursor:pointer">
+              <td><strong>${p.caseId}</strong><div style="font-size:11px;color:var(--text-3)">${c?c.name:''}</div></td>
+              <td style="max-width:130px">${tr ? `<div style="font-size:12px;font-weight:600">${tr.name}</div><span class="badge ${typeColor[tr.type]||'badge-gray'}" style="font-size:10px">${tr.type}</span>` : '<span style="color:var(--text-3);font-size:11px">—</span>'}</td>
+              <td style="white-space:nowrap">${fmtDate(p.date)}</td>
+              <td><span class="badge ${stageColor[p.stage]||'badge-gray'}">${p.stage}</span></td>
+              <td style="max-width:180px">${p.desc}</td>
+              <td>${p.sendRecv ? `<span class="badge ${p.sendRecv==='收件'?'badge-green':'badge-teal'}">${p.sendRecv}</span>` : '-'}</td>
+              <td style="max-width:130px">${p.nextStep||'-'}${p.nextDate?`<div style="font-size:11px;color:var(--text-3)">${fmtDate(p.nextDate)}</div>`:''}</td>
+              <td style="max-width:110px;color:var(--text-3);font-size:12px">${p.note||'-'}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }
+
+  function calendarView() {
+    const allProgs = progressFilter ? db.progress.filter(p=>p.caseId===progressFilter) : db.progress;
+    const allTracks = db.tracks.filter(t => !progressFilter || t.caseId === progressFilter);
+    const eventsByDate = {};
+    allProgs.forEach(p => {
+      if (!p.date) return;
+      if (!eventsByDate[p.date]) eventsByDate[p.date] = [];
+      const c = db.cases.find(x => x.id === p.caseId);
+      eventsByDate[p.date].push({ type:'progress', label:(c?c.name:p.caseId), desc:p.desc, stage:p.stage, caseId:p.caseId, badge:stageColor[p.stage]||'badge-gray', dot:'#0072B2' });
+    });
+    allTracks.forEach(tr => {
+      const c = db.cases.find(x => x.id === tr.caseId);
+      if (tr.deadline) {
+        if (!eventsByDate[tr.deadline]) eventsByDate[tr.deadline] = [];
+        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 截止', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00' });
+      }
+      if (tr.plannedDate) {
+        if (!eventsByDate[tr.plannedDate]) eventsByDate[tr.plannedDate] = [];
+        eventsByDate[tr.plannedDate].push({ type:'planned', label:(c?c.name:tr.caseId)+' 預計完成', desc:tr.plannedDateNote||tr.name, caseId:tr.caseId, badge:'badge-teal', dot:'#0EA5B0' });
+      }
+    });
+    const now = new Date();
+    const y = calYear || now.getFullYear(), m = calMonth != null ? calMonth : now.getMonth();
+    const first = new Date(y, m, 1);
+    const startDay = first.getDay();
+    const daysInMonth = new Date(y, m+1, 0).getDate();
+    const today = now.toISOString().slice(0,10);
+    const mLabel = (y-1911)+'年'+(m+1)+'月';
+    let cells = '';
+    for (let i=0; i<startDay; i++) cells += '<div class="cal-cell empty"></div>';
+    for (let d=1; d<=daysInMonth; d++) {
+      const ds = y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+      const evts = eventsByDate[ds] || [];
+      const isToday = ds === today;
+      cells += `<div class="cal-cell${isToday?' today':''}" style="min-height:70px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;${isToday?'background:rgba(0,114,178,0.06);border-color:#0072B2':''}">
+        <div style="font-size:11px;font-weight:${isToday?'700':'500'};color:${isToday?'#0072B2':'var(--text-2)'};margin-bottom:2px">${d}</div>
+        ${evts.slice(0,3).map(e => `<div onclick="navigate('case-detail','${e.caseId}')" style="font-size:10px;padding:1px 4px;margin-bottom:1px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:2px solid ${e.dot};background:rgba(0,0,0,0.03)">${e.label}</div>`).join('')}
+        ${evts.length>3?`<div style="font-size:9px;color:var(--text-3)">+${evts.length-3}項</div>`:''}
+      </div>`;
+    }
+    return `<div style="margin-bottom:16px;display:flex;align-items:center;gap:12px">
+      <button class="btn btn-outline btn-sm" onclick="calMonth--;if(calMonth<0){calMonth=11;calYear--}render()">◀</button>
+      <span style="font-size:15px;font-weight:700;min-width:100px;text-align:center">${mLabel}</span>
+      <button class="btn btn-outline btn-sm" onclick="calMonth++;if(calMonth>11){calMonth=0;calYear++}render()">▶</button>
+      <button class="btn btn-outline btn-sm" style="margin-left:8px" onclick="calYear=${now.getFullYear()};calMonth=${now.getMonth()};render()">今天</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">
+      ${['日','一','二','三','四','五','六'].map(w=>`<div style="text-align:center;font-size:11px;font-weight:700;color:var(--text-3);padding:4px">${w}</div>`).join('')}
+      ${cells}
+    </div>`;
+  }
+
+  const viewContent = progressView === 'calendar' ? calendarView() : listView();
+  return `<div class="topbar">
+    <div class="topbar-title">進度追蹤</div>
+    <div class="topbar-actions">
+      <select class="btn btn-outline" onchange="progressFilter=this.value;render()" style="cursor:pointer">
+        <option value="">全部個案</option>
+        ${db.cases.map(c => `<option value="${c.id}" ${progressFilter===c.id?'selected':''}>${c.id} ${c.name}</option>`).join('')}
+      </select>
+      <div style="display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden">
+        <button class="btn btn-sm" style="border-radius:0;border:none;${progressView==='list'?'background:#0072B2;color:#fff':''}" onclick="progressView='list';render()" title="清單檢視">☰ 清單</button>
+        <button class="btn btn-sm" style="border-radius:0;border:none;border-left:1px solid var(--border);${progressView==='calendar'?'background:#0072B2;color:#fff':''}" onclick="progressView='calendar';render()" title="行事曆檢視">📅 行事曆</button>
+      </div>
+      <button class="btn btn-gold" onclick="openAddProgress('')">＋ 新增進度</button>
+    </div>
+  </div>
+  <div class="content">
+    ${viewContent}
+  </div>`;
+},
+
 // ── Deadlines ──────────────────────────────────────────────────
 deadlines() {
   // 同時讀取追蹤軸 + 個案層級的日期
