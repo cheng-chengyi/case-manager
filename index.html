@@ -2210,61 +2210,139 @@ function playAlertSound() {
   } catch(e) {}
 }
 
-function showReminderAlert(items) {
-  // 移除舊的提醒彈窗
+function showReminderAlert(items, options = {}) {
+  // options: { title, subtitle, color, buttonLabel, buttonAction }
+  const title = options.title || '提醒通知';
+  const color = options.color || '#D55E00';
+  const colorEnd = options.colorEnd || '#e87a30';
+  const icon = options.icon || '🔔';
+
   document.getElementById('reminder-overlay')?.remove();
 
   const overlay = document.createElement('div');
   overlay.id = 'reminder-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn 0.3s ease';
 
-  const itemsHtml = items.map(t => 
-    `<div style="padding:14px 18px;background:rgba(213,94,0,0.06);border-left:4px solid #D55E00;border-radius:0 8px 8px 0;margin-bottom:10px">
-      <div style="font-size:16px;font-weight:700">${t.title}</div>
-      ${t.dueDate ? '<div style="font-size:13px;color:var(--text-3);margin-top:4px">📅 到期：' + fmtDate(t.dueDate) + '</div>' : ''}
-      ${t.note ? '<div style="font-size:13px;color:var(--text-3);margin-top:2px">📝 ' + t.note + '</div>' : ''}
-    </div>`
-  ).join('');
+  const itemsHtml = items.map(t => {
+    const borderColor = t._type === 'overdue' ? '#D55E00' : t._type === 'deadline' ? '#e8a020' : '#0072B2';
+    return `<div style="padding:14px 18px;background:rgba(0,0,0,0.03);border-left:4px solid ${borderColor};border-radius:0 8px 8px 0;margin-bottom:10px">
+      <div style="font-size:15px;font-weight:700">${t.title}</div>
+      <div style="font-size:13px;color:#666;margin-top:4px">${t.subtitle || ''}</div>
+    </div>`;
+  }).join('');
 
   overlay.innerHTML = `
     <div style="background:#fff;border-radius:16px;max-width:500px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;animation:slideUp 0.3s ease">
-      <div style="background:linear-gradient(135deg,#D55E00,#e87a30);padding:28px 24px;text-align:center">
-        <div style="font-size:48px;margin-bottom:8px">🔔</div>
-        <div style="font-size:22px;font-weight:700;color:#fff">待辦提醒</div>
-        <div style="font-size:14px;color:rgba(255,255,255,0.8);margin-top:4px">您有 ${items.length} 項待辦已到提醒時間</div>
+      <div style="background:linear-gradient(135deg,${color},${colorEnd});padding:28px 24px;text-align:center">
+        <div style="font-size:48px;margin-bottom:8px">${icon}</div>
+        <div style="font-size:22px;font-weight:700;color:#fff">${title}</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.8);margin-top:4px">共 ${items.length} 項需要注意</div>
       </div>
       <div style="padding:20px 24px;max-height:300px;overflow-y:auto">${itemsHtml}</div>
       <div style="padding:16px 24px;border-top:1px solid #eee;display:flex;gap:10px;justify-content:center">
+        <button onclick="document.getElementById('reminder-overlay').remove();navigate('deadlines')" style="padding:12px 28px;background:${color};color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">查看期限</button>
         <button onclick="document.getElementById('reminder-overlay').remove();navigate('todos')" style="padding:12px 28px;background:#0072B2;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">查看待辦</button>
-        <button onclick="document.getElementById('reminder-overlay').remove()" style="padding:12px 28px;background:#f0f0f0;color:#333;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">稍後提醒</button>
+        <button onclick="document.getElementById('reminder-overlay').remove()" style="padding:12px 28px;background:#f0f0f0;color:#333;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">知道了</button>
       </div>
     </div>`;
   document.body.appendChild(overlay);
   playAlertSound();
 }
 
-function checkTodoReminders() {
-  if (!db.todos) return;
+// ─── 統一提醒檢查（待辦 + 個案期限）─────────────────────────
+let _reminderShownToday = {};
+
+function checkAllReminders() {
   const now = new Date();
+  const today = now.toISOString().slice(0, 10);
   const alertItems = [];
-  db.todos.filter(t => !t.done && t.remind && !t._notified).forEach(t => {
-    if (new Date(t.remind) <= now) {
-      t._notified = true;
-      alertItems.push(t);
+
+  // 1) 待辦事項提醒
+  if (db.todos) {
+    db.todos.filter(t => !t.done && t.remind && !t._notified).forEach(t => {
+      if (new Date(t.remind) <= now) {
+        t._notified = true;
+        alertItems.push({
+          title: '⏰ ' + t.title,
+          subtitle: t.dueDate ? '到期：' + fmtDate(t.dueDate) : '待辦事項提醒',
+          _type: 'overdue'
+        });
+      }
+    });
+  }
+
+  // 2) 個案截止日期 — 7天內到期或已逾期
+  const activeTracks = db.tracks.filter(tr => {
+    const c = db.cases.find(x => x.id === tr.caseId);
+    return c && c.status !== '已結案' && c.status !== '撤案';
+  });
+
+  activeTracks.forEach(tr => {
+    const c = db.cases.find(x => x.id === tr.caseId);
+    const cName = c ? c.name : tr.caseId;
+
+    // 截止日期
+    if (tr.deadline) {
+      const days = Math.ceil((new Date(tr.deadline) - now) / 86400000);
+      const key = 'deadline-' + tr.id + '-' + today;
+      if (days <= 7 && !_reminderShownToday[key]) {
+        _reminderShownToday[key] = true;
+        if (days < 0) {
+          alertItems.push({
+            title: '🚨 ' + cName + '｜' + tr.name,
+            subtitle: '截止日已逾期 ' + Math.abs(days) + ' 天（' + fmtDate(tr.deadline) + '）',
+            _type: 'overdue'
+          });
+        } else {
+          alertItems.push({
+            title: '⚠️ ' + cName + '｜' + tr.name,
+            subtitle: '截止日期還剩 ' + days + ' 天（' + fmtDate(tr.deadline) + '）',
+            _type: 'deadline'
+          });
+        }
+      }
+    }
+
+    // 預計完成日
+    if (tr.plannedDate) {
+      const days2 = Math.ceil((new Date(tr.plannedDate) - now) / 86400000);
+      const key2 = 'planned-' + tr.id + '-' + today;
+      if (days2 <= 3 && !_reminderShownToday[key2]) {
+        _reminderShownToday[key2] = true;
+        if (days2 < 0) {
+          alertItems.push({
+            title: '📋 ' + cName + '｜' + tr.name,
+            subtitle: '預計完成日已逾期 ' + Math.abs(days2) + ' 天（' + fmtDate(tr.plannedDate) + '）',
+            _type: 'overdue'
+          });
+        } else {
+          alertItems.push({
+            title: '📋 ' + cName + '｜' + tr.name,
+            subtitle: '預計完成日還剩 ' + days2 + ' 天（' + fmtDate(tr.plannedDate) + '）',
+            _type: 'deadline'
+          });
+        }
+      }
     }
   });
+
+  // 顯示提醒
   if (alertItems.length > 0) {
-    showReminderAlert(alertItems);
-    // 透過 SW 發送背景通知
-    swNotify(alertItems.map(t => t.title).join('、'));
+    showReminderAlert(alertItems, {
+      title: '提醒通知',
+      icon: '🔔',
+      color: '#D55E00',
+      colorEnd: '#e87a30'
+    });
+    swNotify(alertItems.map(t => t.title).join('\n'));
   }
 }
 // 請求通知權限
 if ('Notification' in window && Notification.permission === 'default') {
   Notification.requestPermission();
 }
-setInterval(checkTodoReminders, 30000);
-setTimeout(checkTodoReminders, 2000); // 開頁面 2 秒後先檢查一次
+setInterval(checkAllReminders, 30000);
+setTimeout(checkAllReminders, 2000); // 開頁面 2 秒後先檢查一次
 
 // ─── PWA Service Worker ───────────────────────────────────────
 if ('serviceWorker' in navigator) {
