@@ -232,8 +232,9 @@
     .sidebar-overlay.open { display: block; }
     .mobile-menu-btn { display: block; }
     .main { width: 100%; }
-    .topbar { padding: 0 14px; height: 50px; zoom: 1.35; }
-    .topbar-title { font-size: 18px; }
+    .topbar { padding: 0 14px; height: auto; min-height: 50px; zoom: 1.35; flex-wrap: wrap; gap: 8px; padding-top: 10px; padding-bottom: 10px; }
+    .topbar-title { font-size: 18px; width: 100%; }
+    .topbar-actions { width: 100%; flex-wrap: wrap; }
     .content { padding: 14px; font-size: 16px; zoom: 1.35; }
     .modal-overlay { padding: 10px; zoom: 1.35; }
     .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -1020,10 +1021,10 @@ progress() {
     ).join('');
 
     return `<div style="background:var(--surface);border-radius:12px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow)">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--navy)">
-        <button class="btn btn-sm" style="background:rgba(255,255,255,0.1);color:#fff;border:none" onclick="calMonth--;if(calMonth<0){calMonth=11;calYear--;}render()">‹</button>
-        <div style="font-size:16px;font-weight:700;color:#fff">${rocY} 年 ${monthNames[m]}</div>
-        <button class="btn btn-sm" style="background:rgba(255,255,255,0.1);color:#fff;border:none" onclick="calMonth++;if(calMonth>11){calMonth=0;calYear++;}render()">›</button>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(0,114,178,0.1)">
+        <button class="btn btn-sm" style="background:rgba(0,114,178,0.15);color:#0072B2;border:none" onclick="calMonth--;if(calMonth<0){calMonth=11;calYear--;}render()">‹</button>
+        <div style="font-size:16px;font-weight:700;color:#0072B2">${rocY} 年 ${monthNames[m]}</div>
+        <button class="btn btn-sm" style="background:rgba(0,114,178,0.15);color:#0072B2;border:none" onclick="calMonth++;if(calMonth>11){calMonth=0;calYear++;}render()">›</button>
       </div>
       <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr))">${weekDayHeaders}${cells}</div>
       <div style="padding:10px 16px;border-top:1px solid var(--border);display:flex;gap:16px;font-size:11px;color:var(--text-3)">
@@ -1045,8 +1046,8 @@ progress() {
         ${db.cases.map(c => `<option value="${c.id}" ${progressFilter===c.id?'selected':''}>${c.id} ${c.name}</option>`).join('')}
       </select>
       <div style="display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden">
-        <button class="btn btn-sm" style="border-radius:0;border:none;${progressView==='list'?'background:var(--navy);color:#fff':''}" onclick="progressView='list';render()" title="清單檢視">☰ 清單</button>
-        <button class="btn btn-sm" style="border-radius:0;border:none;border-left:1px solid var(--border);${progressView==='calendar'?'background:var(--navy);color:#fff':''}" onclick="progressView='calendar';render()" title="行事曆檢視">📅 行事曆</button>
+        <button class="btn btn-sm" style="border-radius:0;border:none;${progressView==='list'?'background:#0072B2;color:#fff':''}" onclick="progressView='list';render()" title="清單檢視">☰ 清單</button>
+        <button class="btn btn-sm" style="border-radius:0;border:none;border-left:1px solid var(--border);${progressView==='calendar'?'background:#0072B2;color:#fff':''}" onclick="progressView='calendar';render()" title="行事曆檢視">📅 行事曆</button>
       </div>
       <button class="btn btn-gold" onclick="openAddProgress('')">＋ 新增進度</button>
     </div>
