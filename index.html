@@ -216,10 +216,63 @@
     .type-chips { grid-template-columns: repeat(2,1fr); }
     .detail-grid { grid-template-columns: 1fr; }
   }
+
+  /* ─── Mobile ─── */
+  .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 6px; color: var(--navy); }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 49; }
+
+  @media (max-width: 768px) {
+    .app { flex-direction: column; }
+    .sidebar {
+      position: fixed; left: -260px; top: 0; bottom: 0; width: 250px; z-index: 50;
+      transition: left 0.25s ease; box-shadow: none;
+    }
+    .sidebar.open { left: 0; box-shadow: 4px 0 20px rgba(0,0,0,0.15); }
+    .sidebar-overlay.open { display: block; }
+    .mobile-menu-btn { display: block; }
+    .main { width: 100%; }
+    .topbar { padding: 0 14px; height: 50px; }
+    .topbar-title { font-size: 14px; }
+    .content { padding: 14px; }
+    .content > div[style*="grid-template-columns"] { display: block !important; }
+    .content > div[style*="grid-template-columns"] > div { margin-bottom: 16px; }
+    .content [style*="grid-template-columns:1fr 3"],
+    .content [style*="grid-template-columns:1fr 2"] { display: block !important; }
+    .content [style*="grid-template-columns:1fr 3"] > div,
+    .content [style*="grid-template-columns:1fr 2"] > div { margin-bottom: 16px; }
+    .card-body [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+    .card-body [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .type-chips { grid-template-columns: 1fr; }
+    .stat-card { padding: 14px; }
+    .stat-card .num { font-size: 22px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid.cols-3 { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .table-card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { min-width: 700px; }
+    .modal { max-width: 100%; margin: 10px; border-radius: 12px; }
+    .modal-overlay { padding: 10px; }
+    .modal-head { padding: 16px; }
+    .modal-body { padding: 16px; }
+    .modal-foot { padding: 12px 16px; }
+    .card-body { padding: 14px 16px; }
+    .btn { font-size: 12px; padding: 7px 14px; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .topbar-actions { gap: 6px; }
+    .topbar-actions .btn { font-size: 11px; padding: 6px 10px; }
+  }
 </style>
 </head>
 <body>
 <div class="app" id="app">
+
+  <!-- Mobile sidebar overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
   <!-- Sidebar -->
   <nav class="sidebar">
@@ -430,12 +483,29 @@ function navigate(view, caseId = null) {
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   const nav = document.getElementById('nav-' + (view === 'case-detail' ? 'cases' : view));
   if (nav) nav.classList.add('active');
+  // 手機版：關閉側欄
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
   render();
+}
+
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
 }
 
 function render() {
   const main = document.getElementById('main-content');
   main.innerHTML = views[currentView]();
+  // 插入手機版選單按鈕
+  const topbar = main.querySelector('.topbar');
+  if (topbar) {
+    const btn = document.createElement('button');
+    btn.className = 'mobile-menu-btn';
+    btn.onclick = toggleSidebar;
+    btn.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+    topbar.insertBefore(btn, topbar.firstChild);
+  }
   // 更新側欄日期
   const _d = new Date();
   const _wd = ['日','一','二','三','四','五','六'];
