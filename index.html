@@ -1236,24 +1236,26 @@ todos() {
           sortedPending.map(t => {
             const isOverdue = t.dueDate && t.dueDate < now.toISOString().slice(0,10);
             const isAlerted = t.remind && new Date(t.remind) <= now;
-            return `<div style="display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);${isAlerted?'background:rgba(213,94,0,0.04)':''}">
-              <input type="checkbox" onchange="toggleTodo('${t.id}')" style="width:18px;height:18px;margin-top:2px;cursor:pointer;flex-shrink:0;accent-color:#0072B2">
-              <div style="flex:1;min-width:0">
-                <div style="font-size:13px;font-weight:600;${isOverdue?'color:#D55E00':''}">
-                  ${isAlerted?'⏰ ':''}${t.title}
-                  ${t.priority&&t.priority!=='low'?'<span style="font-size:11px;font-weight:400;margin-left:6px">'+prioLabel(t.priority)+'</span>':''}
-                </div>
-                ${t.note?'<div style="font-size:12px;color:var(--text-3);margin-top:3px;white-space:pre-line">'+t.note+'</div>':''}
-                <div style="display:flex;gap:12px;margin-top:6px;font-size:11px;color:var(--text-3);flex-wrap:wrap">
-                  ${t.dueDate?'<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
-                  ${t.remind?'<span>⏰ '+t.remind.replace('T',' ')+'</span>':''}
-                  ${t.caseId?'<span>📎 '+t.caseId+'</span>':''}
+            return `<div style="padding:14px 18px;border-bottom:1px solid var(--border);${isAlerted?'background:rgba(213,94,0,0.04)':''}">
+              <div style="display:flex;align-items:flex-start;gap:10px">
+                <input type="checkbox" onchange="toggleTodo('${t.id}')" style="width:18px;height:18px;margin-top:2px;cursor:pointer;flex-shrink:0;accent-color:#0072B2">
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:600;${isOverdue?'color:#D55E00':''}">
+                    ${isAlerted?'⏰ ':''}${t.title}
+                    ${t.priority&&t.priority!=='low'?'<span style="font-size:12px;font-weight:400;margin-left:6px">'+prioLabel(t.priority)+'</span>':''}
+                  </div>
+                  ${t.note?'<div style="font-size:12px;color:var(--text-3);margin-top:4px;white-space:pre-line">'+t.note+'</div>':''}
+                  <div style="display:flex;gap:12px;margin-top:6px;font-size:12px;color:var(--text-3);flex-wrap:wrap">
+                    ${t.dueDate?'<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
+                    ${t.remind?'<span>⏰ '+t.remind.replace('T',' ')+'</span>':''}
+                    ${t.caseId?'<span>📎 '+t.caseId+'</span>':''}
+                  </div>
                 </div>
               </div>
-              <div style="display:flex;gap:4px;flex-shrink:0">
-                <button class="btn btn-sm btn-outline" onclick="copyTodo('${t.id}')" title="複製">📋</button>
-                <button class="btn btn-sm btn-outline" onclick="openEditTodo('${t.id}')" title="編輯">✏️</button>
-                <button class="btn btn-sm btn-outline" onclick="deleteTodo('${t.id}')" title="刪除" style="color:#D55E00">🗑</button>
+              <div style="display:flex;gap:6px;margin-top:10px;padding-left:28px">
+                <button class="btn btn-sm btn-outline" onclick="copyTodo('${t.id}')">📋 複製</button>
+                <button class="btn btn-sm btn-outline" onclick="openEditTodo('${t.id}')">✏️ 編輯</button>
+                <button class="btn btn-sm btn-outline" onclick="deleteTodo('${t.id}')" style="color:#D55E00">🗑 刪除</button>
               </div>
             </div>`;
           }).join('')}
