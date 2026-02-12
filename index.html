@@ -1202,18 +1202,12 @@ todos() {
   const now = new Date();
   const alerts = pending.filter(t => t.remind && new Date(t.remind) <= now);
 
-  function prioLabel(p) { return p==='high'?'🔴 高':p==='medium'?'🟡 中':''; }
-  function prioSort(a,b) {
-    const order = {high:0,medium:1,low:2,undefined:2};
-    return (order[a.priority]||2) - (order[b.priority]||2);
-  }
-
   const sortedPending = [...pending].sort((a,b) => {
-    // 有到期提醒的排最前
-    const aAlert = a.remind && new Date(a.remind) <= now ? 0 : 1;
-    const bAlert = b.remind && new Date(b.remind) <= now ? 0 : 1;
+    const now2 = new Date();
+    const aAlert = a.remind && new Date(a.remind) <= now2 ? 0 : 1;
+    const bAlert = b.remind && new Date(b.remind) <= now2 ? 0 : 1;
     if (aAlert !== bAlert) return aAlert - bAlert;
-    return prioSort(a,b) || (a.dueDate||'').localeCompare(b.dueDate||'');
+    return (a.dueDate||'').localeCompare(b.dueDate||'');
   });
 
   return `
@@ -1242,7 +1236,6 @@ todos() {
                 <div style="flex:1;min-width:0">
                   <div style="font-size:14px;font-weight:600;${isOverdue?'color:#D55E00':''}">
                     ${isAlerted?'⏰ ':''}${t.title}
-                    ${t.priority&&t.priority!=='low'?'<span style="font-size:12px;font-weight:400;margin-left:6px">'+prioLabel(t.priority)+'</span>':''}
                   </div>
                   ${t.note?'<div style="font-size:12px;color:var(--text-3);margin-top:4px;white-space:pre-line">'+t.note+'</div>':''}
                   <div style="display:flex;gap:12px;margin-top:6px;font-size:12px;color:var(--text-3);flex-wrap:wrap">
@@ -2096,13 +2089,8 @@ function openAddTodo() {
         <div class="field"><label>到期日</label><input type="date" id="td-due"></div>
         <div class="field"><label>提醒時間</label><input type="datetime-local" id="td-remind"></div>
       </div>
-      <div class="form-grid">
-        <div class="field"><label>優先順序</label>
-          <select id="td-prio"><option value="low">低</option><option value="medium">中</option><option value="high">高</option></select>
-        </div>
-        <div class="field"><label>關聯個案</label>
-          <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'">'+c.id+' '+c.name+'</option>').join('')}</select>
-        </div>
+      <div class="field"><label>關聯個案</label>
+        <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'">'+c.id+' '+c.name+'</option>').join('')}</select>
       </div>
       <div class="field"><label>備註</label><textarea id="td-note" rows="2" placeholder="備註說明..."></textarea></div>
     </div>
@@ -2113,7 +2101,6 @@ function openAddTodo() {
       id: genTodoId(), title: title,
       dueDate: document.getElementById('td-due').value,
       remind: document.getElementById('td-remind').value,
-      priority: document.getElementById('td-prio').value,
       caseId: document.getElementById('td-case').value,
       note: document.getElementById('td-note').value,
       done: false, doneDate: null,
@@ -2133,13 +2120,8 @@ function openEditTodo(id) {
         <div class="field"><label>到期日</label><input type="date" id="td-due" value="${t.dueDate||''}"></div>
         <div class="field"><label>提醒時間</label><input type="datetime-local" id="td-remind" value="${t.remind||''}"></div>
       </div>
-      <div class="form-grid">
-        <div class="field"><label>優先順序</label>
-          <select id="td-prio"><option value="low" ${t.priority==='low'?'selected':''}>低</option><option value="medium" ${t.priority==='medium'?'selected':''}>中</option><option value="high" ${t.priority==='high'?'selected':''}>高</option></select>
-        </div>
-        <div class="field"><label>關聯個案</label>
-          <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'" '+(t.caseId===c.id?'selected':'')+'>'+c.id+' '+c.name+'</option>').join('')}</select>
-        </div>
+      <div class="field"><label>關聯個案</label>
+        <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'" '+(t.caseId===c.id?'selected':'')+'>'+c.id+' '+c.name+'</option>').join('')}</select>
       </div>
       <div class="field"><label>備註</label><textarea id="td-note" rows="2">${t.note||''}</textarea></div>
     </div>
@@ -2149,7 +2131,6 @@ function openEditTodo(id) {
     t.title = title;
     t.dueDate = document.getElementById('td-due').value;
     t.remind = document.getElementById('td-remind').value;
-    t.priority = document.getElementById('td-prio').value;
     t.caseId = document.getElementById('td-case').value;
     t.note = document.getElementById('td-note').value;
     saveData(db); return true;
@@ -2170,7 +2151,7 @@ function copyTodo(id) {
   if (!t) return;
   db.todos.push({
     id: genTodoId(), title: t.title + '（副本）',
-    dueDate: t.dueDate, remind: '', priority: t.priority,
+    dueDate: t.dueDate, remind: '',
     caseId: t.caseId, note: t.note,
     done: false, doneDate: null,
     created: new Date().toISOString().slice(0,10)
