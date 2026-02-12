@@ -356,10 +356,6 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         個案清單
       </div>
-      <div class="nav-item" onclick="navigate('progress')" id="nav-progress">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        進度追蹤
-      </div>
       <div class="nav-item" onclick="navigate('deadlines')" id="nav-deadlines">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         期限管理
@@ -440,30 +436,13 @@ const defaultTracks = [
     deadline:'', deadlineNote:'', plannedDate:'', plannedDateNote:'', amount:210000, note:'已核定結案' },
 ];
 
-const defaultProgress = [
-  { caseId:'A001', trackId:'TR-A001-1', date:'2025-11-01', stage:'未申請', desc:'收到委託，取得授權書及身分證件', sendRecv:'收件', nextStep:'整理病歷資料', nextDate:'2025-11-15', note:'' },
-  { caseId:'A001', trackId:'TR-A001-1', date:'2025-11-20', stage:'待補件', desc:'至台南醫院申請診斷證明書及病歷', sendRecv:'', nextStep:'準備申請書', nextDate:'2025-12-05', note:'' },
-  { caseId:'A001', trackId:'TR-A001-1', date:'2025-12-10', stage:'審核中', desc:'向勞保局送件申請傷病給付，掛號123456789', sendRecv:'送件', nextStep:'等待審查', nextDate:'2026-02-10', note:'已補足所有文件' },
-  { caseId:'A001', trackId:'TR-A001-2', date:'2025-11-05', stage:'未申請', desc:'同步申請職災保險醫療給付', sendRecv:'收件', nextStep:'備妥醫療費用單據', nextDate:'2025-12-01', note:'' },
-  { caseId:'A001', trackId:'TR-A001-2', date:'2026-01-10', stage:'審核中', desc:'送件申請職災醫療給付', sendRecv:'送件', nextStep:'等待審查', nextDate:'2026-03-01', note:'' },
-  { caseId:'A001', trackId:'TR-A001-3', date:'2026-01-15', stage:'未申請', desc:'向雇主主張職災補償差額責任', sendRecv:'', nextStep:'計算差額金額', nextDate:'2026-02-01', note:'勞基法第59條' },
-  { caseId:'A002', trackId:'TR-A002-1', date:'2025-09-05', stage:'未申請', desc:'職災事故，公司否認職災，收取委任狀及相關文件', sendRecv:'收件', nextStep:'蒐集現場證據', nextDate:'2025-09-20', note:'' },
-  { caseId:'A002', trackId:'TR-A002-1', date:'2025-10-15', stage:'審核中', desc:'向勞動局申請職災認定', sendRecv:'送件', nextStep:'等待調查', nextDate:'2025-11-15', note:'' },
-  { caseId:'A002', trackId:'TR-A002-1', date:'2025-11-20', stage:'未調解', desc:'勞動局安排調解，資方未和解', sendRecv:'', nextStep:'再次調解', nextDate:'2026-03-15', note:'資方態度強硬' },
-  { caseId:'A002', trackId:'TR-A002-2', date:'2025-10-01', stage:'未申請', desc:'向雇主主張職災補償責任', sendRecv:'', nextStep:'寄存證信函', nextDate:'2025-10-20', note:'' },
-  { caseId:'A002', trackId:'TR-A002-2', date:'2025-11-01', stage:'未調解', desc:'第一次協商，雇主提出和解方案不接受', sendRecv:'', nextStep:'續行調解', nextDate:'2026-04-01', note:'對方出價過低' },
-  { caseId:'A003', trackId:'TR-A003-1', date:'2025-12-10', stage:'未申請', desc:'商業保險拒賠，委託申訴', sendRecv:'收件', nextStep:'整理理賠資料', nextDate:'2025-12-20', note:'' },
-  { caseId:'A003', trackId:'TR-A003-1', date:'2026-01-05', stage:'待補件', desc:'保險公司要求補診斷書', sendRecv:'', nextStep:'補送診斷書', nextDate:'2026-02-20', note:'截止日：2/20，需加快' },
-  { caseId:'A004', trackId:'TR-A004-1', date:'2025-08-01', stage:'未申請', desc:'資遣費爭議，提起訴訟', sendRecv:'收件', nextStep:'撰寫起訴狀', nextDate:'2025-09-01', note:'' },
-  { caseId:'A004', trackId:'TR-A004-1', date:'2025-10-05', stage:'民事訴訟', desc:'第一次開庭，法官要求補充答辯', sendRecv:'', nextStep:'準備答辯狀', nextDate:'2026-04-10', note:'台南地院 民事庭' },
-];
 
 function loadData() {
   try {
     const s = localStorage.getItem(STORAGE_KEY);
     if (s) return JSON.parse(s);
   } catch(e) {}
-  return { cases: defaultCases, tracks: defaultTracks, progress: defaultProgress };
+  return { cases: defaultCases, tracks: defaultTracks };
 }
 function saveData(data) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
@@ -471,14 +450,7 @@ function saveData(data) {
 let db = loadData();
 if (!db.cases) db.cases = defaultCases;
 if (!db.tracks) db.tracks = defaultTracks;
-if (!db.progress) db.progress = defaultProgress;
 if (!db.todos) db.todos = [];
-var _pid = 1;
-db.progress.forEach(function(p){ if (!p.id) p.id = 'P' + String(_pid++).padStart(4,'0'); });
-function genProgressId() {
-  var nums = db.progress.map(function(p){ return parseInt((p.id||'').slice(1))||0; });
-  return 'P' + String((nums.length ? Math.max.apply(null,nums) : 0) + 1).padStart(4,'0');
-}
 function genTrackId(caseId) {
   const prefix = 'TR-' + caseId + '-';
   const nums = db.tracks.filter(t => t.id.startsWith(prefix)).map(t => parseInt(t.id.slice(prefix.length))||0);
@@ -550,8 +522,6 @@ let selectedCase = null;
 let filterType = null;
 let filterStatus = null;
 let searchQuery = '';
-let progressFilter = '';
-let progressView = 'list'; // 'list' | 'calendar'
 let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth(); // 0-based
 
@@ -814,31 +784,9 @@ cases() {
   const trackBgColors = ['rgba(43,108,176,0.06)','rgba(213,94,0,0.06)','rgba(0,114,178,0.06)',
     'rgba(107,70,193,0.06)','rgba(230,159,0,0.06)','rgba(14,165,176,0.06)','rgba(183,121,31,0.06)'];
 
-  function renderTimeline(progs, col) {
-    if (!progs.length) return '<div class="empty" style="padding:16px 0"><p>尚無進度記錄</p></div>';
-    var html = '<ul class="timeline">';
-    progs.forEach(function(p, i) {
-      var dotStyle = i === progs.length-1 ? 'background:'+col+';border-color:'+col : '';
-      var srBadge = p.sendRecv ? '<span class="badge '+(p.sendRecv==='收件'?'badge-green':'badge-teal')+'" style="font-size:10px">'+p.sendRecv+'</span>' : '';
-      var noteLine = p.note ? '<div class="timeline-desc" style="color:var(--text-3)">備註：'+p.note+'</div>' : '';
-      var nextLine = p.nextStep ? '<div class="timeline-next" style="color:'+col+'">→ 下一步：'+p.nextStep+'（'+fmtDate(p.nextDate)+'）</div>' : '';
-      html += '<li>'
-        + '<div class="timeline-dot '+(i===progs.length-1?'active':'done')+'" style="'+dotStyle+'"></div>'
-        + '<div class="timeline-date">'+fmtDate(p.date)+'</div>'
-        + '<div class="timeline-stage">'+p.stage+' '+srBadge+'</div>'
-        + '<div class="timeline-desc">'+p.desc+'</div>'
-        + noteLine + nextLine
-        + '</li>';
-    });
-    return html + '</ul>';
-  }
-
   function renderTrack(tr, idx) {
     var col = trackColors[idx % trackColors.length];
     var bg = trackBgColors[idx % trackBgColors.length];
-    var progs = db.progress.filter(function(p){ return p.trackId === tr.id; })
-      .sort(function(a,b){ return a.date.localeCompare(b.date); });
-    var lastProg = progs[progs.length-1];
     var days = daysUntil(tr.deadline);
     var daysP = daysUntil(tr.plannedDate);
 
@@ -849,19 +797,8 @@ cases() {
       ? '<div style="font-size:11px"><span style="color:#0EA5B0;font-weight:600">📋 預計：</span>'
         + fmtDate(tr.plannedDate) + ' ' + daysBadge(daysP) + '</div>' : '';
 
-    var lastProgHtml = '';
-    if (lastProg) {
-      var nextH = lastProg.nextStep
-        ? '<div style="margin-top:8px;font-size:11px;color:'+col+';font-weight:600">→ '+lastProg.nextStep+'</div>'
-          + '<div style="font-size:11px;color:var(--text-3)">'+fmtDate(lastProg.nextDate)+'</div>' : '';
-      lastProgHtml = '<div style="background:var(--surface-2);border-radius:8px;padding:12px;border:1px solid var(--border)">'
-        + '<div style="font-size:11px;font-weight:600;color:var(--text-3);margin-bottom:6px">最新進度</div>'
-        + '<span class="badge '+(stageColor[lastProg.stage]||'badge-gray')+'">'+lastProg.stage+'</span>'
-        + '<div style="font-size:12px;margin-top:8px;color:var(--text-2)">'+lastProg.desc+'</div>'
-        + nextH + '</div>';
-    }
     var noteHtml = tr.note
-      ? '<div style="margin-top:8px;font-size:11px;color:var(--text-3);padding:8px;background:var(--surface-2);border-radius:6px">'+tr.note+'</div>' : '';
+      ? '<div style="font-size:12px;color:var(--text-2);padding:10px 12px;background:var(--surface-2);border-radius:6px;margin-bottom:10px">'+tr.note+'</div>' : '';
 
     return '<div class="card" id="track-'+tr.id+'" style="border-top:3px solid '+col+';margin-bottom:20px">'
       + '<div class="card-head" style="background:'+bg+';padding:14px 18px">'
@@ -876,14 +813,11 @@ cases() {
       + (tr.contact ? '<div style="margin-top:8px;font-size:12px;color:var(--text-2)">👤 承辦：<strong>'+tr.contact+'</strong>'+(tr.contactPhone?' ☎ '+tr.contactPhone:'')+'</div>' : '')
       + '</div>'
       + '<div class="card-body" style="padding:16px 20px">'
-      + '<div style="display:grid;grid-template-columns:1fr 260px;gap:16px">'
-      + '<div>' + renderTimeline(progs, col) + '</div>'
-      + '<div>'
-      + lastProgHtml + noteHtml
-      + '<button class="btn btn-outline btn-sm" style="width:100%;margin-top:10px;border-color:'+col+';color:'+col+'" onclick="_trackAction(this)" data-action="addProgress" data-case="'+c.id+'" data-track="'+tr.id+'">＋ 新增進度</button>'
-      + '<button class="btn btn-outline btn-sm" style="width:100%;margin-top:6px;font-size:11px" onclick="_trackAction(this)" data-action="copyTrack" data-track="'+tr.id+'">📋 複製追蹤軸</button>'
-      + '<button class="btn btn-outline btn-sm" style="width:100%;margin-top:6px;font-size:11px" onclick="_trackAction(this)" data-action="editTrack" data-track="'+tr.id+'">編輯此追蹤軸</button>'
-      + '</div></div></div></div>';
+      + noteHtml
+      + '<div style="display:flex;gap:8px">'
+      + '<button class="btn btn-outline btn-sm" style="flex:1;font-size:11px" onclick="_trackAction(this)" data-action="copyTrack" data-track="'+tr.id+'">📋 複製追蹤軸</button>'
+      + '<button class="btn btn-outline btn-sm" style="flex:1;font-size:11px" onclick="_trackAction(this)" data-action="editTrack" data-track="'+tr.id+'">✏️ 編輯追蹤軸</button>'
+      + '</div></div></div>';
   }
 
   var tracksHtml = tracks.length === 0
@@ -942,7 +876,6 @@ cases() {
     <div class="topbar-actions">
       <button class="btn btn-outline btn-sm" onclick="openEditCase('${c.id}')">編輯個案</button>
       <button class="btn btn-outline btn-sm" onclick="openAddTrack('${c.id}')" style="border-color:var(--teal);color:var(--teal)">＋ 新增追蹤軸</button>
-      <button class="btn btn-gold btn-sm" onclick="openAddProgress('${c.id}','')">＋ 新增進度</button>
     </div>
   </div>
   <div class="content">
@@ -979,150 +912,6 @@ cases() {
     </div>
   </div>`;
 },
-// ── Progress ───────────────────────────────────────────────────
-progress() {
-  let progs = db.progress;
-  if (progressFilter) progs = progs.filter(p => p.caseId === progressFilter);
-
-  // ── List View ──────────────────────────────────────────────
-  function listView() {
-    return `<div class="table-card">
-      <table>
-        <thead><tr>
-          <th>個案</th><th>追蹤軸</th><th>日期</th><th>進度階段</th><th>辦理事項說明</th>
-          <th>收/送件</th><th>下一步</th><th>備註</th>
-        </tr></thead>
-        <tbody>
-        ${progs.length === 0 ? `<tr><td colspan="8"><div class="empty"><p>尚無進度記錄</p></div></td></tr>` :
-          [...progs].sort((a,b) => b.date.localeCompare(a.date)).map(p => {
-            const c = db.cases.find(x => x.id === p.caseId);
-            const tr = p.trackId ? db.tracks.find(t => t.id === p.trackId) : null;
-            return `<tr onclick="navigate('case-detail','${p.caseId}')" style="cursor:pointer">
-              <td><strong>${p.caseId}</strong><div style="font-size:11px;color:var(--text-3)">${c?c.name:''}</div></td>
-              <td style="max-width:130px">${tr ? `<div style="font-size:12px;font-weight:600">${tr.name}</div><span class="badge ${typeColor[tr.type]||'badge-gray'}" style="font-size:10px">${tr.type}</span>` : '<span style="color:var(--text-3);font-size:11px">—</span>'}</td>
-              <td style="white-space:nowrap">${fmtDate(p.date)}</td>
-              <td><span class="badge ${stageColor[p.stage]||'badge-gray'}">${p.stage}</span></td>
-              <td style="max-width:180px">${p.desc}</td>
-              <td>${p.sendRecv ? `<span class="badge ${p.sendRecv==='收件'?'badge-green':'badge-teal'}">${p.sendRecv}</span>` : '-'}</td>
-              <td style="max-width:130px">${p.nextStep||'-'}${p.nextDate?`<div style="font-size:11px;color:var(--text-3)">${fmtDate(p.nextDate)}</div>`:''}</td>
-              <td style="max-width:110px;color:var(--text-3);font-size:12px">${p.note||'-'}</td>
-            </tr>`;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>`;
-  }
-
-  // ── Calendar View ──────────────────────────────────────────
-  function calendarView() {
-    const y = calYear, m = calMonth;
-    const rocY = y - 1911;
-    const monthNames = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-    const firstDaySun = new Date(y, m, 1).getDay(); // 0=Sun
-    const firstDay = (firstDaySun + 6) % 7; // convert: Mon=0, Tue=1, ... Sun=6
-    const daysInMonth = new Date(y, m+1, 0).getDate();
-    const today = new Date();
-
-    // Group events by date string YYYY-MM-DD
-    function pad(n){ return String(n).padStart(2,'0'); }
-    const eventsByDate = {};
-    const allProgs = progressFilter ? db.progress.filter(p=>p.caseId===progressFilter) : db.progress;
-
-    // Progress events
-    allProgs.forEach(p => {
-      if (!p.date) return;
-      if (!eventsByDate[p.date]) eventsByDate[p.date] = [];
-      const c = db.cases.find(x=>x.id===p.caseId);
-      eventsByDate[p.date].push({ type:'progress', label:(c?c.name:p.caseId)+': '+p.stage, desc:p.desc, caseId:p.caseId, badge:'badge-blue', dot:'#2b6cb0', stage:p.stage, sendRecv:p.sendRecv });
-      // Next step date
-      if (p.nextDate) {
-        if (!eventsByDate[p.nextDate]) eventsByDate[p.nextDate] = [];
-        eventsByDate[p.nextDate].push({ type:'next', label:(c?c.name:p.caseId)+': '+p.nextStep, desc:'下一步', caseId:p.caseId, badge:'badge-teal', dot:'#0EA5B0' });
-      }
-    });
-
-    // Deadline events from tracks (or case-level)
-    const checkCases = progressFilter ? db.cases.filter(c=>c.id===progressFilter) : db.cases;
-    const checkTracks = progressFilter ? db.tracks.filter(t=>t.caseId===progressFilter) : db.tracks;
-    checkTracks.forEach(tr => {
-      const c = db.cases.find(x=>x.id===tr.caseId);
-      if (tr.deadline) {
-        if (!eventsByDate[tr.deadline]) eventsByDate[tr.deadline] = [];
-        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 截止', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00' });
-      }
-      if (tr.plannedDate) {
-        if (!eventsByDate[tr.plannedDate]) eventsByDate[tr.plannedDate] = [];
-        eventsByDate[tr.plannedDate].push({ type:'planned', label:(c?c.name:tr.caseId)+' 預計完成', desc:tr.plannedDateNote||tr.name, caseId:tr.caseId, badge:'badge-teal', dot:'#0EA5B0' });
-      }
-    });
-
-    // Build calendar grid
-    let cells = '';
-    const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
-    for (let i = 0; i < totalCells; i++) {
-      const dayNum = i - firstDay + 1;
-      const isValid = dayNum >= 1 && dayNum <= daysInMonth;
-      const dateStr = isValid ? y+'-'+pad(m+1)+'-'+pad(dayNum) : '';
-      const isToday = isValid && today.getFullYear()===y && today.getMonth()===m && today.getDate()===dayNum;
-      const events = (isValid && eventsByDate[dateStr]) || [];
-      const rocDay = (y-1911)+'/'+(m+1)+'/'+dayNum;
-
-      const dotHtml = events.slice(0,4).map(e =>
-        `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${e.dot};margin:1px" title="${e.label}"></span>`
-      ).join('');
-      const evtHtml = events.slice(0,3).map(e =>
-        `<div onclick="event.stopPropagation();navigate('case-detail','${e.caseId}')" style="font-size:10px;padding:2px 5px;margin:1px 0;border-radius:3px;background:${e.dot}18;border-left:2px solid ${e.dot};color:var(--text);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${e.label}: ${e.desc}">${e.label}</div>`
-      ).join('') + (events.length > 3 ? `<div style="font-size:9px;color:var(--text-3);padding-left:3px">+${events.length-3} 更多</div>` : '');
-
-      cells += `<div style="min-height:90px;padding:6px;${(i%7)<6?'border-right:1px solid var(--border);':''}border-bottom:1px solid var(--border);background:${isToday?'rgba(201,168,76,0.08)':isValid?'var(--surface)':'var(--surface-2)'}">`
-        + (isValid ? `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">`
-          + `<span style="font-size:12px;font-weight:${isToday?'700':'500'};color:${isToday?'var(--gold)':'var(--text)'};width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:${isToday?'var(--gold)':'transparent'};color:${isToday?'#fff':'var(--text)'}">${dayNum}</span>`
-          + `<span style="font-size:9px;color:var(--text-3)">${events.length>0?dotHtml:''}</span>`
-          + `</div>${evtHtml}` : '')
-        + `</div>`;
-    }
-
-    const weekDayHeaders = ['一','二','三','四','五','六','日'].map((d,i) =>
-      `<div style="padding:8px 0;text-align:center;font-size:11px;font-weight:700;color:var(--text-3);background:var(--surface-2);border-bottom:1px solid var(--border);${i<6?'border-right:1px solid var(--border)':''}">${d}</div>`
-    ).join('');
-
-    return `<div style="background:var(--surface);border-radius:12px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow)">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(0,114,178,0.1)">
-        <button class="btn btn-sm" style="background:rgba(0,114,178,0.15);color:#0072B2;border:none" onclick="calMonth--;if(calMonth<0){calMonth=11;calYear--;}render()">‹</button>
-        <div style="font-size:16px;font-weight:700;color:#0072B2">${rocY} 年 ${monthNames[m]}</div>
-        <button class="btn btn-sm" style="background:rgba(0,114,178,0.15);color:#0072B2;border:none" onclick="calMonth++;if(calMonth>11){calMonth=0;calYear++;}render()">›</button>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr))">${weekDayHeaders}${cells}</div>
-      <div style="padding:10px 16px;border-top:1px solid var(--border);display:flex;gap:16px;font-size:11px;color:var(--text-3)">
-        <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2b6cb0;margin-right:4px"></span>進度記錄</span>
-        <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#D55E00;margin-right:4px"></span>截止日期</span>
-        <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#0EA5B0;margin-right:4px"></span>預計完成/下一步</span>
-      </div>
-    </div>`;
-  }
-
-  const viewContent = progressView === 'calendar' ? calendarView() : listView();
-
-  return `
-  <div class="topbar">
-    <div class="topbar-title">進度追蹤</div>
-    <div class="topbar-actions">
-      <select class="btn btn-outline" onchange="progressFilter=this.value;render()" style="cursor:pointer">
-        <option value="">全部個案</option>
-        ${db.cases.map(c => `<option value="${c.id}" ${progressFilter===c.id?'selected':''}>${c.id} ${c.name}</option>`).join('')}
-      </select>
-      <div style="display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden">
-        <button class="btn btn-sm" style="border-radius:0;border:none;${progressView==='list'?'background:#0072B2;color:#fff':''}" onclick="progressView='list';render()" title="清單檢視">☰ 清單</button>
-        <button class="btn btn-sm" style="border-radius:0;border:none;border-left:1px solid var(--border);${progressView==='calendar'?'background:#0072B2;color:#fff':''}" onclick="progressView='calendar';render()" title="行事曆檢視">📅 行事曆</button>
-      </div>
-      <button class="btn btn-gold" onclick="openAddProgress('')">＋ 新增進度</button>
-    </div>
-  </div>
-  <div class="content">
-    ${viewContent}
-  </div>`;
-},
-
 // ── Deadlines ──────────────────────────────────────────────────
 deadlines() {
   // 同時讀取追蹤軸 + 個案層級的日期
@@ -1321,7 +1110,6 @@ archive() {
   const closedCases = db.cases.filter(c => c.status === '已給付' || c.status === '已調解完成' || c.status === '撤案');
   const activeCases = db.cases.filter(c => c.status !== '已給付' && c.status !== '已調解完成' && c.status !== '撤案');
   const closedTracks = db.tracks.filter(t => closedCases.some(c => c.id === t.caseId));
-  const closedProgress = db.progress.filter(p => closedCases.some(c => c.id === p.caseId));
 
   // 估算 localStorage 使用量
   let storageUsed = 0;
@@ -1360,17 +1148,16 @@ archive() {
           ${closedCases.length === 0 ? '<div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">目前沒有已結案或撤案的個案</div>' : `
           <div style="padding:10px 14px;background:rgba(0,114,178,0.05);border-radius:8px;font-size:12px;color:var(--text-2);margin-bottom:14px;border-left:3px solid #0072B2">
             歸檔會先下載一份 JSON 備份檔，確認下載後再從系統中刪除。<br>
-            備份檔包含完整的個案資料、追蹤軸和進度記錄，日後可透過「匯入」還原。
+            備份檔包含完整的個案資料和追蹤軸，日後可透過「匯入」還原。
           </div>
           <div style="margin-bottom:14px">
             ${closedCases.map(c => {
               const tCount = db.tracks.filter(t => t.caseId === c.id).length;
-              const pCount = db.progress.filter(p => p.caseId === c.id).length;
               return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px">'
                 + '<input type="checkbox" class="archive-cb" value="'+c.id+'" checked style="width:16px;height:16px;cursor:pointer">'
                 + '<div style="flex:1;min-width:0">'
                 + '<div style="font-size:13px;font-weight:600">'+c.name+' <span style="color:var(--text-3);font-weight:400">'+c.id+'</span></div>'
-                + '<div style="font-size:11px;color:var(--text-3)">'+c.type+' · '+tCount+' 條追蹤軸 · '+pCount+' 筆進度 · <span class="badge '+(c.status==='已給付'||c.status==='已調解完成'?'status-closed':'status-closed')+'">'+c.status+'</span></div>'
+                + '<div style="font-size:11px;color:var(--text-3)">'+c.type+' · '+tCount+' 條追蹤軸 · <span class="badge '+(c.status==='已給付'||c.status==='已調解完成'?'status-closed':'status-closed')+'">'+c.status+'</span></div>'
                 + '</div></div>';
             }).join('')}
           </div>
@@ -1387,7 +1174,7 @@ archive() {
         <div class="card-head">📥 匯出備份</div>
         <div class="card-body">
           <button class="btn btn-gold" onclick="exportAllJson()" style="width:100%">📥 匯出全部資料（JSON）</button>
-          <div style="font-size:11px;color:var(--text-3);margin-top:8px;text-align:center">下載目前系統內所有個案、追蹤軸、進度記錄</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:8px;text-align:center">下載目前系統內所有個案、追蹤軸資料</div>
         </div>
       </div>
 
@@ -1643,7 +1430,6 @@ function openEditCase(id) {
 function deleteCase(id) {
   db.cases = db.cases.filter(c => c.id !== id);
   db.tracks = db.tracks.filter(t => t.caseId !== id);
-  db.progress = db.progress.filter(p => p.caseId !== id);
   saveData(db);
   closeModal();
   navigate('cases');
@@ -1655,8 +1441,7 @@ function _trackAction(el) {
   var action = el.getAttribute('data-action');
   var caseId = el.getAttribute('data-case');
   var trackId = el.getAttribute('data-track');
-  if (action === 'addProgress') openAddProgress(caseId, trackId);
-  else if (action === 'editTrack') openEditTrack(trackId);
+  if (action === 'editTrack') openEditTrack(trackId);
   else if (action === 'copyTrack') copyTrack(trackId);
   else if (action === 'addTrack') openAddTrack(caseId);
   else if (action === 'scrollTo') {
@@ -1691,7 +1476,7 @@ function openAddTrack(caseId) {
   var c = db.cases.find(function(x){ return x.id === caseId; });
   openFormModal('新增追蹤軸 — ' + (c ? c.name : caseId), `
     <div style="padding:10px 12px;background:rgba(201,168,76,0.08);border-radius:8px;font-size:12px;color:var(--text-2);margin-bottom:14px">
-      同一個案主可同時並行多條追蹤軸，各有自己的進度記錄與期限。
+      同一個案主可同時並行多條追蹤軸，各有自己的期限與備註。
     </div>
     <div class="form-grid">
       <div class="field form-full"><label>追蹤軸名稱 *</label>
@@ -1865,72 +1650,8 @@ function openEditTrack(trackId) {
 
 function deleteTrack(trackId) {
   db.tracks = db.tracks.filter(function(t){ return t.id !== trackId; });
-  db.progress = db.progress.filter(function(p){ return p.trackId !== trackId; });
   saveData(db);
   closeModal();
-}
-
-function updateTrackOptions(caseId) {
-  const sel = document.getElementById('fp-track');
-  if (!sel) return;
-  const tracks = db.tracks.filter(t => t.caseId === caseId);
-  sel.innerHTML = '<option value="">— 不指定追蹤軸 —</option>' +
-    tracks.map(t => '<option value="' + t.id + '">' + t.name + '（' + t.type + '）</option>').join('');
-}
-
-function openAddProgress(caseId, trackId) {
-  openFormModal('新增進度記錄', `
-    <div class="form-grid">
-      <div class="field"><label>個案 *</label>
-        <select id="fp-case" onchange="updateTrackOptions(this.value)">
-          ${db.cases.map(c=>`<option value="${c.id}" ${c.id===caseId?'selected':''}>${c.id} ${c.name}</option>`).join('')}
-        </select>
-      </div>
-      <div class="field"><label>日期 * <span style="color:var(--text-3);font-weight:400;font-size:10px">（西元年，自動換算民國）</span></label><input type="date" id="fp-date" value="${new Date().toISOString().slice(0,10)}" onchange="var h=document.getElementById('hint-fp-date');if(h)h.textContent=rocHint('fp-date');"><div id="hint-fp-date" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-    </div>
-    <div class="field" style="margin-bottom:12px">
-      <label>追蹤軸 <span style="color:var(--text-3);font-weight:400;font-size:10px">（選擇此進度屬於哪條追蹤軸）</span></label>
-      <select id="fp-track" style="border:2px solid var(--gold)">
-        <option value="">— 不指定追蹤軸 —</option>
-        ${db.tracks.filter(t=>t.caseId===caseId).map(t=>`<option value="${t.id}" ${t.id===trackId?'selected':''}>${t.name}（${t.type}）</option>`).join('')}
-      </select>
-    </div>
-    <div class="form-grid">
-      <div class="field"><label>進度階段 *</label>
-        <select id="fp-stage">
-          ${['未申請','待補件','審核中','已給付','已拒賠','申訴中','評議中','未調解','已調解完成','調解不成立','偵查庭','刑事訴訟','民事訴訟','爭議審議','訴願中','撤案'].map(s=>`<option>${s}</option>`).join('')}
-        </select>
-      </div>
-      <div class="field"><label>收/送件</label>
-        <select id="fp-sr"><option value="">不適用</option><option>收件</option><option>送件</option></select>
-      </div>
-    </div>
-    <div class="field"><label>辦理事項說明 *</label><textarea id="fp-desc" rows="3" placeholder="說明本次辦理的具體事項"></textarea></div>
-    <div class="form-grid">
-      <div class="field"><label>下次重要日期</label><input type="date" id="fp-next-date" onchange="var h=document.getElementById('hint-fp-next-date');if(h)h.textContent=rocHint('fp-next-date');"><div id="hint-fp-next-date" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-    </div>
-    <div class="field"><label>下一步驟</label><input type="text" id="fp-next" placeholder="下一步要做什麼"></div>
-    <div class="field" style="margin-top:8px"><label>備註</label><input type="text" id="fp-note"></div>
-  `, () => {
-    const p = {
-      id: genProgressId(),
-      caseId: document.getElementById('fp-case').value,
-      trackId: document.getElementById('fp-track').value || null,
-      date: document.getElementById('fp-date').value,
-      stage: document.getElementById('fp-stage').value,
-      desc: document.getElementById('fp-desc').value,
-      sendRecv: document.getElementById('fp-sr').value,
-      nextStep: document.getElementById('fp-next').value,
-      nextDate: document.getElementById('fp-next-date').value,
-      note: document.getElementById('fp-note').value
-    };
-    if (!p.caseId || !p.date || !p.desc) { alert('個案、日期、說明為必填！'); return false; }
-    db.progress.push(p);
-    const c = db.cases.find(x => x.id === p.caseId);
-    if (c) c.updated = new Date().toISOString().slice(0,10);
-    saveData(db);
-    return true;
-  });
 }
 
 // ─── Modal Helper ──────────────────────────────────────────────
@@ -1981,15 +1702,13 @@ function archiveSelected() {
   // 收集要歸檔的資料
   const archiveCases = db.cases.filter(c => ids.includes(c.id));
   const archiveTracks = db.tracks.filter(t => ids.includes(t.caseId));
-  const archiveProgress = db.progress.filter(p => ids.includes(p.caseId));
 
   const archiveData = {
     _type: 'archive',
     _date: new Date().toISOString(),
     _note: '歸檔個案：' + archiveCases.map(c => c.id + ' ' + c.name).join('、'),
     cases: archiveCases,
-    tracks: archiveTracks,
-    progress: archiveProgress
+    tracks: archiveTracks
   };
 
   // 下載
@@ -2007,7 +1726,6 @@ function archiveSelected() {
     if (confirm('檔案已下載。\n\n確定要從系統中刪除以下 ' + ids.length + ' 個個案？\n  ' + names + '\n\n（可隨時從備份檔還原）')) {
       db.cases = db.cases.filter(c => !ids.includes(c.id));
       db.tracks = db.tracks.filter(t => !ids.includes(t.caseId));
-      db.progress = db.progress.filter(p => !ids.includes(p.caseId));
       saveData(db);
       alert('✅ 已刪除 ' + ids.length + ' 個結案個案，資料已歸檔保存。');
       render();
