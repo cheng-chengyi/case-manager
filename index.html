@@ -363,27 +363,27 @@ const STORAGE_KEY = 'case_mgmt_v4';
 const defaultCases = [
   { id:'A001', type:'勞工保險給付', name:'王小明', idNum:'A123456789', phone:'0912-345-678',
     employer:'台灣製造股份有限公司', insurer:'勞動部勞工保險局', wage: 45800, accidentDate:'2025-10-15', status:'進行中',
-    receiveDate:'2025-11-01', handler:'陳顧問', deadline:'2026-02-28', deadlineNote:'勞保局補件法定截止',
+    receiveDate:'2025-11-01', deadline:'2026-02-28', deadlineNote:'勞保局補件法定截止',
     plannedDate:'2026-02-10', plannedDateNote:'預計備齊所有文件送出',
     amount:350000, note:'需補就醫證明，已向勞保局確認收件號碼 123456789', created:'2025-11-01', updated:'2026-01-10' },
   { id:'A002', type:'職災補償爭議', name:'李大華', idNum:'B234567890', phone:'0923-456-789',
     employer:'建設工程有限公司', insurer:'勞動部勞工保險局', wage: 52000, accidentDate:'2025-08-20', status:'審核中',
-    receiveDate:'2025-09-05', handler:'林顧問', deadline:'2026-03-15', deadlineNote:'勞動局調解截止',
+    receiveDate:'2025-09-05', deadline:'2026-03-15', deadlineNote:'勞動局調解截止',
     plannedDate:'2026-03-01', plannedDateNote:'預計準備好調解文件',
     amount:550000, note:'雇主否認職災，已向勞動局申請職災認定', created:'2025-09-05', updated:'2026-01-15' },
   { id:'A003', type:'商業保險理賠', name:'張美玲', idNum:'C345678901', phone:'0934-567-890',
     employer:'個人（服務業）', insurer:'富邦人壽', wage: 35000, accidentDate:'2025-11-30', status:'待補件',
-    receiveDate:'2025-12-10', handler:'陳顧問', deadline:'2026-02-20', deadlineNote:'保險公司補件法定截止',
+    receiveDate:'2025-12-10', deadline:'2026-02-20', deadlineNote:'保險公司補件法定截止',
     plannedDate:'2026-02-10', plannedDateNote:'預計取得診斷書並補件',
     amount:180000, note:'保險公司拒賠，要求補診斷書', created:'2025-12-10', updated:'2026-01-20' },
   { id:'A004', type:'勞資爭議/訴訟', name:'陳建國', idNum:'D456789012', phone:'0945-678-901',
     employer:'科技公司', insurer:'勞動部勞工保險局', wage: 65000, accidentDate:'2025-07-01', status:'訴訟中',
-    receiveDate:'2025-08-01', handler:'王顧問', deadline:'2026-04-10', deadlineNote:'法院開庭（不可更動）',
+    receiveDate:'2025-08-01', deadline:'2026-04-10', deadlineNote:'法院開庭（不可更動）',
     plannedDate:'2026-03-25', plannedDateNote:'預計備好答辯狀送法院',
     amount:450000, note:'資遣費爭議，台南地院第二次庭', created:'2025-08-01', updated:'2026-01-18' },
   { id:'A005', type:'勞工保險給付', name:'林淑芬', idNum:'E567890123', phone:'0956-789-012',
     employer:'百貨零售有限公司', insurer:'勞動部勞工保險局', wage: 28000, accidentDate:'2024-06-15', status:'已結案',
-    receiveDate:'2024-07-01', handler:'陳顧問', deadline:'', deadlineNote:'',
+    receiveDate:'2024-07-01', deadline:'', deadlineNote:'',
     plannedDate:'', plannedDateNote:'',
     amount:210000, note:'老年給付已核定，案件結案', created:'2024-07-01', updated:'2025-03-15' },
 ];
@@ -409,21 +409,21 @@ const defaultTracks = [
 ];
 
 const defaultProgress = [
-  { caseId:'A001', trackId:'TR-A001-1', date:'2025-11-01', stage:'收案', desc:'收到委託，取得授權書及身分證件', sendRecv:'收件', handler:'陳顧問', nextStep:'整理病歷資料', nextDate:'2025-11-15', note:'' },
-  { caseId:'A001', trackId:'TR-A001-1', date:'2025-11-20', stage:'補件', desc:'至台南醫院申請診斷證明書及病歷', sendRecv:'', handler:'陳顧問', nextStep:'準備申請書', nextDate:'2025-12-05', note:'' },
-  { caseId:'A001', trackId:'TR-A001-1', date:'2025-12-10', stage:'送件', desc:'向勞保局送件申請傷病給付，掛號123456789', sendRecv:'送件', handler:'陳顧問', nextStep:'等待審查', nextDate:'2026-02-10', note:'已補足所有文件' },
-  { caseId:'A001', trackId:'TR-A001-2', date:'2025-11-05', stage:'收案', desc:'同步申請職災保險醫療給付', sendRecv:'收件', handler:'陳顧問', nextStep:'備妥醫療費用單據', nextDate:'2025-12-01', note:'' },
-  { caseId:'A001', trackId:'TR-A001-2', date:'2026-01-10', stage:'送件', desc:'送件申請職災醫療給付', sendRecv:'送件', handler:'陳顧問', nextStep:'等待審查', nextDate:'2026-03-01', note:'' },
-  { caseId:'A001', trackId:'TR-A001-3', date:'2026-01-15', stage:'收案', desc:'向雇主主張職災補償差額責任', sendRecv:'', handler:'陳顧問', nextStep:'計算差額金額', nextDate:'2026-02-01', note:'勞基法第59條' },
-  { caseId:'A002', trackId:'TR-A002-1', date:'2025-09-05', stage:'收案', desc:'職災事故，公司否認職災，收取委任狀及相關文件', sendRecv:'收件', handler:'林顧問', nextStep:'蒐集現場證據', nextDate:'2025-09-20', note:'' },
-  { caseId:'A002', trackId:'TR-A002-1', date:'2025-10-15', stage:'送件', desc:'向勞動局申請職災認定', sendRecv:'送件', handler:'林顧問', nextStep:'等待調查', nextDate:'2025-11-15', note:'' },
-  { caseId:'A002', trackId:'TR-A002-1', date:'2025-11-20', stage:'協商/調解', desc:'勞動局安排調解，資方未和解', sendRecv:'', handler:'林顧問', nextStep:'再次調解', nextDate:'2026-03-15', note:'資方態度強硬' },
-  { caseId:'A002', trackId:'TR-A002-2', date:'2025-10-01', stage:'收案', desc:'向雇主主張職災補償責任', sendRecv:'', handler:'林顧問', nextStep:'寄存證信函', nextDate:'2025-10-20', note:'' },
-  { caseId:'A002', trackId:'TR-A002-2', date:'2025-11-01', stage:'協商/調解', desc:'第一次協商，雇主提出和解方案不接受', sendRecv:'', handler:'林顧問', nextStep:'續行調解', nextDate:'2026-04-01', note:'對方出價過低' },
-  { caseId:'A003', trackId:'TR-A003-1', date:'2025-12-10', stage:'收案', desc:'商業保險拒賠，委託申訴', sendRecv:'收件', handler:'陳顧問', nextStep:'整理理賠資料', nextDate:'2025-12-20', note:'' },
-  { caseId:'A003', trackId:'TR-A003-1', date:'2026-01-05', stage:'補件', desc:'保險公司要求補診斷書', sendRecv:'', handler:'陳顧問', nextStep:'補送診斷書', nextDate:'2026-02-20', note:'截止日：2/20，需加快' },
-  { caseId:'A004', trackId:'TR-A004-1', date:'2025-08-01', stage:'收案', desc:'資遣費爭議，提起訴訟', sendRecv:'收件', handler:'王顧問', nextStep:'撰寫起訴狀', nextDate:'2025-09-01', note:'' },
-  { caseId:'A004', trackId:'TR-A004-1', date:'2025-10-05', stage:'訴訟', desc:'第一次開庭，法官要求補充答辯', sendRecv:'', handler:'王顧問', nextStep:'準備答辯狀', nextDate:'2026-04-10', note:'台南地院 民事庭' },
+  { caseId:'A001', trackId:'TR-A001-1', date:'2025-11-01', stage:'收案', desc:'收到委託，取得授權書及身分證件', sendRecv:'收件', nextStep:'整理病歷資料', nextDate:'2025-11-15', note:'' },
+  { caseId:'A001', trackId:'TR-A001-1', date:'2025-11-20', stage:'補件', desc:'至台南醫院申請診斷證明書及病歷', sendRecv:'', nextStep:'準備申請書', nextDate:'2025-12-05', note:'' },
+  { caseId:'A001', trackId:'TR-A001-1', date:'2025-12-10', stage:'送件', desc:'向勞保局送件申請傷病給付，掛號123456789', sendRecv:'送件', nextStep:'等待審查', nextDate:'2026-02-10', note:'已補足所有文件' },
+  { caseId:'A001', trackId:'TR-A001-2', date:'2025-11-05', stage:'收案', desc:'同步申請職災保險醫療給付', sendRecv:'收件', nextStep:'備妥醫療費用單據', nextDate:'2025-12-01', note:'' },
+  { caseId:'A001', trackId:'TR-A001-2', date:'2026-01-10', stage:'送件', desc:'送件申請職災醫療給付', sendRecv:'送件', nextStep:'等待審查', nextDate:'2026-03-01', note:'' },
+  { caseId:'A001', trackId:'TR-A001-3', date:'2026-01-15', stage:'收案', desc:'向雇主主張職災補償差額責任', sendRecv:'', nextStep:'計算差額金額', nextDate:'2026-02-01', note:'勞基法第59條' },
+  { caseId:'A002', trackId:'TR-A002-1', date:'2025-09-05', stage:'收案', desc:'職災事故，公司否認職災，收取委任狀及相關文件', sendRecv:'收件', nextStep:'蒐集現場證據', nextDate:'2025-09-20', note:'' },
+  { caseId:'A002', trackId:'TR-A002-1', date:'2025-10-15', stage:'送件', desc:'向勞動局申請職災認定', sendRecv:'送件', nextStep:'等待調查', nextDate:'2025-11-15', note:'' },
+  { caseId:'A002', trackId:'TR-A002-1', date:'2025-11-20', stage:'協商/調解', desc:'勞動局安排調解，資方未和解', sendRecv:'', nextStep:'再次調解', nextDate:'2026-03-15', note:'資方態度強硬' },
+  { caseId:'A002', trackId:'TR-A002-2', date:'2025-10-01', stage:'收案', desc:'向雇主主張職災補償責任', sendRecv:'', nextStep:'寄存證信函', nextDate:'2025-10-20', note:'' },
+  { caseId:'A002', trackId:'TR-A002-2', date:'2025-11-01', stage:'協商/調解', desc:'第一次協商，雇主提出和解方案不接受', sendRecv:'', nextStep:'續行調解', nextDate:'2026-04-01', note:'對方出價過低' },
+  { caseId:'A003', trackId:'TR-A003-1', date:'2025-12-10', stage:'收案', desc:'商業保險拒賠，委託申訴', sendRecv:'收件', nextStep:'整理理賠資料', nextDate:'2025-12-20', note:'' },
+  { caseId:'A003', trackId:'TR-A003-1', date:'2026-01-05', stage:'補件', desc:'保險公司要求補診斷書', sendRecv:'', nextStep:'補送診斷書', nextDate:'2026-02-20', note:'截止日：2/20，需加快' },
+  { caseId:'A004', trackId:'TR-A004-1', date:'2025-08-01', stage:'收案', desc:'資遣費爭議，提起訴訟', sendRecv:'收件', nextStep:'撰寫起訴狀', nextDate:'2025-09-01', note:'' },
+  { caseId:'A004', trackId:'TR-A004-1', date:'2025-10-05', stage:'訴訟', desc:'第一次開庭，法官要求補充答辯', sendRecv:'', nextStep:'準備答辯狀', nextDate:'2026-04-10', note:'台南地院 民事庭' },
 ];
 
 function loadData() {
@@ -701,7 +701,7 @@ cases() {
   if (filterStatus) list = list.filter(c => c.status === filterStatus);
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
-    list = list.filter(c => c.name.includes(q) || c.id.toLowerCase().includes(q) || c.employer.includes(q) || c.handler.includes(q) || (c.insurer||'').includes(q));
+    list = list.filter(c => c.name.includes(q) || c.id.toLowerCase().includes(q) || c.employer.includes(q) || (c.insurer||'').includes(q));
   }
   const typeFilterGroups = [
     { label:'勞工保險', types:['勞工保險給付','勞保生育給付','勞保傷病給付','勞保失能給付','勞保老年給付','勞保死亡給付'] },
@@ -739,10 +739,10 @@ cases() {
         <thead><tr>
           <th>個案編號</th><th>當事人</th><th>個案類型</th>
           <th>投保單位/保險公司</th><th>案件狀態</th><th style="color:#D55E00">⚠️ 截止日期</th><th style="color:#0EA5B0">📋 預計完成</th>
-          <th>預估金額</th><th>負責人</th><th>操作</th>
+          <th>預估金額</th><th>操作</th>
         </tr></thead>
         <tbody>
-        ${list.length === 0 ? `<tr><td colspan="10"><div class="empty"><p>找不到符合的個案</p></div></td></tr>` :
+        ${list.length === 0 ? `<tr><td colspan="9"><div class="empty"><p>找不到符合的個案</p></div></td></tr>` :
           list.map(c => {
             const days = daysUntil(c.deadline);
             const daysP = daysUntil(c.plannedDate);
@@ -756,7 +756,6 @@ cases() {
               <td>${c.deadline ? `<div style="font-size:12px;font-weight:600;color:#D55E00">${fmtDate(c.deadline)}</div><div style="font-size:11px;color:var(--text-3)">${c.deadlineNote}</div>${daysBadge(days)}` : '<span style="color:var(--text-3);font-size:12px">未設定</span>'}</td>
               <td>${c.plannedDate ? `<div style="font-size:12px;font-weight:600;color:#0EA5B0">${fmtDate(c.plannedDate)}</div><div style="font-size:11px;color:var(--text-3)">${c.plannedDateNote}</div>${daysBadge(daysP)}` : '<span style="color:var(--text-3);font-size:12px">未設定</span>'}</td>
               <td class="amount" style="color:var(--navy);font-weight:600">NT$ ${fmt(c.amount)}</td>
-              <td><span class="badge badge-gray">${c.handler}</span></td>
               <td onclick="event.stopPropagation()" style="white-space:nowrap">
                 <button class="btn btn-outline btn-sm" onclick="openEditCase('${c.id}');event.stopPropagation()">編輯</button>
                 <button class="btn btn-outline btn-sm" onclick="openNewCase('${c.id}');event.stopPropagation()" style="margin-left:4px" title="複製此個案">複製</button>
@@ -927,7 +926,6 @@ cases() {
               <div class="info-item"><label>投保薪資</label><value>NT$ ${fmt(c.wage)}</value></div>
               <div class="info-item"><label>事故/起始日</label><value>${fmtDate(c.accidentDate)}</value></div>
               <div class="info-item"><label>受理日期</label><value>${fmtDate(c.receiveDate)}</value></div>
-              <div class="info-item"><label>負責人</label><value>${c.handler}</value></div>
             </div>
             ${c.note ? '<div class="divider"></div><div style="font-size:12px;color:var(--text-2)">'+c.note+'</div>' : ''}
           </div>
@@ -955,10 +953,10 @@ progress() {
       <table>
         <thead><tr>
           <th>個案</th><th>追蹤軸</th><th>日期</th><th>進度階段</th><th>辦理事項說明</th>
-          <th>收/送件</th><th>承辦人</th><th>下一步</th><th>備註</th>
+          <th>收/送件</th><th>下一步</th><th>備註</th>
         </tr></thead>
         <tbody>
-        ${progs.length === 0 ? `<tr><td colspan="9"><div class="empty"><p>尚無進度記錄</p></div></td></tr>` :
+        ${progs.length === 0 ? `<tr><td colspan="8"><div class="empty"><p>尚無進度記錄</p></div></td></tr>` :
           [...progs].sort((a,b) => b.date.localeCompare(a.date)).map(p => {
             const c = db.cases.find(x => x.id === p.caseId);
             const tr = p.trackId ? db.tracks.find(t => t.id === p.trackId) : null;
@@ -969,7 +967,6 @@ progress() {
               <td><span class="badge ${stageColor[p.stage]||'badge-gray'}">${p.stage}</span></td>
               <td style="max-width:180px">${p.desc}</td>
               <td>${p.sendRecv ? `<span class="badge ${p.sendRecv==='收件'?'badge-green':'badge-teal'}">${p.sendRecv}</span>` : '-'}</td>
-              <td>${p.handler}</td>
               <td style="max-width:130px">${p.nextStep||'-'}${p.nextDate?`<div style="font-size:11px;color:var(--text-3)">${fmtDate(p.nextDate)}</div>`:''}</td>
               <td style="max-width:110px;color:var(--text-3);font-size:12px">${p.note||'-'}</td>
             </tr>`;
@@ -1427,7 +1424,6 @@ function fillFromCase(srcId) {
   setVal('f-receive', new Date().toISOString().slice(0,10)); // fresh receive date
   const statusEl = document.getElementById('f-status');
   if (statusEl) { for (let opt of statusEl.options) { if (opt.value === '進行中') { opt.selected = true; break; } } }
-  setVal('f-handler', src.handler);
   setVal('f-amount', src.amount);
   setVal('f-deadline', '');
   setVal('f-deadline-note', src.deadlineNote || '');
@@ -1521,7 +1517,6 @@ function openNewCase(copyFromId) {
           ${['進行中','待補件','審核中','調解中','訴訟中','已結案','撤案'].map(s=>`<option ${s==='進行中'?'selected':''}>${s}</option>`).join('')}
         </select>
       </div>
-      <div class="field"><label>負責人</label><input type="text" id="f-handler" value="陳顧問"></div>
       <div class="field"><label>預估金額（元）</label><input type="number" id="f-amount"></div>
     </div>
     <div style="margin-top:14px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
@@ -1552,7 +1547,6 @@ function openNewCase(copyFromId) {
       accidentDate: document.getElementById('f-accident').value,
       status: document.getElementById('f-status').value,
       receiveDate: document.getElementById('f-receive').value,
-      handler: document.getElementById('f-handler').value,
       deadline: document.getElementById('f-deadline').value,
       deadlineNote: document.getElementById('f-deadline-note').value,
       plannedDate: document.getElementById('f-planned').value,
@@ -1624,7 +1618,6 @@ function openEditCase(id) {
           ${['進行中','待補件','審核中','調解中','訴訟中','已結案','撤案'].map(s=>`<option ${s===c.status?'selected':''}>${s}</option>`).join('')}
         </select>
       </div>
-      <div class="field"><label>負責人</label><input type="text" id="f-handler" value="${c.handler}"></div>
       <div class="field"><label>預估金額（元）</label><input type="number" id="f-amount" value="${c.amount}"></div>
     </div>
     <div style="margin-top:14px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
@@ -1655,7 +1648,6 @@ function openEditCase(id) {
     c.accidentDate = document.getElementById('f-accident').value;
     c.status = document.getElementById('f-status').value;
     c.receiveDate = document.getElementById('f-receive').value;
-    c.handler = document.getElementById('f-handler').value;
     c.deadline = document.getElementById('f-deadline').value;
     c.deadlineNote = document.getElementById('f-deadline-note').value;
     c.plannedDate = document.getElementById('f-planned').value;
@@ -1900,7 +1892,6 @@ function openAddProgress(caseId, trackId) {
     </div>
     <div class="field"><label>辦理事項說明 *</label><textarea id="fp-desc" rows="3" placeholder="說明本次辦理的具體事項"></textarea></div>
     <div class="form-grid">
-      <div class="field"><label>承辦人</label><input type="text" id="fp-handler" value="陳顧問"></div>
       <div class="field"><label>下次重要日期</label><input type="date" id="fp-next-date" onchange="var h=document.getElementById('hint-fp-next-date');if(h)h.textContent=rocHint('fp-next-date');"><div id="hint-fp-next-date" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
     </div>
     <div class="field"><label>下一步驟</label><input type="text" id="fp-next" placeholder="下一步要做什麼"></div>
@@ -1914,7 +1905,6 @@ function openAddProgress(caseId, trackId) {
       stage: document.getElementById('fp-stage').value,
       desc: document.getElementById('fp-desc').value,
       sendRecv: document.getElementById('fp-sr').value,
-      handler: document.getElementById('fp-handler').value,
       nextStep: document.getElementById('fp-next').value,
       nextDate: document.getElementById('fp-next-date').value,
       note: document.getElementById('fp-note').value
