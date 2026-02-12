@@ -1199,6 +1199,20 @@ deadlines() {
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
 
       <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;background:rgba(14,165,176,0.05);border-radius:10px;border:1px solid rgba(14,165,176,0.25)">
+          <span style="font-size:20px">📋</span>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#0EA5B0">預計完成日期</div>
+            <div style="font-size:11px;color:var(--text-3)">內部規劃目標・預計備件完成日</div>
+          </div>
+          <span style="margin-left:auto;font-size:13px;font-weight:700;color:#0EA5B0">${plannedItems.length} 筆</span>
+        </div>
+        ${section('⏰ 7天內（即將到期）', '#0EA5B0', 'rgba(14,165,176,0.07)', p7, plannedCard, '無')}
+        ${section('📅 8–30天', '#0072B2', 'rgba(0,114,178,0.07)', p30, plannedCard, '無')}
+        ${section('📌 30天以上', '#4a5568', 'var(--surface-2)', pLater, plannedCard, '無')}
+      </div>
+
+      <div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;background:rgba(213,94,0,0.05);border-radius:10px;border:1px solid rgba(213,94,0,0.25)">
           <span style="font-size:20px">⚠️</span>
           <div>
@@ -1211,20 +1225,6 @@ deadlines() {
         ${section('🔔 14天內（緊急）', '#D55E00', 'rgba(213,94,0,0.07)', urgent, hardCard, '無緊急截止')}
         ${section('⏱ 15–30天', '#b7791f', 'rgba(214,158,46,0.07)', soon, hardCard, '無')}
         ${section('📌 30天以上', '#4a5568', 'var(--surface-2)', later, hardCard, '無')}
-      </div>
-
-      <div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;background:rgba(14,165,176,0.05);border-radius:10px;border:1px solid rgba(14,165,176,0.25)">
-          <span style="font-size:20px">📋</span>
-          <div>
-            <div style="font-size:13px;font-weight:700;color:#0EA5B0">預計完成日期</div>
-            <div style="font-size:11px;color:var(--text-3)">內部規劃目標・預計備件完成日</div>
-          </div>
-          <span style="margin-left:auto;font-size:13px;font-weight:700;color:#0EA5B0">${plannedItems.length} 筆</span>
-        </div>
-        ${section('⏰ 7天內（即將到期）', '#0EA5B0', 'rgba(14,165,176,0.07)', p7, plannedCard, '無')}
-        ${section('📅 8–30天', '#0072B2', 'rgba(0,114,178,0.07)', p30, plannedCard, '無')}
-        ${section('📌 30天以上', '#4a5568', 'var(--surface-2)', pLater, plannedCard, '無')}
       </div>
     </div>
   </div>`;
@@ -1552,18 +1552,18 @@ function openNewCase(copyFromId) {
       </div>
       <div class="field"><label>預估金額（元）</label><input type="number" id="f-amount"></div>
     </div>
-    <div style="margin-top:14px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
-      <div style="font-size:11px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期（法定/機關要求）</div>
-      <div class="form-grid">
-        <div class="field"><label>截止日期 <span style="color:var(--text-3);font-weight:400;font-size:10px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-deadline" onchange="var h=document.getElementById('hint-f-deadline');if(h)h.textContent=rocHint('f-deadline');"><div id="hint-f-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>截止說明</label><input type="text" id="f-deadline-note" placeholder="如：勞保局補件截止、法院開庭日"></div>
-      </div>
-    </div>
-    <div style="margin-top:10px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
+    <div style="margin-top:14px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
       <div style="font-size:11px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期（內部規劃）</div>
       <div class="form-grid">
         <div class="field"><label>預計完成日期 <span style="color:var(--text-3);font-weight:400;font-size:10px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-planned" onchange="var h=document.getElementById('hint-f-planned');if(h)h.textContent=rocHint('f-planned');"><div id="hint-f-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>完成項目說明</label><input type="text" id="f-planned-note" placeholder="如：預計備妥文件、預計送件"></div>
+      </div>
+    </div>
+    <div style="margin-top:10px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
+      <div style="font-size:11px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期（法定/機關要求）</div>
+      <div class="form-grid">
+        <div class="field"><label>截止日期 <span style="color:var(--text-3);font-weight:400;font-size:10px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-deadline" onchange="var h=document.getElementById('hint-f-deadline');if(h)h.textContent=rocHint('f-deadline');"><div id="hint-f-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>截止說明</label><input type="text" id="f-deadline-note" placeholder="如：勞保局補件截止、法院開庭日"></div>
       </div>
     </div>
     <div class="field" style="margin-top:12px"><label>備註</label><textarea id="f-note" rows="3"></textarea></div>
@@ -1653,18 +1653,18 @@ function openEditCase(id) {
       </div>
       <div class="field"><label>預估金額（元）</label><input type="number" id="f-amount" value="${c.amount}"></div>
     </div>
-    <div style="margin-top:14px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
-      <div style="font-size:11px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期（法定/機關要求）</div>
-      <div class="form-grid">
-        <div class="field"><label>截止日期 <span style="color:var(--text-3);font-weight:400;font-size:10px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-deadline" value="${c.deadline}" onchange="var h=document.getElementById('hint-f-deadline');if(h)h.textContent=rocHint('f-deadline');"><div id="hint-f-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>截止說明</label><input type="text" id="f-deadline-note" value="${c.deadlineNote}"></div>
-      </div>
-    </div>
-    <div style="margin-top:10px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
+    <div style="margin-top:14px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
       <div style="font-size:11px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期（內部規劃）</div>
       <div class="form-grid">
         <div class="field"><label>預計完成日期 <span style="color:var(--text-3);font-weight:400;font-size:10px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-planned" value="${c.plannedDate||''}" onchange="var h=document.getElementById('hint-f-planned');if(h)h.textContent=rocHint('f-planned');"><div id="hint-f-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>完成項目說明</label><input type="text" id="f-planned-note" value="${c.plannedDateNote||''}"></div>
+      </div>
+    </div>
+    <div style="margin-top:10px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
+      <div style="font-size:11px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期（法定/機關要求）</div>
+      <div class="form-grid">
+        <div class="field"><label>截止日期 <span style="color:var(--text-3);font-weight:400;font-size:10px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-deadline" value="${c.deadline}" onchange="var h=document.getElementById('hint-f-deadline');if(h)h.textContent=rocHint('f-deadline');"><div id="hint-f-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>截止說明</label><input type="text" id="f-deadline-note" value="${c.deadlineNote}"></div>
       </div>
     </div>
     <div class="field" style="margin-top:12px"><label>備註</label><textarea id="f-note" rows="3">${c.note}</textarea></div>
