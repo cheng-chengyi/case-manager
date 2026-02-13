@@ -961,7 +961,33 @@ progress() {
     </div>`;
   }
 
-  function calendarView() {
+  function todoSection() {
+    const todos = (db.todos||[]).filter(t => !t.done);
+    if (progressFilter || todos.length === 0) return '';
+    return `<div class="card" style="margin-top:16px">
+      <div class="card-head" style="display:flex;justify-content:space-between;align-items:center">
+        <span>☐ 待辦事項 <span class="badge badge-yellow">${todos.length}</span></span>
+        <button class="btn btn-outline btn-sm" onclick="navigate('todos')">查看全部</button>
+      </div>
+      <div class="card-body" style="padding:0">
+        ${todos.map(t => {
+          const isOverdue = t.dueDate && t.dueDate < new Date().toISOString().slice(0,10);
+          const subDone = (t.subtasks||[]).filter(s=>s.done).length;
+          const subTotal = (t.subtasks||[]).length;
+          return `<div style="padding:10px 16px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;gap:8px">
+              <input type="checkbox" onchange="toggleTodo('${t.id}')" style="width:16px;height:16px;cursor:pointer;accent-color:#0072B2">
+              <span style="font-size:13px;font-weight:600;${isOverdue?'color:#D55E00':''}">${t.title}</span>
+              ${subTotal?'<span style="font-size:11px;color:var(--text-3)">'+subDone+'/'+subTotal+'</span>':''}
+              ${t.dueDate?'<span style="font-size:11px;margin-left:auto;color:'+(isOverdue?'#D55E00':'var(--text-3)')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
+            </div>
+            ${subTotal?'<div style="padding-left:24px;margin-top:4px">'+
+              (t.subtasks||[]).map((s,i)=>'<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:12px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+'">'+s.title+'</span>'+(s.dueDate?'<span style="font-size:11px;color:var(--text-3);margin-left:auto">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')
+            +'</div>':''}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
     const allProgs = progressFilter ? db.progress.filter(p=>p.caseId===progressFilter) : db.progress;
     const allTracks = db.tracks.filter(t => !progressFilter || t.caseId === progressFilter);
     const eventsByDate = {};
@@ -1024,7 +1050,7 @@ progress() {
     </div>`;
   }
 
-  const viewContent = progressView === 'calendar' ? calendarView() : listView();
+  const viewContent = progressView === 'calendar' ? calendarView() : (listView() + todoSection());
   return `<div class="topbar">
     <div class="topbar-title">進度追蹤</div>
     <div class="topbar-actions">
@@ -2109,7 +2135,7 @@ function openAddTodo() {
       </div>
       <div style="padding:12px 14px;background:rgba(0,114,178,0.04);border:1px solid rgba(0,114,178,0.15);border-radius:10px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <label style="font-size:13px;font-weight:700;color:#0072B2">📋 細項（子待辦）</label>
+          <label style="font-size:12px;font-weight:600;color:#0072B2">📋 細項（子待辦）</label>
           <button type="button" class="btn btn-outline btn-sm" style="border-color:#0072B2;color:#0072B2" onclick="addSubtaskRow()">＋ 新增細項</button>
         </div>
         <div id="subtask-list"></div>
@@ -2149,7 +2175,7 @@ function openEditTodo(id) {
       </div>
       <div style="padding:12px 14px;background:rgba(0,114,178,0.04);border:1px solid rgba(0,114,178,0.15);border-radius:10px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <label style="font-size:13px;font-weight:700;color:#0072B2">📋 細項（子待辦）</label>
+          <label style="font-size:12px;font-weight:600;color:#0072B2">📋 細項（子待辦）</label>
           <button type="button" class="btn btn-outline btn-sm" style="border-color:#0072B2;color:#0072B2" onclick="addSubtaskRow()">＋ 新增細項</button>
         </div>
         <div id="subtask-list"></div>
