@@ -2011,6 +2011,8 @@ function restoreArchive(input) {
 function addSubtaskRow(title, dueDate) {
   const list = document.getElementById('subtask-list');
   if (!list) return;
+  var hint = document.getElementById('subtask-empty');
+  if (hint) hint.style.display = 'none';
   const row = document.createElement('div');
   row.style.cssText = 'display:flex;align-items:center;gap:6px;margin-bottom:6px';
   row.innerHTML = '<input type="text" class="st-title" value="'+(title||'')+'" placeholder="細項名稱" style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px">'
@@ -2040,14 +2042,15 @@ function openAddTodo() {
       <div class="field"><label>關聯個案</label>
         <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'">'+c.id+' '+c.name+'</option>').join('')}</select>
       </div>
-      <div class="field"><label>備註</label><textarea id="td-note" rows="2" placeholder="備註說明..."></textarea></div>
-      <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
+      <div style="padding:12px 14px;background:rgba(0,114,178,0.04);border:1px solid rgba(0,114,178,0.15);border-radius:10px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <label style="font-size:12px;font-weight:600;color:var(--text-2)">細項（子待辦）</label>
-          <button type="button" class="btn btn-outline btn-sm" onclick="addSubtaskRow()">＋ 新增細項</button>
+          <label style="font-size:13px;font-weight:700;color:#0072B2">📋 細項（子待辦）</label>
+          <button type="button" class="btn btn-outline btn-sm" style="border-color:#0072B2;color:#0072B2" onclick="addSubtaskRow()">＋ 新增細項</button>
         </div>
         <div id="subtask-list"></div>
+        <div id="subtask-empty" style="font-size:12px;color:var(--text-3);text-align:center;padding:8px">點擊「＋ 新增細項」加入子待辦項目</div>
       </div>
+      <div class="field"><label>備註</label><textarea id="td-note" rows="2" placeholder="備註說明..."></textarea></div>
     </div>
   `, function() {
     const title = document.getElementById('td-title').value.trim();
@@ -2079,14 +2082,14 @@ function openEditTodo(id) {
       <div class="field"><label>關聯個案</label>
         <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'" '+(t.caseId===c.id?'selected':'')+'>'+c.id+' '+c.name+'</option>').join('')}</select>
       </div>
-      <div class="field"><label>備註</label><textarea id="td-note" rows="2">${t.note||''}</textarea></div>
-      <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
+      <div style="padding:12px 14px;background:rgba(0,114,178,0.04);border:1px solid rgba(0,114,178,0.15);border-radius:10px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <label style="font-size:12px;font-weight:600;color:var(--text-2)">細項（子待辦）</label>
-          <button type="button" class="btn btn-outline btn-sm" onclick="addSubtaskRow()">＋ 新增細項</button>
+          <label style="font-size:13px;font-weight:700;color:#0072B2">📋 細項（子待辦）</label>
+          <button type="button" class="btn btn-outline btn-sm" style="border-color:#0072B2;color:#0072B2" onclick="addSubtaskRow()">＋ 新增細項</button>
         </div>
         <div id="subtask-list"></div>
       </div>
+      <div class="field"><label>備註</label><textarea id="td-note" rows="2">${t.note||''}</textarea></div>
     </div>
   `, function() {
     const title = document.getElementById('td-title').value.trim();
