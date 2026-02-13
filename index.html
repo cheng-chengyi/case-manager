@@ -1188,8 +1188,10 @@ todos() {
                 <div style="flex:1;min-width:0">
                   <div style="font-size:14px;font-weight:600;${isOverdue?'color:#D55E00':''}">
                     ${isAlerted?'⏰ ':''}${t.title}
+                    ${(t.subtasks&&t.subtasks.length)?'<span style="font-size:11px;font-weight:400;color:var(--text-3);margin-left:6px">'+t.subtasks.filter(s=>s.done).length+'/'+t.subtasks.length+'</span>':''}
                   </div>
                   ${t.note?'<div style="font-size:12px;color:var(--text-3);margin-top:4px;white-space:pre-line">'+t.note+'</div>':''}
+                  ${(t.subtasks&&t.subtasks.length)?'<div style="margin-top:8px;padding-left:4px">'+t.subtasks.map((s,i)=>'<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:15px;height:15px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+';flex:1">'+s.title+'</span>'+(s.dueDate?'<span style="font-size:11px;color:'+(s.dueDate<now.toISOString().slice(0,10)&&!s.done?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')+'</div>':''}
                   <div style="display:flex;gap:12px;margin-top:6px;font-size:12px;color:var(--text-3);flex-wrap:wrap">
                     ${t.dueDate?'<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
                     ${t.remind?'<span>⏰ '+t.remind.replace('T',' ')+'</span>':''}
@@ -2005,6 +2007,28 @@ function restoreArchive(input) {
 }
 
 // ─── Todo Functions ────────────────────────────────────────────
+
+function addSubtaskRow(title, dueDate) {
+  const list = document.getElementById('subtask-list');
+  if (!list) return;
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;align-items:center;gap:6px;margin-bottom:6px';
+  row.innerHTML = '<input type="text" class="st-title" value="'+(title||'')+'" placeholder="細項名稱" style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px">'
+    + '<input type="date" class="st-date" value="'+(dueDate||'')+'" style="width:140px;padding:7px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px">'
+    + '<button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;color:#D55E00;cursor:pointer;font-size:16px;padding:4px">✕</button>';
+  list.appendChild(row);
+}
+
+function collectSubtasks() {
+  const rows = document.querySelectorAll('#subtask-list > div');
+  const result = [];
+  rows.forEach(row => {
+    const title = row.querySelector('.st-title').value.trim();
+    if (title) result.push({ title: title, dueDate: row.querySelector('.st-date').value, done: false });
+  });
+  return result;
+}
+
 function openAddTodo() {
   openFormModal('新增待辦事項', `
     <div style="display:flex;flex-direction:column;gap:14px">
@@ -2017,6 +2041,13 @@ function openAddTodo() {
         <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'">'+c.id+' '+c.name+'</option>').join('')}</select>
       </div>
       <div class="field"><label>備註</label><textarea id="td-note" rows="2" placeholder="備註說明..."></textarea></div>
+      <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <label style="font-size:12px;font-weight:600;color:var(--text-2)">細項（子待辦）</label>
+          <button type="button" class="btn btn-outline btn-sm" onclick="addSubtaskRow()">＋ 新增細項</button>
+        </div>
+        <div id="subtask-list"></div>
+      </div>
     </div>
   `, function() {
     const title = document.getElementById('td-title').value.trim();
@@ -2027,6 +2058,7 @@ function openAddTodo() {
       remind: document.getElementById('td-remind').value,
       caseId: document.getElementById('td-case').value,
       note: document.getElementById('td-note').value,
+      subtasks: collectSubtasks(),
       done: false, doneDate: null,
       created: new Date().toISOString().slice(0,10)
     });
@@ -2048,6 +2080,13 @@ function openEditTodo(id) {
         <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'" '+(t.caseId===c.id?'selected':'')+'>'+c.id+' '+c.name+'</option>').join('')}</select>
       </div>
       <div class="field"><label>備註</label><textarea id="td-note" rows="2">${t.note||''}</textarea></div>
+      <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <label style="font-size:12px;font-weight:600;color:var(--text-2)">細項（子待辦）</label>
+          <button type="button" class="btn btn-outline btn-sm" onclick="addSubtaskRow()">＋ 新增細項</button>
+        </div>
+        <div id="subtask-list"></div>
+      </div>
     </div>
   `, function() {
     const title = document.getElementById('td-title').value.trim();
@@ -2057,8 +2096,13 @@ function openEditTodo(id) {
     t.remind = document.getElementById('td-remind').value;
     t.caseId = document.getElementById('td-case').value;
     t.note = document.getElementById('td-note').value;
+    t.subtasks = collectSubtasks();
     saveData(db); return true;
   });
+  // 載入既有細項
+  setTimeout(function() {
+    (t.subtasks||[]).forEach(function(s) { addSubtaskRow(s.title, s.dueDate); });
+  }, 80);
 }
 
 function toggleTodo(id) {
@@ -2070,6 +2114,14 @@ function toggleTodo(id) {
   render();
 }
 
+function toggleSubtask(todoId, idx) {
+  const t = db.todos.find(x => x.id === todoId);
+  if (!t || !t.subtasks || !t.subtasks[idx]) return;
+  t.subtasks[idx].done = !t.subtasks[idx].done;
+  saveData(db);
+  render();
+}
+
 function copyTodo(id) {
   const t = db.todos.find(x => x.id === id);
   if (!t) return;
@@ -2077,6 +2129,7 @@ function copyTodo(id) {
     id: genTodoId(), title: t.title + '（副本）',
     dueDate: t.dueDate, remind: '',
     caseId: t.caseId, note: t.note,
+    subtasks: (t.subtasks||[]).map(s => ({ title: s.title, dueDate: s.dueDate, done: false })),
     done: false, doneDate: null,
     created: new Date().toISOString().slice(0,10)
   });
