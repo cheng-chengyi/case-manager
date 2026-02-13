@@ -1025,7 +1025,7 @@ progress() {
         <button class="btn btn-sm" style="border-radius:0;border:none;${progressView==='list'?'background:#0072B2;color:#fff':''}" onclick="progressView='list';render()" title="清單檢視">☰ 清單</button>
         <button class="btn btn-sm" style="border-radius:0;border:none;border-left:1px solid var(--border);${progressView==='calendar'?'background:#0072B2;color:#fff':''}" onclick="progressView='calendar';render()" title="行事曆檢視">📅 行事曆</button>
       </div>
-      <button class="btn btn-gold" onclick="openAddProgress('')">＋ 新增進度</button>
+      <button class="btn btn-gold" onclick="openAddProgress('','')">＋ 新增進度</button>
     </div>
   </div>
   <div class="content">
@@ -1562,7 +1562,8 @@ function _trackAction(el) {
   var action = el.getAttribute('data-action');
   var caseId = el.getAttribute('data-case');
   var trackId = el.getAttribute('data-track');
-  if (action === 'editTrack') openEditTrack(trackId);
+  if (action === 'addProgress') openAddProgress(caseId, trackId);
+  else if (action === 'editTrack') openEditTrack(trackId);
   else if (action === 'copyTrack') copyTrack(trackId);
   else if (action === 'addTrack') openAddTrack(caseId);
   else if (action === 'scrollTo') {
