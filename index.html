@@ -82,7 +82,7 @@
   .stat-card.active::before { background: var(--success); }
   .stat-card.pending::before { background: var(--warning); }
   .stat-card.closed::before { background: var(--text-3); }
-  .stat-label { font-size: 12px; color: var(--text-3); font-weight: 500; margin-bottom: 8px; }
+  .stat-label { font-size: 13.5px; color: var(--text-3); font-weight: 500; margin-bottom: 8px; }
   .stat-num { font-size: 32px; font-weight: 700; color: var(--navy); line-height: 1; }
   .stat-sub { font-size: 11px; color: var(--text-3); margin-top: 6px; }
   .stat-icon { position: absolute; right: 16px; top: 16px; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
@@ -96,7 +96,7 @@
   .type-chip { background: var(--surface); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border); cursor: pointer; transition: all 0.18s; }
   .type-chip:hover { border-color: var(--navy); transform: translateY(-1px); }
   .type-chip.selected { border-color: var(--gold); background: rgba(201,168,76,0.06); }
-  .type-chip-label { font-size: 12px; color: var(--text-3); margin-bottom: 4px; }
+  .type-chip-label { font-size: 13.5px; color: var(--text-3); margin-bottom: 4px; }
   .type-chip-count { font-size: 24px; font-weight: 700; }
   .type-chip.labor .type-chip-count { color: #2b6cb0; }
   .type-chip.injury-ins .type-chip-count { color: #D55E00; }
@@ -624,7 +624,7 @@ dashboard() {
     </div>
   </div>
   <div class="content">
-    <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">📊 案件狀態統計</div>
+    <div style="font-size:13.5px;font-weight:700;color:var(--navy);margin-bottom:8px">📊 案件狀態統計</div>
     <div class="stats-grid">
       <div class="stat-card all" onclick="navigate('cases')" style="cursor:pointer">
         <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f1f3d" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
@@ -652,7 +652,7 @@ dashboard() {
       </div>
     </div>
 
-    <div style="font-size:13px;font-weight:700;color:var(--navy);margin:16px 0 8px">📂 案件類型分佈</div>
+    <div style="font-size:13.5px;font-weight:700;color:var(--navy);margin:16px 0 8px">📂 案件類型分佈</div>
     <div class="type-chips">
       ${typeGroups.map(g => `
         <div class="type-chip ${g.cls}" onclick='filterType=${JSON.stringify(g.types)};navigate("cases")' style="cursor:pointer">
