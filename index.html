@@ -1461,7 +1461,7 @@ function openEditCase(id) {
   if (!c) return;
   openFormModal(`編輯個案 — ${c.name}`, `
     <div class="form-grid">
-      <div class="field"><label>個案編號</label><input type="text" id="f-id" value="${c.id}" disabled></div>
+      <div class="field"><label>個案編號</label><input type="text" id="f-id" value="${c.id}"></div>
       <div class="field"><label>個案類型</label>
         <select id="f-type">
           <optgroup label="勞工保險">
@@ -1526,6 +1526,15 @@ function openEditCase(id) {
     <div class="divider"></div>
     <button class="btn btn-danger btn-sm" onclick="if(confirm('確定刪除此個案？'))deleteCase('${c.id}')">刪除此個案</button>
   `, () => {
+    const newId = document.getElementById('f-id').value;
+    const oldId = c.id;
+    if (newId && newId !== oldId) {
+      // 更新所有關聯資料的 caseId
+      db.tracks.forEach(t => { if (t.caseId === oldId) t.caseId = newId; if (t.id.startsWith('TR-'+oldId+'-')) t.id = t.id.replace('TR-'+oldId+'-','TR-'+newId+'-'); });
+      db.progress.forEach(p => { if (p.caseId === oldId) p.caseId = newId; });
+      if (db.todos) db.todos.forEach(t => { if (t.caseId === oldId) t.caseId = newId; });
+      c.id = newId;
+    }
     c.type = document.getElementById('f-type').value;
     c.name = document.getElementById('f-name').value;
     c.phone = document.getElementById('f-phone').value;
