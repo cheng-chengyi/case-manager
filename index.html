@@ -446,7 +446,7 @@ function loadData() {
     const s = localStorage.getItem(STORAGE_KEY);
     if (s) return JSON.parse(s);
   } catch(e) {}
-  return { cases: defaultCases, tracks: defaultTracks };
+  return { cases: defaultCases, tracks: defaultTracks, progress: [] };
 }
 function saveData(data) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
@@ -454,7 +454,14 @@ function saveData(data) {
 let db = loadData();
 if (!db.cases) db.cases = defaultCases;
 if (!db.tracks) db.tracks = defaultTracks;
+if (!db.progress) db.progress = [];
 if (!db.todos) db.todos = [];
+var _pid = 1;
+db.progress.forEach(function(p){ if (!p.id) p.id = 'P' + String(_pid++).padStart(4,'0'); });
+function genProgressId() {
+  var nums = db.progress.map(function(p){ return parseInt((p.id||'').slice(1))||0; });
+  return 'P' + String((nums.length ? Math.max.apply(null,nums) : 0) + 1).padStart(4,'0');
+}
 function genTrackId(caseId) {
   const prefix = 'TR-' + caseId + '-';
   const nums = db.tracks.filter(t => t.id.startsWith(prefix)).map(t => parseInt(t.id.slice(prefix.length))||0);
@@ -821,6 +828,7 @@ cases() {
       + '<div class="card-body" style="padding:16px 20px">'
       + noteHtml
       + '<div style="display:flex;gap:8px">'
+      + '<button class="btn btn-outline btn-sm" style="flex:1;border-color:'+col+';color:'+col+'" onclick="_trackAction(this)" data-action="addProgress" data-case="'+c.id+'" data-track="'+tr.id+'">＋ 新增進度</button>'
       + '<button class="btn btn-outline btn-sm" style="flex:1;font-size:11px" onclick="_trackAction(this)" data-action="copyTrack" data-track="'+tr.id+'">📋 複製追蹤軸</button>'
       + '<button class="btn btn-outline btn-sm" style="flex:1;font-size:11px" onclick="_trackAction(this)" data-action="editTrack" data-track="'+tr.id+'">✏️ 編輯追蹤軸</button>'
       + '</div></div></div>';
@@ -882,6 +890,7 @@ cases() {
     <div class="topbar-actions">
       <button class="btn btn-outline btn-sm" onclick="openEditCase('${c.id}')">編輯個案</button>
       <button class="btn btn-outline btn-sm" onclick="openAddTrack('${c.id}')" style="border-color:var(--teal);color:var(--teal)">＋ 新增追蹤軸</button>
+      <button class="btn btn-gold btn-sm" onclick="openAddProgress('${c.id}','')">＋ 新增進度</button>
     </div>
   </div>
   <div class="content">
@@ -1666,6 +1675,16 @@ function openAddTrack(caseId) {
       created: new Date().toISOString().slice(0,10)
     };
     db.tracks.push(tr);
+    // 自動建立第一筆進度記錄
+    db.progress.push({
+      id: genProgressId(),
+      caseId: caseId,
+      trackId: tr.id,
+      date: new Date().toISOString().slice(0,10),
+      stage: tr.status || '未申請',
+      desc: '建立追蹤軸：' + tr.name,
+      sendRecv: '', nextStep: '', nextDate: '', note: ''
+    });
     var c2 = db.cases.find(function(x){ return x.id === caseId; });
     if (c2) c2.updated = new Date().toISOString().slice(0,10);
     saveData(db);
@@ -1762,8 +1781,67 @@ function openEditTrack(trackId) {
 
 function deleteTrack(trackId) {
   db.tracks = db.tracks.filter(function(t){ return t.id !== trackId; });
+  db.progress = db.progress.filter(function(p){ return p.trackId !== trackId; });
   saveData(db);
   closeModal();
+}
+
+function openAddProgress(caseIdDefault, trackIdDefault) {
+  const caseOpts = db.cases.map(c => `<option value="${c.id}" ${c.id===caseIdDefault?'selected':''}>${c.id} ${c.name}</option>`).join('');
+  const allTracks = trackIdDefault ? db.tracks.filter(t => t.caseId === caseIdDefault) : db.tracks;
+  const trackOpts = allTracks.map(t => `<option value="${t.id}" ${t.id===trackIdDefault?'selected':''}>${t.name} (${t.type})</option>`).join('');
+  openFormModal('新增進度記錄', `
+    <div class="form-grid">
+      <div class="field"><label>所屬個案 *</label>
+        <select id="fp-case" onchange="var tid=document.getElementById('fp-track');if(tid){tid.innerHTML='<option value=\\'\\'>—</option>'+db.tracks.filter(t=>t.caseId===this.value).map(t=>'<option value=\\''+t.id+'\\'>'+t.name+' ('+t.type+')</option>').join('')}">
+          <option value="">請選擇</option>${caseOpts}
+        </select>
+      </div>
+      <div class="field"><label>追蹤軸</label>
+        <select id="fp-track"><option value="">—</option>${trackOpts}</select>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="field"><label>日期 *</label><input type="date" id="fp-date" value="${new Date().toISOString().slice(0,10)}" onchange="var h=document.getElementById('hint-fp-date');if(h)h.textContent=rocHint('fp-date');"><div id="hint-fp-date" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+      <div class="field"><label>進度階段 *</label>
+        <select id="fp-stage">
+          ${['未申請','待補件','審核中','已給付','已拒賠','申訴中','評議中','未調解','已調解完成','調解不成立','偵查庭','刑事訴訟','民事訴訟','爭議審議','訴願中','撤案'].map(s=>`<option>${s}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>辦理事項說明 *</label><textarea id="fp-desc" rows="2" placeholder="說明本次辦理內容"></textarea></div>
+    <div class="form-grid">
+      <div class="field"><label>收/送件</label>
+        <select id="fp-sr"><option value="">—</option><option>收件</option><option>送件</option></select>
+      </div>
+      <div class="field"><label>下一步</label><input type="text" id="fp-next" placeholder="下一步動作"></div>
+    </div>
+    <div class="form-grid">
+      <div class="field"><label>下次重要日期</label><input type="date" id="fp-next-date" onchange="var h=document.getElementById('hint-fp-next-date');if(h)h.textContent=rocHint('fp-next-date');"><div id="hint-fp-next-date" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+      <div class="field"><label>備註</label><input type="text" id="fp-note"></div>
+    </div>
+  `, () => {
+    const caseId = document.getElementById('fp-case').value;
+    const desc = document.getElementById('fp-desc').value;
+    if (!caseId || !desc) { alert('個案和辦理事項為必填！'); return false; }
+    var p = {
+      id: genProgressId(),
+      caseId: caseId,
+      trackId: document.getElementById('fp-track').value,
+      date: document.getElementById('fp-date').value,
+      stage: document.getElementById('fp-stage').value,
+      desc: desc,
+      sendRecv: document.getElementById('fp-sr').value,
+      nextStep: document.getElementById('fp-next').value,
+      nextDate: document.getElementById('fp-next-date').value,
+      note: document.getElementById('fp-note').value
+    };
+    db.progress.push(p);
+    var c2 = db.cases.find(x => x.id === caseId);
+    if (c2) c2.updated = new Date().toISOString().slice(0,10);
+    saveData(db);
+    return true;
+  });
 }
 
 // ─── Modal Helper ──────────────────────────────────────────────
@@ -1850,7 +1928,8 @@ function exportAllJson() {
     _type: 'full_backup',
     _date: new Date().toISOString(),
     cases: db.cases,
-    tracks: db.tracks
+    tracks: db.tracks,
+    progress: db.progress
   };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -1872,6 +1951,7 @@ function importJson(input) {
       if (!confirm('匯入會覆蓋目前所有資料（' + db.cases.length + ' 筆個案），確定繼續？')) return;
       db.cases = data.cases || [];
       db.tracks = data.tracks || [];
+      db.progress = data.progress || [];
       saveData(db);
       alert('✅ 匯入完成！共 ' + db.cases.length + ' 筆個案。');
       render();
