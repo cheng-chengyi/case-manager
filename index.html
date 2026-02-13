@@ -962,8 +962,9 @@ progress() {
   }
 
   function todoSection() {
-    const todos = (db.todos||[]).filter(t => !t.done);
-    if (progressFilter || todos.length === 0) return '';
+    let todos = (db.todos||[]).filter(t => !t.done);
+    if (progressFilter) todos = todos.filter(t => t.caseId === progressFilter);
+    if (todos.length === 0) return '';
     return `<div class="card" style="margin-top:16px">
       <div class="card-head" style="display:flex;justify-content:space-between;align-items:center">
         <span>☐ 待辦事項 <span class="badge badge-yellow">${todos.length}</span></span>
