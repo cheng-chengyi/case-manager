@@ -982,6 +982,17 @@ progress() {
         eventsByDate[tr.plannedDate].push({ type:'planned', label:(c?c.name:tr.caseId)+' 預計完成', desc:tr.plannedDateNote||tr.name, caseId:tr.caseId, badge:'badge-teal', dot:'#0EA5B0' });
       }
     });
+    // 待辦事項到期日
+    (db.todos||[]).filter(t => !t.done).forEach(t => {
+      if (t.dueDate) {
+        if (!eventsByDate[t.dueDate]) eventsByDate[t.dueDate] = [];
+        eventsByDate[t.dueDate].push({ type:'todo', label:'☐ '+t.title, desc:'', caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C' });
+      }
+      (t.subtasks||[]).filter(s => !s.done && s.dueDate).forEach(s => {
+        if (!eventsByDate[s.dueDate]) eventsByDate[s.dueDate] = [];
+        eventsByDate[s.dueDate].push({ type:'todo', label:'☐ '+s.title, desc:t.title, caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C' });
+      });
+    });
     const now = new Date();
     const y = calYear || now.getFullYear(), m = calMonth != null ? calMonth : now.getMonth();
     const first = new Date(y, m, 1);
@@ -997,7 +1008,7 @@ progress() {
       const isToday = ds === today;
       cells += `<div class="cal-cell${isToday?' today':''}" style="min-height:70px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;${isToday?'background:rgba(0,114,178,0.06);border-color:#0072B2':''}">
         <div style="font-size:11px;font-weight:${isToday?'700':'500'};color:${isToday?'#0072B2':'var(--text-2)'};margin-bottom:2px">${d}</div>
-        ${evts.slice(0,3).map(e => `<div onclick="navigate('case-detail','${e.caseId}')" style="font-size:10px;padding:1px 4px;margin-bottom:1px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:2px solid ${e.dot};background:rgba(0,0,0,0.03)">${e.label}</div>`).join('')}
+        ${evts.slice(0,3).map(e => `<div onclick="navigate('${e.type==='todo'?'todos':'case-detail'}','${e.caseId}')" style="font-size:10px;padding:1px 4px;margin-bottom:1px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:2px solid ${e.dot};background:rgba(0,0,0,0.03)">${e.label}</div>`).join('')}
         ${evts.length>3?`<div style="font-size:9px;color:var(--text-3)">+${evts.length-3}項</div>`:''}
       </div>`;
     }
@@ -1060,6 +1071,19 @@ deadlines() {
   hardItems.sort((a,b) => a.days - b.days);
   plannedItems.sort((a,b) => a.days - b.days);
 
+  // 待辦事項的到期日也加入
+  const todoItems = [];
+  (db.todos||[]).filter(t => !t.done && t.dueDate).forEach(t => {
+    todoItems.push({ id:t.id, caseId:t.caseId||'', name:t.title, type:'待辦事項', deadline:t.dueDate, deadlineNote:t.note||'', days:daysUntil(t.dueDate), trackName:null, isTodo:true });
+  });
+  // 細項到期日
+  (db.todos||[]).filter(t => !t.done && t.subtasks).forEach(t => {
+    (t.subtasks||[]).filter(s => !s.done && s.dueDate).forEach(s => {
+      todoItems.push({ id:t.id, caseId:t.caseId||'', name:t.title+' › '+s.title, type:'待辦細項', deadline:s.dueDate, deadlineNote:'', days:daysUntil(s.dueDate), trackName:null, isTodo:true });
+    });
+  });
+  todoItems.sort((a,b) => a.days - b.days);
+
   function hardCard(item) {
     const cls = item.days < 0 ? 'deadline-urgent' : item.days <= 14 ? 'deadline-urgent' : item.days <= 30 ? 'deadline-soon' : 'deadline-ok';
     const accent = item.days < 0 ? '#5C1A1A' : item.days <= 14 ? '#D55E00' : item.days <= 30 ? '#b7791f' : '#0072B2';
@@ -1088,6 +1112,24 @@ deadlines() {
     </div>`;
   }
 
+  function todoCard(item) {
+    const cls = item.days < 0 ? 'deadline-urgent' : item.days <= 7 ? 'deadline-soon' : 'deadline-ok';
+    const accent = item.days < 0 ? '#D55E00' : item.days <= 7 ? '#b7791f' : '#0072B2';
+    return `<div onclick="navigate('todos')" class="deadline-item ${cls}" style="margin-bottom:8px;cursor:pointer;border-left:3px solid ${accent}" onmouseenter="this.style.opacity='0.85'" onmouseleave="this.style.opacity='1'">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:700">☐ ${item.name}</div>
+        ${item.caseId ? '<div style="font-size:11px;color:var(--text-3)">📎 '+item.caseId+'</div>' : ''}
+        <div style="font-size:11px;color:var(--text-3);margin-top:1px">${fmtDate(item.deadline)}</div>
+      </div>
+      <div style="flex-shrink:0">${daysBadge(item.days)}</div>
+    </div>`;
+  }
+
+  const tOverdue = todoItems.filter(i => i.days < 0);
+  const tUrgent = todoItems.filter(i => i.days >= 0 && i.days <= 7);
+  const tSoon = todoItems.filter(i => i.days > 7 && i.days <= 30);
+  const tLater = todoItems.filter(i => i.days > 30);
+
   const overdue = hardItems.filter(i => i.days < 0);
   const urgent  = hardItems.filter(i => i.days >= 0 && i.days <= 14);
   const soon    = hardItems.filter(i => i.days > 14 && i.days <= 30);
@@ -1107,7 +1149,7 @@ deadlines() {
   return `
   <div class="topbar">
     <div class="topbar-title">期限管理</div>
-    <div class="topbar-actions" style="font-size:12px;color:var(--text-3)">共 ${hardItems.length + plannedItems.length} 筆待辦期限</div>
+    <div class="topbar-actions" style="font-size:12px;color:var(--text-3)">共 ${hardItems.length + plannedItems.length + todoItems.length} 筆期限</div>
   </div>
   <div class="content">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
@@ -1140,6 +1182,29 @@ deadlines() {
         ${section('⏱ 15–30天', '#b7791f', 'rgba(214,158,46,0.07)', soon, hardCard, '無')}
         ${section('📌 30天以上', '#4a5568', 'var(--surface-2)', later, hardCard, '無')}
       </div>
+    </div>
+
+    <!-- 待辦事項期限 -->
+    <div style="margin-top:24px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;background:rgba(201,168,76,0.08);border-radius:10px;border:1px solid rgba(201,168,76,0.3)">
+        <span style="font-size:20px">☑️</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--gold)">待辦事項到期日</div>
+          <div style="font-size:11px;color:var(--text-3)">待辦事項及細項的預定日期</div>
+        </div>
+        <span style="margin-left:auto;font-size:13px;font-weight:700;color:var(--gold)">${todoItems.length} 筆</span>
+      </div>
+      ${todoItems.length === 0 ? '<div style="padding:16px;text-align:center;color:var(--text-3);font-size:13px">目前沒有設定到期日的待辦事項</div>' : `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          ${tOverdue.length ? section('🚫 已逾期', '#5C1A1A', 'rgba(92,26,26,0.08)', tOverdue, todoCard, '') : ''}
+          ${section('⏰ 7天內', '#D55E00', 'rgba(213,94,0,0.07)', tUrgent, todoCard, '無')}
+        </div>
+        <div>
+          ${section('📅 8–30天', '#b7791f', 'rgba(214,158,46,0.07)', tSoon, todoCard, '無')}
+          ${section('📌 30天以上', '#4a5568', 'var(--surface-2)', tLater, todoCard, '無')}
+        </div>
+      </div>`}
     </div>
   </div>`;
 },
