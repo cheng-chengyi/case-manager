@@ -989,6 +989,9 @@ progress() {
         }).join('')}
       </div>
     </div>`;
+  }
+
+  function calendarView() {
     const allProgs = progressFilter ? db.progress.filter(p=>p.caseId===progressFilter) : db.progress;
     const allTracks = db.tracks.filter(t => !progressFilter || t.caseId === progressFilter);
     const eventsByDate = {};
