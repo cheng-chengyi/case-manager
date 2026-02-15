@@ -2322,8 +2322,8 @@ function openAddTodo() {
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" placeholder="輸入待辦事項..."></div>
       <div class="form-grid">
-        <div class="field"><label>到期日</label><input type="date" id="td-due"></div>
         <div class="field"><label>提醒時間</label><input type="datetime-local" id="td-remind"></div>
+        <div class="field"><label>到期日</label><input type="date" id="td-due"></div>
       </div>
       <div class="field"><label>關聯個案</label>
         <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'">'+c.id+' '+c.name+'</option>').join('')}</select>
@@ -2362,8 +2362,8 @@ function openEditTodo(id) {
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" value="${t.title}"></div>
       <div class="form-grid">
-        <div class="field"><label>到期日</label><input type="date" id="td-due" value="${t.dueDate||''}"></div>
         <div class="field"><label>提醒時間</label><input type="datetime-local" id="td-remind" value="${t.remind||''}"></div>
+        <div class="field"><label>到期日</label><input type="date" id="td-due" value="${t.dueDate||''}"></div>
       </div>
       <div class="field"><label>關聯個案</label>
         <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'" '+(t.caseId===c.id?'selected':'')+'>'+c.id+' '+c.name+'</option>').join('')}</select>
