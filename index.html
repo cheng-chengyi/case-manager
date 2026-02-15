@@ -1053,30 +1053,37 @@ progress() {
     const daysInMonth = new Date(y, m+1, 0).getDate();
     const today = now.toISOString().slice(0,10);
     const mLabel = (y-1911)+'年'+(m+1)+'月';
-    let cells = '';
+    let cellArr = [];
     // 週一開始：getDay() 0=日 -> 轉成 0=一
     const startDay = (first.getDay() + 6) % 7;
     // 上月補足
     const prevMonthDays = new Date(y, m, 0).getDate();
     for (let i=startDay-1; i>=0; i--) {
       const d = prevMonthDays - i;
-      cells += '<div style="min-height:70px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:11px;color:var(--text-3)">'+d+'</div></div>';
+      cellArr.push('<div style="min-height:70px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:11px;color:var(--text-3)">'+d+'</div></div>');
     }
     for (let d=1; d<=daysInMonth; d++) {
       const ds = y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
       const evts = eventsByDate[ds] || [];
       const isToday = ds === today;
-      cells += `<div style="min-height:70px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:${isToday?'rgba(0,114,178,0.06)':'#fff'};${isToday?'border-color:#0072B2':''}">
+      cellArr.push(`<div style="min-height:70px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:${isToday?'rgba(0,114,178,0.06)':'#fff'};${isToday?'border-color:#0072B2':''}">
         <div style="font-size:11px;font-weight:${isToday?'700':'500'};color:${isToday?'#0072B2':'var(--text-2)'};margin-bottom:2px">${d}</div>
         ${evts.slice(0,3).map(e => `<div onclick="navigate('${e.type==='todo'?'todos':'case-detail'}','${e.caseId}')" style="font-size:11px;padding:2px 4px;margin-bottom:1px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid ${e.dot};background:${e.bg||'rgba(0,0,0,0.03)'};color:var(--text)">${e.type==='deadline'?'⚠️ ':e.type==='planned'?'📋 ':e.type==='todo'?'☑️ ':'● '}${e.label}</div>`).join('')}
         ${evts.length>3?`<div style="font-size:11px;color:var(--text-3)">+${evts.length-3}項</div>`:''}
-      </div>`;
+      </div>`);
     }
-    // 下月補足（補滿到 7 的倍數）
+    // 下月補足
     const totalCells = startDay + daysInMonth;
     const remaining = (7 - totalCells % 7) % 7;
     for (let nd=1; nd<=remaining; nd++) {
-      cells += '<div style="min-height:70px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:11px;color:var(--text-3)">'+nd+'</div></div>';
+      cellArr.push('<div style="min-height:70px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:11px;color:var(--text-3)">'+nd+'</div></div>');
+    }
+    // 產生表格行
+    let tableRows = '';
+    for (let r=0; r<cellArr.length; r+=7) {
+      tableRows += '<tr>';
+      for (let c=0; c<7; c++) tableRows += '<td style="padding:2px;vertical-align:top">'+(cellArr[r+c]||'')+'</td>';
+      tableRows += '</tr>';
     }
     return `<div style="margin-bottom:16px;display:flex;align-items:center;gap:12px">
       <button class="btn btn-outline btn-sm" onclick="calMonth--;if(calMonth<0){calMonth=11;calYear--}render()">◀</button>
@@ -1090,10 +1097,10 @@ progress() {
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(14,165,176,0.5);margin-right:4px;vertical-align:middle"></span>📋 預計完成</span>
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(201,168,76,0.5);margin-right:4px;vertical-align:middle"></span>☑️ 待辦事項</span>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px">
-      ${['一','二','三','四','五','六','日'].map(w=>`<div style="text-align:center;font-size:11px;font-weight:700;color:var(--text-3);padding:4px">${w}</div>`).join('')}
-      ${cells}
-    </div>`;
+    <table style="width:100%;border-collapse:separate;border-spacing:3px;table-layout:fixed">
+      <thead><tr>${['一','二','三','四','五','六','日'].map(w=>'<th style="text-align:center;font-size:11px;font-weight:700;color:var(--text-3);padding:4px;background:none;border:none;text-transform:none;letter-spacing:0">'+w+'</th>').join('')}</tr></thead>
+      <tbody>${tableRows}</tbody>
+    </table>`;
   }
 
   const viewContent = progressView === 'calendar' ? calendarView() : (listView() + todoSection());
