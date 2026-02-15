@@ -381,7 +381,7 @@
       </div>
     </div>
     <div class="sidebar-footer">
-      <p>資料儲存於本機 · 隱私安全</p>
+      <p><span id="sync-indicator" style="cursor:pointer" onclick="navigate('archive')" title="雲端同步狀態">☁️</span> 資料自動同步</p>
     </div>
   </nav>
 
@@ -453,7 +453,16 @@ function loadData() {
   return { cases: defaultCases, tracks: defaultTracks, progress: [] };
 }
 function saveData(data) {
+  data._date = new Date().toISOString();
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+  // 自動上傳到 GitHub（背景靜默）
+  ghAutoSync(data);
+}
+var _ghSyncTimer = null;
+function ghAutoSync(data) {
+  // 防抖：2秒內多次儲存只推一次
+  clearTimeout(_ghSyncTimer);
+  _ghSyncTimer = setTimeout(function() { ghPushSilent(data); }, 2000);
 }
 let db = loadData();
 if (!db.cases) db.cases = defaultCases;
@@ -1402,6 +1411,26 @@ archive() {
         </div>
       </div>
 
+      <!-- 雲端同步 -->
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-head">☁️ GitHub 雲端同步</div>
+        <div class="card-body">
+          <div style="font-size:11px;color:var(--text-3);margin-bottom:12px;line-height:1.6">
+            透過 GitHub 在多台電腦間同步資料。需設定 Personal Access Token。
+          </div>
+          <div class="form-grid" style="margin-bottom:12px">
+            <div class="field"><label>GitHub Token</label><input type="password" id="gh-token" value="${localStorage.getItem('gh_token')||''}" placeholder="ghp_..." style="font-size:13px"></div>
+            <div class="field"><label>Repository</label><input type="text" id="gh-repo" value="${localStorage.getItem('gh_repo')||'cheng-chengyi/case-manager'}" placeholder="user/repo" style="font-size:13px"></div>
+          </div>
+          <button class="btn btn-sm btn-outline" onclick="localStorage.setItem('gh_token',document.getElementById('gh-token').value);localStorage.setItem('gh_repo',document.getElementById('gh-repo').value);alert('✅ 已儲存設定')" style="margin-bottom:14px">💾 儲存設定</button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <button class="btn btn-gold" onclick="ghPush()" style="width:100%">⬆️ 上傳到雲端</button>
+            <button class="btn btn-outline" onclick="ghPull()" style="width:100%">⬇️ 從雲端下載</button>
+          </div>
+          <div id="gh-status" style="font-size:11px;color:var(--text-3);margin-top:8px;text-align:center"></div>
+        </div>
+      </div>
+
       <!-- 匯出 -->
       <div class="card" style="margin-bottom:20px">
         <div class="card-head">📥 匯出備份</div>
@@ -2051,7 +2080,8 @@ function exportAllJson() {
     _date: new Date().toISOString(),
     cases: db.cases,
     tracks: db.tracks,
-    progress: db.progress
+    progress: db.progress,
+    todos: db.todos
   };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -2060,6 +2090,117 @@ function exportAllJson() {
   a.download = '個案管理_全量備份_' + new Date().toISOString().slice(0,10) + '.json';
   a.click();
   URL.revokeObjectURL(url);
+}
+
+// ─── GitHub Sync ────────────────────────────────────────────────
+function ghStatus(msg, isError) {
+  const el = document.getElementById('gh-status');
+  if (el) { el.textContent = msg; el.style.color = isError ? '#D55E00' : 'var(--text-3)'; }
+}
+
+// 背景靜默推送（不彈訊息）
+async function ghPushSilent(data) {
+  const token = localStorage.getItem('gh_token');
+  const repo = localStorage.getItem('gh_repo');
+  if (!token || !repo) return;
+  try {
+    const payload = { _type:'cloud_sync', _date:new Date().toISOString(), cases:data.cases, tracks:data.tracks, progress:data.progress, todos:data.todos };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+    let sha = null;
+    try {
+      const getRes = await fetch('https://api.github.com/repos/'+repo+'/contents/data.json', { headers:{'Authorization':'Bearer '+token} });
+      if (getRes.ok) { const f = await getRes.json(); sha = f.sha; }
+    } catch(e) {}
+    const body = { message:'auto-sync: '+new Date().toISOString().slice(0,16), content:content };
+    if (sha) body.sha = sha;
+    await fetch('https://api.github.com/repos/'+repo+'/contents/data.json', {
+      method:'PUT', headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'}, body:JSON.stringify(body)
+    });
+    // 更新同步指示器
+    const ind = document.getElementById('sync-indicator');
+    if (ind) { ind.textContent = '☁️ 已同步'; ind.style.color = '#0072B2'; setTimeout(()=>{ ind.textContent = '☁️'; ind.style.color = 'var(--text-3)'; }, 3000); }
+  } catch(e) { /* 靜默失敗 */ }
+}
+
+// 頁面載入自動拉取
+async function ghAutoPull() {
+  const token = localStorage.getItem('gh_token');
+  const repo = localStorage.getItem('gh_repo');
+  if (!token || !repo) return;
+  try {
+    const res = await fetch('https://api.github.com/repos/'+repo+'/contents/data.json', { headers:{'Authorization':'Bearer '+token} });
+    if (!res.ok) return;
+    const f = await res.json();
+    const json = decodeURIComponent(escape(atob(f.content)));
+    const remote = JSON.parse(json);
+    if (!remote.cases) return;
+    // 比較遠端和本機誰較新
+    const remoteTime = new Date(remote._date || 0).getTime();
+    const localData = localStorage.getItem(STORAGE_KEY);
+    const local = localData ? JSON.parse(localData) : null;
+    const localTime = local && local._date ? new Date(local._date).getTime() : 0;
+    if (remoteTime > localTime) {
+      // 遠端較新，自動更新本機
+      db.cases = remote.cases || [];
+      db.tracks = remote.tracks || [];
+      db.progress = remote.progress || [];
+      db.todos = remote.todos || [];
+      db._date = remote._date;
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); } catch(e) {}
+      render();
+    }
+  } catch(e) { /* 靜默失敗 */ }
+}
+
+async function ghPush() {
+  const token = localStorage.getItem('gh_token');
+  const repo = localStorage.getItem('gh_repo');
+  if (!token || !repo) { alert('請先設定 GitHub Token 和 Repository'); return; }
+  ghStatus('⏳ 上傳中...');
+  try {
+    const data = { _type:'cloud_sync', _date:new Date().toISOString(), cases:db.cases, tracks:db.tracks, progress:db.progress, todos:db.todos };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    // Get current file SHA if exists
+    let sha = null;
+    try {
+      const getRes = await fetch('https://api.github.com/repos/'+repo+'/contents/data.json', { headers:{'Authorization':'Bearer '+token} });
+      if (getRes.ok) { const f = await getRes.json(); sha = f.sha; }
+    } catch(e) {}
+    const body = { message:'sync: '+new Date().toISOString().slice(0,16), content:content };
+    if (sha) body.sha = sha;
+    const putRes = await fetch('https://api.github.com/repos/'+repo+'/contents/data.json', {
+      method:'PUT', headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'}, body:JSON.stringify(body)
+    });
+    if (!putRes.ok) throw new Error('HTTP ' + putRes.status);
+    ghStatus('✅ 上傳成功！ ' + new Date().toLocaleTimeString());
+  } catch(err) {
+    ghStatus('❌ 上傳失敗：' + err.message, true);
+  }
+}
+
+async function ghPull() {
+  const token = localStorage.getItem('gh_token');
+  const repo = localStorage.getItem('gh_repo');
+  if (!token || !repo) { alert('請先設定 GitHub Token 和 Repository'); return; }
+  ghStatus('⏳ 下載中...');
+  try {
+    const res = await fetch('https://api.github.com/repos/'+repo+'/contents/data.json', { headers:{'Authorization':'Bearer '+token} });
+    if (!res.ok) throw new Error(res.status === 404 ? '雲端尚無資料，請先上傳' : 'HTTP ' + res.status);
+    const f = await res.json();
+    const json = decodeURIComponent(escape(atob(f.content)));
+    const data = JSON.parse(json);
+    if (!data.cases) throw new Error('資料格式不正確');
+    if (!confirm('從雲端下載會覆蓋本機資料（' + db.cases.length + ' 筆 → ' + data.cases.length + ' 筆），確定？')) { ghStatus('已取消'); return; }
+    db.cases = data.cases || [];
+    db.tracks = data.tracks || [];
+    db.progress = data.progress || [];
+    db.todos = data.todos || [];
+    saveData(db);
+    ghStatus('✅ 下載成功！共 ' + db.cases.length + ' 筆個案 ' + new Date().toLocaleTimeString());
+    render();
+  } catch(err) {
+    ghStatus('❌ 下載失敗：' + err.message, true);
+  }
 }
 
 function importJson(input) {
@@ -2450,6 +2591,8 @@ function swNotify(body) {
 
 // ─── Init ──────────────────────────────────────────────────────
 render();
+// 頁面載入後自動從 GitHub 拉取最新資料
+setTimeout(ghAutoPull, 500);
 </script>
 </body>
 </html>
