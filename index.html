@@ -1023,28 +1023,28 @@ progress() {
       if (!p.date) return;
       if (!eventsByDate[p.date]) eventsByDate[p.date] = [];
       const c = db.cases.find(x => x.id === p.caseId);
-      eventsByDate[p.date].push({ type:'progress', label:(c?c.name:p.caseId), desc:p.desc, stage:p.stage, caseId:p.caseId, badge:stageColor[p.stage]||'badge-gray', dot:'#0072B2', bg:'rgba(0,114,178,0.12)' });
+      eventsByDate[p.date].push({ type:'progress', label:(c?c.name:p.caseId), desc:p.desc, stage:p.stage, caseId:p.caseId, badge:stageColor[p.stage]||'badge-gray', dot:'#0072B2', bg:'rgba(0,114,178,0.08)' });
     });
     allTracks.forEach(tr => {
       const c = db.cases.find(x => x.id === tr.caseId);
       if (tr.deadline) {
         if (!eventsByDate[tr.deadline]) eventsByDate[tr.deadline] = [];
-        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 截止', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00', bg:'rgba(213,94,0,0.12)' });
+        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 截止', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00', bg:'rgba(213,94,0,0.08)' });
       }
       if (tr.plannedDate) {
         if (!eventsByDate[tr.plannedDate]) eventsByDate[tr.plannedDate] = [];
-        eventsByDate[tr.plannedDate].push({ type:'planned', label:(c?c.name:tr.caseId)+' 預計完成', desc:tr.plannedDateNote||tr.name, caseId:tr.caseId, badge:'badge-teal', dot:'#0EA5B0', bg:'rgba(14,165,176,0.12)' });
+        eventsByDate[tr.plannedDate].push({ type:'planned', label:(c?c.name:tr.caseId)+' 預計完成', desc:tr.plannedDateNote||tr.name, caseId:tr.caseId, badge:'badge-teal', dot:'#0EA5B0', bg:'rgba(14,165,176,0.08)' });
       }
     });
     // 待辦事項到期日
     (db.todos||[]).filter(t => !t.done).forEach(t => {
       if (t.dueDate) {
         if (!eventsByDate[t.dueDate]) eventsByDate[t.dueDate] = [];
-        eventsByDate[t.dueDate].push({ type:'todo', label:'☐ '+t.title, desc:'', caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C', bg:'rgba(201,168,76,0.12)' });
+        eventsByDate[t.dueDate].push({ type:'todo', label:'☐ '+t.title, desc:'', caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C', bg:'rgba(201,168,76,0.08)' });
       }
       (t.subtasks||[]).filter(s => !s.done && s.dueDate).forEach(s => {
         if (!eventsByDate[s.dueDate]) eventsByDate[s.dueDate] = [];
-        eventsByDate[s.dueDate].push({ type:'todo', label:'☐ '+s.title, desc:t.title, caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C', bg:'rgba(201,168,76,0.12)' });
+        eventsByDate[s.dueDate].push({ type:'todo', label:'☐ '+s.title, desc:t.title, caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C', bg:'rgba(201,168,76,0.08)' });
       });
     });
     const now = new Date();
