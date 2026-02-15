@@ -1023,28 +1023,28 @@ progress() {
       if (!p.date) return;
       if (!eventsByDate[p.date]) eventsByDate[p.date] = [];
       const c = db.cases.find(x => x.id === p.caseId);
-      eventsByDate[p.date].push({ type:'progress', label:(c?c.name:p.caseId), desc:p.desc, stage:p.stage, caseId:p.caseId, badge:stageColor[p.stage]||'badge-gray', dot:'#0072B2' });
+      eventsByDate[p.date].push({ type:'progress', label:(c?c.name:p.caseId), desc:p.desc, stage:p.stage, caseId:p.caseId, badge:stageColor[p.stage]||'badge-gray', dot:'#0072B2', bg:'rgba(0,114,178,0.12)' });
     });
     allTracks.forEach(tr => {
       const c = db.cases.find(x => x.id === tr.caseId);
       if (tr.deadline) {
         if (!eventsByDate[tr.deadline]) eventsByDate[tr.deadline] = [];
-        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 截止', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00' });
+        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 截止', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00', bg:'rgba(213,94,0,0.12)' });
       }
       if (tr.plannedDate) {
         if (!eventsByDate[tr.plannedDate]) eventsByDate[tr.plannedDate] = [];
-        eventsByDate[tr.plannedDate].push({ type:'planned', label:(c?c.name:tr.caseId)+' 預計完成', desc:tr.plannedDateNote||tr.name, caseId:tr.caseId, badge:'badge-teal', dot:'#0EA5B0' });
+        eventsByDate[tr.plannedDate].push({ type:'planned', label:(c?c.name:tr.caseId)+' 預計完成', desc:tr.plannedDateNote||tr.name, caseId:tr.caseId, badge:'badge-teal', dot:'#0EA5B0', bg:'rgba(14,165,176,0.12)' });
       }
     });
     // 待辦事項到期日
     (db.todos||[]).filter(t => !t.done).forEach(t => {
       if (t.dueDate) {
         if (!eventsByDate[t.dueDate]) eventsByDate[t.dueDate] = [];
-        eventsByDate[t.dueDate].push({ type:'todo', label:'☐ '+t.title, desc:'', caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C' });
+        eventsByDate[t.dueDate].push({ type:'todo', label:'☐ '+t.title, desc:'', caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C', bg:'rgba(201,168,76,0.12)' });
       }
       (t.subtasks||[]).filter(s => !s.done && s.dueDate).forEach(s => {
         if (!eventsByDate[s.dueDate]) eventsByDate[s.dueDate] = [];
-        eventsByDate[s.dueDate].push({ type:'todo', label:'☐ '+s.title, desc:t.title, caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C' });
+        eventsByDate[s.dueDate].push({ type:'todo', label:'☐ '+s.title, desc:t.title, caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C', bg:'rgba(201,168,76,0.12)' });
       });
     });
     const now = new Date();
@@ -1062,7 +1062,7 @@ progress() {
       const isToday = ds === today;
       cells += `<div class="cal-cell${isToday?' today':''}" style="min-height:70px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;background:${isToday?'rgba(0,114,178,0.06)':'#fff'};${isToday?'border-color:#0072B2':''}">
         <div style="font-size:11px;font-weight:${isToday?'700':'500'};color:${isToday?'#0072B2':'var(--text-2)'};margin-bottom:2px">${d}</div>
-        ${evts.slice(0,3).map(e => `<div onclick="navigate('${e.type==='todo'?'todos':'case-detail'}','${e.caseId}')" style="font-size:11px;padding:1px 4px;margin-bottom:1px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:2px solid ${e.dot};background:rgba(0,0,0,0.03)">${e.label}</div>`).join('')}
+        ${evts.slice(0,3).map(e => `<div onclick="navigate('${e.type==='todo'?'todos':'case-detail'}','${e.caseId}')" style="font-size:11px;padding:2px 4px;margin-bottom:1px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid ${e.dot};background:${e.bg||'rgba(0,0,0,0.03)'};color:var(--text)">${e.type==='deadline'?'⚠️ ':e.type==='planned'?'📋 ':e.type==='todo'?'☑️ ':'● '}${e.label}</div>`).join('')}
         ${evts.length>3?`<div style="font-size:11px;color:var(--text-3)">+${evts.length-3}項</div>`:''}
       </div>`;
     }
@@ -1071,6 +1071,12 @@ progress() {
       <span style="font-size:15px;font-weight:700;min-width:100px;text-align:center">${mLabel}</span>
       <button class="btn btn-outline btn-sm" onclick="calMonth++;if(calMonth>11){calMonth=0;calYear++}render()">▶</button>
       <button class="btn btn-outline btn-sm" style="margin-left:8px" onclick="calYear=${now.getFullYear()};calMonth=${now.getMonth()};render()">今天</button>
+    </div>
+    <div style="display:flex;gap:16px;margin-bottom:12px;font-size:11px;color:var(--text-2);flex-wrap:wrap">
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(0,114,178,0.5);margin-right:4px;vertical-align:middle"></span>● 進度紀錄</span>
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(213,94,0,0.5);margin-right:4px;vertical-align:middle"></span>⚠️ 截止日期</span>
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(14,165,176,0.5);margin-right:4px;vertical-align:middle"></span>📋 預計完成</span>
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(201,168,76,0.5);margin-right:4px;vertical-align:middle"></span>☑️ 待辦事項</span>
     </div>
     <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">
       ${['日','一','二','三','四','五','六'].map(w=>`<div style="text-align:center;font-size:11px;font-weight:700;color:var(--text-3);padding:4px">${w}</div>`).join('')}
