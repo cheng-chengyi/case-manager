@@ -1415,18 +1415,28 @@ archive() {
       <div class="card" style="margin-bottom:20px">
         <div class="card-head">☁️ GitHub 雲端同步</div>
         <div class="card-body">
-          <div style="font-size:11px;color:var(--text-3);margin-bottom:12px;line-height:1.6">
-            透過 GitHub 在多台電腦間同步資料。需設定 Personal Access Token。
+          ${localStorage.getItem('gh_token') ? `
+          <div style="font-size:13px;color:var(--text-2);margin-bottom:12px">✅ 已設定 Token · <span style="color:var(--text-3)">${localStorage.getItem('gh_repo')||'cheng-chengyi/case-manager'}</span>
+            <button class="btn btn-sm btn-outline" style="margin-left:8px" onclick="localStorage.removeItem('gh_token');render()">重新設定</button>
           </div>
-          <div class="form-grid" style="margin-bottom:12px">
-            <div class="field"><label>GitHub Token</label><input type="password" id="gh-token" value="${localStorage.getItem('gh_token')||''}" placeholder="ghp_..." style="font-size:13px"></div>
-            <div class="field"><label>Repository</label><input type="text" id="gh-repo" value="${localStorage.getItem('gh_repo')||'cheng-chengyi/case-manager'}" placeholder="user/repo" style="font-size:13px"></div>
-          </div>
-          <button class="btn btn-sm btn-outline" onclick="localStorage.setItem('gh_token',document.getElementById('gh-token').value);localStorage.setItem('gh_repo',document.getElementById('gh-repo').value);alert('✅ 已儲存設定')" style="margin-bottom:14px">💾 儲存設定</button>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <button class="btn btn-gold" onclick="ghPush()" style="width:100%">⬆️ 上傳到雲端</button>
             <button class="btn btn-outline" onclick="ghPull()" style="width:100%">⬇️ 從雲端下載</button>
           </div>
+          ` : `
+          <div style="font-size:11px;color:var(--text-3);margin-bottom:12px;line-height:1.6">
+            透過 GitHub 在多台電腦間同步資料。需設定 Personal Access Token。
+          </div>
+          <div class="form-grid" style="margin-bottom:12px">
+            <div class="field"><label>GitHub Token</label><input type="password" id="gh-token" value="" placeholder="ghp_..." style="font-size:13px"></div>
+            <div class="field"><label>Repository</label><input type="text" id="gh-repo" value="${localStorage.getItem('gh_repo')||'cheng-chengyi/case-manager'}" placeholder="user/repo" style="font-size:13px"></div>
+          </div>
+          <button class="btn btn-sm btn-outline" onclick="localStorage.setItem('gh_token',document.getElementById('gh-token').value);localStorage.setItem('gh_repo',document.getElementById('gh-repo').value);alert('✅ 已儲存設定');render()" style="margin-bottom:14px">💾 儲存設定</button>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <button class="btn btn-gold" onclick="ghPush()" style="width:100%">⬆️ 上傳到雲端</button>
+            <button class="btn btn-outline" onclick="ghPull()" style="width:100%">⬇️ 從雲端下載</button>
+          </div>
+          `}
           <div id="gh-status" style="font-size:11px;color:var(--text-3);margin-top:8px;text-align:center"></div>
         </div>
       </div>
