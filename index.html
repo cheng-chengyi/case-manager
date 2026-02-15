@@ -1056,16 +1056,27 @@ progress() {
     let cells = '';
     // 週一開始：getDay() 0=日 -> 轉成 0=一
     const startDay = (first.getDay() + 6) % 7;
-    for (let i=0; i<startDay; i++) cells += '<div class="cal-cell empty" style="min-height:70px"></div>';
+    // 上月補足
+    const prevMonthDays = new Date(y, m, 0).getDate();
+    for (let i=startDay-1; i>=0; i--) {
+      const d = prevMonthDays - i;
+      cells += '<div style="min-height:70px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:11px;color:var(--text-3)">'+d+'</div></div>';
+    }
     for (let d=1; d<=daysInMonth; d++) {
       const ds = y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
       const evts = eventsByDate[ds] || [];
       const isToday = ds === today;
-      cells += `<div class="cal-cell${isToday?' today':''}" style="min-height:70px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;background:${isToday?'rgba(0,114,178,0.06)':'#fff'};${isToday?'border-color:#0072B2':''}">
+      cells += `<div style="min-height:70px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;background:${isToday?'rgba(0,114,178,0.06)':'#fff'};${isToday?'border-color:#0072B2':''}">
         <div style="font-size:11px;font-weight:${isToday?'700':'500'};color:${isToday?'#0072B2':'var(--text-2)'};margin-bottom:2px">${d}</div>
         ${evts.slice(0,3).map(e => `<div onclick="navigate('${e.type==='todo'?'todos':'case-detail'}','${e.caseId}')" style="font-size:11px;padding:2px 4px;margin-bottom:1px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid ${e.dot};background:${e.bg||'rgba(0,0,0,0.03)'};color:var(--text)">${e.type==='deadline'?'⚠️ ':e.type==='planned'?'📋 ':e.type==='todo'?'☑️ ':'● '}${e.label}</div>`).join('')}
         ${evts.length>3?`<div style="font-size:11px;color:var(--text-3)">+${evts.length-3}項</div>`:''}
       </div>`;
+    }
+    // 下月補足（補滿到 7 的倍數）
+    const totalCells = startDay + daysInMonth;
+    const remaining = (7 - totalCells % 7) % 7;
+    for (let nd=1; nd<=remaining; nd++) {
+      cells += '<div style="min-height:70px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:11px;color:var(--text-3)">'+nd+'</div></div>';
     }
     return `<div style="margin-bottom:16px;display:flex;align-items:center;gap:12px">
       <button class="btn btn-outline btn-sm" onclick="calMonth--;if(calMonth<0){calMonth=11;calYear--}render()">◀</button>
