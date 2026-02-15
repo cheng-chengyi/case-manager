@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-15T09:14:08.096Z",
+  "_date": "2026-02-15T12:38:38.745Z",
   "cases": [
     {
       "id": "A001",
@@ -494,6 +494,18 @@
       "title": "提供PDF給職災重建中心 朱奕築小姐",
       "dueDate": "2026-03-02",
       "remind": "2026-02-23T15:25",
+      "caseId": "",
+      "note": "",
+      "subtasks": [],
+      "done": false,
+      "doneDate": null,
+      "created": "2026-02-15"
+    },
+    {
+      "id": "T0002",
+      "title": "富邦人壽中二區林宏育 印製講義150份",
+      "dueDate": "2026-03-05",
+      "remind": "2026-03-04T09:30",
       "caseId": "",
       "note": "",
       "subtasks": [],
