@@ -830,10 +830,10 @@ cases() {
     var daysP = daysUntil(tr.plannedDate);
 
     var deadlineRow = tr.deadline
-      ? '<div style="font-size:11px"><span style="color:#D55E00;font-weight:600">🔔 提醒：</span>'
+      ? '<div style="font-size:11px"><span style="color:#D55E00;font-weight:600">🔔 提醒日期：</span>'
         + fmtDate(tr.deadline) + ' ' + daysBadge(days) + '</div>' : '';
     var plannedRow = tr.plannedDate
-      ? '<div style="font-size:11px"><span style="color:#0EA5B0;font-weight:600">📋 預計：</span>'
+      ? '<div style="font-size:11px"><span style="color:#0EA5B0;font-weight:600">📋 預計完成：</span>'
         + fmtDate(tr.plannedDate) + ' ' + daysBadge(daysP) + '</div>' : '';
 
     var noteHtml = tr.note
@@ -891,14 +891,14 @@ cases() {
         var d = daysUntil(tr.deadline);
         rows += '<div class="deadline-item '+(d<=14?'deadline-urgent':d<=30?'deadline-soon':'deadline-ok')+'" style="margin-bottom:6px">'
           + '<div><div style="font-size:11px;font-weight:700">'+tr.name+'</div>'
-          + '<div style="font-size:11px;color:var(--text-3)">🔔 '+(tr.deadlineNote||'提醒')+' '+fmtDate(tr.deadline)+'</div></div>'
+          + '<div style="font-size:11px;color:var(--text-3)">🔔 '+(tr.deadlineNote||'提醒日期')+' '+fmtDate(tr.deadline)+'</div></div>'
           + daysBadge(d) + '</div>';
       }
       if (tr.plannedDate) {
         var d2 = daysUntil(tr.plannedDate);
         rows += '<div class="deadline-item '+(d2<=7?'deadline-soon':'deadline-ok')+'" style="margin-bottom:6px">'
           + '<div><div style="font-size:11px;font-weight:700">'+tr.name+'</div>'
-          + '<div style="font-size:11px;color:var(--text-3)">📋 '+(tr.plannedDateNote||'預計')+' '+fmtDate(tr.plannedDate)+'</div></div>'
+          + '<div style="font-size:11px;color:var(--text-3)">📋 '+(tr.plannedDateNote||'預計完成')+' '+fmtDate(tr.plannedDate)+'</div></div>'
           + daysBadge(d2) + '</div>';
       }
       return rows;
@@ -1031,7 +1031,7 @@ progress() {
       const c = db.cases.find(x => x.id === tr.caseId);
       if (tr.deadline) {
         if (!eventsByDate[tr.deadline]) eventsByDate[tr.deadline] = [];
-        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 提醒', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00', bg:'rgba(213,94,0,0.08)' });
+        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 提醒日期', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00', bg:'rgba(213,94,0,0.08)' });
       }
       if (tr.plannedDate) {
         if (!eventsByDate[tr.plannedDate]) eventsByDate[tr.plannedDate] = [];
