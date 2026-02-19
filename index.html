@@ -1852,8 +1852,8 @@ function openAddTrack(caseId) {
       </div>
       <div style="border-top:1px dashed rgba(213,94,0,0.2);margin-top:10px;padding-top:10px">
         <div class="form-grid">
-          <div class="field"><label>完成日期</label><input type="date" id="ft-planned" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-          <div class="field"><label>完成說明</label><input type="text" id="ft-planned-note" placeholder="如：預計備妥文件"></div>
+          <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+          <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" placeholder="如：預計備妥文件"></div>
         </div>
       </div>
     </div>
@@ -1952,8 +1952,8 @@ function openEditTrack(trackId) {
       </div>
       <div style="border-top:1px dashed rgba(213,94,0,0.2);margin-top:10px;padding-top:10px">
         <div class="form-grid">
-          <div class="field"><label>完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-          <div class="field"><label>完成說明</label><input type="text" id="ft-planned-note" value="${tr.plannedDateNote||''}"></div>
+          <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+          <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" value="${tr.plannedDateNote||''}"></div>
         </div>
       </div>
     </div>
@@ -2554,11 +2554,11 @@ function checkAllReminders() {
     const c = db.cases.find(x => x.id === tr.caseId);
     const cName = c ? c.name : tr.caseId;
 
-    // 截止日期
+    // 提醒日期 — 14天內或已逾期
     if (tr.deadline) {
       const days = Math.ceil((new Date(tr.deadline) - now) / 86400000);
       const key = 'deadline-' + tr.id + '-' + today;
-      if (days <= 7 && !_reminderShownToday[key]) {
+      if (days <= 14 && !_reminderShownToday[key]) {
         _reminderShownToday[key] = true;
         if (days < 0) {
           alertItems.push({
@@ -2568,7 +2568,7 @@ function checkAllReminders() {
           });
         } else {
           alertItems.push({
-            title: '⚠️ ' + cName + '｜' + tr.name,
+            title: '🔔 ' + cName + '｜' + tr.name,
             subtitle: '提醒日期還剩 ' + days + ' 天（' + fmtDate(tr.deadline) + '）',
             _type: 'deadline'
           });
@@ -2576,11 +2576,11 @@ function checkAllReminders() {
       }
     }
 
-    // 預計完成日
+    // 預計完成日 — 7天內或已逾期
     if (tr.plannedDate) {
       const days2 = Math.ceil((new Date(tr.plannedDate) - now) / 86400000);
       const key2 = 'planned-' + tr.id + '-' + today;
-      if (days2 <= 3 && !_reminderShownToday[key2]) {
+      if (days2 <= 7 && !_reminderShownToday[key2]) {
         _reminderShownToday[key2] = true;
         if (days2 < 0) {
           alertItems.push({
