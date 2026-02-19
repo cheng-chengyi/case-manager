@@ -523,10 +523,8 @@ function fmtDate(d) {
 }
 function fmtDateTime(dt) {
   if (!dt) return '';
-  const [datePart, timePart] = dt.split('T');
-  if (!datePart) return dt;
-  const d = fmtDate(datePart);
-  return timePart ? d + ' ' + timePart : d;
+  const datePart = dt.includes('T') ? dt.split('T')[0] : dt;
+  return fmtDate(datePart);
 }
 function rocHint(inputId) {
   const el = document.getElementById(inputId);
@@ -1300,12 +1298,12 @@ todos() {
 
   // 檢查提醒
   const now = new Date();
-  const alerts = pending.filter(t => t.remind && new Date(t.remind) <= now);
+  const alerts = pending.filter(t => t.remind && t.remind <= now.toISOString().slice(0,10));
 
   const sortedPending = [...pending].sort((a,b) => {
     const now2 = new Date();
-    const aAlert = a.remind && new Date(a.remind) <= now2 ? 0 : 1;
-    const bAlert = b.remind && new Date(b.remind) <= now2 ? 0 : 1;
+    const aAlert = a.remind && a.remind.slice(0,10) <= now2.toISOString().slice(0,10) ? 0 : 1;
+    const bAlert = b.remind && b.remind.slice(0,10) <= now2.toISOString().slice(0,10) ? 0 : 1;
     if (aAlert !== bAlert) return aAlert - bAlert;
     return (a.dueDate||'').localeCompare(b.dueDate||'');
   });
@@ -1329,7 +1327,7 @@ todos() {
         ${sortedPending.length === 0 ? '<div style="padding:30px;text-align:center;color:var(--text-3);font-size:13px">沒有待辦事項 🎉</div>' :
           sortedPending.map(t => {
             const isOverdue = t.dueDate && t.dueDate < now.toISOString().slice(0,10);
-            const isAlerted = t.remind && new Date(t.remind) <= now;
+            const isAlerted = t.remind && t.remind <= now.toISOString().slice(0,10);
             return `<div style="padding:14px 18px;border-bottom:1px solid var(--border);${isAlerted?'background:rgba(213,94,0,0.04)':''}">
               <div style="display:flex;align-items:flex-start;gap:10px">
                 <input type="checkbox" onchange="toggleTodo('${t.id}')" style="width:18px;height:18px;margin-top:2px;cursor:pointer;flex-shrink:0;accent-color:#0072B2">
@@ -2381,7 +2379,7 @@ function openEditTodo(id) {
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" value="${t.title}"></div>
       <div class="form-grid">
-        <div class="field"><label>提醒日期</label><input type="date" id="td-remind" value="${t.remind||''}"></div>
+        <div class="field"><label>提醒日期</label><input type="date" id="td-remind" value="${(t.remind||'').slice(0,10)}"></div>
         <div class="field"><label>到期日</label><input type="date" id="td-due" value="${t.dueDate||''}"></div>
       </div>
       <div class="field"><label>關聯個案</label>
