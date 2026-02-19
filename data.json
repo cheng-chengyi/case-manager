@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T12:02:24.977Z",
+  "_date": "2026-02-19T12:30:34.963Z",
   "cases": [
     {
       "id": "A001",
@@ -301,6 +301,23 @@
       "created": "2026-02-13",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1121209_余林素娥(車禍)-1",
+      "caseId": "1121209_余林素娥(車禍)",
+      "name": "意外險申請進度",
+      "type": "意外險",
+      "insurer": "全球人壽",
+      "contact": "",
+      "contactPhone": "",
+      "status": "審核中",
+      "deadline": "2026-04-30",
+      "deadlineNote": "",
+      "plannedDate": "2026-05-29",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-19"
     }
   ],
   "progress": [
@@ -504,6 +521,18 @@
       "stage": "未申請",
       "desc": "有等待期的問題",
       "sendRecv": "送件",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0018",
+      "caseId": "1121209_余林素娥(車禍)",
+      "trackId": "TR-1121209_余林素娥(車禍)-1",
+      "date": "2026-02-19",
+      "stage": "審核中",
+      "desc": "建立追蹤軸：意外險申請進度",
+      "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
       "note": ""
