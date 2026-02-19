@@ -1,26 +1,7 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T14:32:22.368Z",
+  "_date": "2026-02-19T14:33:17.303Z",
   "cases": [
-    {
-      "id": "A001",
-      "type": "勞工保險給付",
-      "name": "王小明",
-      "phone": "0912-345-678",
-      "employer": "台灣製造股份有限公司",
-      "insurer": "勞動部勞工保險局",
-      "accidentDate": "2025-10-15",
-      "status": "進行中",
-      "receiveDate": "2025-11-01",
-      "deadline": "2026-02-28",
-      "deadlineNote": "勞保局補件法定截止",
-      "plannedDate": "2026-02-10",
-      "plannedDateNote": "預計備齊所有文件送出",
-      "amount": 350000,
-      "note": "需補就醫證明，已向勞保局確認收件號碼 123456789",
-      "created": "2025-11-01",
-      "updated": "2026-01-10"
-    },
     {
       "id": "A002",
       "type": "職災補償賠償",
@@ -162,45 +143,6 @@
     }
   ],
   "tracks": [
-    {
-      "id": "TR-A001-1",
-      "caseId": "A001",
-      "name": "勞工保險傷病給付",
-      "type": "勞工保險給付",
-      "status": "進行中",
-      "deadline": "2026-02-28",
-      "deadlineNote": "勞保局補件截止",
-      "plannedDate": "2026-02-10",
-      "plannedDateNote": "預計備齊文件",
-      "amount": 150000,
-      "note": ""
-    },
-    {
-      "id": "TR-A001-2",
-      "caseId": "A001",
-      "name": "職災醫療給付",
-      "type": "職災保險給付",
-      "status": "進行中",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "2026-03-01",
-      "plannedDateNote": "預計申請完成",
-      "amount": 80000,
-      "note": "同步申請職災保險"
-    },
-    {
-      "id": "TR-A001-3",
-      "caseId": "A001",
-      "name": "雇主職災補償",
-      "type": "職災補償賠償",
-      "status": "進行中",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "2026-04-01",
-      "plannedDateNote": "協商目標",
-      "amount": 120000,
-      "note": "另向雇主求償差額"
-    },
     {
       "id": "TR-A002-1",
       "caseId": "A002",
