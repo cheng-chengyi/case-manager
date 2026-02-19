@@ -799,7 +799,7 @@ cases() {
       <table>
         <thead><tr>
           <th style="cursor:pointer" onclick="if(caseSortBy==='id')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='id';caseSortDir='asc';}render()">個案編號 ${caseSortBy==='id'?(caseSortDir==='asc'?'▲':'▼'):''}</th><th>當事人</th><th>個案類型</th>
-          <th>受僱公司/保險公司</th><th style="cursor:pointer" onclick="if(caseSortBy==='status')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='status';caseSortDir='asc';}render()">接案狀態 ${caseSortBy==='status'?(caseSortDir==='asc'?'▲':'▼'):''}</th><th style="color:#D55E00;cursor:pointer" onclick="if(caseSortBy==='deadline')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='deadline';caseSortDir='asc';}render()">⚠️ 截止日期 ${caseSortBy==='deadline'?(caseSortDir==='asc'?'▲':'▼'):''}</th><th style="color:#0EA5B0;cursor:pointer" onclick="if(caseSortBy==='planned')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='planned';caseSortDir='asc';}render()">📋 預計完成 ${caseSortBy==='planned'?(caseSortDir==='asc'?'▲':'▼'):''}</th>
+          <th>受僱公司/保險公司</th><th style="cursor:pointer" onclick="if(caseSortBy==='status')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='status';caseSortDir='asc';}render()">接案狀態 ${caseSortBy==='status'?(caseSortDir==='asc'?'▲':'▼'):''}</th><th style="color:#0EA5B0;cursor:pointer" onclick="if(caseSortBy==='planned')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='planned';caseSortDir='asc';}render()">📋 預計完成 ${caseSortBy==='planned'?(caseSortDir==='asc'?'▲':'▼'):''}</th><th style="color:#D55E00;cursor:pointer" onclick="if(caseSortBy==='deadline')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='deadline';caseSortDir='asc';}render()">⚠️ 截止日期 ${caseSortBy==='deadline'?(caseSortDir==='asc'?'▲':'▼'):''}</th>
           <th>操作</th>
         </tr></thead>
         <tbody>
@@ -814,8 +814,8 @@ cases() {
               <td><span class="badge ${typeColor[c.type]}">${c.type}</span></td>
               <td style="max-width:140px"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">${c.employer}</div>${c.insurer?`<div style="font-size:11px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">${c.insurer}</div>`:""}</td>
               <td><span class="badge ${statusColor[c.status]}">${c.status}</span></td>
-              <td>${c.deadline ? `<div style="font-size:13px;font-weight:600;color:#D55E00">${fmtDate(c.deadline)}</div><div style="font-size:11px;color:var(--text-3)">${c.deadlineNote}</div>${daysBadge(days)}` : '<span style="color:var(--text-3);font-size:11px">未設定</span>'}</td>
               <td>${c.plannedDate ? `<div style="font-size:13px;font-weight:600;color:#0EA5B0">${fmtDate(c.plannedDate)}</div><div style="font-size:11px;color:var(--text-3)">${c.plannedDateNote}</div>${daysBadge(daysP)}` : '<span style="color:var(--text-3);font-size:11px">未設定</span>'}</td>
+              <td>${c.deadline ? `<div style="font-size:13px;font-weight:600;color:#D55E00">${fmtDate(c.deadline)}</div><div style="font-size:11px;color:var(--text-3)">${c.deadlineNote}</div>${daysBadge(days)}` : '<span style="color:var(--text-3);font-size:11px">未設定</span>'}</td>
               <td onclick="event.stopPropagation()" style="white-space:nowrap">
                 <button class="btn btn-outline btn-sm" onclick="openEditCase('${c.id}');event.stopPropagation()">編輯</button>
               </td>
