@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T14:49:48.190Z",
+  "_date": "2026-02-19T14:51:08.366Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -149,14 +149,16 @@
       "insurer": "台灣人壽",
       "contact": "王小姐",
       "contactPhone": "02-81709888#6159",
-      "status": "進行中",
-      "deadline": "",
-      "deadlineNote": "送出評議申請書",
-      "plannedDate": "",
-      "plannedDateNote": "提出評議申請書",
+      "status": "申訴中",
+      "deadline": "2026-02-26",
+      "deadlineNote": "聯絡王小姐",
+      "plannedDate": "2026-02-26",
+      "plannedDateNote": "",
       "amount": "",
       "note": "",
-      "created": "2026-02-19"
+      "created": "2026-02-19",
+      "closedDate": "",
+      "closedNote": ""
     }
   ],
   "progress": [
