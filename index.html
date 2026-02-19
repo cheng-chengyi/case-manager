@@ -970,7 +970,7 @@ cases() {
 
 // ── Progress ───────────────────────────────────────────────────
 progress() {
-  let progs = db.progress;
+  let progs = db.progress.filter(p => db.cases.some(c => c.id === p.caseId));
   if (progressFilter) progs = progs.filter(p => p.caseId === progressFilter);
 
   function listView() {
@@ -1032,7 +1032,8 @@ progress() {
   }
 
   function calendarView() {
-    const allProgs = progressFilter ? db.progress.filter(p=>p.caseId===progressFilter) : db.progress;
+    const _validProgs = db.progress.filter(p => db.cases.some(c => c.id === p.caseId));
+    const allProgs = progressFilter ? _validProgs.filter(p=>p.caseId===progressFilter) : _validProgs;
     const allTracks = db.tracks.filter(t => !progressFilter || t.caseId === progressFilter);
     const eventsByDate = {};
     allProgs.forEach(p => {
@@ -2656,6 +2657,14 @@ function swNotify(body) {
 }
 
 // ─── Init ──────────────────────────────────────────────────────
+// 清理孤立資料（個案已刪除但進度/追蹤軸殘留）
+(function cleanOrphans() {
+  const caseIds = new Set(db.cases.map(c => c.id));
+  const before = db.progress.length + db.tracks.length;
+  db.progress = db.progress.filter(p => caseIds.has(p.caseId));
+  db.tracks = db.tracks.filter(t => caseIds.has(t.caseId));
+  if (db.progress.length + db.tracks.length < before) saveData(db);
+})();
 render();
 // 頁面載入後自動從 GitHub 拉取最新資料
 setTimeout(ghAutoPull, 500);
