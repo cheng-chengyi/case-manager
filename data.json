@@ -1,26 +1,7 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T14:33:17.303Z",
+  "_date": "2026-02-19T14:33:24.718Z",
   "cases": [
-    {
-      "id": "A002",
-      "type": "職災補償賠償",
-      "name": "李大華",
-      "phone": "0923-456-789",
-      "employer": "建設工程有限公司",
-      "insurer": "勞動部勞工保險局",
-      "accidentDate": "2025-08-20",
-      "status": "審核中",
-      "receiveDate": "2025-09-05",
-      "deadline": "2026-03-15",
-      "deadlineNote": "勞動局調解截止",
-      "plannedDate": "2026-03-01",
-      "plannedDateNote": "預計準備好調解文件",
-      "amount": 550000,
-      "note": "雇主否認職災，已向勞動局申請職災認定",
-      "created": "2025-09-05",
-      "updated": "2026-01-15"
-    },
     {
       "id": "A003",
       "type": "商業保險理賠",
@@ -143,32 +124,6 @@
     }
   ],
   "tracks": [
-    {
-      "id": "TR-A002-1",
-      "caseId": "A002",
-      "name": "職災認定申請",
-      "type": "職災保險給付",
-      "status": "審核中",
-      "deadline": "2026-03-15",
-      "deadlineNote": "勞動局調解截止",
-      "plannedDate": "2026-03-01",
-      "plannedDateNote": "準備調解文件",
-      "amount": 350000,
-      "note": ""
-    },
-    {
-      "id": "TR-A002-2",
-      "caseId": "A002",
-      "name": "雇主補償爭議",
-      "type": "職災補償賠償",
-      "status": "調解中",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "2026-04-01",
-      "plannedDateNote": "協商期限",
-      "amount": 200000,
-      "note": "調解不成將提訴訟"
-    },
     {
       "id": "TR-A003-1",
       "caseId": "A003",
