@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T14:30:28.835Z",
+  "_date": "2026-02-19T14:32:22.368Z",
   "cases": [
     {
       "id": "A001",
@@ -286,15 +286,15 @@
     {
       "id": "TR-1141226_陳佳慧(乳癌)-1",
       "caseId": "1141226_陳佳慧(乳癌)",
-      "name": "安達產物送件",
+      "name": "陳佳慧安達產物申請理賠",
       "type": "醫療險",
       "insurer": "安達產險",
       "contact": "",
       "contactPhone": "",
-      "status": "未申請",
-      "deadline": "2026-06-30",
+      "status": "審核中",
+      "deadline": "2026-04-30",
       "deadlineNote": "",
-      "plannedDate": "2026-06-30",
+      "plannedDate": "2026-05-29",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
