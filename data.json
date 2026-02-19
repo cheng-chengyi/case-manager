@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T14:33:44.589Z",
+  "_date": "2026-02-19T14:44:31.882Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -31,7 +31,7 @@
       "employer": "",
       "insuredUnit": "",
       "address": "台南市中西區湖美街69-5號",
-      "insurer": "",
+      "insurer": "安達產險",
       "accidentDate": "2025-12-26",
       "status": "未申請",
       "receiveDate": "2026-02-13",
