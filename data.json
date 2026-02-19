@@ -1,26 +1,7 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T14:33:24.718Z",
+  "_date": "2026-02-19T14:33:30.435Z",
   "cases": [
-    {
-      "id": "A003",
-      "type": "商業保險理賠",
-      "name": "張美玲",
-      "phone": "0934-567-890",
-      "employer": "個人（服務業）",
-      "insurer": "富邦人壽",
-      "accidentDate": "2025-11-30",
-      "status": "待補件",
-      "receiveDate": "2025-12-10",
-      "deadline": "2026-02-20",
-      "deadlineNote": "保險公司補件法定截止",
-      "plannedDate": "2026-02-10",
-      "plannedDateNote": "預計取得診斷書並補件",
-      "amount": 180000,
-      "note": "保險公司拒賠，要求補診斷書",
-      "created": "2025-12-10",
-      "updated": "2026-01-20"
-    },
     {
       "id": "A004",
       "type": "勞資爭議事項",
@@ -124,19 +105,6 @@
     }
   ],
   "tracks": [
-    {
-      "id": "TR-A003-1",
-      "caseId": "A003",
-      "name": "商業保險理賠",
-      "type": "商業保險理賠",
-      "status": "待補件",
-      "deadline": "2026-02-20",
-      "deadlineNote": "保險公司補件截止",
-      "plannedDate": "2026-02-10",
-      "plannedDateNote": "取得診斷書",
-      "amount": 180000,
-      "note": ""
-    },
     {
       "id": "TR-A004-1",
       "caseId": "A004",
