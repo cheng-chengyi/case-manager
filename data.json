@@ -1,26 +1,7 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T14:33:37.685Z",
+  "_date": "2026-02-19T14:33:44.589Z",
   "cases": [
-    {
-      "id": "A005",
-      "type": "勞工保險給付",
-      "name": "林淑芬",
-      "phone": "0956-789-012",
-      "employer": "百貨零售有限公司",
-      "insurer": "勞動部勞工保險局",
-      "accidentDate": "2024-06-15",
-      "status": "已結案",
-      "receiveDate": "2024-07-01",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "",
-      "plannedDateNote": "",
-      "amount": 210000,
-      "note": "老年給付已核定，案件結案",
-      "created": "2024-07-01",
-      "updated": "2025-03-15"
-    },
     {
       "id": "1140930_鄞家府(口腔癌)",
       "type": "失能險",
@@ -86,19 +67,6 @@
     }
   ],
   "tracks": [
-    {
-      "id": "TR-A005-1",
-      "caseId": "A005",
-      "name": "老年給付申請",
-      "type": "勞工保險給付",
-      "status": "已結案",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "",
-      "plannedDateNote": "",
-      "amount": 210000,
-      "note": "已核定結案"
-    },
     {
       "id": "TR-1140930_鄞家府(口腔癌)-1",
       "caseId": "1140930_鄞家府(口腔癌)",
