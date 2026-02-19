@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T12:31:27.012Z",
+  "_date": "2026-02-19T12:37:32.611Z",
   "cases": [
     {
       "id": "A001",
@@ -320,6 +320,23 @@
       "created": "2026-02-19",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1121209_余林素娥(車禍)-2",
+      "caseId": "1121209_余林素娥(車禍)",
+      "name": "全球人壽意外險申請進度（複製）",
+      "type": "意外險",
+      "insurer": "全球人壽",
+      "contact": "",
+      "contactPhone": "",
+      "status": "進行中",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-19"
     }
   ],
   "progress": [
