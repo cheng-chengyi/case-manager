@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T12:39:14.446Z",
+  "_date": "2026-02-19T12:43:06.296Z",
   "cases": [
     {
       "id": "A001",
@@ -591,6 +591,18 @@
       "remind": "2026-03-08T09:49",
       "caseId": "",
       "note": "",
+      "subtasks": [],
+      "done": false,
+      "doneDate": null,
+      "created": "2026-02-19"
+    },
+    {
+      "id": "T0004",
+      "title": "確認余林素娥原先全球人壽給付嗅覺喪失保額正確嗎？",
+      "dueDate": "",
+      "remind": "",
+      "caseId": "",
+      "note": "全球人壽台南分公司 06-6017600#7629 李小姐",
       "subtasks": [],
       "done": false,
       "doneDate": null,
