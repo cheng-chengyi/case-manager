@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-15T12:38:38.745Z",
+  "_date": "2026-02-19T01:49:59.540Z",
   "cases": [
     {
       "id": "A001",
@@ -512,6 +512,18 @@
       "done": false,
       "doneDate": null,
       "created": "2026-02-15"
+    },
+    {
+      "id": "T0003",
+      "title": "調整claude付費模型",
+      "dueDate": "2026-03-10",
+      "remind": "2026-03-08T09:49",
+      "caseId": "",
+      "note": "",
+      "subtasks": [],
+      "done": false,
+      "doneDate": null,
+      "created": "2026-02-19"
     }
   ]
 }
