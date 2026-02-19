@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T01:49:59.540Z",
+  "_date": "2026-02-19T12:02:24.977Z",
   "cases": [
     {
       "id": "A001",
@@ -138,6 +138,27 @@
       "note": "",
       "created": "2026-02-13",
       "updated": "2026-02-13"
+    },
+    {
+      "id": "1121209_余林素娥(車禍)",
+      "type": "意外險",
+      "name": "余林素娥",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "",
+      "accidentDate": "2023-12-09",
+      "status": "審核中",
+      "receiveDate": "",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "意外險給付",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-19",
+      "updated": "2026-02-19"
     }
   ],
   "tracks": [
