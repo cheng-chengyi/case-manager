@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T14:45:12.982Z",
+  "_date": "2026-02-19T14:46:36.250Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -12,7 +12,7 @@
       "address": "",
       "insurer": "台灣人壽",
       "accidentDate": "2025-09-30",
-      "status": "未申請",
+      "status": "申訴中",
       "receiveDate": "2025-12-24",
       "deadline": "",
       "deadlineNote": "",
@@ -21,7 +21,7 @@
       "amount": "",
       "note": "太太 洪麗華\n業務同仁 謝惠如",
       "created": "2026-02-12",
-      "updated": "2026-02-13"
+      "updated": "2026-02-19"
     },
     {
       "id": "1141226_陳佳慧(乳癌)",
