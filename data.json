@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T12:38:47.180Z",
+  "_date": "2026-02-19T12:39:14.446Z",
   "cases": [
     {
       "id": "A001",
@@ -329,7 +329,7 @@
       "insurer": "全球人壽",
       "contact": "",
       "contactPhone": "",
-      "status": "未申請",
+      "status": "審核中",
       "deadline": "2026-04-30",
       "deadlineNote": "",
       "plannedDate": "2026-05-29",
