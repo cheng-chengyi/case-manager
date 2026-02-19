@@ -1850,12 +1850,11 @@ function openAddTrack(caseId) {
         <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" placeholder="如：勞保局補件截止"></div>
       </div>
-    </div>
-    <div style="margin-top:10px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
-      <div style="font-size:11px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期</div>
-      <div class="form-grid">
-        <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" placeholder="如：預計備妥文件"></div>
+      <div style="border-top:1px dashed rgba(213,94,0,0.2);margin-top:10px;padding-top:10px">
+        <div class="form-grid">
+          <div class="field"><label>完成日期</label><input type="date" id="ft-planned" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+          <div class="field"><label>完成說明</label><input type="text" id="ft-planned-note" placeholder="如：預計備妥文件"></div>
+        </div>
       </div>
     </div>
     <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note"></div>
@@ -1951,12 +1950,11 @@ function openEditTrack(trackId) {
         <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" value="${tr.deadline||''}" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" value="${tr.deadlineNote||''}"></div>
       </div>
-    </div>
-    <div style="margin-top:10px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
-      <div style="font-size:11px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期</div>
-      <div class="form-grid">
-        <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" value="${tr.plannedDateNote||''}"></div>
+      <div style="border-top:1px dashed rgba(213,94,0,0.2);margin-top:10px;padding-top:10px">
+        <div class="form-grid">
+          <div class="field"><label>完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+          <div class="field"><label>完成說明</label><input type="text" id="ft-planned-note" value="${tr.plannedDateNote||''}"></div>
+        </div>
       </div>
     </div>
     <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note" value="${tr.note||''}"></div>
