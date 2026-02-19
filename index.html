@@ -830,7 +830,7 @@ cases() {
     var daysP = daysUntil(tr.plannedDate);
 
     var deadlineRow = tr.deadline
-      ? '<div style="font-size:11px"><span style="color:#D55E00;font-weight:600">⚠️ 截止：</span>'
+      ? '<div style="font-size:11px"><span style="color:#D55E00;font-weight:600">🔔 提醒：</span>'
         + fmtDate(tr.deadline) + ' ' + daysBadge(days) + '</div>' : '';
     var plannedRow = tr.plannedDate
       ? '<div style="font-size:11px"><span style="color:#0EA5B0;font-weight:600">📋 預計：</span>'
@@ -891,7 +891,7 @@ cases() {
         var d = daysUntil(tr.deadline);
         rows += '<div class="deadline-item '+(d<=14?'deadline-urgent':d<=30?'deadline-soon':'deadline-ok')+'" style="margin-bottom:6px">'
           + '<div><div style="font-size:11px;font-weight:700">'+tr.name+'</div>'
-          + '<div style="font-size:11px;color:var(--text-3)">⚠️ '+(tr.deadlineNote||'截止')+' '+fmtDate(tr.deadline)+'</div></div>'
+          + '<div style="font-size:11px;color:var(--text-3)">🔔 '+(tr.deadlineNote||'提醒')+' '+fmtDate(tr.deadline)+'</div></div>'
           + daysBadge(d) + '</div>';
       }
       if (tr.plannedDate) {
@@ -1031,7 +1031,7 @@ progress() {
       const c = db.cases.find(x => x.id === tr.caseId);
       if (tr.deadline) {
         if (!eventsByDate[tr.deadline]) eventsByDate[tr.deadline] = [];
-        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 截止', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00', bg:'rgba(213,94,0,0.08)' });
+        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 提醒', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00', bg:'rgba(213,94,0,0.08)' });
       }
       if (tr.plannedDate) {
         if (!eventsByDate[tr.plannedDate]) eventsByDate[tr.plannedDate] = [];
@@ -1844,18 +1844,11 @@ function openAddTrack(caseId) {
       <div class="field"><label>承辦人電話</label><input type="text" id="ft-contact-phone" placeholder="分機或手機"></div>
       <div class="field"><label>預估金額（元）</label><input type="number" id="ft-amount" placeholder="0"></div>
     </div>
-    <div style="margin-top:12px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
-      <div style="font-size:11px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期</div>
+    <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
+      <div style="font-size:11px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
       <div class="form-grid">
-        <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>完成項目說明</label><input type="text" id="ft-planned-note" placeholder="如：預計備妥文件"></div>
-      </div>
-    </div>
-    <div style="margin-top:10px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
-      <div style="font-size:11px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期</div>
-      <div class="form-grid">
-        <div class="field"><label>截止日期</label><input type="date" id="ft-deadline" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>截止說明</label><input type="text" id="ft-deadline-note" placeholder="如：勞保局補件截止"></div>
+        <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" placeholder="如：勞保局補件截止"></div>
       </div>
     </div>
     <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note"></div>
@@ -1871,8 +1864,6 @@ function openAddTrack(caseId) {
       status: document.getElementById('ft-status').value,
       deadline: document.getElementById('ft-deadline').value,
       deadlineNote: document.getElementById('ft-deadline-note').value,
-      plannedDate: document.getElementById('ft-planned').value,
-      plannedDateNote: document.getElementById('ft-planned-note').value,
       amount: document.getElementById('ft-amount').value,
       note: document.getElementById('ft-note').value,
       created: new Date().toISOString().slice(0,10)
@@ -1945,18 +1936,11 @@ function openEditTrack(trackId) {
       <div class="field"><label>承辦人電話</label><input type="text" id="ft-contact-phone" value="${tr.contactPhone||''}" placeholder="分機或手機"></div>
       <div class="field"><label>預估金額（元）</label><input type="number" id="ft-amount" value="${tr.amount||''}"></div>
     </div>
-    <div style="margin-top:12px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
-      <div style="font-size:11px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期</div>
+    <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
+      <div style="font-size:11px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
       <div class="form-grid">
-        <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>完成項目說明</label><input type="text" id="ft-planned-note" value="${tr.plannedDateNote||''}"></div>
-      </div>
-    </div>
-    <div style="margin-top:10px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
-      <div style="font-size:11px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期</div>
-      <div class="form-grid">
-        <div class="field"><label>截止日期</label><input type="date" id="ft-deadline" value="${tr.deadline||''}" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>截止說明</label><input type="text" id="ft-deadline-note" value="${tr.deadlineNote||''}"></div>
+        <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" value="${tr.deadline||''}" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" value="${tr.deadlineNote||''}"></div>
       </div>
     </div>
     <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note" value="${tr.note||''}"></div>
@@ -1974,8 +1958,6 @@ function openEditTrack(trackId) {
     tr.amount = document.getElementById('ft-amount').value;
     tr.deadline = document.getElementById('ft-deadline').value;
     tr.deadlineNote = document.getElementById('ft-deadline-note').value;
-    tr.plannedDate = document.getElementById('ft-planned').value;
-    tr.plannedDateNote = document.getElementById('ft-planned-note').value;
     tr.note = document.getElementById('ft-note').value;
     saveData(db);
     return true;
@@ -2067,7 +2049,7 @@ function openFormModal(title, body, onConfirm) {
   document.body.appendChild(overlay);
   window._modalConfirm = onConfirm;
   setTimeout(() => {
-    ['f-accident','f-receive','f-deadline','f-planned','fp-date','fp-next-date','ft-deadline','ft-planned','f-closed-date','ft-closed-date'].forEach(function(id) {
+    ['f-accident','f-receive','f-deadline','f-planned','fp-date','fp-next-date','ft-deadline','f-closed-date','ft-closed-date'].forEach(function(id) {
       var el = document.getElementById(id);
       var hint = document.getElementById('hint-'+id);
       if (el && hint && el.value) hint.textContent = rocHint(id);
@@ -2565,13 +2547,13 @@ function checkAllReminders() {
         if (days < 0) {
           alertItems.push({
             title: '🚨 ' + cName + '｜' + tr.name,
-            subtitle: '截止日已逾期 ' + Math.abs(days) + ' 天（' + fmtDate(tr.deadline) + '）',
+            subtitle: '提醒日已逾期 ' + Math.abs(days) + ' 天（' + fmtDate(tr.deadline) + '）',
             _type: 'overdue'
           });
         } else {
           alertItems.push({
             title: '⚠️ ' + cName + '｜' + tr.name,
-            subtitle: '截止日期還剩 ' + days + ' 天（' + fmtDate(tr.deadline) + '）',
+            subtitle: '提醒日期還剩 ' + days + ' 天（' + fmtDate(tr.deadline) + '）',
             _type: 'deadline'
           });
         }
