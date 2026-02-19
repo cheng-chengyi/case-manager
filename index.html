@@ -1076,13 +1076,13 @@ progress() {
     const prevMonthDays = new Date(y, m, 0).getDate();
     for (let i=startDay-1; i>=0; i--) {
       const d = prevMonthDays - i;
-      cellArr.push('<div style="min-height:70px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:11px;color:var(--text-3)">'+d+'</div></div>');
+      cellArr.push('<div style="min-height:90px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:11px;color:var(--text-3)">'+d+'</div></div>');
     }
     for (let d=1; d<=daysInMonth; d++) {
       const ds = y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
       const evts = eventsByDate[ds] || [];
       const isToday = ds === today;
-      cellArr.push(`<div style="min-height:70px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:${isToday?'rgba(0,114,178,0.06)':'#fff'};${isToday?'border-color:#0072B2':''}">
+      cellArr.push(`<div style="min-height:90px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:${isToday?'rgba(0,114,178,0.06)':'#fff'};${isToday?'border-color:#0072B2':''}">
         <div style="font-size:11px;font-weight:${isToday?'700':'500'};color:${isToday?'#0072B2':'var(--text-2)'};margin-bottom:2px">${d}</div>
         ${evts.slice(0,3).map(e => `<div onclick="navigate('${e.type==='todo'?'todos':'case-detail'}','${e.caseId}')" style="font-size:11px;padding:2px 4px;margin-bottom:1px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid ${e.dot};background:${e.bg||'rgba(0,0,0,0.03)'};color:var(--text)">${e.type==='deadline'?'⚠️ ':e.type==='planned'?'📋 ':e.type==='todo'?'☑️ ':'● '}${e.label}</div>`).join('')}
         ${evts.length>3?`<div style="font-size:11px;color:var(--text-3)">+${evts.length-3}項</div>`:''}
@@ -1092,7 +1092,7 @@ progress() {
     const totalCells = startDay + daysInMonth;
     const remaining = (7 - totalCells % 7) % 7;
     for (let nd=1; nd<=remaining; nd++) {
-      cellArr.push('<div style="min-height:70px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:11px;color:var(--text-3)">'+nd+'</div></div>');
+      cellArr.push('<div style="min-height:90px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:11px;color:var(--text-3)">'+nd+'</div></div>');
     }
     // 產生表格行
     let tableRows = '';
@@ -1767,6 +1767,7 @@ function openEditCase(id) {
 function deleteCase(id) {
   db.cases = db.cases.filter(c => c.id !== id);
   db.tracks = db.tracks.filter(t => t.caseId !== id);
+  db.progress = db.progress.filter(p => p.caseId !== id);
   saveData(db);
   closeModal();
   navigate('cases');
@@ -2131,6 +2132,7 @@ function archiveSelected() {
     if (confirm('檔案已下載。\n\n確定要從系統中刪除以下 ' + ids.length + ' 個個案？\n  ' + names + '\n\n（可隨時從備份檔還原）')) {
       db.cases = db.cases.filter(c => !ids.includes(c.id));
       db.tracks = db.tracks.filter(t => !ids.includes(t.caseId));
+      db.progress = db.progress.filter(p => !ids.includes(p.caseId));
       saveData(db);
       alert('✅ 已刪除 ' + ids.length + ' 個結案個案，資料已歸檔保存。');
       render();
