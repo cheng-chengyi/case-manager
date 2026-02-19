@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T14:46:36.250Z",
+  "_date": "2026-02-19T14:49:48.190Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -140,6 +140,23 @@
       "created": "2026-02-19",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1140930_鄞家府(口腔癌)-2",
+      "caseId": "1140930_鄞家府(口腔癌)",
+      "name": "已提出申訴，但台壽繼續審核，追蹤申訴進度以及評議申請書（複製）",
+      "type": "失能險",
+      "insurer": "台灣人壽",
+      "contact": "王小姐",
+      "contactPhone": "02-81709888#6159",
+      "status": "進行中",
+      "deadline": "",
+      "deadlineNote": "送出評議申請書",
+      "plannedDate": "",
+      "plannedDateNote": "提出評議申請書",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-19"
     }
   ],
   "progress": [
