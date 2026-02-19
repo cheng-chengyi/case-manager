@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T14:44:31.882Z",
+  "_date": "2026-02-19T14:45:12.982Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -52,7 +52,7 @@
       "employer": "",
       "insuredUnit": "",
       "address": "",
-      "insurer": "",
+      "insurer": "全球人壽/台灣產物",
       "accidentDate": "2023-12-09",
       "status": "審核中",
       "receiveDate": "",
