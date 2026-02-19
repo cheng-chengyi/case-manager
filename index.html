@@ -555,6 +555,8 @@ let selectedCase = null;
 let filterType = null;
 let filterStatus = null;
 let searchQuery = '';
+let caseSortBy = null; // 'id','status','deadline','planned'
+let caseSortDir = 'asc';
 let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth(); // 0-based
 let progressView = 'list';
@@ -749,6 +751,19 @@ cases() {
     const q = searchQuery.toLowerCase();
     list = list.filter(c => c.name.includes(q) || c.id.toLowerCase().includes(q) || c.employer.includes(q) || (c.insuredUnit||'').includes(q) || (c.insurer||'').includes(q));
   }
+  // 排序
+  if (caseSortBy) {
+    list = [...list].sort((a, b) => {
+      let va, vb;
+      if (caseSortBy === 'id') { va = a.id; vb = b.id; }
+      else if (caseSortBy === 'status') { va = a.status||''; vb = b.status||''; }
+      else if (caseSortBy === 'deadline') { va = a.deadline||'9999'; vb = b.deadline||'9999'; }
+      else if (caseSortBy === 'planned') { va = a.plannedDate||'9999'; vb = b.plannedDate||'9999'; }
+      if (va < vb) return caseSortDir === 'asc' ? -1 : 1;
+      if (va > vb) return caseSortDir === 'asc' ? 1 : -1;
+      return 0;
+    });
+  }
   const typeFilterGroups = [
     { label:'勞工保險', types:['勞工保險給付','勞保生育給付','勞保傷病給付','勞保失能給付','勞保老年給付','勞保死亡給付'] },
     { label:'職災保險', types:['職災保險給付','職保醫療給付','職保傷病給付','職保失能給付','職保死亡給付'] },
@@ -783,12 +798,12 @@ cases() {
       </div>
       <table>
         <thead><tr>
-          <th>個案編號</th><th>當事人</th><th>個案類型</th>
-          <th>受僱公司/保險公司</th><th>接案狀態</th><th style="color:#D55E00">⚠️ 截止日期</th><th style="color:#0EA5B0">📋 預計完成</th>
-          <th>預估金額</th><th>操作</th>
+          <th style="cursor:pointer" onclick="if(caseSortBy==='id')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='id';caseSortDir='asc';}render()">個案編號 ${caseSortBy==='id'?(caseSortDir==='asc'?'▲':'▼'):''}</th><th>當事人</th><th>個案類型</th>
+          <th>受僱公司/保險公司</th><th style="cursor:pointer" onclick="if(caseSortBy==='status')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='status';caseSortDir='asc';}render()">接案狀態 ${caseSortBy==='status'?(caseSortDir==='asc'?'▲':'▼'):''}</th><th style="color:#D55E00;cursor:pointer" onclick="if(caseSortBy==='deadline')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='deadline';caseSortDir='asc';}render()">⚠️ 截止日期 ${caseSortBy==='deadline'?(caseSortDir==='asc'?'▲':'▼'):''}</th><th style="color:#0EA5B0;cursor:pointer" onclick="if(caseSortBy==='planned')caseSortDir=caseSortDir==='asc'?'desc':'asc';else{caseSortBy='planned';caseSortDir='asc';}render()">📋 預計完成 ${caseSortBy==='planned'?(caseSortDir==='asc'?'▲':'▼'):''}</th>
+          <th>操作</th>
         </tr></thead>
         <tbody>
-        ${list.length === 0 ? `<tr><td colspan="9"><div class="empty"><p>找不到符合的個案</p></div></td></tr>` :
+        ${list.length === 0 ? `<tr><td colspan="8"><div class="empty"><p>找不到符合的個案</p></div></td></tr>` :
           list.map(c => {
             const days = daysUntil(c.deadline);
             const daysP = daysUntil(c.plannedDate);
@@ -801,7 +816,6 @@ cases() {
               <td><span class="badge ${statusColor[c.status]}">${c.status}</span></td>
               <td>${c.deadline ? `<div style="font-size:13px;font-weight:600;color:#D55E00">${fmtDate(c.deadline)}</div><div style="font-size:11px;color:var(--text-3)">${c.deadlineNote}</div>${daysBadge(days)}` : '<span style="color:var(--text-3);font-size:11px">未設定</span>'}</td>
               <td>${c.plannedDate ? `<div style="font-size:13px;font-weight:600;color:#0EA5B0">${fmtDate(c.plannedDate)}</div><div style="font-size:11px;color:var(--text-3)">${c.plannedDateNote}</div>${daysBadge(daysP)}` : '<span style="color:var(--text-3);font-size:11px">未設定</span>'}</td>
-              <td class="amount" style="color:var(--navy);font-weight:600">NT$ ${fmt(c.amount)}</td>
               <td onclick="event.stopPropagation()" style="white-space:nowrap">
                 <button class="btn btn-outline btn-sm" onclick="openEditCase('${c.id}');event.stopPropagation()">編輯</button>
               </td>
