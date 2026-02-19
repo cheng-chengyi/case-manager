@@ -1341,7 +1341,7 @@ todos() {
                   ${t.note?'<div style="font-size:11px;color:var(--text-3);margin-top:4px;white-space:pre-line">'+t.note+'</div>':''}
                   ${(t.subtasks&&t.subtasks.length)?'<div style="margin-top:8px;padding-left:4px">'+t.subtasks.map((s,i)=>'<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:15px;height:15px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+';flex:1">'+s.title+'</span>'+(s.dueDate?'<span style="font-size:11px;color:'+(s.dueDate<now.toISOString().slice(0,10)&&!s.done?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')+'</div>':''}
                   <div style="display:flex;gap:12px;margin-top:6px;font-size:11px;color:var(--text-3);flex-wrap:wrap">
-                    ${t.remind?'<span>⏰ '+fmtDateTime(t.remind)+'</span>':''}
+                    ${t.remind?'<span>⏰ '+fmtDate(t.remind)+'</span>':''}
                     ${t.dueDate?'<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
                     ${t.caseId?'<span>📎 '+t.caseId+'</span>':''}
                   </div>
@@ -2341,7 +2341,7 @@ function openAddTodo() {
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" placeholder="輸入待辦事項..."></div>
       <div class="form-grid">
-        <div class="field"><label>提醒時間</label><input type="datetime-local" id="td-remind"></div>
+        <div class="field"><label>提醒日期</label><input type="date" id="td-remind"></div>
         <div class="field"><label>到期日</label><input type="date" id="td-due"></div>
       </div>
       <div class="field"><label>關聯個案</label>
@@ -2381,7 +2381,7 @@ function openEditTodo(id) {
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" value="${t.title}"></div>
       <div class="form-grid">
-        <div class="field"><label>提醒時間</label><input type="datetime-local" id="td-remind" value="${t.remind||''}"></div>
+        <div class="field"><label>提醒日期</label><input type="date" id="td-remind" value="${t.remind||''}"></div>
         <div class="field"><label>到期日</label><input type="date" id="td-due" value="${t.dueDate||''}"></div>
       </div>
       <div class="field"><label>關聯個案</label>
