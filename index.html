@@ -400,53 +400,10 @@
 // ─── Data Store ────────────────────────────────────────────────
 const STORAGE_KEY = 'case_mgmt_v4';
 
-const defaultCases = [
-  { id:'A001', type:'勞工保險給付', name:'王小明', phone:'0912-345-678',
-    employer:'台灣製造股份有限公司', insurer:'勞動部勞工保險局',  accidentDate:'2025-10-15', status:'審核中',
-    receiveDate:'2025-11-01', deadline:'2026-02-28', deadlineNote:'勞保局補件法定截止',
-    plannedDate:'2026-02-10', plannedDateNote:'預計備齊所有文件送出',
-    amount:350000, note:'需補就醫證明，已向勞保局確認收件號碼 123456789', created:'2025-11-01', updated:'2026-01-10' },
-  { id:'A002', type:'職災補償賠償', name:'李大華', phone:'0923-456-789',
-    employer:'建設工程有限公司', insurer:'勞動部勞工保險局',  accidentDate:'2025-08-20', status:'審核中',
-    receiveDate:'2025-09-05', deadline:'2026-03-15', deadlineNote:'勞動局調解截止',
-    plannedDate:'2026-03-01', plannedDateNote:'預計準備好調解文件',
-    amount:550000, note:'雇主否認職災，已向勞動局申請職災認定', created:'2025-09-05', updated:'2026-01-15' },
-  { id:'A003', type:'商業保險理賠', name:'張美玲', phone:'0934-567-890',
-    employer:'個人（服務業）', insurer:'富邦人壽',  accidentDate:'2025-11-30', status:'待補件',
-    receiveDate:'2025-12-10', deadline:'2026-02-20', deadlineNote:'保險公司補件法定截止',
-    plannedDate:'2026-02-10', plannedDateNote:'預計取得診斷書並補件',
-    amount:180000, note:'保險公司拒賠，要求補診斷書', created:'2025-12-10', updated:'2026-01-20' },
-  { id:'A004', type:'勞資爭議事項', name:'陳建國', phone:'0945-678-901',
-    employer:'科技公司', insurer:'勞動部勞工保險局',  accidentDate:'2025-07-01', status:'民事訴訟',
-    receiveDate:'2025-08-01', deadline:'2026-04-10', deadlineNote:'法院開庭（不可更動）',
-    plannedDate:'2026-03-25', plannedDateNote:'預計備好答辯狀送法院',
-    amount:450000, note:'資遣費爭議，台南地院第二次庭', created:'2025-08-01', updated:'2026-01-18' },
-  { id:'A005', type:'勞工保險給付', name:'林淑芬', phone:'0956-789-012',
-    employer:'百貨零售有限公司', insurer:'勞動部勞工保險局',  accidentDate:'2024-06-15', status:'已給付',
-    receiveDate:'2024-07-01', deadline:'', deadlineNote:'',
-    plannedDate:'', plannedDateNote:'',
-    amount:210000, note:'老年給付已核定，案件結案', created:'2024-07-01', updated:'2025-03-15' },
-];
+const defaultCases = [];
 
 // 追蹤軸：每個案件可有多條並行追蹤軸
-const defaultTracks = [
-  { id:'TR-A001-1', caseId:'A001', name:'勞工保險傷病給付', type:'勞工保險給付', status:'審核中',
-    deadline:'2026-02-28', deadlineNote:'勞保局補件截止', plannedDate:'2026-02-10', plannedDateNote:'預計備齊文件', amount:150000, note:'' },
-  { id:'TR-A001-2', caseId:'A001', name:'職災醫療給付', type:'職災保險給付', status:'審核中',
-    deadline:'', deadlineNote:'', plannedDate:'2026-03-01', plannedDateNote:'預計申請完成', amount:80000, note:'同步申請職災保險' },
-  { id:'TR-A001-3', caseId:'A001', name:'雇主職災補償', type:'職災補償賠償', status:'審核中',
-    deadline:'', deadlineNote:'', plannedDate:'2026-04-01', plannedDateNote:'協商目標', amount:120000, note:'另向雇主求償差額' },
-  { id:'TR-A002-1', caseId:'A002', name:'職災認定申請', type:'職災保險給付', status:'審核中',
-    deadline:'2026-03-15', deadlineNote:'勞動局調解截止', plannedDate:'2026-03-01', plannedDateNote:'準備調解文件', amount:350000, note:'' },
-  { id:'TR-A002-2', caseId:'A002', name:'雇主補償爭議', type:'職災補償賠償', status:'未調解',
-    deadline:'', deadlineNote:'', plannedDate:'2026-04-01', plannedDateNote:'協商期限', amount:200000, note:'調解不成將提訴訟' },
-  { id:'TR-A003-1', caseId:'A003', name:'商業保險理賠', type:'商業保險理賠', status:'待補件',
-    deadline:'2026-02-20', deadlineNote:'保險公司補件截止', plannedDate:'2026-02-10', plannedDateNote:'取得診斷書', amount:180000, note:'' },
-  { id:'TR-A004-1', caseId:'A004', name:'資遣費訴訟', type:'勞資爭議事項', status:'民事訴訟',
-    deadline:'2026-04-10', deadlineNote:'法院開庭', plannedDate:'2026-03-25', plannedDateNote:'備好答辯狀', amount:450000, note:'' },
-  { id:'TR-A005-1', caseId:'A005', name:'老年給付申請', type:'勞工保險給付', status:'已給付',
-    deadline:'', deadlineNote:'', plannedDate:'', plannedDateNote:'', amount:210000, note:'已核定結案' },
-];
+const defaultTracks = [];
 
 
 function loadData() {
