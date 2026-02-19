@@ -1851,6 +1851,13 @@ function openAddTrack(caseId) {
         <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" placeholder="如：勞保局補件截止"></div>
       </div>
     </div>
+    <div style="margin-top:10px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
+      <div style="font-size:11px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期</div>
+      <div class="form-grid">
+        <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" placeholder="如：預計備妥文件"></div>
+      </div>
+    </div>
     <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note"></div>
   `, () => {
     var name = document.getElementById('ft-name').value;
@@ -1864,6 +1871,8 @@ function openAddTrack(caseId) {
       status: document.getElementById('ft-status').value,
       deadline: document.getElementById('ft-deadline').value,
       deadlineNote: document.getElementById('ft-deadline-note').value,
+      plannedDate: document.getElementById('ft-planned').value,
+      plannedDateNote: document.getElementById('ft-planned-note').value,
       amount: document.getElementById('ft-amount').value,
       note: document.getElementById('ft-note').value,
       created: new Date().toISOString().slice(0,10)
@@ -1943,6 +1952,13 @@ function openEditTrack(trackId) {
         <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" value="${tr.deadlineNote||''}"></div>
       </div>
     </div>
+    <div style="margin-top:10px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
+      <div style="font-size:11px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期</div>
+      <div class="form-grid">
+        <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" value="${tr.plannedDateNote||''}"></div>
+      </div>
+    </div>
     <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note" value="${tr.note||''}"></div>
     <div class="divider"></div>
     <button class="btn btn-danger btn-sm" onclick="if(confirm('確定刪除此追蹤軸？'))deleteTrack('${tr.id}')">刪除此追蹤軸</button>
@@ -1958,6 +1974,8 @@ function openEditTrack(trackId) {
     tr.amount = document.getElementById('ft-amount').value;
     tr.deadline = document.getElementById('ft-deadline').value;
     tr.deadlineNote = document.getElementById('ft-deadline-note').value;
+    tr.plannedDate = document.getElementById('ft-planned').value;
+    tr.plannedDateNote = document.getElementById('ft-planned-note').value;
     tr.note = document.getElementById('ft-note').value;
     saveData(db);
     return true;
@@ -2049,7 +2067,7 @@ function openFormModal(title, body, onConfirm) {
   document.body.appendChild(overlay);
   window._modalConfirm = onConfirm;
   setTimeout(() => {
-    ['f-accident','f-receive','f-deadline','f-planned','fp-date','fp-next-date','ft-deadline','f-closed-date','ft-closed-date'].forEach(function(id) {
+    ['f-accident','f-receive','f-deadline','f-planned','fp-date','fp-next-date','ft-deadline','ft-planned','f-closed-date','ft-closed-date'].forEach(function(id) {
       var el = document.getElementById(id);
       var hint = document.getElementById('hint-'+id);
       if (el && hint && el.value) hint.textContent = rocHint(id);
