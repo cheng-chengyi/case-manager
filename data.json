@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:27:02.240Z",
+  "_date": "2026-02-20T07:27:07.567Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -268,6 +268,23 @@
       "contact": "",
       "contactPhone": "",
       "status": "爭議審議",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20"
+    },
+    {
+      "id": "TR-1140419_李紹中(腦傷車禍)-2",
+      "caseId": "1140419_李紹中(腦傷車禍)",
+      "name": "李紹中_勞保失能給付_爭議審議（複製）",
+      "type": "勞保失能給付",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "進行中",
       "deadline": "",
       "deadlineNote": "",
       "plannedDate": "",
