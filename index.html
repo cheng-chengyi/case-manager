@@ -2598,13 +2598,58 @@ function checkAllReminders() {
 
   // 1) 待辦事項提醒
   if (db.todos) {
-    db.todos.filter(t => !t.done && t.remind && !t._notified).forEach(t => {
-      if (new Date(t.remind) <= now) {
+    db.todos.filter(t => !t.done).forEach(t => {
+      // 提醒日期到了
+      if (t.remind && !t._notified && new Date(t.remind) <= now) {
         t._notified = true;
         alertItems.push({
           title: '⏰ ' + t.title,
           subtitle: t.dueDate ? '到期：' + fmtDate(t.dueDate) : '待辦事項提醒',
           _type: 'overdue'
+        });
+      }
+      // 到期日 14 天內或已逾期
+      if (t.dueDate) {
+        const daysTodo = Math.ceil((new Date(t.dueDate) - now) / 86400000);
+        const keyTodo = 'todo-due-' + t.id + '-' + today;
+        if (daysTodo <= 14 && !_reminderShownToday[keyTodo]) {
+          _reminderShownToday[keyTodo] = true;
+          if (daysTodo < 0) {
+            alertItems.push({
+              title: '🚨 待辦已逾期：' + t.title,
+              subtitle: '已逾期 ' + Math.abs(daysTodo) + ' 天（' + fmtDate(t.dueDate) + '）',
+              _type: 'overdue'
+            });
+          } else {
+            alertItems.push({
+              title: '📋 待辦即將到期：' + t.title,
+              subtitle: '還剩 ' + daysTodo + ' 天（' + fmtDate(t.dueDate) + '）',
+              _type: 'deadline'
+            });
+          }
+        }
+      }
+      // 子細項到期日 7 天內
+      if (t.subtasks) {
+        t.subtasks.filter(s => !s.done && s.dueDate).forEach((s,i) => {
+          const daysSub = Math.ceil((new Date(s.dueDate) - now) / 86400000);
+          const keySub = 'todo-sub-' + t.id + '-' + i + '-' + today;
+          if (daysSub <= 7 && !_reminderShownToday[keySub]) {
+            _reminderShownToday[keySub] = true;
+            if (daysSub < 0) {
+              alertItems.push({
+                title: '🚨 細項已逾期：' + s.title,
+                subtitle: t.title + '・已逾期 ' + Math.abs(daysSub) + ' 天',
+                _type: 'overdue'
+              });
+            } else {
+              alertItems.push({
+                title: '📋 細項即將到期：' + s.title,
+                subtitle: t.title + '・還剩 ' + daysSub + ' 天',
+                _type: 'deadline'
+              });
+            }
+          }
         });
       }
     });
