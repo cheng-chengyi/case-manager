@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:12:55.131Z",
+  "_date": "2026-02-20T07:14:47.876Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -218,6 +218,23 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1131017_賴思伃(肺癌)-1",
+      "caseId": "1131017_賴思伃(肺癌)",
+      "name": "賴思伃 評議中心_遠雄人壽",
+      "type": "醫療險",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20"
     }
   ],
   "progress": [
@@ -264,6 +281,18 @@
       "date": "2026-02-20",
       "stage": "審核中",
       "desc": "建立追蹤軸：張文浩_災保傷病給付",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0020",
+      "caseId": "1131017_賴思伃(肺癌)",
+      "trackId": "TR-1131017_賴思伃(肺癌)-1",
+      "date": "2026-02-20",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：賴思伃 評議中心_遠雄人壽",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
