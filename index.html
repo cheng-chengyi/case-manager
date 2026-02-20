@@ -954,11 +954,10 @@ cases() {
 
     ${(function(){
       var caseTodos = (db.todos||[]).filter(function(t){ return t.caseId === c.id || (!t.caseId && (t.title||'').indexOf(c.name) >= 0); });
-      if (caseTodos.length === 0) return '';
       var nowStr = new Date().toISOString().slice(0,10);
       var pendingTodos = caseTodos.filter(function(t){ return !t.done; });
       var doneTodos = caseTodos.filter(function(t){ return t.done; });
-      return '<div class="card" style="margin-top:16px"><div class="card-head">相關待辦事項 <span class="badge badge-yellow">'+pendingTodos.length+' 項未完成</span></div>'
+      return '<div class="card" style="margin-top:16px"><div class="card-head" style="display:flex;align-items:center;justify-content:space-between">相關待辦事項 <span class="badge badge-yellow">'+pendingTodos.length+' 項未完成</span><button class="btn btn-outline btn-sm" style="font-size:11px;border-color:var(--gold);color:var(--gold)" onclick="openAddTodo(\''+c.id+'\')">＋ 新增待辦</button></div>'
         + '<div class="card-body" style="padding:0">'
         + (pendingTodos.length === 0 ? '<div style="padding:16px;text-align:center;color:var(--text-3);font-size:13px">所有待辦已完成 🎉</div>' :
           pendingTodos.sort(function(a,b){ return (a.dueDate||'9999').localeCompare(b.dueDate||'9999'); }).map(function(t){
@@ -2398,7 +2397,7 @@ function collectSubtasks() {
   return result;
 }
 
-function openAddTodo() {
+function openAddTodo(prefillCaseId) {
   openFormModal('新增待辦事項', `
     <div style="display:flex;flex-direction:column;gap:14px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" placeholder="輸入待辦事項..."></div>
@@ -2407,7 +2406,7 @@ function openAddTodo() {
         <div class="field"><label>到期日</label><input type="date" id="td-due"></div>
       </div>
       <div class="field"><label>關聯個案</label>
-        <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'">'+c.id+' '+c.name+'</option>').join('')}</select>
+        <select id="td-case"><option value="">無</option>${db.cases.map(c=>'<option value="'+c.id+'"'+(c.id===prefillCaseId?' selected':'')+'>'+c.id+' '+c.name+'</option>').join('')}</select>
       </div>
       <div style="padding:12px 14px;background:rgba(0,114,178,0.04);border:1px solid rgba(0,114,178,0.15);border-radius:10px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
