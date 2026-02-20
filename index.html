@@ -1891,7 +1891,7 @@ function openAddTrack(caseId) {
           </optgroup>
         </select>
       </div>
-      <div class="field"><label>初始狀態</label>
+      <div class="field"><label>目前狀態</label>
         <select id="ft-status">
           ${['未申請','待補件','審核中','已給付','已拒賠','申訴中','評議中','未調解','已調解完成','調解不成立','偵查庭','刑事訴訟','民事訴訟','爭議審議','訴願中','撤案'].map(s=>`<option ${s==='未申請'?'selected':''}>${s}</option>`).join('')}
         </select>
