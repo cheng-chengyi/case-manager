@@ -1183,19 +1183,19 @@ deadlines() {
   db.tracks.filter(t => activeCaseIds.has(t.caseId) && t.status !== '已給付' && t.status !== '已調解完成' && t.status !== '撤案').forEach(t => {
     const c = db.cases.find(x => x.id === t.caseId);
     if (!c) return;
-    if (t.deadline) hardItems.push({ id:t.id, caseId:t.caseId, name:c.name, type:t.type, deadline:t.deadline, deadlineNote:t.deadlineNote||t.name, days:daysUntil(t.deadline), trackName:t.name });
-    if (t.plannedDate) plannedItems.push({ id:t.id, caseId:t.caseId, name:c.name, type:t.type, plannedDate:t.plannedDate, plannedDateNote:t.plannedDateNote||t.name, days:daysUntil(t.plannedDate), trackName:t.name });
+    if (t.deadline) hardItems.push({ id:t.id, caseId:t.caseId, name:c.name, type:t.type, deadline:t.deadline, deadlineNote:t.deadlineNote||t.name, days:daysUntil(t.deadline), trackName:t.name, done:!!t.deadlineDone, doneDate:t.deadlineDoneDate||'' });
+    if (t.plannedDate) plannedItems.push({ id:t.id, caseId:t.caseId, name:c.name, type:t.type, plannedDate:t.plannedDate, plannedDateNote:t.plannedDateNote||t.name, days:daysUntil(t.plannedDate), trackName:t.name, done:!!t.plannedDone, doneDate:t.plannedDoneDate||'' });
   });
   // 個案層級（無追蹤軸時的 fallback）
   activeCases.filter(c => c.deadline && !db.tracks.some(t=>t.caseId===c.id&&t.deadline)).forEach(c => {
-    hardItems.push({ id:c.id, caseId:c.id, name:c.name, type:c.type, deadline:c.deadline, deadlineNote:c.deadlineNote||'', days:daysUntil(c.deadline), trackName:null });
+    hardItems.push({ id:c.id, caseId:c.id, name:c.name, type:c.type, deadline:c.deadline, deadlineNote:c.deadlineNote||'', days:daysUntil(c.deadline), trackName:null, done:!!c.deadlineDone, doneDate:c.deadlineDoneDate||'' });
   });
   activeCases.filter(c => c.plannedDate && !db.tracks.some(t=>t.caseId===c.id&&t.plannedDate)).forEach(c => {
-    plannedItems.push({ id:c.id, caseId:c.id, name:c.name, type:c.type, plannedDate:c.plannedDate, plannedDateNote:c.plannedDateNote||'', days:daysUntil(c.plannedDate), trackName:null });
+    plannedItems.push({ id:c.id, caseId:c.id, name:c.name, type:c.type, plannedDate:c.plannedDate, plannedDateNote:c.plannedDateNote||'', days:daysUntil(c.plannedDate), trackName:null, done:!!c.plannedDone, doneDate:c.plannedDoneDate||'' });
   });
 
-  hardItems.sort((a,b) => a.days - b.days);
-  plannedItems.sort((a,b) => a.days - b.days);
+  hardItems.sort((a,b) => (a.done?1:0) - (b.done?1:0) || a.days - b.days);
+  plannedItems.sort((a,b) => (a.done?1:0) - (b.done?1:0) || a.days - b.days);
 
   // 待辦事項的到期日也加入
   const todoItems = [];
@@ -1211,32 +1211,36 @@ deadlines() {
   todoItems.sort((a,b) => a.days - b.days);
 
   function hardCard(item) {
-    const cls = item.days < 0 ? 'deadline-urgent' : item.days <= 14 ? 'deadline-urgent' : item.days <= 30 ? 'deadline-soon' : 'deadline-ok';
-    const accent = item.days < 0 ? '#5C1A1A' : item.days <= 14 ? '#D55E00' : item.days <= 30 ? '#b7791f' : '#0072B2';
-    return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px">
-      <input type="checkbox" onclick="event.stopPropagation();markDeadlineDone('${item.id}','deadline')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#0072B2;flex-shrink:0" title="標記完成">
+    const done = item.done;
+    const cls = done ? 'deadline-ok' : (item.days < 0 ? 'deadline-urgent' : item.days <= 14 ? 'deadline-urgent' : item.days <= 30 ? 'deadline-soon' : 'deadline-ok');
+    const accent = done ? '#56a65c' : (item.days < 0 ? '#5C1A1A' : item.days <= 14 ? '#D55E00' : item.days <= 30 ? '#b7791f' : '#0072B2');
+    return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px;${done?'opacity:0.6':''}">
+      <input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation();markDeadlineDone('${item.id}','deadline')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#56a65c;flex-shrink:0" title="${done?'取消完成':'標記完成'}">
       <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('case-detail','${item.caseId}')">
-        <div style="font-size:13px;font-weight:700">${item.name} <span style="color:var(--text-3);font-weight:400;font-size:11px">${item.caseId}</span></div>
+        <div style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${item.name} <span style="color:var(--text-3);font-weight:400;font-size:11px">${item.caseId}</span></div>
         ${item.trackName ? `<div style="font-size:11px;color:var(--text-3)">追蹤軸：${item.trackName}</div>` : ''}
         <div style="font-size:11px;color:var(--text-3);margin-top:1px">${item.deadlineNote} · ${fmtDate(item.deadline)}</div>
         <span class="badge ${typeColor[item.type]||'badge-gray'}" style="font-size:11px;margin-top:4px">${item.type}</span>
+        ${done ? '<span style="font-size:11px;color:#56a65c;margin-left:8px">✅ 完成於 '+fmtDate(item.doneDate)+'</span>' : ''}
       </div>
-      <div style="flex-shrink:0">${daysBadge(item.days)}</div>
+      <div style="flex-shrink:0">${done ? '<span class="badge badge-green" style="font-size:11px">已完成</span>' : daysBadge(item.days)}</div>
     </div>`;
   }
 
   function plannedCard(item) {
-    const cls = item.days <= 7 ? 'deadline-soon' : 'deadline-ok';
-    const accent = item.days <= 7 ? '#b7791f' : '#0EA5B0';
-    return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px">
-      <input type="checkbox" onclick="event.stopPropagation();markDeadlineDone('${item.id}','planned')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#0072B2;flex-shrink:0" title="標記完成">
+    const done = item.done;
+    const cls = done ? 'deadline-ok' : (item.days <= 7 ? 'deadline-soon' : 'deadline-ok');
+    const accent = done ? '#56a65c' : (item.days <= 7 ? '#b7791f' : '#0EA5B0');
+    return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px;${done?'opacity:0.6':''}">
+      <input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation();markDeadlineDone('${item.id}','planned')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#56a65c;flex-shrink:0" title="${done?'取消完成':'標記完成'}">
       <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('case-detail','${item.caseId}')">
-        <div style="font-size:13px;font-weight:700">${item.name} <span style="color:var(--text-3);font-weight:400;font-size:11px">${item.caseId}</span></div>
+        <div style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${item.name} <span style="color:var(--text-3);font-weight:400;font-size:11px">${item.caseId}</span></div>
         ${item.trackName ? `<div style="font-size:11px;color:var(--text-3)">追蹤軸：${item.trackName}</div>` : ''}
         <div style="font-size:11px;color:var(--text-3);margin-top:1px">${item.plannedDateNote} · ${fmtDate(item.plannedDate)}</div>
         <span class="badge ${typeColor[item.type]||'badge-gray'}" style="font-size:11px;margin-top:4px">${item.type}</span>
+        ${done ? '<span style="font-size:11px;color:#56a65c;margin-left:8px">✅ 完成於 '+fmtDate(item.doneDate)+'</span>' : ''}
       </div>
-      <div style="flex-shrink:0">${daysBadge(item.days)}</div>
+      <div style="flex-shrink:0">${done ? '<span class="badge badge-green" style="font-size:11px">已完成</span>' : daysBadge(item.days)}</div>
     </div>`;
   }
 
@@ -2056,18 +2060,22 @@ function markDeadlineDone(id, type) {
   var tr = db.tracks.find(function(t){ return t.id === id; });
   if (tr) {
     if (type === 'deadline') {
-      tr.deadlineDoneDate = new Date().toISOString().slice(0,10);
-      tr.deadline = '';
+      tr.deadlineDone = !tr.deadlineDone;
+      tr.deadlineDoneDate = tr.deadlineDone ? new Date().toISOString().slice(0,10) : '';
     } else if (type === 'planned') {
-      tr.plannedDoneDate = new Date().toISOString().slice(0,10);
-      tr.plannedDate = '';
+      tr.plannedDone = !tr.plannedDone;
+      tr.plannedDoneDate = tr.plannedDone ? new Date().toISOString().slice(0,10) : '';
     }
   } else {
-    // fallback: 個案層級
     var c = db.cases.find(function(x){ return x.id === id; });
     if (c) {
-      if (type === 'deadline') { c.deadlineDoneDate = new Date().toISOString().slice(0,10); c.deadline = ''; }
-      else if (type === 'planned') { c.plannedDoneDate = new Date().toISOString().slice(0,10); c.plannedDate = ''; }
+      if (type === 'deadline') {
+        c.deadlineDone = !c.deadlineDone;
+        c.deadlineDoneDate = c.deadlineDone ? new Date().toISOString().slice(0,10) : '';
+      } else if (type === 'planned') {
+        c.plannedDone = !c.plannedDone;
+        c.plannedDoneDate = c.plannedDone ? new Date().toISOString().slice(0,10) : '';
+      }
     }
   }
   saveData(db);
