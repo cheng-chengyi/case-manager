@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T00:08:50.373Z",
+  "_date": "2026-02-20T05:44:04.807Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -64,6 +64,27 @@
       "note": "",
       "created": "2026-02-19",
       "updated": "2026-02-19"
+    },
+    {
+      "id": "1140731_張文浩(職災墜落)",
+      "type": "職災補償賠償",
+      "name": "張文浩",
+      "phone": "",
+      "employer": "自然人雇主",
+      "insuredUnit": "七股區漁會",
+      "address": "",
+      "insurer": "勞保局",
+      "accidentDate": "2025-07-31",
+      "status": "未申請",
+      "receiveDate": "",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
     }
   ],
   "tracks": [
