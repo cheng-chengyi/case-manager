@@ -1213,8 +1213,9 @@ deadlines() {
   function hardCard(item) {
     const cls = item.days < 0 ? 'deadline-urgent' : item.days <= 14 ? 'deadline-urgent' : item.days <= 30 ? 'deadline-soon' : 'deadline-ok';
     const accent = item.days < 0 ? '#5C1A1A' : item.days <= 14 ? '#D55E00' : item.days <= 30 ? '#b7791f' : '#0072B2';
-    return `<div onclick="navigate('case-detail','${item.caseId}')" class="deadline-item ${cls}" style="margin-bottom:8px;cursor:pointer;border-left:3px solid ${accent}" onmouseenter="this.style.opacity='0.85'" onmouseleave="this.style.opacity='1'">
-      <div style="flex:1;min-width:0">
+    return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px">
+      <input type="checkbox" onclick="event.stopPropagation();markDeadlineDone('${item.id}','deadline')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#0072B2;flex-shrink:0" title="標記完成">
+      <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('case-detail','${item.caseId}')">
         <div style="font-size:13px;font-weight:700">${item.name} <span style="color:var(--text-3);font-weight:400;font-size:11px">${item.caseId}</span></div>
         ${item.trackName ? `<div style="font-size:11px;color:var(--text-3)">追蹤軸：${item.trackName}</div>` : ''}
         <div style="font-size:11px;color:var(--text-3);margin-top:1px">${item.deadlineNote} · ${fmtDate(item.deadline)}</div>
@@ -1227,8 +1228,9 @@ deadlines() {
   function plannedCard(item) {
     const cls = item.days <= 7 ? 'deadline-soon' : 'deadline-ok';
     const accent = item.days <= 7 ? '#b7791f' : '#0EA5B0';
-    return `<div onclick="navigate('case-detail','${item.caseId}')" class="deadline-item ${cls}" style="margin-bottom:8px;cursor:pointer;border-left:3px solid ${accent}" onmouseenter="this.style.opacity='0.85'" onmouseleave="this.style.opacity='1'">
-      <div style="flex:1;min-width:0">
+    return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px">
+      <input type="checkbox" onclick="event.stopPropagation();markDeadlineDone('${item.id}','planned')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#0072B2;flex-shrink:0" title="標記完成">
+      <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('case-detail','${item.caseId}')">
         <div style="font-size:13px;font-weight:700">${item.name} <span style="color:var(--text-3);font-weight:400;font-size:11px">${item.caseId}</span></div>
         ${item.trackName ? `<div style="font-size:11px;color:var(--text-3)">追蹤軸：${item.trackName}</div>` : ''}
         <div style="font-size:11px;color:var(--text-3);margin-top:1px">${item.plannedDateNote} · ${fmtDate(item.plannedDate)}</div>
@@ -1241,8 +1243,9 @@ deadlines() {
   function todoCard(item) {
     const cls = item.days < 0 ? 'deadline-urgent' : item.days <= 7 ? 'deadline-soon' : 'deadline-ok';
     const accent = item.days < 0 ? '#D55E00' : item.days <= 7 ? '#b7791f' : '#0072B2';
-    return `<div onclick="navigate('todos')" class="deadline-item ${cls}" style="margin-bottom:8px;cursor:pointer;border-left:3px solid ${accent}" onmouseenter="this.style.opacity='0.85'" onmouseleave="this.style.opacity='1'">
-      <div style="flex:1;min-width:0">
+    return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px">
+      <input type="checkbox" onclick="event.stopPropagation();toggleTodo('${item.id}')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#0072B2;flex-shrink:0" title="標記完成">
+      <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('todos')">
         <div style="font-size:13px;font-weight:700">☐ ${item.name}</div>
         ${item.caseId ? '<div style="font-size:11px;color:var(--text-3)">📎 '+item.caseId+'</div>' : ''}
         <div style="font-size:11px;color:var(--text-3);margin-top:1px">${fmtDate(item.deadline)}</div>
@@ -2046,6 +2049,29 @@ function deleteTrack(trackId) {
   db.progress = db.progress.filter(function(p){ return p.trackId !== trackId; });
   saveData(db);
   closeModal();
+}
+
+function markDeadlineDone(id, type) {
+  // 先找追蹤軸
+  var tr = db.tracks.find(function(t){ return t.id === id; });
+  if (tr) {
+    if (type === 'deadline') {
+      tr.deadlineDoneDate = new Date().toISOString().slice(0,10);
+      tr.deadline = '';
+    } else if (type === 'planned') {
+      tr.plannedDoneDate = new Date().toISOString().slice(0,10);
+      tr.plannedDate = '';
+    }
+  } else {
+    // fallback: 個案層級
+    var c = db.cases.find(function(x){ return x.id === id; });
+    if (c) {
+      if (type === 'deadline') { c.deadlineDoneDate = new Date().toISOString().slice(0,10); c.deadline = ''; }
+      else if (type === 'planned') { c.plannedDoneDate = new Date().toISOString().slice(0,10); c.plannedDate = ''; }
+    }
+  }
+  saveData(db);
+  render();
 }
 
 function openAddProgress(caseIdDefault, trackIdDefault) {
