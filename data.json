@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:40:16.532Z",
+  "_date": "2026-02-20T07:46:44.857Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -164,6 +164,27 @@
       "deadline": "2026-02-12",
       "deadlineNote": "",
       "plannedDate": "2026-03-12",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1141208_林婕愉(小腦中風)",
+      "type": "勞保失能給付",
+      "name": "林婕愉",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "勞保局",
+      "accidentDate": "2024-01-08",
+      "status": "爭議審議",
+      "receiveDate": "2026-02-20",
+      "deadline": "2026-04-30",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-31",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
