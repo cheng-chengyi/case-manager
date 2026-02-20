@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:28:15.172Z",
+  "_date": "2026-02-20T07:31:43.862Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -120,6 +120,27 @@
       "status": "審核中",
       "receiveDate": "2026-02-20",
       "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1130403_楊泰祥(巴金森氏症)",
+      "type": "勞保失能給付",
+      "name": "楊泰祥",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "勞保局",
+      "accidentDate": "2025-05-21",
+      "status": "爭議審議",
+      "receiveDate": "2026-02-20",
+      "deadline": "2026-04-30",
       "deadlineNote": "",
       "plannedDate": "",
       "plannedDateNote": "",
