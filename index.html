@@ -1194,8 +1194,14 @@ deadlines() {
     plannedItems.push({ id:c.id, caseId:c.id, name:c.name, type:c.type, plannedDate:c.plannedDate, plannedDateNote:c.plannedDateNote||'', days:daysUntil(c.plannedDate), trackName:null, done:!!c.plannedDone, doneDate:c.plannedDoneDate||'' });
   });
 
-  hardItems.sort((a,b) => (a.done?1:0) - (b.done?1:0) || a.days - b.days);
-  plannedItems.sort((a,b) => (a.done?1:0) - (b.done?1:0) || a.days - b.days);
+  hardItems.sort((a,b) => a.days - b.days);
+  plannedItems.sort((a,b) => a.days - b.days);
+
+  // 分離已完成和未完成
+  const hardDone = hardItems.filter(i => i.done);
+  const hardPending = hardItems.filter(i => !i.done);
+  const plannedDone = plannedItems.filter(i => i.done);
+  const plannedPending = plannedItems.filter(i => !i.done);
 
   // 待辦事項的到期日也加入
   const todoItems = [];
@@ -1263,14 +1269,14 @@ deadlines() {
   const tSoon = todoItems.filter(i => i.days > 7 && i.days <= 30);
   const tLater = todoItems.filter(i => i.days > 30);
 
-  const overdue = hardItems.filter(i => i.days < 0);
-  const urgent  = hardItems.filter(i => i.days >= 0 && i.days <= 14);
-  const soon    = hardItems.filter(i => i.days > 14 && i.days <= 30);
-  const later   = hardItems.filter(i => i.days > 30);
+  const overdue = hardPending.filter(i => i.days < 0);
+  const urgent  = hardPending.filter(i => i.days >= 0 && i.days <= 14);
+  const soon    = hardPending.filter(i => i.days > 14 && i.days <= 30);
+  const later   = hardPending.filter(i => i.days > 30);
 
-  const p7    = plannedItems.filter(i => i.days <= 7);
-  const p30   = plannedItems.filter(i => i.days > 7 && i.days <= 30);
-  const pLater= plannedItems.filter(i => i.days > 30);
+  const p7    = plannedPending.filter(i => i.days <= 7);
+  const p30   = plannedPending.filter(i => i.days > 7 && i.days <= 30);
+  const pLater= plannedPending.filter(i => i.days > 30);
 
   function section(label, color, bg, items, cardFn, emptyMsg) {
     return `<div style="margin-bottom:12px">
@@ -1282,7 +1288,7 @@ deadlines() {
   return `
   <div class="topbar">
     <div class="topbar-title">期限管理</div>
-    <div class="topbar-actions" style="font-size:11px;color:var(--text-3)">共 ${hardItems.length + plannedItems.length + todoItems.length} 筆期限</div>
+    <div class="topbar-actions" style="font-size:11px;color:var(--text-3)">共 ${hardPending.length + plannedPending.length + todoItems.length} 筆期限</div>
   </div>
   <div class="content">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
@@ -1294,7 +1300,7 @@ deadlines() {
             <div style="font-size:13px;font-weight:700;color:#0EA5B0">預計完成日期</div>
             <div style="font-size:11px;color:var(--text-3)">內部規劃目標・預計備件完成日</div>
           </div>
-          <span style="margin-left:auto;font-size:13px;font-weight:700;color:#0EA5B0">${plannedItems.length} 筆</span>
+          <span style="margin-left:auto;font-size:13px;font-weight:700;color:#0EA5B0">${plannedPending.length} 筆</span>
         </div>
         ${section('⏰ 7天內（即將到期）', '#0EA5B0', 'rgba(14,165,176,0.07)', p7, plannedCard, '無')}
         ${section('📅 8–30天', '#0072B2', 'rgba(0,114,178,0.07)', p30, plannedCard, '無')}
@@ -1308,7 +1314,7 @@ deadlines() {
             <div style="font-size:13px;font-weight:700;color:#D55E00">完成截止日期</div>
             <div style="font-size:11px;color:var(--text-3)">法定期限・法院期日・機關要求截止</div>
           </div>
-          <span style="margin-left:auto;font-size:13px;font-weight:700;color:#D55E00">${hardItems.filter(i=>i.days>=0).length} 筆</span>
+          <span style="margin-left:auto;font-size:13px;font-weight:700;color:#D55E00">${hardPending.filter(i=>i.days>=0).length} 筆</span>
         </div>
         ${overdue.length ? section('🚫 已逾期', '#5C1A1A', 'rgba(92,26,26,0.08)', overdue, hardCard, '') : ''}
         ${section('🔔 14天內（緊急）', '#D55E00', 'rgba(213,94,0,0.07)', urgent, hardCard, '無緊急截止')}
@@ -1339,6 +1345,23 @@ deadlines() {
         </div>
       </div>`}
     </div>
+
+    ${(hardDone.length + plannedDone.length) > 0 ? `
+    <div style="margin-top:24px">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(86,166,92,0.08);border-radius:10px;border:1px solid rgba(86,166,92,0.25);cursor:pointer" onclick="var el=document.getElementById('done-section');el.style.display=el.style.display==='none'?'block':'none';this.querySelector('.toggle-arrow').textContent=el.style.display==='none'?'▶':'▼'">
+        <span style="font-size:20px">✅</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#56a65c">已完成</div>
+          <div style="font-size:11px;color:var(--text-3)">點擊展開/收合</div>
+        </div>
+        <span style="margin-left:auto;font-size:13px;font-weight:700;color:#56a65c">${hardDone.length + plannedDone.length} 筆</span>
+        <span class="toggle-arrow" style="font-size:11px;color:var(--text-3)">▶</span>
+      </div>
+      <div id="done-section" style="display:none;margin-top:12px">
+        ${hardDone.length ? '<div style="font-size:11px;font-weight:700;color:#56a65c;margin-bottom:6px;padding:4px 10px;background:rgba(86,166,92,0.06);border-radius:6px">⚠️ 完成截止日期</div>' + hardDone.map(i => hardCard(i)).join('') : ''}
+        ${plannedDone.length ? '<div style="font-size:11px;font-weight:700;color:#56a65c;margin-bottom:6px;margin-top:12px;padding:4px 10px;background:rgba(86,166,92,0.06);border-radius:6px">📋 預計完成日期</div>' + plannedDone.map(i => plannedCard(i)).join('') : ''}
+      </div>
+    </div>` : ''}
   </div>`;
 },
 
