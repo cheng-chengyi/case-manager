@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T06:03:52.147Z",
+  "_date": "2026-02-20T06:05:23.296Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -305,7 +305,13 @@
       "remind": "2026-03-06",
       "caseId": "",
       "note": "",
-      "subtasks": [],
+      "subtasks": [
+        {
+          "title": "佳里奇美醫院_災保失能診斷書",
+          "dueDate": "2026-03-06",
+          "done": false
+        }
+      ],
       "done": false,
       "doneDate": null,
       "created": "2026-02-20"
