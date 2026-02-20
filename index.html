@@ -896,34 +896,63 @@ cases() {
     </div>
   </div>
   <div class="content">
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-head">
+        當事人基本資料
+        <span style="font-size:11px;color:var(--text-3);font-weight:400">共 ${tracks.length} 條追蹤軸・總預估 NT$ ${fmt(totalAmount)}</span>
+      </div>
+      <div class="card-body">
+        <div class="info-grid">
+          <div class="info-item"><label>姓名</label><value>${c.name}</value></div>
+          <div class="info-item"><label>連絡電話</label><value>${c.phone}</value></div>
+          <div class="info-item"><label>地址</label><value>${c.address||'—'}</value></div>
+          <div class="info-item"><label>受僱公司</label><value>${c.employer}</value></div>
+          <div class="info-item"><label>投保單位</label><value>${c.insuredUnit||c.employer||'—'}</value></div>
+          <div class="info-item"><label>保險公司/主管機關</label><value>${c.insurer||'—'}</value></div>
+          <div class="info-item"><label>事故/起始日</label><value>${fmtDate(c.accidentDate)}</value></div>
+          <div class="info-item"><label>受理日期</label><value>${fmtDate(c.receiveDate)}</value></div>
+        </div>
+        ${c.note ? '<div class="divider"></div><div style="font-size:11px;color:var(--text-2)">'+c.note+'</div>' : ''}
+      </div>
+    </div>
+
     <div style="display:grid;grid-template-columns:1fr 300px;gap:20px">
       <div>
-        <div class="card" style="margin-bottom:16px">
-          <div class="card-head">
-            當事人基本資料
-            <span style="font-size:11px;color:var(--text-3);font-weight:400">共 ${tracks.length} 條追蹤軸・總預估 NT$ ${fmt(totalAmount)}</span>
-          </div>
-          <div class="card-body">
-            <div class="info-grid">
-              <div class="info-item"><label>姓名</label><value>${c.name}</value></div>
-              <div class="info-item"><label>連絡電話</label><value>${c.phone}</value></div>
-              <div class="info-item"><label>地址</label><value>${c.address||'—'}</value></div>
-              <div class="info-item"><label>受僱公司</label><value>${c.employer}</value></div>
-              <div class="info-item"><label>投保單位</label><value>${c.insuredUnit||c.employer||'—'}</value></div>
-              <div class="info-item"><label>保險公司/主管機關</label><value>${c.insurer||'—'}</value></div>
-              <div class="info-item"><label>事故/起始日</label><value>${fmtDate(c.accidentDate)}</value></div>
-              <div class="info-item"><label>受理日期</label><value>${fmtDate(c.receiveDate)}</value></div>
-            </div>
-            ${c.note ? '<div class="divider"></div><div style="font-size:11px;color:var(--text-2)">'+c.note+'</div>' : ''}
+        <div class="card">
+          <div class="card-head">追蹤軸總覽</div>
+          <div class="card-body" style="padding:0">
+            ${tracks.length === 0
+              ? '<div style="padding:30px;text-align:center;color:var(--text-3);font-size:13px"><p>尚無追蹤軸</p><button class="btn btn-gold" style="margin-top:12px" onclick="openAddTrack(\''+c.id+'\')">＋ 新增第一條追蹤軸</button></div>'
+              : tracks.map(function(tr,i){
+                var col2 = trackColors[i%trackColors.length];
+                var bg2 = trackBgColors[i%trackBgColors.length];
+                var days = daysUntil(tr.deadline);
+                var daysP = daysUntil(tr.plannedDate);
+                var deadlineInfo = tr.deadline ? '<span style="font-size:11px;color:#D55E00">🔔 '+fmtDate(tr.deadline)+' '+daysBadge(days)+'</span>' : '';
+                var plannedInfo = tr.plannedDate ? '<span style="font-size:11px;color:#0EA5B0">📋 '+fmtDate(tr.plannedDate)+' '+daysBadge(daysP)+'</span>' : '';
+                var contactInfo = tr.contact ? '<span style="font-size:11px;color:var(--text-3)">👤 '+tr.contact+(tr.contactPhone?' ☎ '+tr.contactPhone:'')+'</span>' : '';
+                return '<div id="track-'+tr.id+'" style="padding:14px 18px;border-bottom:1px solid var(--border);border-left:4px solid '+col2+'">'
+                  + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
+                  + '<div style="width:8px;height:8px;border-radius:50%;background:'+col2+';flex-shrink:0"></div>'
+                  + '<span style="font-size:14px;font-weight:700">'+tr.name+'</span>'
+                  + '<span class="badge '+(typeColor[tr.type]||'badge-gray')+'" style="font-size:11px">'+tr.type+'</span>'
+                  + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'" style="font-size:11px">'+tr.status+'</span>'
+                  + '<span style="font-size:13px;font-weight:600;color:'+col2+';margin-left:auto" class="amount">NT$ '+fmt(tr.amount)+'</span>'
+                  + '</div>'
+                  + ((deadlineInfo||plannedInfo||contactInfo) ? '<div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap">'+deadlineInfo+plannedInfo+contactInfo+'</div>' : '')
+                  + (tr.note ? '<div style="font-size:11px;color:var(--text-3);margin-top:4px">'+tr.note+'</div>' : '')
+                  + '<div style="display:flex;gap:6px;margin-top:8px">'
+                  + '<button class="btn btn-outline btn-sm" style="font-size:11px;border-color:'+col2+';color:'+col2+'" onclick="_trackAction(this)" data-action="addProgress" data-case="'+c.id+'" data-track="'+tr.id+'">＋ 新增進度</button>'
+                  + '<button class="btn btn-outline btn-sm" style="font-size:11px" onclick="_trackAction(this)" data-action="editTrack" data-track="'+tr.id+'">✏️ 編輯</button>'
+                  + '<button class="btn btn-outline btn-sm" style="font-size:11px" onclick="_trackAction(this)" data-action="copyTrack" data-track="'+tr.id+'">📋 複製</button>'
+                  + '<button class="btn btn-outline btn-sm" style="font-size:11px;color:#D55E00" onclick="if(confirm(\'確定刪除追蹤軸「'+tr.name.replace(/'/g,"\\\\'")+'」？\'))deleteTrack(\''+tr.id+'\')">🗑 刪除</button>'
+                  + '</div></div>';
+              }).join('')
+            }
           </div>
         </div>
-        ${tracksHtml}
       </div>
       <div>
-        <div class="card" style="margin-bottom:14px">
-          <div class="card-head">追蹤軸總覽</div>
-          <div class="card-body" style="padding:12px">${sidebarTracks}</div>
-        </div>
         ${dateQuickHtml}
       </div>
     </div>
