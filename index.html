@@ -1889,8 +1889,8 @@ function copyTrack(trackId) {
     type: src.type, insurer: src.insurer,
     contact: src.contact || '', contactPhone: src.contactPhone || '',
     status: '進行中',
-    deadline: '', deadlineNote: src.deadlineNote || '',
-    plannedDate: '', plannedDateNote: src.plannedDateNote || '',
+    deadline: src.deadline || '', deadlineNote: src.deadlineNote || '',
+    plannedDate: src.plannedDate || '', plannedDateNote: src.plannedDateNote || '',
     amount: src.amount, note: src.note || '',
     created: new Date().toISOString().slice(0,10)
   };
@@ -2568,7 +2568,7 @@ function copyTodo(id) {
   if (!t) return;
   db.todos.push({
     id: genTodoId(), title: t.title + '（副本）',
-    dueDate: t.dueDate, remind: '',
+    dueDate: t.dueDate, remind: t.remind || '',
     caseId: t.caseId, note: t.note,
     subtasks: (t.subtasks||[]).map(s => ({ title: s.title, dueDate: s.dueDate, done: false })),
     done: false, doneDate: null,
