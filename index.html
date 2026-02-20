@@ -455,7 +455,7 @@ const typeColor = {
   '勞保生育給付':'badge-blue','勞保傷病給付':'badge-blue','勞保失能給付':'badge-blue','勞保老年給付':'badge-blue','勞保死亡給付':'badge-blue',
   '職保醫療給付':'badge-red','職保傷病給付':'badge-red','職保失能給付':'badge-red','職保死亡給付':'badge-red',
   '爭議審議訴願':'badge-gray','車禍處理程序':'badge-red','職災補償賠償':'badge-orange','勞資爭議事項':'badge-gray',
-  '壽險':'badge-purple','醫療險':'badge-purple','意外險':'badge-purple','失能險':'badge-purple','長照險':'badge-purple'
+  '壽險':'badge-purple','醫療險':'badge-purple','意外險':'badge-purple','失能險':'badge-purple','長照險':'badge-purple','強制險':'badge-purple'
 };
 const statusColor = {
   '未申請': 'status-pending', '待補件': 'status-pending', '審核中': 'status-review',
@@ -574,7 +574,7 @@ dashboard() {
     { label:'職災保險', cls:'injury-ins', types:['職保醫療給付','職保傷病給付','職保失能給付','職保死亡給付'] },
     { label:'公保農保', cls:'farmer', types:['農保給付','公保給付'] },
     { label:'車禍職災爭議', cls:'dispute', types:['車禍處理程序','爭議審議訴願','職災補償賠償','勞資爭議事項'] },
-    { label:'商業保險', cls:'commercial', types:['壽險','醫療險','意外險','失能險','長照險'] },
+    { label:'商業保險', cls:'commercial', types:['壽險','醫療險','意外險','失能險','長照險','強制險'] },
   ];
   
   const deadlines = cases.filter(c => (c.deadline || c.plannedDate) && c.status !== '已給付' && c.status !== '已調解完成')
@@ -727,7 +727,7 @@ cases() {
     { label:'職災保險', types:['職災保險給付','職保醫療給付','職保傷病給付','職保失能給付','職保死亡給付'] },
     { label:'公保農保', types:['農保給付','公保給付'] },
     { label:'車禍職災爭議', types:['車禍處理程序','爭議審議訴願','職災補償賠償','勞資爭議事項'] },
-    { label:'商業保險', types:['商業保險理賠','壽險','醫療險','意外險','失能險','長照險'] },
+    { label:'商業保險', types:['商業保險理賠','壽險','醫療險','意外險','失能險','長照險','強制險'] },
   ];
   const statusLabel = filterStatus ? ' · 篩選：'+filterStatus : '';
   return `
@@ -1723,7 +1723,7 @@ function openEditCase(id) {
             ${['車禍處理程序','爭議審議訴願','職災補償賠償','勞資爭議事項'].map(t=>`<option ${t===c.type?'selected':''}>${t}</option>`).join('')}
           </optgroup>
           <optgroup label="商業保險">
-            ${['壽險','醫療險','意外險','失能險','長照險'].map(t=>`<option ${t===c.type?'selected':''}>${t}</option>`).join('')}
+            ${['壽險','醫療險','意外險','失能險','長照險','強制險'].map(t=>`<option ${t===c.type?'selected':''}>${t}</option>`).join('')}
           </optgroup>
         </select>
       </div>
@@ -1887,7 +1887,7 @@ function openAddTrack(caseId) {
           </optgroup>
           <optgroup label="商業保險">
             <option>壽險</option><option>醫療險</option><option>意外險</option>
-            <option>失能險</option><option>長照險</option>
+            <option>失能險</option><option>長照險</option><option>強制險</option>
           </optgroup>
         </select>
       </div>
@@ -1980,7 +1980,7 @@ function openEditTrack(trackId) {
             ${['車禍處理程序','爭議審議訴願','職災補償賠償','勞資爭議事項'].map(t=>`<option ${t===tr.type?'selected':''}>${t}</option>`).join('')}
           </optgroup>
           <optgroup label="商業保險">
-            ${['壽險','醫療險','意外險','失能險','長照險'].map(t=>`<option ${t===tr.type?'selected':''}>${t}</option>`).join('')}
+            ${['壽險','醫療險','意外險','失能險','長照險','強制險'].map(t=>`<option ${t===tr.type?'selected':''}>${t}</option>`).join('')}
           </optgroup>
         </select>
       </div>
