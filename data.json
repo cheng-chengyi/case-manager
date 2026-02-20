@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T12:36:04.844Z",
+  "_date": "2026-02-20T13:56:48.238Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -307,6 +307,27 @@
       "insurer": "友邦人壽",
       "accidentDate": "2025-10-14",
       "status": "審核中",
+      "receiveDate": "2026-02-20",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1120328_毛上瑋(職災墜落)",
+      "type": "職保失能給付",
+      "name": "毛上瑋",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "",
+      "accidentDate": "",
+      "status": "未申請",
       "receiveDate": "2026-02-20",
       "deadline": "",
       "deadlineNote": "",
