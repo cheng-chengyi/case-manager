@@ -568,7 +568,7 @@ dashboard() {
   const total = cases.length;
   const active = cases.filter(c => c.status === '進行中').length;
   const pending = cases.filter(c => c.status === '待補件').length;
-  const closed = cases.filter(c => c.status === '已給付' || c.status === '已調解完成').length;
+  const closed = cases.filter(c => c.status === '已給付' || c.status === '已調解完成' || c.status === '已結案' || c.status === '撤案').length;
   const typeGroups = [
     { label:'勞工保險', cls:'labor', types:['勞保生育給付','勞保傷病給付','勞保失能給付','勞保老年給付','勞保死亡給付'] },
     { label:'職災保險', cls:'injury-ins', types:['職保醫療給付','職保傷病給付','職保失能給付','職保死亡給付'] },
@@ -622,7 +622,7 @@ dashboard() {
         <div class="stat-num" style="color:#b7791f">${pending}</div>
         
       </div>
-      <div class="stat-card closed" onclick="filterStatus='已給付';navigate('cases')" style="cursor:pointer">
+      <div class="stat-card closed" onclick="filterStatus='_closed';navigate('cases')" style="cursor:pointer">
         <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
         <div class="stat-label">已結案/完成</div>
         <div class="stat-num" style="color:#4a5568">${closed}</div>
@@ -704,7 +704,8 @@ cases() {
     if (Array.isArray(filterType)) list = list.filter(c => filterType.includes(c.type));
     else list = list.filter(c => c.type === filterType);
   }
-  if (filterStatus) list = list.filter(c => c.status === filterStatus);
+  if (filterStatus === '_closed') list = list.filter(c => c.status === '已給付' || c.status === '已調解完成' || c.status === '已結案' || c.status === '撤案');
+  else if (filterStatus) list = list.filter(c => c.status === filterStatus);
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
     list = list.filter(c => c.name.includes(q) || c.id.toLowerCase().includes(q) || c.employer.includes(q) || (c.insuredUnit||'').includes(q) || (c.insurer||'').includes(q));
@@ -729,7 +730,7 @@ cases() {
     { label:'車禍職災爭議', types:['車禍處理程序','爭議審議訴願','職災補償賠償','勞資爭議事項'] },
     { label:'商業保險', types:['商業保險理賠','壽險','醫療險','意外險','失能險','長照險','強制險'] },
   ];
-  const statusLabel = filterStatus ? ' · 篩選：'+filterStatus : '';
+  const statusLabel = filterStatus ? ' · 篩選：'+(filterStatus==='_closed'?'已結案/完成':filterStatus) : '';
   return `
   <div class="topbar">
     <div class="topbar-title">個案清單 <span class="text-muted">（${list.length} 筆${statusLabel}）</span></div>
