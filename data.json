@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T08:37:46.149Z",
+  "_date": "2026-02-20T09:17:15.056Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -209,6 +209,27 @@
       "plannedDateNote": "",
       "amount": "",
       "note": "公勝保經嘉義林雅倫",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1131023_歐諭(腦中風)",
+      "type": "失能險",
+      "name": "歐諭",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "台灣人壽",
+      "accidentDate": "2024-10-23",
+      "status": "審核中",
+      "receiveDate": "2026-02-20",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-04-30",
+      "plannedDateNote": "完成給付",
+      "amount": "",
+      "note": "",
       "created": "2026-02-20",
       "updated": "2026-02-20"
     }
