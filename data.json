@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T14:31:22.929Z",
+  "_date": "2026-02-20T14:32:14.740Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -773,20 +773,22 @@
     {
       "id": "TR-1120328_毛上瑋(職災墜落)-2",
       "caseId": "1120328_毛上瑋(職災墜落)",
-      "name": "毛上瑋_職災失能給付_爭議審議（複製）",
-      "type": "爭議審議訴願",
+      "name": "毛上瑋_職災傷病給付_申請",
+      "type": "職保傷病給付",
       "insurer": "勞保局",
       "contact": "",
       "contactPhone": "",
-      "status": "進行中",
-      "deadline": "2026-04-30",
+      "status": "審核中",
+      "deadline": "",
       "deadlineNote": "",
-      "plannedDate": "2026-05-31",
+      "plannedDate": "2026-03-31",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
       "todos": [],
-      "created": "2026-02-20"
+      "created": "2026-02-20",
+      "closedDate": "",
+      "closedNote": ""
     }
   ],
   "progress": [
