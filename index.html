@@ -931,6 +931,27 @@ cases() {
                 var deadlineInfo = tr.deadline ? '<span style="font-size:11px;color:#D55E00">🔔 '+fmtDate(tr.deadline)+' '+daysBadge(days)+'</span>' : '';
                 var plannedInfo = tr.plannedDate ? '<span style="font-size:11px;color:#0EA5B0">📋 '+fmtDate(tr.plannedDate)+' '+daysBadge(daysP)+'</span>' : '';
                 var contactInfo = tr.contact ? '<span style="font-size:11px;color:var(--text-3)">👤 '+tr.contact+(tr.contactPhone?' ☎ '+tr.contactPhone:'')+'</span>' : '';
+                var trackTodos = (tr.todos||[]);
+                var pendingTodos = trackTodos.filter(function(t){return !t.done});
+                var doneTodos = trackTodos.filter(function(t){return t.done});
+                var todoHtml = '<div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border)">'
+                  + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">'
+                  + '<span style="font-size:11px;font-weight:600;color:var(--text-2)">☑️ 待辦 '+pendingTodos.length+'/'+ trackTodos.length+'</span>'
+                  + '</div>'
+                  + trackTodos.map(function(todo,ti){
+                    var isOd = todo.dueDate && todo.dueDate < new Date().toISOString().slice(0,10) && !todo.done;
+                    return '<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:12px;'+(todo.done?'opacity:0.5':'')+'">'
+                      + '<input type="checkbox" '+(todo.done?'checked':'')+' onchange="toggleTrackTodo(\''+tr.id+'\','+ti+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2;flex-shrink:0">'
+                      + '<span style="flex:1;'+(todo.done?'text-decoration:line-through;color:var(--text-3)':'')+(isOd?';color:#D55E00':'')+'">'+todo.title+'</span>'
+                      + (todo.dueDate ? '<span style="font-size:10px;color:'+(isOd?'#D55E00':'var(--text-3)')+'">'+fmtDate(todo.dueDate)+'</span>' : '')
+                      + '<button onclick="removeTrackTodo(\''+tr.id+'\','+ti+')" style="background:none;border:none;cursor:pointer;font-size:11px;color:#D55E00;padding:0 2px" title="刪除">✕</button>'
+                      + '</div>';
+                  }).join('')
+                  + '<div style="display:flex;gap:4px;margin-top:4px">'
+                  + '<input type="text" id="tt-input-'+tr.id+'" placeholder="新增待辦..." style="flex:1;font-size:11px;padding:4px 8px;border:1px solid var(--border);border-radius:6px" onkeydown="if(event.key===\'Enter\')addTrackTodo(\''+tr.id+'\')">'
+                  + '<input type="date" id="tt-date-'+tr.id+'" style="font-size:11px;padding:4px;border:1px solid var(--border);border-radius:6px;width:120px">'
+                  + '<button class="btn btn-outline btn-sm" style="font-size:11px;padding:2px 8px" onclick="addTrackTodo(\''+tr.id+'\')">＋</button>'
+                  + '</div></div>';
                 return '<div id="track-'+tr.id+'" style="padding:14px 18px;border-bottom:1px solid var(--border);border-left:4px solid '+col2+'">'
                   + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
                   + '<div style="width:8px;height:8px;border-radius:50%;background:'+col2+';flex-shrink:0"></div>'
@@ -941,6 +962,7 @@ cases() {
                   + '</div>'
                   + ((deadlineInfo||plannedInfo||contactInfo) ? '<div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap">'+deadlineInfo+plannedInfo+contactInfo+'</div>' : '')
                   + (tr.note ? '<div style="font-size:11px;color:var(--text-3);margin-top:4px">'+tr.note+'</div>' : '')
+                  + todoHtml
                   + '<div style="display:flex;gap:6px;margin-top:8px">'
                   + '<button class="btn btn-outline btn-sm" style="font-size:11px;border-color:'+col2+';color:'+col2+'" onclick="_trackAction(this)" data-action="addProgress" data-case="'+c.id+'" data-track="'+tr.id+'">＋ 新增進度</button>'
                   + '<button class="btn btn-outline btn-sm" style="font-size:11px" onclick="_trackAction(this)" data-action="editTrack" data-track="'+tr.id+'">✏️ 編輯</button>'
@@ -1894,6 +1916,7 @@ function copyTrack(trackId) {
     deadline: src.deadline || '', deadlineNote: src.deadlineNote || '',
     plannedDate: src.plannedDate || '', plannedDateNote: src.plannedDateNote || '',
     amount: src.amount, note: src.note || '',
+    todos: (src.todos||[]).map(function(t){ return {title:t.title, dueDate:t.dueDate, done:false, doneDate:''}; }),
     created: new Date().toISOString().slice(0,10)
   };
   db.tracks.push(newTr);
@@ -2086,6 +2109,36 @@ function openEditTrack(trackId) {
     saveData(db);
     return true;
   });
+}
+
+function addTrackTodo(trackId) {
+  var input = document.getElementById('tt-input-' + trackId);
+  var dateInput = document.getElementById('tt-date-' + trackId);
+  var title = input ? input.value.trim() : '';
+  if (!title) return;
+  var tr = db.tracks.find(function(t){ return t.id === trackId; });
+  if (!tr) return;
+  if (!tr.todos) tr.todos = [];
+  tr.todos.push({ title: title, dueDate: dateInput ? dateInput.value : '', done: false, doneDate: '' });
+  saveData(db);
+  render();
+}
+
+function toggleTrackTodo(trackId, idx) {
+  var tr = db.tracks.find(function(t){ return t.id === trackId; });
+  if (!tr || !tr.todos || !tr.todos[idx]) return;
+  tr.todos[idx].done = !tr.todos[idx].done;
+  tr.todos[idx].doneDate = tr.todos[idx].done ? new Date().toISOString().slice(0,10) : '';
+  saveData(db);
+  render();
+}
+
+function removeTrackTodo(trackId, idx) {
+  var tr = db.tracks.find(function(t){ return t.id === trackId; });
+  if (!tr || !tr.todos) return;
+  tr.todos.splice(idx, 1);
+  saveData(db);
+  render();
 }
 
 function deleteTrack(trackId) {
