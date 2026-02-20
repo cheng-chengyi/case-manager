@@ -2143,7 +2143,10 @@ async function ghPushSilent(data) {
     // 更新同步指示器
     const ind = document.getElementById('sync-indicator');
     if (ind) { ind.textContent = '☁️ 已同步'; ind.style.color = '#0072B2'; setTimeout(()=>{ ind.textContent = '☁️'; ind.style.color = 'var(--text-3)'; }, 3000); }
-  } catch(e) { /* 靜默失敗 */ }
+  } catch(e) {
+    const ind = document.getElementById('sync-indicator');
+    if (ind) { ind.textContent = '⚠️ 同步失敗'; ind.style.color = '#D55E00'; setTimeout(()=>{ ind.textContent = '☁️'; ind.style.color = 'var(--text-3)'; }, 5000); }
+  }
 }
 
 // 頁面載入自動拉取
