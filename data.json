@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:47:35.402Z",
+  "_date": "2026-02-20T07:56:52.196Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -188,6 +188,27 @@
       "plannedDateNote": "",
       "amount": "",
       "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1130718_蔡勝綋(車禍腦傷)",
+      "type": "意外險",
+      "name": "蔡勝綋",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "",
+      "accidentDate": "2024-07-18",
+      "status": "未申請",
+      "receiveDate": "2026-02-20",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "公勝保經嘉義林雅倫",
       "created": "2026-02-20",
       "updated": "2026-02-20"
     }
