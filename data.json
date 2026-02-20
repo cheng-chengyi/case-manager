@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T09:17:15.056Z",
+  "_date": "2026-02-20T09:18:55.198Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -500,6 +500,23 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1131023_歐諭(腦中風)-1",
+      "caseId": "1131023_歐諭(腦中風)",
+      "name": "歐諭_台灣人壽_失能險_給付追蹤",
+      "type": "失能險",
+      "insurer": "台灣人壽",
+      "contact": "台中分公司保服課 張先生",
+      "contactPhone": "04-22522505#3476",
+      "status": "審核中",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20"
     }
   ],
   "progress": [
@@ -594,6 +611,18 @@
       "date": "2026-02-20",
       "stage": "審核中",
       "desc": "建立追蹤軸：蔡勝綋_新光產物_駕駛人傷害險",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0024",
+      "caseId": "1131023_歐諭(腦中風)",
+      "trackId": "TR-1131023_歐諭(腦中風)-1",
+      "date": "2026-02-20",
+      "stage": "審核中",
+      "desc": "建立追蹤軸：歐諭_台灣人壽_失能險_給付追蹤",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
