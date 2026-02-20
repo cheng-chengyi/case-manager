@@ -953,7 +953,7 @@ cases() {
       </div>
 
     ${(function(){
-      var caseTodos = (db.todos||[]).filter(function(t){ return t.caseId === c.id; });
+      var caseTodos = (db.todos||[]).filter(function(t){ return t.caseId === c.id || (!t.caseId && (t.title||'').indexOf(c.name) >= 0); });
       if (caseTodos.length === 0) return '';
       var nowStr = new Date().toISOString().slice(0,10);
       var pendingTodos = caseTodos.filter(function(t){ return !t.done; });
