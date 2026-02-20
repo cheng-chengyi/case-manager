@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:16:48.195Z",
+  "_date": "2026-02-20T07:25:47.546Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -102,6 +102,27 @@
       "deadlineNote": "",
       "plannedDate": "2026-05-29",
       "plannedDateNote": "評議完成",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1140419_李紹中(腦傷車禍)",
+      "type": "意外險",
+      "name": "李紹中",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "台灣人壽",
+      "accidentDate": "2025-04-19",
+      "status": "審核中",
+      "receiveDate": "2026-02-20",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-31",
+      "plannedDateNote": "",
       "amount": "",
       "note": "",
       "created": "2026-02-20",
