@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T09:19:23.506Z",
+  "_date": "2026-02-20T09:29:32.930Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -230,6 +230,27 @@
       "plannedDateNote": "完成給付",
       "amount": "",
       "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1120923_陳盛隆",
+      "type": "職保失能給付",
+      "name": "陳盛隆",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "",
+      "accidentDate": "",
+      "status": "未申請",
+      "receiveDate": "2026-02-20",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "母親 陳張秋華",
       "created": "2026-02-20",
       "updated": "2026-02-20"
     }
