@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:37:55.542Z",
+  "_date": "2026-02-20T07:39:50.656Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -338,6 +338,23 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1140923_鄭淑惠(車禍)-1",
+      "caseId": "1140923_鄭淑惠(車禍)",
+      "name": "對造_尚龍翔_賠償12,000元",
+      "type": "車禍處理程序",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "已調解完成",
+      "deadline": "2026-03-12",
+      "deadlineNote": "",
+      "plannedDate": "2026-02-12",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20"
     }
   ],
   "progress": [
@@ -408,6 +425,18 @@
       "date": "2026-02-20",
       "stage": "爭議審議",
       "desc": "建立追蹤軸：李紹中_勞保失能給付_爭議審議",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0022",
+      "caseId": "1140923_鄭淑惠(車禍)",
+      "trackId": "TR-1140923_鄭淑惠(車禍)-1",
+      "date": "2026-02-20",
+      "stage": "已調解完成",
+      "desc": "建立追蹤軸：對造_尚龍翔_賠償12,000元",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
