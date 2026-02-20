@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:25:47.546Z",
+  "_date": "2026-02-20T07:27:02.240Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -258,6 +258,23 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1140419_李紹中(腦傷車禍)-1",
+      "caseId": "1140419_李紹中(腦傷車禍)",
+      "name": "李紹中_勞保失能給付_爭議審議",
+      "type": "勞保失能給付",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "爭議審議",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20"
     }
   ],
   "progress": [
@@ -316,6 +333,18 @@
       "date": "2026-02-20",
       "stage": "未申請",
       "desc": "建立追蹤軸：賴思伃 評議中心_遠雄人壽",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0021",
+      "caseId": "1140419_李紹中(腦傷車禍)",
+      "trackId": "TR-1140419_李紹中(腦傷車禍)-1",
+      "date": "2026-02-20",
+      "stage": "爭議審議",
+      "desc": "建立追蹤軸：李紹中_勞保失能給付_爭議審議",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
