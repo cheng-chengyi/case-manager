@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T11:32:24.100Z",
+  "_date": "2026-02-20T11:34:44.889Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -285,6 +285,27 @@
       "address": "",
       "insurer": "國泰產險",
       "accidentDate": "2025-04-28",
+      "status": "審核中",
+      "receiveDate": "2026-02-20",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1141014_蘇新蔭(T12骨折)",
+      "type": "失能險",
+      "name": "蘇新蔭",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "友邦人壽",
+      "accidentDate": "2025-10-14",
       "status": "審核中",
       "receiveDate": "2026-02-20",
       "deadline": "",
