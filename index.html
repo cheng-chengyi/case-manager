@@ -1277,7 +1277,15 @@ todos() {
     const aAlert = a.remind && a.remind.slice(0,10) <= now2.toISOString().slice(0,10) ? 0 : 1;
     const bAlert = b.remind && b.remind.slice(0,10) <= now2.toISOString().slice(0,10) ? 0 : 1;
     if (aAlert !== bAlert) return aAlert - bAlert;
-    return (a.dueDate||'').localeCompare(b.dueDate||'');
+    const aDate = a.dueDate || a.remind || '9999';
+    const bDate = b.dueDate || b.remind || '9999';
+    return aDate.localeCompare(bDate);
+  });
+  // 子任務也按日期排序
+  sortedPending.forEach(t => {
+    if (t.subtasks && t.subtasks.length) {
+      t.subtasks.sort((a,b) => (a.dueDate||'9999').localeCompare(b.dueDate||'9999'));
+    }
   });
 
   return `
