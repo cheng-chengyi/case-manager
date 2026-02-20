@@ -1,26 +1,7 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T00:08:20.673Z",
+  "_date": "2026-02-20T00:08:28.089Z",
   "cases": [
-    {
-      "id": "A003",
-      "type": "商業保險理賠",
-      "name": "張美玲",
-      "phone": "0934-567-890",
-      "employer": "個人（服務業）",
-      "insurer": "富邦人壽",
-      "accidentDate": "2025-11-30",
-      "status": "待補件",
-      "receiveDate": "2025-12-10",
-      "deadline": "2026-02-20",
-      "deadlineNote": "保險公司補件法定截止",
-      "plannedDate": "2026-02-10",
-      "plannedDateNote": "預計取得診斷書並補件",
-      "amount": 180000,
-      "note": "保險公司拒賠，要求補診斷書",
-      "created": "2025-12-10",
-      "updated": "2026-01-20"
-    },
     {
       "id": "A004",
       "type": "勞資爭議事項",
@@ -125,19 +106,6 @@
   ],
   "tracks": [
     {
-      "id": "TR-A003-1",
-      "caseId": "A003",
-      "name": "商業保險理賠",
-      "type": "商業保險理賠",
-      "status": "待補件",
-      "deadline": "2026-02-20",
-      "deadlineNote": "保險公司補件截止",
-      "plannedDate": "2026-02-10",
-      "plannedDateNote": "取得診斷書",
-      "amount": 180000,
-      "note": ""
-    },
-    {
       "id": "TR-A004-1",
       "caseId": "A004",
       "name": "資遣費訴訟",
@@ -239,30 +207,6 @@
     }
   ],
   "progress": [
-    {
-      "caseId": "A003",
-      "trackId": "TR-A003-1",
-      "date": "2025-12-10",
-      "stage": "收案",
-      "desc": "商業保險拒賠，委託申訴",
-      "sendRecv": "收件",
-      "nextStep": "整理理賠資料",
-      "nextDate": "2025-12-20",
-      "note": "",
-      "id": "P0012"
-    },
-    {
-      "caseId": "A003",
-      "trackId": "TR-A003-1",
-      "date": "2026-01-05",
-      "stage": "補件",
-      "desc": "保險公司要求補診斷書",
-      "sendRecv": "",
-      "nextStep": "補送診斷書",
-      "nextDate": "2026-02-20",
-      "note": "截止日：2/20，需加快",
-      "id": "P0013"
-    },
     {
       "caseId": "A004",
       "trackId": "TR-A004-1",
