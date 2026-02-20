@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:14:47.876Z",
+  "_date": "2026-02-20T07:16:48.195Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -222,19 +222,21 @@
     {
       "id": "TR-1131017_賴思伃(肺癌)-1",
       "caseId": "1131017_賴思伃(肺癌)",
-      "name": "賴思伃 評議中心_遠雄人壽",
+      "name": "賴思伃 評議中心 遠雄人壽",
       "type": "醫療險",
       "insurer": "",
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "",
-      "plannedDateNote": "",
+      "deadline": "2026-03-20",
+      "deadlineNote": "收文陳述意見",
+      "plannedDate": "2026-03-27",
+      "plannedDateNote": "寄出陳述意見書",
       "amount": "",
       "note": "",
-      "created": "2026-02-20"
+      "created": "2026-02-20",
+      "closedDate": "",
+      "closedNote": ""
     }
   ],
   "progress": [
