@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T09:52:42.197Z",
+  "_date": "2026-02-20T11:11:06.705Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -266,6 +266,27 @@
       "accidentDate": "2024-06-26",
       "status": "未申請",
       "receiveDate": "",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1140428_楊雅米(車禍腦傷)",
+      "type": "強制險",
+      "name": "楊雅米",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "國泰產險",
+      "accidentDate": "2025-04-28",
+      "status": "審核中",
+      "receiveDate": "2026-02-20",
       "deadline": "",
       "deadlineNote": "",
       "plannedDate": "",
