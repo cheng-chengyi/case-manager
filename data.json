@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T11:24:38.368Z",
+  "_date": "2026-02-20T11:27:05.990Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -644,14 +644,16 @@
       "insurer": "國泰產險",
       "contact": "",
       "contactPhone": "",
-      "status": "進行中",
+      "status": "未申請",
       "deadline": "2026-03-09",
       "deadlineNote": "準備開立診斷書",
       "plannedDate": "2026-03-27",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
-      "created": "2026-02-20"
+      "created": "2026-02-20",
+      "closedDate": "",
+      "closedNote": ""
     }
   ],
   "progress": [
