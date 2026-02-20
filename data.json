@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T08:24:18.923Z",
+  "_date": "2026-02-20T08:29:11.066Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -420,15 +420,15 @@
     {
       "id": "TR-1130718_蔡勝綋(車禍腦傷)-2",
       "caseId": "1130718_蔡勝綋(車禍腦傷)",
-      "name": "蔡勝綋_新光產物_駕駛人傷害險（複製）",
+      "name": "蔡勝綋_新光產物_意外險",
       "type": "意外險",
       "insurer": "新光產險",
       "contact": "",
       "contactPhone": "",
-      "status": "未申請",
-      "deadline": "2026-02-19",
+      "status": "已拒賠",
+      "deadline": "2026-03-31",
       "deadlineNote": "",
-      "plannedDate": "2026-02-19",
+      "plannedDate": "2026-08-31",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
