@@ -1,26 +1,7 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T00:08:28.089Z",
+  "_date": "2026-02-20T00:08:34.823Z",
   "cases": [
-    {
-      "id": "A004",
-      "type": "勞資爭議事項",
-      "name": "陳建國",
-      "phone": "0945-678-901",
-      "employer": "科技公司",
-      "insurer": "勞動部勞工保險局",
-      "accidentDate": "2025-07-01",
-      "status": "訴訟中",
-      "receiveDate": "2025-08-01",
-      "deadline": "2026-04-10",
-      "deadlineNote": "法院開庭（不可更動）",
-      "plannedDate": "2026-03-25",
-      "plannedDateNote": "預計備好答辯狀送法院",
-      "amount": 450000,
-      "note": "資遣費爭議，台南地院第二次庭",
-      "created": "2025-08-01",
-      "updated": "2026-01-18"
-    },
     {
       "id": "A005",
       "type": "勞工保險給付",
@@ -105,19 +86,6 @@
     }
   ],
   "tracks": [
-    {
-      "id": "TR-A004-1",
-      "caseId": "A004",
-      "name": "資遣費訴訟",
-      "type": "勞資爭議事項",
-      "status": "訴訟中",
-      "deadline": "2026-04-10",
-      "deadlineNote": "法院開庭",
-      "plannedDate": "2026-03-25",
-      "plannedDateNote": "備好答辯狀",
-      "amount": 450000,
-      "note": ""
-    },
     {
       "id": "TR-A005-1",
       "caseId": "A005",
@@ -207,30 +175,6 @@
     }
   ],
   "progress": [
-    {
-      "caseId": "A004",
-      "trackId": "TR-A004-1",
-      "date": "2025-08-01",
-      "stage": "收案",
-      "desc": "資遣費爭議，提起訴訟",
-      "sendRecv": "收件",
-      "nextStep": "撰寫起訴狀",
-      "nextDate": "2025-09-01",
-      "note": "",
-      "id": "P0014"
-    },
-    {
-      "caseId": "A004",
-      "trackId": "TR-A004-1",
-      "date": "2025-10-05",
-      "stage": "訴訟",
-      "desc": "第一次開庭，法官要求補充答辯",
-      "sendRecv": "",
-      "nextStep": "準備答辯狀",
-      "nextDate": "2026-04-10",
-      "note": "台南地院 民事庭",
-      "id": "P0015"
-    },
     {
       "id": "P0016",
       "caseId": "1140930_鄞家府(口腔癌)",
