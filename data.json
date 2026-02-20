@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T09:30:13.868Z",
+  "_date": "2026-02-20T09:30:17.476Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -550,6 +550,23 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-31",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20"
+    },
+    {
+      "id": "TR-1120923_陳盛隆-2",
+      "caseId": "1120923_陳盛隆",
+      "name": "陳盛隆 強制險失能給付_顏面疤痕（複製）",
+      "type": "",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "進行中",
       "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-03-31",
