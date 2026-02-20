@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T11:28:14.534Z",
+  "_date": "2026-02-20T11:30:52.943Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -673,6 +673,23 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1140428_楊雅米(車禍腦傷)-4",
+      "caseId": "1140428_楊雅米(車禍腦傷)",
+      "name": "楊雅米 勞保局 職災傷病給付爭議事項審議（複製）",
+      "type": "強制險",
+      "insurer": "國泰產險",
+      "contact": "",
+      "contactPhone": "",
+      "status": "進行中",
+      "deadline": "2026-04-30",
+      "deadlineNote": "準備開立診斷書",
+      "plannedDate": "2026-05-31",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20"
     }
   ],
   "progress": [
