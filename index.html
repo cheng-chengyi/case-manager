@@ -937,7 +937,6 @@ cases() {
                 var todoHtml = '<div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border)">'
                   + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">'
                   + '<span style="font-size:11px;font-weight:600;color:var(--text-2)">☑️ 待辦 '+pendingTodos.length+'/'+ trackTodos.length+'</span>'
-                  + '<button class="btn btn-outline btn-sm" style="font-size:10px;padding:1px 6px;margin-left:auto" onclick="openAddTrackTodo(\''+tr.id+'\')">＋ 新增</button>'
                   + '</div>'
                   + trackTodos.map(function(todo,ti){
                     var nowStr2 = new Date().toISOString().slice(0,10);
@@ -951,6 +950,7 @@ cases() {
                       + '<button onclick="removeTrackTodo(\''+tr.id+'\','+ti+')" style="background:none;border:none;cursor:pointer;font-size:11px;color:#D55E00;padding:0 2px" title="刪除">✕</button>'
                       + '</div>';
                   }).join('')
+                  + '<button class="btn btn-outline btn-sm" style="font-size:10px;padding:2px 8px;margin-top:4px" onclick="openAddTrackTodo(\''+tr.id+'\')">＋ 新增待辦</button>'
                   + '</div>';
                 return '<div id="track-'+tr.id+'" style="padding:14px 18px;border-bottom:1px solid var(--border);border-left:4px solid '+col2+'">'
                   + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
@@ -2116,8 +2116,8 @@ function openAddTrackTodo(trackId) {
     <div style="display:flex;flex-direction:column;gap:12px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="ttt-title" placeholder="輸入待辦事項..."></div>
       <div class="form-grid">
-        <div class="field"><label>到期日</label><input type="date" id="ttt-due"></div>
         <div class="field"><label>提醒日期</label><input type="date" id="ttt-remind"></div>
+        <div class="field"><label>到期日</label><input type="date" id="ttt-due"></div>
       </div>
     </div>
   `, function() {
