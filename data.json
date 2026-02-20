@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T05:45:16.102Z",
+  "_date": "2026-02-20T05:45:25.838Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -172,6 +172,23 @@
       "contactPhone": "",
       "status": "審核中",
       "deadline": "2026-03-31",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20"
+    },
+    {
+      "id": "TR-1140731_張文浩(職災墜落)-2",
+      "caseId": "1140731_張文浩(職災墜落)",
+      "name": "張文浩_災保傷病給付（複製）",
+      "type": "職保傷病給付",
+      "insurer": "勞保局",
+      "contact": "",
+      "contactPhone": "",
+      "status": "進行中",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "",
       "plannedDateNote": "",
