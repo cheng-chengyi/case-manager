@@ -1984,7 +1984,7 @@ function openEditTrack(trackId) {
           </optgroup>
         </select>
       </div>
-      <div class="field"><label>狀態</label>
+      <div class="field"><label>目前狀態</label>
         <select id="ft-status" onchange="var cr=document.getElementById('ft-closed-row');if(cr)cr.style.display=(this.value==='已給付'||this.value==='已調解完成'||this.value==='撤案')?'block':'none'">
           ${['未申請','待補件','審核中','已給付','已拒賠','申訴中','評議中','未調解','已調解完成','調解不成立','偵查庭','刑事訴訟','民事訴訟','爭議審議','訴願中','撤案'].map(s=>`<option ${s===tr.status?'selected':''}>${s}</option>`).join('')}
         </select>
