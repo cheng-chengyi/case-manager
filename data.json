@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T09:30:55.389Z",
+  "_date": "2026-02-20T09:52:42.197Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -251,6 +251,27 @@
       "plannedDateNote": "",
       "amount": "",
       "note": "母親 陳張秋華",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1130626_黃嬋妃(連枷胸)",
+      "type": "意外險",
+      "name": "黃嬋妃",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "",
+      "accidentDate": "2024-06-26",
+      "status": "未申請",
+      "receiveDate": "",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
       "created": "2026-02-20",
       "updated": "2026-02-20"
     }
