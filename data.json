@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:06:07.368Z",
+  "_date": "2026-02-20T07:12:04.597Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -76,6 +76,27 @@
       "insurer": "勞保局",
       "accidentDate": "2025-07-31",
       "status": "未申請",
+      "receiveDate": "",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1131017_賴思伃(肺癌)",
+      "type": "意外險",
+      "name": "賴思妤",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "遠雄人壽",
+      "accidentDate": "2024-10-17",
+      "status": "評議中",
       "receiveDate": "",
       "deadline": "",
       "deadlineNote": "",
