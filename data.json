@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T06:59:54.686Z",
+  "_date": "2026-02-20T07:06:07.368Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -328,7 +328,13 @@
       "remind": "2026-02-28",
       "caseId": "1140731_張文浩(職災墜落)",
       "note": "是否要進行",
-      "subtasks": [],
+      "subtasks": [
+        {
+          "title": "聯絡當事人的舅媽",
+          "dueDate": "2026-02-23",
+          "done": false
+        }
+      ],
       "done": false,
       "doneDate": null,
       "created": "2026-02-20"
