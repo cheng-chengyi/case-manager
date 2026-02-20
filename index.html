@@ -2620,11 +2620,11 @@ function checkAllReminders() {
     const c = db.cases.find(x => x.id === tr.caseId);
     const cName = c ? c.name : tr.caseId;
 
-    // 提醒日期 — 14天內或已逾期
+    // 提醒日期 — 45天內或已逾期
     if (tr.deadline) {
       const days = Math.ceil((new Date(tr.deadline) - now) / 86400000);
       const key = 'deadline-' + tr.id + '-' + today;
-      if (days <= 14 && !_reminderShownToday[key]) {
+      if (days <= 45 && !_reminderShownToday[key]) {
         _reminderShownToday[key] = true;
         if (days < 0) {
           alertItems.push({
@@ -2642,11 +2642,11 @@ function checkAllReminders() {
       }
     }
 
-    // 預計完成日 — 7天內或已逾期
+    // 預計完成日 — 30天內或已逾期
     if (tr.plannedDate) {
       const days2 = Math.ceil((new Date(tr.plannedDate) - now) / 86400000);
       const key2 = 'planned-' + tr.id + '-' + today;
-      if (days2 <= 7 && !_reminderShownToday[key2]) {
+      if (days2 <= 30 && !_reminderShownToday[key2]) {
         _reminderShownToday[key2] = true;
         if (days2 < 0) {
           alertItems.push({
