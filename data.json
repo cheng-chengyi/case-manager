@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T11:11:06.705Z",
+  "_date": "2026-02-20T11:22:48.400Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -618,6 +618,23 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1140428_楊雅米(車禍腦傷)-1",
+      "caseId": "1140428_楊雅米(車禍腦傷)",
+      "name": "楊雅米 國泰產險 申請強制險失能給付",
+      "type": "強制險",
+      "insurer": "國泰產險",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "2026-03-09",
+      "deadlineNote": "準備開立診斷書",
+      "plannedDate": "2026-03-27",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20"
     }
   ],
   "progress": [
@@ -736,6 +753,18 @@
       "date": "2026-02-20",
       "stage": "未申請",
       "desc": "建立追蹤軸：陳盛隆 強制險失能給付_顏面疤痕",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0026",
+      "caseId": "1140428_楊雅米(車禍腦傷)",
+      "trackId": "TR-1140428_楊雅米(車禍腦傷)-1",
+      "date": "2026-02-20",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：楊雅米 國泰產險 申請強制險失能給付",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
