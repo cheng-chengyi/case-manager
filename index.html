@@ -951,6 +951,38 @@ cases() {
           </div>
         </div>
       </div>
+
+    ${(function(){
+      var caseTodos = (db.todos||[]).filter(function(t){ return t.caseId === c.id; });
+      if (caseTodos.length === 0) return '';
+      var nowStr = new Date().toISOString().slice(0,10);
+      var pendingTodos = caseTodos.filter(function(t){ return !t.done; });
+      var doneTodos = caseTodos.filter(function(t){ return t.done; });
+      return '<div class="card" style="margin-top:16px"><div class="card-head">相關待辦事項 <span class="badge badge-yellow">'+pendingTodos.length+' 項未完成</span></div>'
+        + '<div class="card-body" style="padding:0">'
+        + (pendingTodos.length === 0 ? '<div style="padding:16px;text-align:center;color:var(--text-3);font-size:13px">所有待辦已完成 🎉</div>' :
+          pendingTodos.sort(function(a,b){ return (a.dueDate||'9999').localeCompare(b.dueDate||'9999'); }).map(function(t){
+            var isOverdue = t.dueDate && t.dueDate < nowStr;
+            return '<div style="padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px">'
+              + '<input type="checkbox" onchange="toggleTodo(\''+t.id+'\')" style="width:16px;height:16px;margin-top:2px;cursor:pointer;accent-color:#0072B2;flex-shrink:0">'
+              + '<div style="flex:1;min-width:0">'
+              + '<div style="font-size:13px;font-weight:600;'+(isOverdue?'color:#D55E00':'')+'">'+t.title
+              + (t.subtasks&&t.subtasks.length ? ' <span style="font-size:11px;font-weight:400;color:var(--text-3)">'+t.subtasks.filter(function(s){return s.done}).length+'/'+t.subtasks.length+'</span>' : '')
+              + '</div>'
+              + (t.note ? '<div style="font-size:11px;color:var(--text-3);margin-top:2px">'+t.note+'</div>' : '')
+              + '<div style="display:flex;gap:10px;margin-top:4px;font-size:11px;color:var(--text-3)">'
+              + (t.dueDate ? '<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>' : '')
+              + (t.remind ? '<span>⏰ '+fmtDate(t.remind)+'</span>' : '')
+              + '</div></div>'
+              + '<div style="display:flex;gap:4px;flex-shrink:0">'
+              + '<button class="btn btn-outline btn-sm" style="font-size:11px;padding:2px 6px" onclick="openEditTodo(\''+t.id+'\')">✏️</button>'
+              + '<button class="btn btn-outline btn-sm" style="font-size:11px;padding:2px 6px;color:#D55E00" onclick="deleteTodo(\''+t.id+'\')">🗑</button>'
+              + '</div></div>';
+          }).join(''))
+        + (doneTodos.length ? '<div style="padding:10px 18px;border-top:1px solid var(--border);font-size:11px;color:var(--text-3)">✅ 已完成 '+doneTodos.length+' 項</div>' : '')
+        + '</div></div>';
+    })()}
+
   </div>`;
 },
 
