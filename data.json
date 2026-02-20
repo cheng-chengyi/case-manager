@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T08:03:27.918Z",
+  "_date": "2026-02-20T08:17:12.411Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -434,7 +434,9 @@
       "note": "",
       "created": "2026-02-20",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-02-20"
     }
   ],
   "progress": [
