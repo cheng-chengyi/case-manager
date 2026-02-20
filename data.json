@@ -1,26 +1,7 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-19T15:41:54.584Z",
+  "_date": "2026-02-20T00:08:13.725Z",
   "cases": [
-    {
-      "id": "A001",
-      "type": "勞工保險給付",
-      "name": "王小明",
-      "phone": "0912-345-678",
-      "employer": "台灣製造股份有限公司",
-      "insurer": "勞動部勞工保險局",
-      "accidentDate": "2025-10-15",
-      "status": "進行中",
-      "receiveDate": "2025-11-01",
-      "deadline": "2026-02-28",
-      "deadlineNote": "勞保局補件法定截止",
-      "plannedDate": "2026-02-10",
-      "plannedDateNote": "預計備齊所有文件送出",
-      "amount": 350000,
-      "note": "需補就醫證明，已向勞保局確認收件號碼 123456789",
-      "created": "2025-11-01",
-      "updated": "2026-01-10"
-    },
     {
       "id": "A002",
       "type": "職災補償賠償",
@@ -163,45 +144,6 @@
   ],
   "tracks": [
     {
-      "id": "TR-A001-1",
-      "caseId": "A001",
-      "name": "勞工保險傷病給付",
-      "type": "勞工保險給付",
-      "status": "進行中",
-      "deadline": "2026-02-28",
-      "deadlineNote": "勞保局補件截止",
-      "plannedDate": "2026-02-10",
-      "plannedDateNote": "預計備齊文件",
-      "amount": 150000,
-      "note": ""
-    },
-    {
-      "id": "TR-A001-2",
-      "caseId": "A001",
-      "name": "職災醫療給付",
-      "type": "職災保險給付",
-      "status": "進行中",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "2026-03-01",
-      "plannedDateNote": "預計申請完成",
-      "amount": 80000,
-      "note": "同步申請職災保險"
-    },
-    {
-      "id": "TR-A001-3",
-      "caseId": "A001",
-      "name": "雇主職災補償",
-      "type": "職災補償賠償",
-      "status": "進行中",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "2026-04-01",
-      "plannedDateNote": "協商目標",
-      "amount": 120000,
-      "note": "另向雇主求償差額"
-    },
-    {
       "id": "TR-A002-1",
       "caseId": "A002",
       "name": "職災認定申請",
@@ -342,78 +284,6 @@
     }
   ],
   "progress": [
-    {
-      "caseId": "A001",
-      "trackId": "TR-A001-1",
-      "date": "2025-11-01",
-      "stage": "收案",
-      "desc": "收到委託，取得授權書及身分證件",
-      "sendRecv": "收件",
-      "nextStep": "整理病歷資料",
-      "nextDate": "2025-11-15",
-      "note": "",
-      "id": "P0001"
-    },
-    {
-      "caseId": "A001",
-      "trackId": "TR-A001-1",
-      "date": "2025-11-20",
-      "stage": "補件",
-      "desc": "至台南醫院申請診斷證明書及病歷",
-      "sendRecv": "",
-      "nextStep": "準備申請書",
-      "nextDate": "2025-12-05",
-      "note": "",
-      "id": "P0002"
-    },
-    {
-      "caseId": "A001",
-      "trackId": "TR-A001-1",
-      "date": "2025-12-10",
-      "stage": "送件",
-      "desc": "向勞保局送件申請傷病給付，掛號123456789",
-      "sendRecv": "送件",
-      "nextStep": "等待審查",
-      "nextDate": "2026-02-10",
-      "note": "已補足所有文件",
-      "id": "P0003"
-    },
-    {
-      "caseId": "A001",
-      "trackId": "TR-A001-2",
-      "date": "2025-11-05",
-      "stage": "收案",
-      "desc": "同步申請職災保險醫療給付",
-      "sendRecv": "收件",
-      "nextStep": "備妥醫療費用單據",
-      "nextDate": "2025-12-01",
-      "note": "",
-      "id": "P0004"
-    },
-    {
-      "caseId": "A001",
-      "trackId": "TR-A001-2",
-      "date": "2026-01-10",
-      "stage": "送件",
-      "desc": "送件申請職災醫療給付",
-      "sendRecv": "送件",
-      "nextStep": "等待審查",
-      "nextDate": "2026-03-01",
-      "note": "",
-      "id": "P0005"
-    },
-    {
-      "caseId": "A001",
-      "trackId": "TR-A001-3",
-      "date": "2026-01-15",
-      "stage": "收案",
-      "desc": "向雇主主張職災補償差額責任",
-      "sendRecv": "",
-      "nextStep": "計算差額金額",
-      "nextDate": "2026-02-01",
-      "note": "勞基法第59條",
-      "id": "P0006"
-    },
     {
       "caseId": "A002",
       "trackId": "TR-A002-1",
