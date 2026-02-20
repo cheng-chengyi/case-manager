@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T07:33:30.215Z",
+  "_date": "2026-02-20T07:37:55.542Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -143,6 +143,27 @@
       "deadline": "2026-04-30",
       "deadlineNote": "",
       "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20"
+    },
+    {
+      "id": "1140923_鄭淑惠(車禍)",
+      "type": "車禍處理程序",
+      "name": "鄭淑惠",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "",
+      "accidentDate": "2025-09-23",
+      "status": "已調解完成",
+      "receiveDate": "2026-02-20",
+      "deadline": "2026-02-12",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-12",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
