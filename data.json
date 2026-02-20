@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T05:46:02.400Z",
+  "_date": "2026-02-20T06:03:52.147Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -297,6 +297,18 @@
       "done": false,
       "doneDate": null,
       "created": "2026-02-19"
+    },
+    {
+      "id": "T0005",
+      "title": "確認張文浩勞動能力減損",
+      "dueDate": "",
+      "remind": "2026-03-06",
+      "caseId": "",
+      "note": "",
+      "subtasks": [],
+      "done": false,
+      "doneDate": null,
+      "created": "2026-02-20"
     }
   ]
 }
