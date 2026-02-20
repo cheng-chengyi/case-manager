@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-20T13:56:48.238Z",
+  "_date": "2026-02-20T13:58:00.678Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -752,6 +752,23 @@
       "note": "",
       "created": "2026-02-20",
       "todos": []
+    },
+    {
+      "id": "TR-1120328_毛上瑋(職災墜落)-1",
+      "caseId": "1120328_毛上瑋(職災墜落)",
+      "name": "毛上瑋_職災失能給付_爭議審議",
+      "type": "爭議審議訴願",
+      "insurer": "勞保局",
+      "contact": "",
+      "contactPhone": "",
+      "status": "爭議審議",
+      "deadline": "2026-04-30",
+      "deadlineNote": "",
+      "plannedDate": "2026-05-31",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20"
     }
   ],
   "progress": [
@@ -918,6 +935,18 @@
       "date": "2026-02-20",
       "stage": "審核中",
       "desc": "建立追蹤軸：蘇新蔭_友邦人壽失能險申請",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0030",
+      "caseId": "1120328_毛上瑋(職災墜落)",
+      "trackId": "TR-1120328_毛上瑋(職災墜落)-1",
+      "date": "2026-02-20",
+      "stage": "爭議審議",
+      "desc": "建立追蹤軸：毛上瑋_職災失能給付_爭議審議",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
