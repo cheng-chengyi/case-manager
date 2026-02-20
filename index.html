@@ -159,6 +159,7 @@
   .detail-main {}
   .detail-aside {}
   .card { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; margin-bottom: 16px; }
+  .track-highlight { box-shadow: 0 0 0 3px rgba(0,114,178,0.4), var(--shadow); border-color: #0072B2; transition: box-shadow 0.2s, border-color 0.2s; }
   .card-head { padding: 14px 18px; border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 700; color: var(--navy); display: flex; align-items: center; justify-content: space-between; }
   .card-body { padding: 16px 18px; }
   .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -1745,13 +1746,20 @@ function _trackAction(el) {
   var action = el.getAttribute('data-action');
   var caseId = el.getAttribute('data-case');
   var trackId = el.getAttribute('data-track');
+  // 清除所有追蹤軸高亮
+  document.querySelectorAll('.track-highlight').forEach(function(e){ e.classList.remove('track-highlight'); });
+  // 高亮當前追蹤軸
+  if (trackId) {
+    var card = document.getElementById('track-' + trackId);
+    if (card) { card.classList.add('track-highlight'); }
+  }
   if (action === 'addProgress') openAddProgress(caseId, trackId);
   else if (action === 'editTrack') openEditTrack(trackId);
   else if (action === 'copyTrack') copyTrack(trackId);
   else if (action === 'addTrack') openAddTrack(caseId);
   else if (action === 'scrollTo') {
     var el2 = document.getElementById('track-' + trackId);
-    if (el2) el2.scrollIntoView({behavior: 'smooth'});
+    if (el2) { el2.classList.add('track-highlight'); el2.scrollIntoView({behavior: 'smooth'}); }
   }
 }
 
