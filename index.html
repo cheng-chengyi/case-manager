@@ -472,6 +472,7 @@ const stageColor = {
   '民事訴訟': 'badge-red', '爭議審議': 'badge-blue', '訴願中': 'badge-blue', '撤案': 'badge-gray'
 };
 function fmt(n) { return n ? parseInt(n).toLocaleString('zh-TW') : '-'; }
+function esc(s) { if (s == null) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 function fmtDate(d) {
   if (!d) return '-';
   const parts = d.split('-');
@@ -566,9 +567,10 @@ const views = {
 dashboard() {
   const cases = db.cases;
   const total = cases.length;
-  const active = cases.filter(c => c.status === '進行中').length;
+  const _closedStatuses = ['已給付','已調解完成','已結案','撤案'];
+  const active = cases.filter(c => !_closedStatuses.includes(c.status) && c.status !== '未申請').length;
   const pending = cases.filter(c => c.status === '待補件').length;
-  const closed = cases.filter(c => c.status === '已給付' || c.status === '已調解完成' || c.status === '已結案' || c.status === '撤案').length;
+  const closed = cases.filter(c => _closedStatuses.includes(c.status)).length;
   const typeGroups = [
     { label:'勞工保險', cls:'labor', types:['勞保生育給付','勞保傷病給付','勞保失能給付','勞保老年給付','勞保死亡給付'] },
     { label:'職災保險', cls:'injury-ins', types:['職保醫療給付','職保傷病給付','職保失能給付','職保死亡給付'] },
@@ -577,17 +579,20 @@ dashboard() {
     { label:'商業保險', cls:'commercial', types:['壽險','醫療險','意外險','失能險','長照險','強制險'] },
   ];
   
-  const deadlines = cases.filter(c => (c.deadline || c.plannedDate) && c.status !== '已給付' && c.status !== '已調解完成')
-    .filter(c => {
-      const d1 = c.deadline ? daysUntil(c.deadline) : null;
-      const d2 = c.plannedDate ? daysUntil(c.plannedDate) : null;
-      return (d1 !== null && d1 <= 45) || (d2 !== null && d2 <= 45);
-    })
-    .sort((a,b) => {
-      const da = Math.min(a.deadline ? daysUntil(a.deadline) : 999, a.plannedDate ? daysUntil(a.plannedDate) : 999);
-      const db2 = Math.min(b.deadline ? daysUntil(b.deadline) : 999, b.plannedDate ? daysUntil(b.plannedDate) : 999);
-      return da - db2;
-    });
+  // 彙整近期期限：追蹤軸優先，無追蹤軸時 fallback 到案件層級
+  const _dlItems = [];
+  const _activeCaseIds = new Set(cases.filter(c => !_closedStatuses.includes(c.status)).map(c => c.id));
+  db.tracks.filter(t => _activeCaseIds.has(t.caseId) && !_closedStatuses.includes(t.status)).forEach(t => {
+    const c = cases.find(x => x.id === t.caseId);
+    if (!c) return;
+    if (t.deadline) { const d = daysUntil(t.deadline); if (d !== null && d <= 45) _dlItems.push({ dtype:'deadline', caseId:c.id, name:c.name, trackName:t.name, date:t.deadline, note:t.deadlineNote||t.name, days:d }); }
+    if (t.plannedDate) { const d = daysUntil(t.plannedDate); if (d !== null && d <= 45) _dlItems.push({ dtype:'planned', caseId:c.id, name:c.name, trackName:t.name, date:t.plannedDate, note:t.plannedDateNote||t.name, days:d }); }
+  });
+  cases.filter(c => _activeCaseIds.has(c.id) && !db.tracks.some(t => t.caseId === c.id)).forEach(c => {
+    if (c.deadline) { const d = daysUntil(c.deadline); if (d !== null && d <= 45) _dlItems.push({ dtype:'deadline', caseId:c.id, name:c.name, trackName:null, date:c.deadline, note:c.deadlineNote, days:d }); }
+    if (c.plannedDate) { const d = daysUntil(c.plannedDate); if (d !== null && d <= 45) _dlItems.push({ dtype:'planned', caseId:c.id, name:c.name, trackName:null, date:c.plannedDate, note:c.plannedDateNote, days:d }); }
+  });
+  _dlItems.sort((a,b) => a.days - b.days);
 
   const _now = new Date();
   const rocY = _now.getFullYear() - 1911;
@@ -610,7 +615,7 @@ dashboard() {
         <div class="stat-num">${total}</div>
         
       </div>
-      <div class="stat-card active" onclick="filterStatus='進行中';navigate('cases')" style="cursor:pointer">
+      <div class="stat-card active" onclick="filterStatus='_active';navigate('cases')" style="cursor:pointer">
         <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0072B2" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <div class="stat-label">進行中</div>
         <div class="stat-num" style="color:#0072B2">${active}</div>
@@ -646,33 +651,20 @@ dashboard() {
           <div class="table-header">
             <div style="font-size:15px;font-weight:700;color:var(--navy)">⏰ 近期期限（45天內）</div>
           </div>
-          ${deadlines.length === 0 ? '<div class="empty"><p>近期無到期事項</p></div>' : `
+          ${_dlItems.length === 0 ? '<div class="empty"><p>近期無到期事項</p></div>' : `
           <div style="padding:12px 16px">
-            ${deadlines.map(c => {
-              const rows = [];
-              if (c.deadline && daysUntil(c.deadline) <= 45) {
-                const days = daysUntil(c.deadline);
-                const cls = days <= 14 ? 'deadline-urgent' : days <= 30 ? 'deadline-soon' : 'deadline-ok';
-                rows.push(`<div class="deadline-item ${cls}" onclick="navigate('case-detail','${c.id}')" style="cursor:pointer">
-                  <div>
-                    <div class="deadline-label">${c.name} <span style="font-size:11px;color:#D55E00;font-weight:700;margin-left:6px">⚠️ 截止日期</span></div>
-                    <div style="font-size:11px;color:var(--text-3);margin-top:2px">${c.deadlineNote} · ${fmtDate(c.deadline)}</div>
-                  </div>
-                  ${daysBadge(days)}
-                </div>`);
-              }
-              if (c.plannedDate && daysUntil(c.plannedDate) <= 45) {
-                const days2 = daysUntil(c.plannedDate);
-                const cls2 = days2 <= 7 ? 'deadline-soon' : 'deadline-ok';
-                rows.push(`<div class="deadline-item ${cls2}" onclick="navigate('case-detail','${c.id}')" style="cursor:pointer">
-                  <div>
-                    <div class="deadline-label">${c.name} <span style="font-size:11px;color:#0EA5B0;font-weight:700;margin-left:6px">📋 預計完成</span></div>
-                    <div style="font-size:11px;color:var(--text-3);margin-top:2px">${c.plannedDateNote} · ${fmtDate(c.plannedDate)}</div>
-                  </div>
-                  ${daysBadge(days2)}
-                </div>`);
-              }
-              return rows.join('');
+            ${_dlItems.map(item => {
+              const isDeadline = item.dtype === 'deadline';
+              const cls = isDeadline ? (item.days <= 14 ? 'deadline-urgent' : item.days <= 30 ? 'deadline-soon' : 'deadline-ok') : (item.days <= 7 ? 'deadline-soon' : 'deadline-ok');
+              const tagColor = isDeadline ? '#D55E00' : '#0EA5B0';
+              const tagIcon = isDeadline ? '⚠️ 截止日期' : '📋 預計完成';
+              return `<div class="deadline-item ${cls}" onclick="navigate('case-detail','${item.caseId}')" style="cursor:pointer">
+                <div>
+                  <div class="deadline-label">${esc(item.name)} <span style="font-size:11px;color:${tagColor};font-weight:700;margin-left:6px">${tagIcon}</span></div>
+                  <div style="font-size:11px;color:var(--text-3);margin-top:2px">${esc(item.note)} · ${fmtDate(item.date)}${item.trackName ? ' · '+esc(item.trackName) : ''}</div>
+                </div>
+                ${daysBadge(item.days)}
+              </div>`;
             }).join('')}
           </div>`}
         </div>
@@ -684,7 +676,7 @@ dashboard() {
             ${[...db.cases].sort((a,b) => b.updated.localeCompare(a.updated)).slice(0,5).map(c => `
               <div onclick="navigate('case-detail','${c.id}')" style="padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s" onmouseenter="this.style.background='rgba(15,31,61,0.025)'" onmouseleave="this.style.background=''">
                 <div style="display:flex;align-items:center;justify-content:space-between">
-                  <div style="font-size:13px;font-weight:600">${c.name} <span style="color:var(--text-3);font-weight:400">${c.id}</span></div>
+                  <div style="font-size:13px;font-weight:600">${esc(c.name)} <span style="color:var(--text-3);font-weight:400">${esc(c.id)}</span></div>
                   <span class="badge ${statusColor[c.status]}">${c.status}</span>
                 </div>
                 <div style="font-size:11px;color:var(--text-3);margin-top:3px">${c.type} · 更新：${fmtDate(c.updated)}</div>
@@ -705,6 +697,7 @@ cases() {
     else list = list.filter(c => c.type === filterType);
   }
   if (filterStatus === '_closed') list = list.filter(c => c.status === '已給付' || c.status === '已調解完成' || c.status === '已結案' || c.status === '撤案');
+  else if (filterStatus === '_active') list = list.filter(c => !['已給付','已調解完成','已結案','撤案','未申請'].includes(c.status));
   else if (filterStatus) list = list.filter(c => c.status === filterStatus);
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
@@ -730,7 +723,7 @@ cases() {
     { label:'車禍職災爭議', types:['車禍處理程序','爭議審議訴願','職災補償賠償','勞資爭議事項'] },
     { label:'商業保險', types:['商業保險理賠','壽險','醫療險','意外險','失能險','長照險','強制險'] },
   ];
-  const statusLabel = filterStatus ? ' · 篩選：'+(filterStatus==='_closed'?'已結案/完成':filterStatus) : '';
+  const statusLabel = filterStatus ? ' · 篩選：'+(filterStatus==='_closed'?'已結案/完成':filterStatus==='_active'?'進行中':filterStatus) : '';
   return `
   <div class="topbar">
     <div class="topbar-title">個案清單 <span class="text-muted">（${list.length} 筆${statusLabel}）</span></div>
@@ -768,13 +761,13 @@ cases() {
             const daysP = daysUntil(c.plannedDate);
             return `
             <tr onclick="navigate('case-detail','${c.id}')">
-              <td><span style="font-family:'Playfair Display';font-weight:600;color:var(--navy)">${c.id}</span></td>
-              <td><strong>${c.name}</strong></td>
-              <td><span class="badge ${typeColor[c.type]}">${c.type}</span></td>
-              <td style="max-width:140px"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">${c.employer}</div>${c.insurer?`<div style="font-size:11px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">${c.insurer}</div>`:""}</td>
+              <td><span style="font-family:'Playfair Display';font-weight:600;color:var(--navy)">${esc(c.id)}</span></td>
+              <td><strong>${esc(c.name)}</strong></td>
+              <td><span class="badge ${typeColor[c.type]}">${esc(c.type)}</span></td>
+              <td style="max-width:140px"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">${esc(c.employer)}</div>${c.insurer?`<div style="font-size:11px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">${esc(c.insurer)}</div>`:""}</td>
               <td><span class="badge ${statusColor[c.status]}">${c.status}</span></td>
-              <td>${c.plannedDate ? `<div style="font-size:13px;font-weight:600;color:#0EA5B0">${fmtDate(c.plannedDate)}</div><div style="font-size:11px;color:var(--text-3)">${c.plannedDateNote}</div>${daysBadge(daysP)}` : '<span style="color:var(--text-3);font-size:11px">未設定</span>'}</td>
-              <td>${c.deadline ? `<div style="font-size:13px;font-weight:600;color:#D55E00">${fmtDate(c.deadline)}</div><div style="font-size:11px;color:var(--text-3)">${c.deadlineNote}</div>${daysBadge(days)}` : '<span style="color:var(--text-3);font-size:11px">未設定</span>'}</td>
+              <td>${c.plannedDate ? `<div style="font-size:13px;font-weight:600;color:#0EA5B0">${fmtDate(c.plannedDate)}</div><div style="font-size:11px;color:var(--text-3)">${esc(c.plannedDateNote)}</div>${daysBadge(daysP)}` : '<span style="color:var(--text-3);font-size:11px">未設定</span>'}</td>
+              <td>${c.deadline ? `<div style="font-size:13px;font-weight:600;color:#D55E00">${fmtDate(c.deadline)}</div><div style="font-size:11px;color:var(--text-3)">${esc(c.deadlineNote)}</div>${daysBadge(days)}` : '<span style="color:var(--text-3);font-size:11px">未設定</span>'}</td>
               <td onclick="event.stopPropagation()" style="white-space:nowrap">
                 <button class="btn btn-outline btn-sm" onclick="openEditCase('${c.id}');event.stopPropagation()">編輯</button>
               </td>
@@ -810,19 +803,19 @@ cases() {
         + fmtDate(tr.plannedDate) + ' ' + daysBadge(daysP) + '</div>' : '';
 
     var noteHtml = tr.note
-      ? '<div style="font-size:11px;color:var(--text-2);padding:10px 12px;background:var(--surface-2);border-radius:6px;margin-bottom:10px">'+tr.note+'</div>' : '';
+      ? '<div style="font-size:11px;color:var(--text-2);padding:10px 12px;background:var(--surface-2);border-radius:6px;margin-bottom:10px">'+esc(tr.note)+'</div>' : '';
 
     return '<div class="card" id="track-'+tr.id+'" style="border-top:3px solid '+col+';margin-bottom:20px">'
       + '<div class="card-head" style="background:'+bg+';padding:14px 18px">'
       + '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">'
       + '<div style="width:10px;height:10px;border-radius:50%;background:'+col+';flex-shrink:0"></div>'
-      + '<span style="font-size:15px;font-weight:700;color:'+col+'">'+tr.name+'</span>'
-      + '<span class="badge '+(typeColor[tr.type]||'badge-gray')+'">'+tr.type+'</span>'
-      + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'">'+tr.status+'</span>'
+      + '<span style="font-size:15px;font-weight:700;color:'+col+'">'+esc(tr.name)+'</span>'
+      + '<span class="badge '+(typeColor[tr.type]||'badge-gray')+'">'+esc(tr.type)+'</span>'
+      + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'">'+esc(tr.status)+'</span>'
       + '<span style="margin-left:auto;font-size:13px;font-weight:700;color:'+col+'" class="amount">NT$ '+fmt(tr.amount)+'</span>'
       + '</div>'
       + (deadlineRow||plannedRow ? '<div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap">'+deadlineRow+plannedRow+'</div>' : '')
-      + (tr.contact ? '<div style="margin-top:8px;font-size:11px;color:var(--text-2)">👤 承辦：<strong>'+tr.contact+'</strong>'+(tr.contactPhone?' ☎ '+tr.contactPhone:'')+'</div>' : '')
+      + (tr.contact ? '<div style="margin-top:8px;font-size:11px;color:var(--text-2)">👤 承辦：<strong>'+esc(tr.contact)+'</strong>'+(tr.contactPhone?' ☎ '+esc(tr.contactPhone):'')+'</div>' : '')
       + '</div>'
       + '<div class="card-body" style="padding:12px 20px">'
       + noteHtml
@@ -845,8 +838,8 @@ cases() {
         return '<div style="padding:8px 10px;border-radius:8px;margin-bottom:6px;background:'+bg2+';border:1px solid rgba(0,0,0,0.05)">'
           + '<div style="display:flex;align-items:center;gap:8px;cursor:pointer" onclick="_trackAction(this)" data-action="scrollTo" data-track="'+tr.id+'">'
           + '<div style="width:8px;height:8px;border-radius:50%;background:'+col2+';flex-shrink:0"></div>'
-          + '<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+tr.name+'</div>'
-          + '<div style="font-size:11px;color:var(--text-3)">'+tr.type+'</div></div>'
+          + '<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(tr.name)+'</div>'
+          + '<div style="font-size:11px;color:var(--text-3)">'+esc(tr.type)+'</div></div>'
           + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'" style="font-size:11px">'+tr.status+'</span>'
           + '</div>'
           + '<div style="display:flex;gap:4px;margin-top:6px;padding-left:16px">'
@@ -887,7 +880,7 @@ cases() {
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:12px">
       <button class="btn btn-outline btn-sm" onclick="navigate('cases')">← 返回</button>
-      <div class="topbar-title">${c.name}｜${c.id}</div>
+      <div class="topbar-title">${esc(c.name)}｜${esc(c.id)}</div>
       <span class="badge ${statusColor[c.status]}">${c.status}</span>
     </div>
     <div class="topbar-actions">
@@ -904,16 +897,16 @@ cases() {
       </div>
       <div class="card-body">
         <div class="info-grid">
-          <div class="info-item"><label>姓名</label><value>${c.name}</value></div>
-          <div class="info-item"><label>連絡電話</label><value>${c.phone}</value></div>
-          <div class="info-item"><label>地址</label><value>${c.address||'—'}</value></div>
-          <div class="info-item"><label>受僱公司</label><value>${c.employer}</value></div>
-          <div class="info-item"><label>投保單位</label><value>${c.insuredUnit||c.employer||'—'}</value></div>
-          <div class="info-item"><label>保險公司/主管機關</label><value>${c.insurer||'—'}</value></div>
+          <div class="info-item"><label>姓名</label><value>${esc(c.name)}</value></div>
+          <div class="info-item"><label>連絡電話</label><value>${esc(c.phone)}</value></div>
+          <div class="info-item"><label>地址</label><value>${esc(c.address)||'—'}</value></div>
+          <div class="info-item"><label>受僱公司</label><value>${esc(c.employer)}</value></div>
+          <div class="info-item"><label>投保單位</label><value>${esc(c.insuredUnit||c.employer)||'—'}</value></div>
+          <div class="info-item"><label>保險公司/主管機關</label><value>${esc(c.insurer)||'—'}</value></div>
           <div class="info-item"><label>事故/起始日</label><value>${fmtDate(c.accidentDate)}</value></div>
           <div class="info-item"><label>受理日期</label><value>${fmtDate(c.receiveDate)}</value></div>
         </div>
-        ${c.note ? '<div class="divider"></div><div style="font-size:11px;color:var(--text-2)">'+c.note+'</div>' : ''}
+        ${c.note ? '<div class="divider"></div><div style="font-size:11px;color:var(--text-2)">'+esc(c.note)+'</div>' : ''}
       </div>
     </div>
 
@@ -930,7 +923,7 @@ cases() {
                 var daysP = daysUntil(tr.plannedDate);
                 var deadlineInfo = tr.deadline ? '<span style="font-size:11px;color:#D55E00">🔔 '+fmtDate(tr.deadline)+' '+daysBadge(days)+'</span>' : '';
                 var plannedInfo = tr.plannedDate ? '<span style="font-size:11px;color:#0EA5B0">📋 '+fmtDate(tr.plannedDate)+' '+daysBadge(daysP)+'</span>' : '';
-                var contactInfo = tr.contact ? '<span style="font-size:11px;color:var(--text-3)">👤 '+tr.contact+(tr.contactPhone?' ☎ '+tr.contactPhone:'')+'</span>' : '';
+                var contactInfo = tr.contact ? '<span style="font-size:11px;color:var(--text-3)">👤 '+esc(tr.contact)+(tr.contactPhone?' ☎ '+esc(tr.contactPhone):'')+'</span>' : '';
                 var trackTodos = (tr.todos||[]);
                 var pendingTodos = trackTodos.filter(function(t){return !t.done});
                 var doneTodos = trackTodos.filter(function(t){return t.done});
@@ -944,7 +937,7 @@ cases() {
                     var remindHit = todo.remind && todo.remind <= nowStr2 && !todo.done;
                     return '<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:12px;'+(todo.done?'opacity:0.5':'')+'">'
                       + '<input type="checkbox" '+(todo.done?'checked':'')+' onchange="toggleTrackTodo(\''+tr.id+'\','+ti+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2;flex-shrink:0">'
-                      + '<span style="flex:1;'+(todo.done?'text-decoration:line-through;color:var(--text-3)':'')+(isOd?';color:#D55E00':'')+(remindHit&&!todo.done?';font-weight:600':'')+'">'+( remindHit&&!todo.done?'⏰ ':'')+todo.title+'</span>'
+                      + '<span style="flex:1;'+(todo.done?'text-decoration:line-through;color:var(--text-3)':'')+(isOd?';color:#D55E00':'')+(remindHit&&!todo.done?';font-weight:600':'')+'">'+( remindHit&&!todo.done?'⏰ ':'')+esc(todo.title)+'</span>'
                       + (todo.dueDate ? '<span style="font-size:10px;color:'+(isOd?'#D55E00':'var(--text-3)')+'">📅'+fmtDate(todo.dueDate)+'</span>' : '')
                       + (todo.remind ? '<span style="font-size:10px;color:'+(remindHit?'#D55E00':'var(--text-3)')+'">🔔'+fmtDate(todo.remind)+'</span>' : '')
                       + '<button onclick="removeTrackTodo(\''+tr.id+'\','+ti+')" style="background:none;border:none;cursor:pointer;font-size:11px;color:#D55E00;padding:0 2px" title="刪除">✕</button>'
@@ -955,13 +948,13 @@ cases() {
                 return '<div id="track-'+tr.id+'" style="padding:14px 18px;border-bottom:1px solid var(--border);border-left:4px solid '+col2+'">'
                   + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
                   + '<div style="width:8px;height:8px;border-radius:50%;background:'+col2+';flex-shrink:0"></div>'
-                  + '<span style="font-size:14px;font-weight:700">'+tr.name+'</span>'
-                  + '<span class="badge '+(typeColor[tr.type]||'badge-gray')+'" style="font-size:11px">'+tr.type+'</span>'
-                  + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'" style="font-size:11px">'+tr.status+'</span>'
+                  + '<span style="font-size:14px;font-weight:700">'+esc(tr.name)+'</span>'
+                  + '<span class="badge '+(typeColor[tr.type]||'badge-gray')+'" style="font-size:11px">'+esc(tr.type)+'</span>'
+                  + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'" style="font-size:11px">'+esc(tr.status)+'</span>'
                   + '<span style="font-size:13px;font-weight:600;color:'+col2+';margin-left:auto" class="amount">NT$ '+fmt(tr.amount)+'</span>'
                   + '</div>'
                   + ((deadlineInfo||plannedInfo||contactInfo) ? '<div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap">'+deadlineInfo+plannedInfo+contactInfo+'</div>' : '')
-                  + (tr.note ? '<div style="font-size:11px;color:var(--text-3);margin-top:4px">'+tr.note+'</div>' : '')
+                  + (tr.note ? '<div style="font-size:11px;color:var(--text-3);margin-top:4px">'+esc(tr.note)+'</div>' : '')
                   + todoHtml
                   + '<div style="display:flex;gap:6px;margin-top:8px">'
                   + '<button class="btn btn-outline btn-sm" style="font-size:11px;border-color:'+col2+';color:'+col2+'" onclick="_trackAction(this)" data-action="addProgress" data-case="'+c.id+'" data-track="'+tr.id+'">＋ 新增進度</button>'
@@ -992,7 +985,7 @@ cases() {
                 var sOverdue = s.dueDate && s.dueDate < nowStr && !s.done;
                 return '<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px">'
                   + '<input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2">'
-                  + '<span style="flex:1;'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+'">'+s.title+'</span>'
+                  + '<span style="flex:1;'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+'">'+esc(s.title)+'</span>'
                   + (s.dueDate ? '<span style="font-size:11px;color:'+(sOverdue?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>' : '')
                   + '</div>';
               }).join('') + '</div>';
@@ -1000,10 +993,10 @@ cases() {
             return '<div style="padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px">'
               + '<input type="checkbox" onchange="toggleTodo(\''+t.id+'\')" style="width:16px;height:16px;margin-top:2px;cursor:pointer;accent-color:#0072B2;flex-shrink:0">'
               + '<div style="flex:1;min-width:0">'
-              + '<div style="font-size:13px;font-weight:600;'+(isOverdue?'color:#D55E00':'')+'">'+t.title
+              + '<div style="font-size:13px;font-weight:600;'+(isOverdue?'color:#D55E00':'')+'">'+esc(t.title)
               + (t.subtasks&&t.subtasks.length ? ' <span style="font-size:11px;font-weight:400;color:var(--text-3)">'+t.subtasks.filter(function(s){return s.done}).length+'/'+t.subtasks.length+'</span>' : '')
               + '</div>'
-              + (t.note ? '<div style="font-size:11px;color:var(--text-3);margin-top:2px">'+t.note+'</div>' : '')
+              + (t.note ? '<div style="font-size:11px;color:var(--text-3);margin-top:2px">'+esc(t.note)+'</div>' : '')
               + subtasksHtml
               + '<div style="display:flex;gap:10px;margin-top:4px;font-size:11px;color:var(--text-3)">'
               + (t.dueDate ? '<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>' : '')
@@ -1039,14 +1032,14 @@ progress() {
             const c = db.cases.find(x => x.id === p.caseId);
             const tr = p.trackId ? db.tracks.find(t => t.id === p.trackId) : null;
             return `<tr onclick="navigate('case-detail','${p.caseId}')" style="cursor:pointer">
-              <td><strong>${p.caseId}</strong><div style="font-size:11px;color:var(--text-3)">${c?c.name:''}</div></td>
-              <td style="max-width:130px">${tr ? `<div style="font-size:13px;font-weight:600">${tr.name}</div><span class="badge ${typeColor[tr.type]||'badge-gray'}" style="font-size:11px">${tr.type}</span>` : '<span style="color:var(--text-3);font-size:11px">—</span>'}</td>
+              <td><strong>${esc(p.caseId)}</strong><div style="font-size:11px;color:var(--text-3)">${c?esc(c.name):''}</div></td>
+              <td style="max-width:130px">${tr ? `<div style="font-size:13px;font-weight:600">${esc(tr.name)}</div><span class="badge ${typeColor[tr.type]||'badge-gray'}" style="font-size:11px">${esc(tr.type)}</span>` : '<span style="color:var(--text-3);font-size:11px">—</span>'}</td>
               <td style="white-space:nowrap">${fmtDate(p.date)}</td>
-              <td><span class="badge ${stageColor[p.stage]||'badge-gray'}">${p.stage}</span></td>
-              <td style="max-width:180px">${p.desc}</td>
-              <td>${p.sendRecv ? `<span class="badge ${p.sendRecv==='收件'?'badge-green':'badge-teal'}">${p.sendRecv}</span>` : '-'}</td>
-              <td style="max-width:130px">${p.nextStep||'-'}${p.nextDate?`<div style="font-size:11px;color:var(--text-3)">${fmtDate(p.nextDate)}</div>`:''}</td>
-              <td style="max-width:110px;color:var(--text-3);font-size:11px">${p.note||'-'}</td>
+              <td><span class="badge ${stageColor[p.stage]||'badge-gray'}">${esc(p.stage)}</span></td>
+              <td style="max-width:180px">${esc(p.desc)}</td>
+              <td>${p.sendRecv ? `<span class="badge ${p.sendRecv==='收件'?'badge-green':'badge-teal'}">${esc(p.sendRecv)}</span>` : '-'}</td>
+              <td style="max-width:130px">${esc(p.nextStep)||'-'}${p.nextDate?`<div style="font-size:11px;color:var(--text-3)">${fmtDate(p.nextDate)}</div>`:''}</td>
+              <td style="max-width:110px;color:var(--text-3);font-size:11px">${esc(p.note)||'-'}</td>
             </tr>`;
           }).join('')}
         </tbody>
@@ -1071,12 +1064,12 @@ progress() {
           return `<div style="padding:10px 16px;border-bottom:1px solid var(--border)">
             <div style="display:flex;align-items:center;gap:8px">
               <input type="checkbox" onchange="toggleTodo('${t.id}')" style="width:16px;height:16px;cursor:pointer;accent-color:#0072B2">
-              <span style="font-size:13px;font-weight:600;${isOverdue?'color:#D55E00':''}">${t.title}</span>
+              <span style="font-size:13px;font-weight:600;${isOverdue?'color:#D55E00':''}">${esc(t.title)}</span>
               ${subTotal?'<span style="font-size:11px;color:var(--text-3)">'+subDone+'/'+subTotal+'</span>':''}
               ${t.dueDate?'<span style="font-size:11px;margin-left:auto;color:'+(isOverdue?'#D55E00':'var(--text-3)')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
             </div>
             ${subTotal?'<div style="padding-left:24px;margin-top:4px">'+
-              (t.subtasks||[]).map((s,i)=>'<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:13px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+'">'+s.title+'</span>'+(s.dueDate?'<span style="font-size:11px;color:var(--text-3);margin-left:auto">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')
+              (t.subtasks||[]).map((s,i)=>'<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:13px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+'">'+esc(s.title)+'</span>'+(s.dueDate?'<span style="font-size:11px;color:var(--text-3);margin-left:auto">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')
             +'</div>':''}
           </div>`;
         }).join('')}
@@ -1093,28 +1086,28 @@ progress() {
       if (!p.date) return;
       if (!eventsByDate[p.date]) eventsByDate[p.date] = [];
       const c = db.cases.find(x => x.id === p.caseId);
-      eventsByDate[p.date].push({ type:'progress', label:(c?c.name:p.caseId), desc:p.desc, stage:p.stage, caseId:p.caseId, badge:stageColor[p.stage]||'badge-gray', dot:'#0072B2', bg:'rgba(0,114,178,0.08)' });
+      eventsByDate[p.date].push({ type:'progress', label:esc(c?c.name:p.caseId), desc:esc(p.desc), stage:p.stage, caseId:p.caseId, badge:stageColor[p.stage]||'badge-gray', dot:'#0072B2', bg:'rgba(0,114,178,0.08)' });
     });
     allTracks.forEach(tr => {
       const c = db.cases.find(x => x.id === tr.caseId);
       if (tr.deadline) {
         if (!eventsByDate[tr.deadline]) eventsByDate[tr.deadline] = [];
-        eventsByDate[tr.deadline].push({ type:'deadline', label:(c?c.name:tr.caseId)+' 提醒日期', desc:tr.deadlineNote||tr.name, caseId:tr.caseId, badge:'badge-red', dot:'#D55E00', bg:'rgba(213,94,0,0.08)' });
+        eventsByDate[tr.deadline].push({ type:'deadline', label:esc(c?c.name:tr.caseId)+' 提醒日期', desc:esc(tr.deadlineNote||tr.name), caseId:tr.caseId, badge:'badge-red', dot:'#D55E00', bg:'rgba(213,94,0,0.08)' });
       }
       if (tr.plannedDate) {
         if (!eventsByDate[tr.plannedDate]) eventsByDate[tr.plannedDate] = [];
-        eventsByDate[tr.plannedDate].push({ type:'planned', label:(c?c.name:tr.caseId)+' 預計完成', desc:tr.plannedDateNote||tr.name, caseId:tr.caseId, badge:'badge-teal', dot:'#0EA5B0', bg:'rgba(14,165,176,0.08)' });
+        eventsByDate[tr.plannedDate].push({ type:'planned', label:esc(c?c.name:tr.caseId)+' 預計完成', desc:esc(tr.plannedDateNote||tr.name), caseId:tr.caseId, badge:'badge-teal', dot:'#0EA5B0', bg:'rgba(14,165,176,0.08)' });
       }
     });
     // 待辦事項到期日
     (db.todos||[]).filter(t => !t.done).forEach(t => {
       if (t.dueDate) {
         if (!eventsByDate[t.dueDate]) eventsByDate[t.dueDate] = [];
-        eventsByDate[t.dueDate].push({ type:'todo', label:'☐ '+t.title, desc:'', caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C', bg:'rgba(201,168,76,0.08)' });
+        eventsByDate[t.dueDate].push({ type:'todo', label:'☐ '+esc(t.title), desc:'', caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C', bg:'rgba(201,168,76,0.08)' });
       }
       (t.subtasks||[]).filter(s => !s.done && s.dueDate).forEach(s => {
         if (!eventsByDate[s.dueDate]) eventsByDate[s.dueDate] = [];
-        eventsByDate[s.dueDate].push({ type:'todo', label:'☐ '+s.title, desc:t.title, caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C', bg:'rgba(201,168,76,0.08)' });
+        eventsByDate[s.dueDate].push({ type:'todo', label:'☐ '+esc(s.title), desc:esc(t.title), caseId:t.caseId||'', badge:'badge-yellow', dot:'#C9A84C', bg:'rgba(201,168,76,0.08)' });
       });
     });
     const now = new Date();
@@ -1246,10 +1239,10 @@ deadlines() {
     return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px;${done?'opacity:0.6':''}">
       <input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation();markDeadlineDone('${item.id}','deadline')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#56a65c;flex-shrink:0" title="${done?'取消完成':'標記完成'}">
       <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('case-detail','${item.caseId}')">
-        <div style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${item.name} <span style="color:var(--text-3);font-weight:400;font-size:11px">${item.caseId}</span></div>
-        ${item.trackName ? `<div style="font-size:11px;color:var(--text-3)">追蹤軸：${item.trackName}</div>` : ''}
-        <div style="font-size:11px;color:var(--text-3);margin-top:1px">${item.deadlineNote} · ${fmtDate(item.deadline)}</div>
-        <span class="badge ${typeColor[item.type]||'badge-gray'}" style="font-size:11px;margin-top:4px">${item.type}</span>
+        <div style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${esc(item.name)} <span style="color:var(--text-3);font-weight:400;font-size:11px">${esc(item.caseId)}</span></div>
+        ${item.trackName ? `<div style="font-size:11px;color:var(--text-3)">追蹤軸：${esc(item.trackName)}</div>` : ''}
+        <div style="font-size:11px;color:var(--text-3);margin-top:1px">${esc(item.deadlineNote)} · ${fmtDate(item.deadline)}</div>
+        <span class="badge ${typeColor[item.type]||'badge-gray'}" style="font-size:11px;margin-top:4px">${esc(item.type)}</span>
         ${done ? '<span style="font-size:11px;color:#56a65c;margin-left:8px">✅ 完成於 '+fmtDate(item.doneDate)+'</span>' : ''}
       </div>
       <div style="flex-shrink:0">${done ? '<span class="badge badge-green" style="font-size:11px">已完成</span>' : daysBadge(item.days)}</div>
@@ -1263,10 +1256,10 @@ deadlines() {
     return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px;${done?'opacity:0.6':''}">
       <input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation();markDeadlineDone('${item.id}','planned')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#56a65c;flex-shrink:0" title="${done?'取消完成':'標記完成'}">
       <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('case-detail','${item.caseId}')">
-        <div style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${item.name} <span style="color:var(--text-3);font-weight:400;font-size:11px">${item.caseId}</span></div>
-        ${item.trackName ? `<div style="font-size:11px;color:var(--text-3)">追蹤軸：${item.trackName}</div>` : ''}
-        <div style="font-size:11px;color:var(--text-3);margin-top:1px">${item.plannedDateNote} · ${fmtDate(item.plannedDate)}</div>
-        <span class="badge ${typeColor[item.type]||'badge-gray'}" style="font-size:11px;margin-top:4px">${item.type}</span>
+        <div style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${esc(item.name)} <span style="color:var(--text-3);font-weight:400;font-size:11px">${esc(item.caseId)}</span></div>
+        ${item.trackName ? `<div style="font-size:11px;color:var(--text-3)">追蹤軸：${esc(item.trackName)}</div>` : ''}
+        <div style="font-size:11px;color:var(--text-3);margin-top:1px">${esc(item.plannedDateNote)} · ${fmtDate(item.plannedDate)}</div>
+        <span class="badge ${typeColor[item.type]||'badge-gray'}" style="font-size:11px;margin-top:4px">${esc(item.type)}</span>
         ${done ? '<span style="font-size:11px;color:#56a65c;margin-left:8px">✅ 完成於 '+fmtDate(item.doneDate)+'</span>' : ''}
       </div>
       <div style="flex-shrink:0">${done ? '<span class="badge badge-green" style="font-size:11px">已完成</span>' : daysBadge(item.days)}</div>
@@ -1279,8 +1272,8 @@ deadlines() {
     return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px">
       <input type="checkbox" onclick="event.stopPropagation();toggleTodo('${item.id}')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#0072B2;flex-shrink:0" title="標記完成">
       <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('todos')">
-        <div style="font-size:13px;font-weight:700">☐ ${item.name}</div>
-        ${item.caseId ? '<div style="font-size:11px;color:var(--text-3)">📎 '+item.caseId+'</div>' : ''}
+        <div style="font-size:13px;font-weight:700">☐ ${esc(item.name)}</div>
+        ${item.caseId ? '<div style="font-size:11px;color:var(--text-3)">📎 '+esc(item.caseId)+'</div>' : ''}
         <div style="font-size:11px;color:var(--text-3);margin-top:1px">${fmtDate(item.deadline)}</div>
       </div>
       <div style="flex-shrink:0">${daysBadge(item.days)}</div>
@@ -1446,11 +1439,11 @@ todos() {
                 <input type="checkbox" onchange="toggleTodo('${t.id}')" style="width:18px;height:18px;margin-top:2px;cursor:pointer;flex-shrink:0;accent-color:#0072B2">
                 <div style="flex:1;min-width:0">
                   <div style="font-size:13px;font-weight:600;${isOverdue?'color:#D55E00':''}">
-                    ${isAlerted?'⏰ ':''}${t.title}
+                    ${isAlerted?'⏰ ':''}${esc(t.title)}
                     ${(t.subtasks&&t.subtasks.length)?'<span style="font-size:11px;font-weight:400;color:var(--text-3);margin-left:6px">'+t.subtasks.filter(s=>s.done).length+'/'+t.subtasks.length+'</span>':''}
                   </div>
-                  ${t.note?'<div style="font-size:11px;color:var(--text-3);margin-top:4px;white-space:pre-line">'+t.note+'</div>':''}
-                  ${(t.subtasks&&t.subtasks.length)?'<div style="margin-top:8px;padding-left:4px">'+t.subtasks.map((s,i)=>'<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:15px;height:15px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+';flex:1">'+s.title+'</span>'+(s.dueDate?'<span style="font-size:11px;color:'+(s.dueDate<now.toISOString().slice(0,10)&&!s.done?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')+'</div>':''}
+                  ${t.note?'<div style="font-size:11px;color:var(--text-3);margin-top:4px;white-space:pre-line">'+esc(t.note)+'</div>':''}
+                  ${(t.subtasks&&t.subtasks.length)?'<div style="margin-top:8px;padding-left:4px">'+t.subtasks.map((s,i)=>'<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:15px;height:15px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+';flex:1">'+esc(s.title)+'</span>'+(s.dueDate?'<span style="font-size:11px;color:'+(s.dueDate<now.toISOString().slice(0,10)&&!s.done?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')+'</div>':''}
                   <div style="display:flex;gap:12px;margin-top:6px;font-size:11px;color:var(--text-3);flex-wrap:wrap">
                     ${t.remind?'<span>⏰ '+fmtDate(t.remind)+'</span>':''}
                     ${t.dueDate?'<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
@@ -1486,7 +1479,7 @@ todos() {
         ${done.map(t => `<div style="display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--border);opacity:0.6">
           <input type="checkbox" class="todo-done-cb" data-id="${t.id}" style="width:16px;height:16px;cursor:pointer;flex-shrink:0">
           <input type="checkbox" checked onchange="toggleTodo('${t.id}')" style="width:18px;height:18px;cursor:pointer;flex-shrink:0;accent-color:#0072B2" title="取消完成">
-          <div style="flex:1;font-size:13px;text-decoration:line-through;color:var(--text-3)">${t.title}</div>
+          <div style="flex:1;font-size:13px;text-decoration:line-through;color:var(--text-3)">${esc(t.title)}</div>
           <div style="font-size:11px;color:var(--text-3)">${t.doneDate ? fmtDate(t.doneDate) : ''}</div>
           <button class="btn btn-sm btn-outline" onclick="deleteTodo('${t.id}')" title="刪除" style="color:#D55E00;font-size:11px;padding:2px 6px">🗑</button>
         </div>`).join('')}
@@ -1561,8 +1554,8 @@ archive() {
               return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px">'
                 + '<input type="checkbox" class="archive-cb" value="'+c.id+'" checked style="width:16px;height:16px;cursor:pointer">'
                 + '<div style="flex:1;min-width:0">'
-                + '<div style="font-size:13px;font-weight:600">'+c.name+' <span style="color:var(--text-3);font-weight:400">'+c.id+'</span></div>'
-                + '<div style="font-size:11px;color:var(--text-3)">'+c.type+' · '+tCount+' 條追蹤軸 · <span class="badge '+(c.status==='已給付'||c.status==='已調解完成'?'status-closed':'status-closed')+'">'+c.status+'</span></div>'
+                + '<div style="font-size:13px;font-weight:600">'+esc(c.name)+' <span style="color:var(--text-3);font-weight:400">'+esc(c.id)+'</span></div>'
+                + '<div style="font-size:11px;color:var(--text-3)">'+esc(c.type)+' · '+tCount+' 條追蹤軸 · <span class="badge '+(c.status==='已給付'||c.status==='已調解完成'?'status-closed':'status-closed')+'">'+esc(c.status)+'</span></div>'
                 + '</div></div>';
             }).join('')}
           </div>
@@ -1799,16 +1792,16 @@ function openEditCase(id) {
     </div>
     <div class="section-divider">當事人資料</div>
     <div class="form-grid">
-      <div class="field"><label>姓名</label><input type="text" id="f-name" value="${c.name}"></div>
-      <div class="field"><label>連絡電話</label><input type="text" id="f-phone" value="${c.phone}"></div>
+      <div class="field"><label>姓名</label><input type="text" id="f-name" value="${esc(c.name)}"></div>
+      <div class="field"><label>連絡電話</label><input type="text" id="f-phone" value="${esc(c.phone)}"></div>
     </div>
-    <div class="field"><label>地址</label><input type="text" id="f-address" value="${c.address||''}"></div>
+    <div class="field"><label>地址</label><input type="text" id="f-address" value="${esc(c.address||'')}"></div>
     <div class="form-grid">
-      <div class="field"><label>受僱公司</label><input type="text" id="f-employer" value="${c.employer}" oninput="var u=document.getElementById('f-insured-unit');if(u&&!u._edited)u.value=this.value"></div>
-      <div class="field"><label>投保單位</label><input type="text" id="f-insured-unit" value="${c.insuredUnit||c.employer||''}" onfocus="this._edited=true"></div>
+      <div class="field"><label>受僱公司</label><input type="text" id="f-employer" value="${esc(c.employer)}" oninput="var u=document.getElementById('f-insured-unit');if(u&&!u._edited)u.value=this.value"></div>
+      <div class="field"><label>投保單位</label><input type="text" id="f-insured-unit" value="${esc(c.insuredUnit||c.employer||'')}" onfocus="this._edited=true"></div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="f-insurer" list="insurer-dl" value="${c.insurer||''}" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('f-insurer').value='';document.getElementById('f-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
+      <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="f-insurer" list="insurer-dl" value="${esc(c.insurer||'')}" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('f-insurer').value='';document.getElementById('f-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
     </div>
     <div class="form-grid">
       <div class="field"><label>事故/起始日期</label><input type="date" id="f-accident" value="${c.accidentDate}" onchange="var h=document.getElementById('hint-f-accident');if(h)h.textContent=rocHint('f-accident');"><div id="hint-f-accident" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
@@ -1827,17 +1820,17 @@ function openEditCase(id) {
       <div style="font-size:11px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期（內部規劃）</div>
       <div class="form-grid">
         <div class="field"><label>預計完成日期 <span style="color:var(--text-3);font-weight:400;font-size:11px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-planned" value="${c.plannedDate||''}" onchange="var h=document.getElementById('hint-f-planned');if(h)h.textContent=rocHint('f-planned');"><div id="hint-f-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>完成項目說明</label><input type="text" id="f-planned-note" value="${c.plannedDateNote||''}"></div>
+        <div class="field"><label>完成項目說明</label><input type="text" id="f-planned-note" value="${esc(c.plannedDateNote||'')}"></div>
       </div>
     </div>
     <div style="margin-top:10px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
       <div style="font-size:11px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期（法定/機關要求）</div>
       <div class="form-grid">
         <div class="field"><label>截止日期 <span style="color:var(--text-3);font-weight:400;font-size:11px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-deadline" value="${c.deadline}" onchange="var h=document.getElementById('hint-f-deadline');if(h)h.textContent=rocHint('f-deadline');"><div id="hint-f-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>截止說明</label><input type="text" id="f-deadline-note" value="${c.deadlineNote}"></div>
+        <div class="field"><label>截止說明</label><input type="text" id="f-deadline-note" value="${esc(c.deadlineNote)}"></div>
       </div>
     </div>
-    <div class="field" style="margin-top:12px"><label>備註</label><textarea id="f-note" rows="3">${c.note}</textarea></div>
+    <div class="field" style="margin-top:12px"><label>備註</label><textarea id="f-note" rows="3">${esc(c.note)}</textarea></div>
     <div class="divider"></div>
     <button class="btn btn-danger btn-sm" onclick="if(confirm('確定刪除此個案？'))deleteCase('${c.id}')">刪除此個案</button>
   `, () => {
@@ -1912,7 +1905,7 @@ function copyTrack(trackId) {
     name: src.name + '（複製）',
     type: src.type, insurer: src.insurer,
     contact: src.contact || '', contactPhone: src.contactPhone || '',
-    status: '進行中',
+    status: src.status || '未申請',
     deadline: src.deadline || '', deadlineNote: src.deadlineNote || '',
     plannedDate: src.plannedDate || '', plannedDateNote: src.plannedDateNote || '',
     amount: src.amount, note: src.note || '',
@@ -2031,7 +2024,7 @@ function openEditTrack(trackId) {
   openFormModal(`編輯追蹤軸 — ${tr.name}`, `
     <div class="form-grid">
       <div class="field form-full"><label>追蹤軸名稱 *</label>
-        <input type="text" id="ft-name" value="${tr.name}">
+        <input type="text" id="ft-name" value="${esc(tr.name)}">
       </div>
     </div>
     <div class="form-grid">
@@ -2064,31 +2057,31 @@ function openEditTrack(trackId) {
       <div style="font-size:11px;font-weight:700;color:#0072B2;margin-bottom:8px">✓ 結案日期</div>
       <div class="form-grid">
         <div class="field"><label>結案日期</label><input type="date" id="ft-closed-date" value="${tr.closedDate||''}" onchange="var h=document.getElementById('hint-ft-closed-date');if(h)h.textContent=rocHint('ft-closed-date');"><div id="hint-ft-closed-date" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>結案說明</label><input type="text" id="ft-closed-note" value="${tr.closedNote||''}" placeholder="如：核定給付、調解成立"></div>
+        <div class="field"><label>結案說明</label><input type="text" id="ft-closed-note" value="${esc(tr.closedNote||'')}" placeholder="如：核定給付、調解成立"></div>
       </div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="ft-insurer" list="insurer-dl" value="${tr.insurer||''}" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('ft-insurer').value='';document.getElementById('ft-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
-      <div class="field"><label>承辦人員</label><input type="text" id="ft-contact" value="${tr.contact||''}" placeholder="保險公司/機關承辦人姓名"></div>
+      <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="ft-insurer" list="insurer-dl" value="${esc(tr.insurer||'')}" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('ft-insurer').value='';document.getElementById('ft-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
+      <div class="field"><label>承辦人員</label><input type="text" id="ft-contact" value="${esc(tr.contact||'')}" placeholder="保險公司/機關承辦人姓名"></div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>承辦人電話</label><input type="text" id="ft-contact-phone" value="${tr.contactPhone||''}" placeholder="分機或手機"></div>
+      <div class="field"><label>承辦人電話</label><input type="text" id="ft-contact-phone" value="${esc(tr.contactPhone||'')}" placeholder="分機或手機"></div>
       <div class="field"><label>預估金額（元）</label><input type="number" id="ft-amount" value="${tr.amount||''}"></div>
     </div>
     <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
       <div style="font-size:11px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
       <div class="form-grid">
         <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" value="${tr.deadline||''}" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" value="${tr.deadlineNote||''}"></div>
+        <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" value="${esc(tr.deadlineNote||'')}"></div>
       </div>
       <div style="border-top:1px dashed rgba(213,94,0,0.2);margin-top:10px;padding-top:10px">
         <div class="form-grid">
           <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:11px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-          <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" value="${tr.plannedDateNote||''}"></div>
+          <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" value="${esc(tr.plannedDateNote||'')}"></div>
         </div>
       </div>
     </div>
-    <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note" value="${tr.note||''}"></div>
+    <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note" value="${esc(tr.note||'')}"></div>
     <div class="divider"></div>
     <button class="btn btn-danger btn-sm" onclick="if(confirm('確定刪除此追蹤軸？'))deleteTrack('${tr.id}')">刪除此追蹤軸</button>
   `, () => {
@@ -2474,6 +2467,7 @@ function importJson(input) {
       db.cases = data.cases || [];
       db.tracks = data.tracks || [];
       db.progress = data.progress || [];
+      db.todos = data.todos || [];
       saveData(db);
       alert('✅ 匯入完成！共 ' + db.cases.length + ' 筆個案。');
       render();
@@ -2518,14 +2512,15 @@ function restoreArchive(input) {
 
 // ─── Todo Functions ────────────────────────────────────────────
 
-function addSubtaskRow(title, dueDate) {
+function addSubtaskRow(title, dueDate, done) {
   const list = document.getElementById('subtask-list');
   if (!list) return;
   var hint = document.getElementById('subtask-empty');
   if (hint) hint.style.display = 'none';
   const row = document.createElement('div');
+  row.dataset.done = done ? '1' : '0';
   row.style.cssText = 'display:flex;align-items:center;gap:6px;margin-bottom:6px';
-  row.innerHTML = '<input type="text" class="st-title" value="'+(title||'')+'" placeholder="細項名稱" style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px">'
+  row.innerHTML = '<input type="text" class="st-title" value="'+esc(title||'')+'" placeholder="細項名稱" style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px">'
     + '<input type="date" class="st-date" value="'+(dueDate||'')+'" style="width:140px;padding:7px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px">'
     + '<button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;color:#D55E00;cursor:pointer;font-size:16px;padding:4px">✕</button>';
   list.appendChild(row);
@@ -2536,7 +2531,7 @@ function collectSubtasks() {
   const result = [];
   rows.forEach(row => {
     const title = row.querySelector('.st-title').value.trim();
-    if (title) result.push({ title: title, dueDate: row.querySelector('.st-date').value, done: false });
+    if (title) result.push({ title: title, dueDate: row.querySelector('.st-date').value, done: row.dataset.done === '1' });
   });
   return result;
 }
@@ -2584,7 +2579,7 @@ function openEditTodo(id) {
   if (!t) return;
   openFormModal('編輯待辦事項', `
     <div style="display:flex;flex-direction:column;gap:14px">
-      <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" value="${t.title}"></div>
+      <div class="field"><label>待辦內容 *</label><input type="text" id="td-title" value="${esc(t.title)}"></div>
       <div class="form-grid">
         <div class="field"><label>提醒日期</label><input type="date" id="td-remind" value="${(t.remind||'').slice(0,10)}"></div>
         <div class="field"><label>到期日</label><input type="date" id="td-due" value="${t.dueDate||''}"></div>
@@ -2599,7 +2594,7 @@ function openEditTodo(id) {
         </div>
         <div id="subtask-list"></div>
       </div>
-      <div class="field"><label>備註</label><textarea id="td-note" rows="2">${t.note||''}</textarea></div>
+      <div class="field"><label>備註</label><textarea id="td-note" rows="2">${esc(t.note||'')}</textarea></div>
     </div>
   `, function() {
     const title = document.getElementById('td-title').value.trim();
@@ -2614,7 +2609,7 @@ function openEditTodo(id) {
   });
   // 載入既有細項
   setTimeout(function() {
-    (t.subtasks||[]).forEach(function(s) { addSubtaskRow(s.title, s.dueDate); });
+    (t.subtasks||[]).forEach(function(s) { addSubtaskRow(s.title, s.dueDate, s.done); });
   }, 80);
 }
 
@@ -2708,8 +2703,8 @@ function showReminderAlert(items, options = {}) {
   const itemsHtml = items.map(t => {
     const borderColor = t._type === 'overdue' ? '#D55E00' : t._type === 'deadline' ? '#e8a020' : '#0072B2';
     return `<div style="padding:14px 18px;background:rgba(0,0,0,0.03);border-left:4px solid ${borderColor};border-radius:0 8px 8px 0;margin-bottom:10px">
-      <div style="font-size:15px;font-weight:700">${t.title}</div>
-      <div style="font-size:13px;color:#666;margin-top:4px">${t.subtitle || ''}</div>
+      <div style="font-size:15px;font-weight:700">${esc(t.title)}</div>
+      <div style="font-size:13px;color:#666;margin-top:4px">${esc(t.subtitle || '')}</div>
     </div>`;
   }).join('');
 
