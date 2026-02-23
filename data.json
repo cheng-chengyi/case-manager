@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:42:30.160Z",
+  "_date": "2026-02-23T15:43:00.491Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1314,7 +1314,7 @@
     {
       "id": "TR-1130924_余國優(職災墜落)-2",
       "caseId": "1130924_余國優(職災墜落)",
-      "name": "余國優_勞資爭議申請_新北市政府（複製）",
+      "name": "余國優_職災保險失能給付_申請",
       "type": "勞資爭議事項",
       "insurer": "",
       "contact": "",
@@ -1322,12 +1322,14 @@
       "status": "未申請",
       "deadline": "2026-05-31",
       "deadlineNote": "",
-      "plannedDate": "2026-06-30",
+      "plannedDate": "2026-09-30",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
       "todos": [],
-      "created": "2026-02-23"
+      "created": "2026-02-23",
+      "closedDate": "",
+      "closedNote": ""
     }
   ],
   "progress": [
