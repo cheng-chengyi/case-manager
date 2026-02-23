@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T07:01:37.066Z",
+  "_date": "2026-02-23T07:02:06.985Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -647,9 +647,9 @@
       "contact": "台中分公司保服課 張先生",
       "contactPhone": "04-22522505#3476",
       "status": "審核中",
-      "deadline": "",
+      "deadline": "2026-03-31",
       "deadlineNote": "",
-      "plannedDate": "",
+      "plannedDate": "2026-04-30",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
