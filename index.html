@@ -1211,12 +1211,17 @@ deadlines() {
     allItems.push({ id:c.id, caseId:c.id, name:c.name, caseType:c.type, date:c.plannedDate, note:c.plannedDateNote||'', days:daysUntil(c.plannedDate), trackName:null, done:!!c.plannedDone, doneDate:c.plannedDoneDate||'', dtype:'planned', label:'📋 預計完成', color:'#0EA5B0', bg:'rgba(14,165,176,0.06)' });
   });
 
-  // 追蹤軸的提醒日期
+  // 追蹤軸的待辦事項（提醒日期 + 到期日）
   db.tracks.filter(t => activeCaseIds.has(t.caseId) && t.status !== '已給付' && t.status !== '已調解完成' && t.status !== '撤案').forEach(t => {
     const c = db.cases.find(x => x.id === t.caseId);
     if (!c) return;
-    (t.todos||[]).filter(td => !td.done && td.remind).forEach(td => {
-      allItems.push({ id:t.id, caseId:t.caseId, name:c.name, caseType:t.type||c.type, date:td.remind, note:td.title, days:daysUntil(td.remind), trackName:t.name, done:false, doneDate:'', dtype:'remind', label:'🔔 提醒', color:'#E69F00', bg:'rgba(230,159,0,0.06)', isTodo:false });
+    (t.todos||[]).filter(td => !td.done).forEach((td, ti) => {
+      if (td.dueDate) {
+        allItems.push({ id:t.id, caseId:t.caseId, name:c.name, caseType:t.type||c.type, date:td.dueDate, note:td.title, days:daysUntil(td.dueDate), trackName:t.name, done:false, doneDate:'', dtype:'trackTodo', label:'☑️ 追蹤待辦', color:'var(--gold)', bg:'rgba(201,168,76,0.06)', isTodo:false, isTrackTodo:true, trackId:t.id, todoIdx:ti });
+      }
+      if (td.remind) {
+        allItems.push({ id:t.id, caseId:t.caseId, name:c.name, caseType:t.type||c.type, date:td.remind, note:td.title, days:daysUntil(td.remind), trackName:t.name, done:false, doneDate:'', dtype:'remind', label:'🔔 提醒', color:'#E69F00', bg:'rgba(230,159,0,0.06)', isTodo:false, isTrackTodo:true, trackId:t.id, todoIdx:ti });
+      }
     });
   });
 
@@ -1239,7 +1244,9 @@ deadlines() {
     const accent = done ? '#56a65c' : (item.days < 0 ? '#5C1A1A' : item.days <= 7 ? '#D55E00' : item.days <= 14 ? '#b7791f' : item.days <= 30 ? '#0072B2' : '#4a5568');
     const checkAction = item.isTodo
       ? `toggleTodo('${item.id}')`
-      : `markDeadlineDone('${item.id}','${item.dtype}')`;
+      : item.isTrackTodo
+        ? `toggleTrackTodo('${item.trackId}',${item.todoIdx})`
+        : `markDeadlineDone('${item.id}','${item.dtype}')`;
     const clickTarget = item.isTodo ? `navigate('todos')` : `navigate('case-detail','${item.caseId}')`;
     return `<div class="deadline-item" style="margin-bottom:6px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px;padding:10px 14px;background:var(--surface);border-radius:8px;${done?'opacity:0.55':''}">
       <input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation();${checkAction}" style="width:16px;height:16px;margin-top:3px;cursor:pointer;accent-color:#56a65c;flex-shrink:0" title="${done?'取消完成':'標記完成'}">
@@ -1286,7 +1293,7 @@ deadlines() {
       <span style="font-size:11px;color:#D55E00;font-weight:600">⚠️ 截止日期</span>
       <span style="font-size:11px;color:#0EA5B0;font-weight:600">📋 預計完成</span>
       <span style="font-size:11px;color:#E69F00;font-weight:600">🔔 提醒</span>
-      <span style="font-size:11px;color:var(--gold);font-weight:600">☑️ 待辦到期</span>
+      <span style="font-size:11px;color:var(--gold);font-weight:600">☑️ 追蹤待辦／待辦到期</span>
     </div>
 
     ${section('🚫 已逾期', '#5C1A1A', 'rgba(92,26,26,0.08)', overdue)}
