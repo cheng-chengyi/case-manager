@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T09:15:04.182Z",
+  "_date": "2026-02-23T09:15:44.847Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1426,6 +1426,18 @@
       "done": false,
       "doneDate": null,
       "created": "2026-02-20"
+    },
+    {
+      "id": "T0007",
+      "title": "調整GCP到美國地區",
+      "dueDate": "2026-05-10",
+      "remind": "",
+      "caseId": "",
+      "note": "",
+      "subtasks": [],
+      "done": false,
+      "doneDate": null,
+      "created": "2026-02-23"
     }
   ]
 }
