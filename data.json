@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T07:40:22.935Z",
+  "_date": "2026-02-23T07:41:42.969Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -873,6 +873,23 @@
       "amount": "",
       "note": "",
       "created": "2026-02-23"
+    },
+    {
+      "id": "TR-1130218_鍾宜蓁(車禍腦傷)-1",
+      "caseId": "1130218_鍾宜蓁(車禍腦傷)",
+      "name": "鍾宜蓁_富邦產物",
+      "type": "",
+      "insurer": "富邦產險",
+      "contact": "曾聖平先生",
+      "contactPhone": "03-2622688#213",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-31",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23"
     }
   ],
   "progress": [
@@ -1063,6 +1080,18 @@
       "date": "2026-02-23",
       "stage": "未申請",
       "desc": "建立追蹤軸：鄭淑惠_對方尚龍翔匯款",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0033",
+      "caseId": "1130218_鍾宜蓁(車禍腦傷)",
+      "trackId": "TR-1130218_鍾宜蓁(車禍腦傷)-1",
+      "date": "2026-02-23",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：鍾宜蓁_富邦產物",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
