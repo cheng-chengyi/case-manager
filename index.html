@@ -938,8 +938,10 @@ cases() {
                     return '<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:12px;'+(todo.done?'opacity:0.5':'')+'">'
                       + '<input type="checkbox" '+(todo.done?'checked':'')+' onchange="toggleTrackTodo(\''+tr.id+'\','+ti+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2;flex-shrink:0">'
                       + '<span style="flex:1;'+(todo.done?'text-decoration:line-through;color:var(--text-3)':'')+(isOd?';color:#D55E00':'')+(remindHit&&!todo.done?';font-weight:600':'')+'">'+( remindHit&&!todo.done?'⏰ ':'')+esc(todo.title)+'</span>'
+                      + (todo.done && todo.doneDate ? '<span style="font-size:10px;color:#56a65c" title="完成日期">✅'+fmtDate(todo.doneDate)+'</span>' : '')
                       + (todo.dueDate ? '<span style="font-size:10px;color:'+(isOd?'#D55E00':'var(--text-3)')+'">📅'+fmtDate(todo.dueDate)+'</span>' : '')
                       + (todo.remind ? '<span style="font-size:10px;color:'+(remindHit?'#D55E00':'var(--text-3)')+'">🔔'+fmtDate(todo.remind)+'</span>' : '')
+                      + '<button onclick="openEditTrackTodo(\''+tr.id+'\','+ti+')" style="background:none;border:none;cursor:pointer;font-size:11px;color:#0072B2;padding:0 2px" title="編輯">✏️</button>'
                       + '<button onclick="removeTrackTodo(\''+tr.id+'\','+ti+')" style="background:none;border:none;cursor:pointer;font-size:11px;color:#D55E00;padding:0 2px" title="刪除">✕</button>'
                       + '</div>';
                   }).join('')
@@ -2132,6 +2134,27 @@ function openAddTrackTodo(trackId) {
 
 function addTrackTodo(trackId) {
   openAddTrackTodo(trackId);
+}
+
+function openEditTrackTodo(trackId, idx) {
+  var tr = db.tracks.find(function(t){ return t.id === trackId; });
+  if (!tr || !tr.todos || !tr.todos[idx]) return;
+  var todo = tr.todos[idx];
+  openFormModal('編輯追蹤軸待辦', '<div style="display:flex;flex-direction:column;gap:12px">'
+    + '<div class="field"><label>待辦內容 *</label><input type="text" id="ttt-title" value="'+esc(todo.title)+'"></div>'
+    + '<div class="form-grid">'
+    + '<div class="field"><label>提醒日期</label><input type="date" id="ttt-remind" value="'+(todo.remind||'')+'"></div>'
+    + '<div class="field"><label>到期日</label><input type="date" id="ttt-due" value="'+(todo.dueDate||'')+'"></div>'
+    + '</div>'
+    + '</div>', function() {
+    var title = document.getElementById('ttt-title').value.trim();
+    if (!title) { alert('請輸入待辦內容！'); return false; }
+    todo.title = title;
+    todo.dueDate = document.getElementById('ttt-due').value;
+    todo.remind = document.getElementById('ttt-remind').value;
+    saveData(db);
+    return true;
+  });
 }
 
 function toggleTrackTodo(trackId, idx) {
