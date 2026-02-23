@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:43:34.024Z",
+  "_date": "2026-02-23T15:45:38.041Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -536,6 +536,27 @@
       "insuredUnit": "大唐保全",
       "address": "",
       "insurer": "國泰產險",
+      "accidentDate": "",
+      "status": "未申請",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
+    },
+    {
+      "id": "1121129_林智平(職災手臂)",
+      "type": "勞資爭議事項",
+      "name": "林智平",
+      "phone": "",
+      "employer": "真芳麵包坊",
+      "insuredUnit": "屏東營造職業工會",
+      "address": "",
+      "insurer": "勞保局",
       "accidentDate": "",
       "status": "未申請",
       "receiveDate": "2026-02-23",
