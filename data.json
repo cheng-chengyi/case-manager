@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T06:46:04.501Z",
+  "_date": "2026-02-23T06:49:39.837Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -337,6 +337,27 @@
       "note": "",
       "created": "2026-02-20",
       "updated": "2026-02-20"
+    },
+    {
+      "id": "1120325_陳志明(職災墜落)",
+      "type": "勞保老年給付",
+      "name": "陳志明",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "勞保局",
+      "accidentDate": "",
+      "status": "未申請",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
     }
   ],
   "tracks": [
@@ -511,8 +532,8 @@
           "title": "已詢問台灣人壽理賠進度",
           "dueDate": "",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-02-23"
         }
       ]
     },
