@@ -1194,197 +1194,121 @@ deadlines() {
   const activeCases = db.cases.filter(c => c.status !== '已給付' && c.status !== '已調解完成' && c.status !== '撤案');
   const activeCaseIds = new Set(activeCases.map(c => c.id));
 
-  // 彙整所有截止日期（追蹤軸優先，個案層級補充）
-  const hardItems = [];
-  const plannedItems = [];
+  // 統一彙整所有期限項目
+  const allItems = [];
 
   db.tracks.filter(t => activeCaseIds.has(t.caseId) && t.status !== '已給付' && t.status !== '已調解完成' && t.status !== '撤案').forEach(t => {
     const c = db.cases.find(x => x.id === t.caseId);
     if (!c) return;
-    if (t.deadline) hardItems.push({ id:t.id, caseId:t.caseId, name:c.name, type:t.type, deadline:t.deadline, deadlineNote:t.deadlineNote||t.name, days:daysUntil(t.deadline), trackName:t.name, done:!!t.deadlineDone, doneDate:t.deadlineDoneDate||'' });
-    if (t.plannedDate) plannedItems.push({ id:t.id, caseId:t.caseId, name:c.name, type:t.type, plannedDate:t.plannedDate, plannedDateNote:t.plannedDateNote||t.name, days:daysUntil(t.plannedDate), trackName:t.name, done:!!t.plannedDone, doneDate:t.plannedDoneDate||'' });
+    if (t.deadline) allItems.push({ id:t.id, caseId:t.caseId, name:c.name, caseType:t.type, date:t.deadline, note:t.deadlineNote||t.name, days:daysUntil(t.deadline), trackName:t.name, done:!!t.deadlineDone, doneDate:t.deadlineDoneDate||'', dtype:'deadline', label:'⚠️ 截止日期', color:'#D55E00', bg:'rgba(213,94,0,0.06)' });
+    if (t.plannedDate) allItems.push({ id:t.id, caseId:t.caseId, name:c.name, caseType:t.type, date:t.plannedDate, note:t.plannedDateNote||t.name, days:daysUntil(t.plannedDate), trackName:t.name, done:!!t.plannedDone, doneDate:t.plannedDoneDate||'', dtype:'planned', label:'📋 預計完成', color:'#0EA5B0', bg:'rgba(14,165,176,0.06)' });
   });
-  // 個案層級（無追蹤軸時的 fallback）
+  // 個案層級 fallback
   activeCases.filter(c => c.deadline && !db.tracks.some(t=>t.caseId===c.id&&t.deadline)).forEach(c => {
-    hardItems.push({ id:c.id, caseId:c.id, name:c.name, type:c.type, deadline:c.deadline, deadlineNote:c.deadlineNote||'', days:daysUntil(c.deadline), trackName:null, done:!!c.deadlineDone, doneDate:c.deadlineDoneDate||'' });
+    allItems.push({ id:c.id, caseId:c.id, name:c.name, caseType:c.type, date:c.deadline, note:c.deadlineNote||'', days:daysUntil(c.deadline), trackName:null, done:!!c.deadlineDone, doneDate:c.deadlineDoneDate||'', dtype:'deadline', label:'⚠️ 截止日期', color:'#D55E00', bg:'rgba(213,94,0,0.06)' });
   });
   activeCases.filter(c => c.plannedDate && !db.tracks.some(t=>t.caseId===c.id&&t.plannedDate)).forEach(c => {
-    plannedItems.push({ id:c.id, caseId:c.id, name:c.name, type:c.type, plannedDate:c.plannedDate, plannedDateNote:c.plannedDateNote||'', days:daysUntil(c.plannedDate), trackName:null, done:!!c.plannedDone, doneDate:c.plannedDoneDate||'' });
+    allItems.push({ id:c.id, caseId:c.id, name:c.name, caseType:c.type, date:c.plannedDate, note:c.plannedDateNote||'', days:daysUntil(c.plannedDate), trackName:null, done:!!c.plannedDone, doneDate:c.plannedDoneDate||'', dtype:'planned', label:'📋 預計完成', color:'#0EA5B0', bg:'rgba(14,165,176,0.06)' });
   });
 
-  hardItems.sort((a,b) => a.days - b.days);
-  plannedItems.sort((a,b) => a.days - b.days);
-
-  // 分離已完成和未完成
-  const hardDone = hardItems.filter(i => i.done);
-  const hardPending = hardItems.filter(i => !i.done);
-  const plannedDone = plannedItems.filter(i => i.done);
-  const plannedPending = plannedItems.filter(i => !i.done);
-
-  // 待辦事項的到期日也加入
-  const todoItems = [];
-  (db.todos||[]).filter(t => !t.done && t.dueDate).forEach(t => {
-    todoItems.push({ id:t.id, caseId:t.caseId||'', name:t.title, type:'待辦事項', deadline:t.dueDate, deadlineNote:t.note||'', days:daysUntil(t.dueDate), trackName:null, isTodo:true });
-  });
-  // 細項到期日
-  (db.todos||[]).filter(t => !t.done && t.subtasks).forEach(t => {
-    (t.subtasks||[]).filter(s => !s.done && s.dueDate).forEach(s => {
-      todoItems.push({ id:t.id, caseId:t.caseId||'', name:t.title+' › '+s.title, type:'待辦細項', deadline:s.dueDate, deadlineNote:'', days:daysUntil(s.dueDate), trackName:null, isTodo:true });
+  // 追蹤軸的提醒日期
+  db.tracks.filter(t => activeCaseIds.has(t.caseId) && t.status !== '已給付' && t.status !== '已調解完成' && t.status !== '撤案').forEach(t => {
+    const c = db.cases.find(x => x.id === t.caseId);
+    if (!c) return;
+    (t.todos||[]).filter(td => !td.done && td.remind).forEach(td => {
+      allItems.push({ id:t.id, caseId:t.caseId, name:c.name, caseType:t.type||c.type, date:td.remind, note:td.title, days:daysUntil(td.remind), trackName:t.name, done:false, doneDate:'', dtype:'remind', label:'🔔 提醒', color:'#E69F00', bg:'rgba(230,159,0,0.06)', isTodo:false });
     });
   });
-  todoItems.sort((a,b) => a.days - b.days);
 
-  function hardCard(item) {
+  // 待辦事項的到期日
+  (db.todos||[]).filter(t => !t.done && t.dueDate).forEach(t => {
+    allItems.push({ id:t.id, caseId:t.caseId||'', name:t.title, caseType:'待辦事項', date:t.dueDate, note:t.note||'', days:daysUntil(t.dueDate), trackName:null, done:false, doneDate:'', dtype:'todo', label:'☑️ 待辦到期', color:'var(--gold)', bg:'rgba(201,168,76,0.06)', isTodo:true });
+  });
+  (db.todos||[]).filter(t => !t.done && t.subtasks).forEach(t => {
+    (t.subtasks||[]).filter(s => !s.done && s.dueDate).forEach(s => {
+      allItems.push({ id:t.id, caseId:t.caseId||'', name:t.title+' › '+s.title, caseType:'待辦細項', date:s.dueDate, note:'', days:daysUntil(s.dueDate), trackName:null, done:false, doneDate:'', dtype:'todo', label:'☑️ 待辦到期', color:'var(--gold)', bg:'rgba(201,168,76,0.06)', isTodo:true });
+    });
+  });
+
+  // 按日期排序（由近到遠）
+  const pendingItems = allItems.filter(i => !i.done).sort((a,b) => a.date.localeCompare(b.date));
+  const doneItems = allItems.filter(i => i.done).sort((a,b) => a.date.localeCompare(b.date));
+
+  function itemCard(item) {
     const done = item.done;
-    const cls = done ? 'deadline-ok' : (item.days < 0 ? 'deadline-urgent' : item.days <= 14 ? 'deadline-urgent' : item.days <= 30 ? 'deadline-soon' : 'deadline-ok');
-    const accent = done ? '#56a65c' : (item.days < 0 ? '#5C1A1A' : item.days <= 14 ? '#D55E00' : item.days <= 30 ? '#b7791f' : '#0072B2');
-    return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px;${done?'opacity:0.6':''}">
-      <input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation();markDeadlineDone('${item.id}','deadline')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#56a65c;flex-shrink:0" title="${done?'取消完成':'標記完成'}">
-      <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('case-detail','${item.caseId}')">
-        <div style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${esc(item.name)} <span style="color:var(--text-3);font-weight:400;font-size:11px">${esc(item.caseId)}</span></div>
-        ${item.trackName ? `<div style="font-size:11px;color:var(--text-3)">追蹤軸：${esc(item.trackName)}</div>` : ''}
-        <div style="font-size:11px;color:var(--text-3);margin-top:1px">${esc(item.deadlineNote)} · ${fmtDate(item.deadline)}</div>
-        <span class="badge ${typeColor[item.type]||'badge-gray'}" style="font-size:11px;margin-top:4px">${esc(item.type)}</span>
-        ${done ? '<span style="font-size:11px;color:#56a65c;margin-left:8px">✅ 完成於 '+fmtDate(item.doneDate)+'</span>' : ''}
+    const accent = done ? '#56a65c' : (item.days < 0 ? '#5C1A1A' : item.days <= 7 ? '#D55E00' : item.days <= 14 ? '#b7791f' : item.days <= 30 ? '#0072B2' : '#4a5568');
+    const checkAction = item.isTodo
+      ? `toggleTodo('${item.id}')`
+      : `markDeadlineDone('${item.id}','${item.dtype}')`;
+    const clickTarget = item.isTodo ? `navigate('todos')` : `navigate('case-detail','${item.caseId}')`;
+    return `<div class="deadline-item" style="margin-bottom:6px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px;padding:10px 14px;background:var(--surface);border-radius:8px;${done?'opacity:0.55':''}">
+      <input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation();${checkAction}" style="width:16px;height:16px;margin-top:3px;cursor:pointer;accent-color:#56a65c;flex-shrink:0" title="${done?'取消完成':'標記完成'}">
+      <div style="flex:1;min-width:0;cursor:pointer" onclick="${clickTarget}">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span style="font-size:11px;font-weight:700;color:${item.color};background:${item.bg};padding:1px 8px;border-radius:4px">${item.label}</span>
+          <span style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${esc(item.name)}</span>
+          <span style="font-size:11px;color:var(--text-3)">${esc(item.caseId)}</span>
+        </div>
+        ${item.trackName ? `<div style="font-size:11px;color:var(--text-3);margin-top:2px">追蹤軸：${esc(item.trackName)}</div>` : ''}
+        <div style="font-size:11px;color:var(--text-3);margin-top:2px">${esc(item.note)} · ${fmtDate(item.date)}</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
+          <span class="badge ${typeColor[item.caseType]||'badge-gray'}" style="font-size:10px">${esc(item.caseType)}</span>
+          ${done && item.doneDate ? '<span style="font-size:11px;color:#56a65c">✅ 完成於 '+fmtDate(item.doneDate)+'</span>' : ''}
+        </div>
       </div>
-      <div style="flex-shrink:0">${done ? '<span class="badge badge-green" style="font-size:11px">已完成</span>' : daysBadge(item.days)}</div>
+      <div style="flex-shrink:0;text-align:right">${done ? '<span class="badge badge-green" style="font-size:11px">已完成</span>' : daysBadge(item.days)}</div>
     </div>`;
   }
 
-  function plannedCard(item) {
-    const done = item.done;
-    const cls = done ? 'deadline-ok' : (item.days <= 7 ? 'deadline-soon' : 'deadline-ok');
-    const accent = done ? '#56a65c' : (item.days <= 7 ? '#b7791f' : '#0EA5B0');
-    return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px;${done?'opacity:0.6':''}">
-      <input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation();markDeadlineDone('${item.id}','planned')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#56a65c;flex-shrink:0" title="${done?'取消完成':'標記完成'}">
-      <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('case-detail','${item.caseId}')">
-        <div style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${esc(item.name)} <span style="color:var(--text-3);font-weight:400;font-size:11px">${esc(item.caseId)}</span></div>
-        ${item.trackName ? `<div style="font-size:11px;color:var(--text-3)">追蹤軸：${esc(item.trackName)}</div>` : ''}
-        <div style="font-size:11px;color:var(--text-3);margin-top:1px">${esc(item.plannedDateNote)} · ${fmtDate(item.plannedDate)}</div>
-        <span class="badge ${typeColor[item.type]||'badge-gray'}" style="font-size:11px;margin-top:4px">${esc(item.type)}</span>
-        ${done ? '<span style="font-size:11px;color:#56a65c;margin-left:8px">✅ 完成於 '+fmtDate(item.doneDate)+'</span>' : ''}
-      </div>
-      <div style="flex-shrink:0">${done ? '<span class="badge badge-green" style="font-size:11px">已完成</span>' : daysBadge(item.days)}</div>
-    </div>`;
-  }
+  // 分區：已逾期、7天內、8-14天、15-30天、30天以上
+  const overdue = pendingItems.filter(i => i.days < 0);
+  const d7  = pendingItems.filter(i => i.days >= 0 && i.days <= 7);
+  const d14 = pendingItems.filter(i => i.days > 7 && i.days <= 14);
+  const d30 = pendingItems.filter(i => i.days > 14 && i.days <= 30);
+  const dLater = pendingItems.filter(i => i.days > 30);
 
-  function todoCard(item) {
-    const cls = item.days < 0 ? 'deadline-urgent' : item.days <= 7 ? 'deadline-soon' : 'deadline-ok';
-    const accent = item.days < 0 ? '#D55E00' : item.days <= 7 ? '#b7791f' : '#0072B2';
-    return `<div class="deadline-item ${cls}" style="margin-bottom:8px;border-left:3px solid ${accent};display:flex;align-items:flex-start;gap:8px">
-      <input type="checkbox" onclick="event.stopPropagation();toggleTodo('${item.id}')" style="width:16px;height:16px;margin-top:4px;cursor:pointer;accent-color:#0072B2;flex-shrink:0" title="標記完成">
-      <div style="flex:1;min-width:0;cursor:pointer" onclick="navigate('todos')">
-        <div style="font-size:13px;font-weight:700">☐ ${esc(item.name)}</div>
-        ${item.caseId ? '<div style="font-size:11px;color:var(--text-3)">📎 '+esc(item.caseId)+'</div>' : ''}
-        <div style="font-size:11px;color:var(--text-3);margin-top:1px">${fmtDate(item.deadline)}</div>
-      </div>
-      <div style="flex-shrink:0">${daysBadge(item.days)}</div>
-    </div>`;
-  }
-
-  const tOverdue = todoItems.filter(i => i.days < 0);
-  const tUrgent = todoItems.filter(i => i.days >= 0 && i.days <= 7);
-  const tSoon = todoItems.filter(i => i.days > 7 && i.days <= 30);
-  const tLater = todoItems.filter(i => i.days > 30);
-
-  const overdue = hardPending.filter(i => i.days < 0);
-  const urgent  = hardPending.filter(i => i.days >= 0 && i.days <= 14);
-  const soon    = hardPending.filter(i => i.days > 14 && i.days <= 30);
-  const later   = hardPending.filter(i => i.days > 30);
-
-  const p7    = plannedPending.filter(i => i.days <= 7);
-  const p30   = plannedPending.filter(i => i.days > 7 && i.days <= 30);
-  const pLater= plannedPending.filter(i => i.days > 30);
-
-  function section(label, color, bg, items, cardFn, emptyMsg) {
-    return `<div style="margin-bottom:12px">
-      <div style="font-size:11px;font-weight:700;color:${color};margin-bottom:8px;padding:5px 10px;background:${bg};border-radius:6px">${label}</div>
-      ${items.length ? items.map(cardFn).join('') : `<div class="text-muted" style="padding:10px;font-size:11px">${emptyMsg}</div>`}
+  function section(label, color, bg, items) {
+    if (!items.length) return '';
+    return `<div style="margin-bottom:16px">
+      <div style="font-size:12px;font-weight:700;color:${color};margin-bottom:8px;padding:5px 12px;background:${bg};border-radius:6px;display:flex;align-items:center;justify-content:space-between">${label}<span style="font-size:11px;font-weight:400">${items.length} 筆</span></div>
+      ${items.map(itemCard).join('')}
     </div>`;
   }
 
   return `
   <div class="topbar">
     <div class="topbar-title">期限管理</div>
-    <div class="topbar-actions" style="font-size:11px;color:var(--text-3)">共 ${hardPending.length + plannedPending.length + todoItems.length} 筆期限</div>
+    <div class="topbar-actions" style="font-size:11px;color:var(--text-3)">共 ${pendingItems.length} 筆期限</div>
   </div>
   <div class="content">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
-
-      <div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;background:rgba(14,165,176,0.05);border-radius:10px;border:1px solid rgba(14,165,176,0.25)">
-          <span style="font-size:20px">📋</span>
-          <div>
-            <div style="font-size:13px;font-weight:700;color:#0EA5B0">預計完成日期</div>
-            <div style="font-size:11px;color:var(--text-3)">內部規劃目標・預計備件完成日</div>
-          </div>
-          <span style="margin-left:auto;font-size:13px;font-weight:700;color:#0EA5B0">${plannedPending.length} 筆</span>
-        </div>
-        ${section('⏰ 7天內（即將到期）', '#0EA5B0', 'rgba(14,165,176,0.07)', p7, plannedCard, '無')}
-        ${section('📅 8–30天', '#0072B2', 'rgba(0,114,178,0.07)', p30, plannedCard, '無')}
-        ${section('📌 30天以上', '#4a5568', 'var(--surface-2)', pLater, plannedCard, '無')}
-      </div>
-
-      <div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;background:rgba(213,94,0,0.05);border-radius:10px;border:1px solid rgba(213,94,0,0.25)">
-          <span style="font-size:20px">⚠️</span>
-          <div>
-            <div style="font-size:13px;font-weight:700;color:#D55E00">完成截止日期</div>
-            <div style="font-size:11px;color:var(--text-3)">法定期限・法院期日・機關要求截止</div>
-          </div>
-          <span style="margin-left:auto;font-size:13px;font-weight:700;color:#D55E00">${hardPending.filter(i=>i.days>=0).length} 筆</span>
-        </div>
-        ${overdue.length ? section('🚫 已逾期', '#5C1A1A', 'rgba(92,26,26,0.08)', overdue, hardCard, '') : ''}
-        ${section('🔔 14天內（緊急）', '#D55E00', 'rgba(213,94,0,0.07)', urgent, hardCard, '無緊急截止')}
-        ${section('⏱ 15–30天', '#b7791f', 'rgba(214,158,46,0.07)', soon, hardCard, '無')}
-        ${section('📌 30天以上', '#4a5568', 'var(--surface-2)', later, hardCard, '無')}
-      </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding:10px 14px;background:var(--surface-2);border-radius:10px">
+      <span style="font-size:11px;font-weight:600;color:var(--text-2);margin-right:4px">類型：</span>
+      <span style="font-size:11px;color:#D55E00;font-weight:600">⚠️ 截止日期</span>
+      <span style="font-size:11px;color:#0EA5B0;font-weight:600">📋 預計完成</span>
+      <span style="font-size:11px;color:#E69F00;font-weight:600">🔔 提醒</span>
+      <span style="font-size:11px;color:var(--gold);font-weight:600">☑️ 待辦到期</span>
     </div>
 
-    <!-- 待辦事項期限 -->
-    <div style="margin-top:24px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 14px;background:rgba(201,168,76,0.08);border-radius:10px;border:1px solid rgba(201,168,76,0.3)">
-        <span style="font-size:20px">☑️</span>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:var(--gold)">待辦事項到期日</div>
-          <div style="font-size:11px;color:var(--text-3)">待辦事項及細項的預定日期</div>
-        </div>
-        <span style="margin-left:auto;font-size:13px;font-weight:700;color:var(--gold)">${todoItems.length} 筆</span>
-      </div>
-      ${todoItems.length === 0 ? '<div style="padding:16px;text-align:center;color:var(--text-3);font-size:13px">目前沒有設定到期日的待辦事項</div>' : `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-        <div>
-          ${tOverdue.length ? section('🚫 已逾期', '#5C1A1A', 'rgba(92,26,26,0.08)', tOverdue, todoCard, '') : ''}
-          ${section('⏰ 7天內', '#D55E00', 'rgba(213,94,0,0.07)', tUrgent, todoCard, '無')}
-        </div>
-        <div>
-          ${section('📅 8–30天', '#b7791f', 'rgba(214,158,46,0.07)', tSoon, todoCard, '無')}
-          ${section('📌 30天以上', '#4a5568', 'var(--surface-2)', tLater, todoCard, '無')}
-        </div>
-      </div>`}
-    </div>
+    ${section('🚫 已逾期', '#5C1A1A', 'rgba(92,26,26,0.08)', overdue)}
+    ${section('🔔 7天內', '#D55E00', 'rgba(213,94,0,0.07)', d7)}
+    ${section('⏰ 8–14天', '#b7791f', 'rgba(214,158,46,0.07)', d14)}
+    ${section('📅 15–30天', '#0072B2', 'rgba(0,114,178,0.07)', d30)}
+    ${section('📌 30天以上', '#4a5568', 'var(--surface-2)', dLater)}
+    ${pendingItems.length === 0 ? '<div style="padding:40px;text-align:center;color:var(--text-3);font-size:14px">目前沒有進行中的期限項目 🎉</div>' : ''}
 
-    ${(hardDone.length + plannedDone.length) > 0 ? `
-    <div style="margin-top:24px">
+    ${doneItems.length > 0 ? `
+    <div style="margin-top:16px">
       <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(86,166,92,0.08);border-radius:10px;border:1px solid rgba(86,166,92,0.25);cursor:pointer" onclick="var el=document.getElementById('done-section');el.style.display=el.style.display==='none'?'block':'none';this.querySelector('.toggle-arrow').textContent=el.style.display==='none'?'▶':'▼'">
         <span style="font-size:20px">✅</span>
         <div>
           <div style="font-size:13px;font-weight:700;color:#56a65c">已完成</div>
           <div style="font-size:11px;color:var(--text-3)">點擊展開/收合</div>
         </div>
-        <span style="margin-left:auto;font-size:13px;font-weight:700;color:#56a65c">${hardDone.length + plannedDone.length} 筆</span>
+        <span style="margin-left:auto;font-size:13px;font-weight:700;color:#56a65c">${doneItems.length} 筆</span>
         <span class="toggle-arrow" style="font-size:11px;color:var(--text-3)">▶</span>
       </div>
       <div id="done-section" style="display:none;margin-top:12px">
-        <div style="padding:8px 12px;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;background:var(--surface-2);border-radius:8px;margin-bottom:8px">
-          <label style="font-size:11px;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px">
-            <input type="checkbox" id="dl-select-all" onchange="document.querySelectorAll('.dl-done-cb').forEach(function(c){c.checked=this.checked}.bind(this))" style="cursor:pointer"> 全選
-          </label>
-          <button class="btn btn-sm btn-outline" style="font-size:11px;color:#D55E00;margin-left:auto" onclick="var els=document.querySelectorAll('.dl-done-cb:checked');if(!els.length){alert('請先勾選要刪除的項目');return}if(confirm('確定刪除已選的 '+els.length+' 項完成記錄？')){els.forEach(function(c){markDeadlineDone(c.dataset.id,c.dataset.dtype)});render()}">🗑 刪除已選</button>
-          <button class="btn btn-sm btn-outline" style="font-size:11px;color:#D55E00" onclick="if(confirm('確定清除全部 ${hardDone.length + plannedDone.length} 項完成記錄？')){${JSON.stringify(hardDone.map(i=>i.id))}.forEach(function(id){var tr=db.tracks.find(function(t){return t.id===id});if(tr){tr.deadlineDone=false;tr.deadlineDoneDate=''}else{var c=db.cases.find(function(x){return x.id===id});if(c){c.deadlineDone=false;c.deadlineDoneDate=''}}});${JSON.stringify(plannedDone.map(i=>i.id))}.forEach(function(id){var tr=db.tracks.find(function(t){return t.id===id});if(tr){tr.plannedDone=false;tr.plannedDoneDate=''}else{var c=db.cases.find(function(x){return x.id===id});if(c){c.plannedDone=false;c.plannedDoneDate=''}}});saveData(db);render()}">🗑 全部清除</button>
-        </div>
-        ${hardDone.length ? '<div style="font-size:11px;font-weight:700;color:#56a65c;margin-bottom:6px;padding:4px 10px;background:rgba(86,166,92,0.06);border-radius:6px">⚠️ 完成截止日期</div>' + hardDone.map(i => '<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:4px"><input type="checkbox" class="dl-done-cb" data-id="'+i.id+'" data-dtype="deadline" style="width:16px;height:16px;margin-top:4px;cursor:pointer;flex-shrink:0"><div style="flex:1">'+hardCard(i)+'</div></div>').join('') : ''}
-        ${plannedDone.length ? '<div style="font-size:11px;font-weight:700;color:#56a65c;margin-bottom:6px;margin-top:12px;padding:4px 10px;background:rgba(86,166,92,0.06);border-radius:6px">📋 預計完成日期</div>' + plannedDone.map(i => '<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:4px"><input type="checkbox" class="dl-done-cb" data-id="'+i.id+'" data-dtype="planned" style="width:16px;height:16px;margin-top:4px;cursor:pointer;flex-shrink:0"><div style="flex:1">'+plannedCard(i)+'</div></div>').join('') : ''}
+        ${doneItems.map(itemCard).join('')}
       </div>
     </div>` : ''}
   </div>`;
