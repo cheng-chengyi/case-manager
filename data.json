@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:43:00.491Z",
+  "_date": "2026-02-23T15:43:34.024Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1326,7 +1326,15 @@
       "plannedDateNote": "",
       "amount": "",
       "note": "",
-      "todos": [],
+      "todos": [
+        {
+          "title": "余國優_安排心理衡鑑",
+          "dueDate": "2026-07-31",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        }
+      ],
       "created": "2026-02-23",
       "closedDate": "",
       "closedNote": ""
