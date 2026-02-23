@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:29:35.260Z",
+  "_date": "2026-02-23T15:30:56.859Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1150,6 +1150,23 @@
           "doneDate": ""
         }
       ]
+    },
+    {
+      "id": "TR-1140829_梅凱翔(車禍骨骨骨折)-1",
+      "caseId": "1140829_梅凱翔(車禍骨骨骨折)",
+      "name": "梅凱翔_台大雲林分院_勞動能力減損",
+      "type": "車禍處理程序",
+      "insurer": "新光產險",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "2026-03-10",
+      "deadlineNote": "",
+      "plannedDate": "2026-04-15",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23"
     }
   ],
   "progress": [
@@ -1412,6 +1429,18 @@
       "date": "2026-02-23",
       "stage": "未申請",
       "desc": "建立追蹤軸：張文浩_民事訴訟醫療糾紛_新樓醫院 ",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0039",
+      "caseId": "1140829_梅凱翔(車禍骨骨骨折)",
+      "trackId": "TR-1140829_梅凱翔(車禍骨骨骨折)-1",
+      "date": "2026-02-23",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：梅凱翔_台大雲林分院_勞動能力減損",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
