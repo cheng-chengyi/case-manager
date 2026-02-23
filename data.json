@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T09:12:41.151Z",
+  "_date": "2026-02-23T09:13:07.566Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1073,14 +1073,14 @@
       "id": "TR-1140504_林秋碧(直腸癌併腦轉移)-1",
       "caseId": "1140504_林秋碧(直腸癌併腦轉移)",
       "name": "林秋碧_台灣人壽申訴函",
-      "type": "",
+      "type": "勞保生育給付",
       "insurer": "",
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
       "deadline": "2026-03-15",
       "deadlineNote": "",
-      "plannedDate": "2026-02-22",
+      "plannedDate": "2026-03-23",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
@@ -1100,7 +1100,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "closedDate": "",
+      "closedNote": ""
     }
   ],
   "progress": [
