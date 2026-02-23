@@ -379,6 +379,13 @@
       </div>
     </div>
     <div class="nav-section">
+      <div class="nav-label">工具</div>
+      <div class="nav-item" onclick="navigate('templates')" id="nav-templates">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+        常用樣板
+      </div>
+    </div>
+    <div class="nav-section">
       <div class="nav-label">資料管理</div>
       <div class="nav-item" onclick="navigate('archive')" id="nav-archive">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
@@ -1633,10 +1640,140 @@ archive() {
 
     </div>
   </div>`;
+},
+
+// ── Templates ─────────────────────────────────────────────────
+templates: function() {
+  // 預設樣板資料
+  const defaultTemplates = {
+    tracking: [
+      { cat: '申請流程', items: ['已寄出申請書','已收到回函','已送件至勞保局','已送件至勞動部','已送件至保險公司','已補件完成','已收到審核結果','已收到核定函'] },
+      { cat: '調解/訴訟', items: ['已聲請調解','調解日期已排定','調解成立','調解不成立','已提起訴訟','已收到開庭通知','已開庭','已收到判決書'] },
+      { cat: '聯繫紀錄', items: ['已電話聯繫當事人','已電話聯繫承辦人','已電話聯繫保險公司','已發函通知雇主','已與律師討論案情','當事人來電告知進度','已轉介相關單位'] },
+      { cat: '文件處理', items: ['已取得診斷證明書','已取得薪資證明','已取得勞保投保資料','已準備書狀完成','已影印相關文件','已整理病歷資料','已取得失能鑑定報告'] },
+      { cat: '審查階段', items: ['案件審查中','已送專科醫師審查','已送特約醫師複審','等待審議結果','已進入評議程序','評議結果出爐'] }
+    ],
+    todos: [
+      { cat: '文件準備', items: ['準備申請書及相關附件','取得最新診斷證明書','整理薪資證明文件','準備委託書','影印身分證及存摺','整理完整病歷資料','準備陳述意見書'] },
+      { cat: '聯繫追蹤', items: ['電話追蹤案件進度','聯繫當事人補簽文件','聯繫雇主提供資料','確認保險公司收件','詢問審核進度','聯繫醫院開立證明','通知當事人審核結果'] },
+      { cat: '期限事項', items: ['確認申請期限','確認上訴期限','確認補件期限','提醒開庭日期','提醒調解日期','追蹤給付入帳日期'] },
+      { cat: '行政作業', items: ['建立案件資料','更新案件狀態','歸檔結案文件','製作案件摘要','更新追蹤紀錄','寄送結案通知'] }
+    ]
+  };
+
+  // 讀取自訂樣板（存在 db 中）
+  if (!db.customTemplates) db.customTemplates = { tracking: [], todos: [] };
+  const custom = db.customTemplates;
+
+  function renderCategory(cat, items, type, isCustom, catIdx) {
+    return `<div style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:600;color:var(--text)">${cat}</span>
+        ${isCustom ? `<button class="btn btn-outline btn-sm" style="font-size:11px;padding:1px 6px;color:#D55E00" onclick="deleteTemplateCategory('${type}',${catIdx})">刪除分類</button>` : ''}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${items.map((item, i) => `<button class="btn btn-outline btn-sm template-chip" style="font-size:13px;padding:4px 10px;border-radius:16px;cursor:pointer;position:relative;display:inline-flex;align-items:center;gap:4px" onclick="copyTemplate(this,'${item.replace(/'/g,"\\'")}')">
+          <span>${item}</span>
+          ${isCustom ? `<span style="font-size:11px;color:#D55E00;margin-left:2px;cursor:pointer" onclick="event.stopPropagation();deleteTemplateItem('${type}',${catIdx},${i})">✕</span>` : ''}
+        </button>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  const trackingHtml = defaultTemplates.tracking.map(c => renderCategory(c.cat, c.items, 'tracking', false, -1)).join('');
+  const customTrackingHtml = custom.tracking.map((c, i) => renderCategory(c.cat, c.items, 'tracking', true, i)).join('');
+  const todosHtml = defaultTemplates.todos.map(c => renderCategory(c.cat, c.items, 'todos', false, -1)).join('');
+  const customTodosHtml = custom.todos.map((c, i) => renderCategory(c.cat, c.items, 'todos', true, i)).join('');
+
+  return `<div class="topbar"><h2>📋 常用樣板</h2></div>
+  <div class="content-area" style="padding:20px;max-width:900px">
+    <p style="font-size:13px;color:var(--text-2);margin-bottom:20px">點擊下方文字即可複製到剪貼簿，方便貼到追蹤紀錄或待辦事項中。</p>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <h3 style="font-size:15px;margin:0">📝 追蹤紀錄樣板</h3>
+        <button class="btn btn-outline btn-sm" style="font-size:12px" onclick="openAddTemplate('tracking')">＋ 新增自訂</button>
+      </div>
+      ${trackingHtml}
+      ${customTrackingHtml ? '<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px"><span style="font-size:11px;color:var(--text-3);font-weight:600">⭐ 我的自訂樣板</span></div>' + customTrackingHtml : ''}
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <h3 style="font-size:15px;margin:0">☑️ 待辦事項樣板</h3>
+        <button class="btn btn-outline btn-sm" style="font-size:12px" onclick="openAddTemplate('todos')">＋ 新增自訂</button>
+      </div>
+      ${todosHtml}
+      ${customTodosHtml ? '<div style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px"><span style="font-size:11px;color:var(--text-3);font-weight:600">⭐ 我的自訂樣板</span></div>' + customTodosHtml : ''}
+    </div>
+  </div>`;
 }
+
 };
 
-// ─── Modals ────────────────────────────────────────────────────
+// ─── Template Functions ───────────────────────────────────────
+
+function copyTemplate(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.querySelector('span').textContent;
+    btn.querySelector('span').textContent = '✓ 已複製';
+    btn.style.background = '#E6F4EA';
+    btn.style.borderColor = '#34A853';
+    btn.style.color = '#34A853';
+    setTimeout(() => {
+      btn.querySelector('span').textContent = orig;
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    }, 1200);
+  }).catch(() => {
+    // fallback: select text
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.querySelector('span').textContent = '✓ 已複製';
+    setTimeout(() => { btn.querySelector('span').textContent = text; }, 1200);
+  });
+}
+
+function openAddTemplate(type) {
+  const typeLabel = type === 'tracking' ? '追蹤紀錄' : '待辦事項';
+  openFormModal('新增自訂' + typeLabel + '樣板', `
+    <div class="form-grid">
+      <div class="field"><label>分類名稱</label><input type="text" id="f-tpl-cat" placeholder="例如：我的常用語"></div>
+      <div class="field" style="grid-column:1/-1"><label>樣板內容（每行一項）</label><textarea id="f-tpl-items" rows="6" placeholder="每行輸入一個常用文字&#10;例如：&#10;已寄出申請書&#10;已收到回函&#10;已電話追蹤"></textarea></div>
+    </div>
+  `, function() {
+    const cat = document.getElementById('f-tpl-cat').value.trim();
+    const items = document.getElementById('f-tpl-items').value.split('\n').map(s => s.trim()).filter(Boolean);
+    if (!cat) { alert('請輸入分類名稱'); return; }
+    if (!items.length) { alert('請至少輸入一項樣板內容'); return; }
+    if (!db.customTemplates) db.customTemplates = { tracking: [], todos: [] };
+    db.customTemplates[type].push({ cat, items });
+    saveData(db);
+    closeModal();
+    render();
+  });
+}
+
+function deleteTemplateCategory(type, catIdx) {
+  if (!confirm('確定刪除此自訂分類？')) return;
+  db.customTemplates[type].splice(catIdx, 1);
+  saveData(db);
+  render();
+}
+
+function deleteTemplateItem(type, catIdx, itemIdx) {
+  db.customTemplates[type][catIdx].items.splice(itemIdx, 1);
+  if (db.customTemplates[type][catIdx].items.length === 0) {
+    db.customTemplates[type].splice(catIdx, 1);
+  }
+  saveData(db);
+  render();
+}
 
 function openNewCase() {
   const id = genId();
