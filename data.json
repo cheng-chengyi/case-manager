@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T07:12:50.634Z",
+  "_date": "2026-02-23T07:13:56.133Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -836,6 +836,23 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1120325_陳志明(職災墜落)-1",
+      "caseId": "1120325_陳志明(職災墜落)",
+      "name": "陳志明_申請勞保老年給付",
+      "type": "勞保老年給付",
+      "insurer": "勞保局",
+      "contact": "",
+      "contactPhone": "",
+      "status": "審核中",
+      "deadline": "2026-03-27",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-31",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23"
     }
   ],
   "progress": [
@@ -1014,6 +1031,18 @@
       "date": "2026-02-20",
       "stage": "爭議審議",
       "desc": "建立追蹤軸：毛上瑋_職災失能給付_爭議審議",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0031",
+      "caseId": "1120325_陳志明(職災墜落)",
+      "trackId": "TR-1120325_陳志明(職災墜落)-1",
+      "date": "2026-02-23",
+      "stage": "審核中",
+      "desc": "建立追蹤軸：陳志明_申請勞保老年給付",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
