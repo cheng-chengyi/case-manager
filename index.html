@@ -1137,6 +1137,37 @@ progress() {
     </div>`;
   }
 
+  function trackOverview() {
+    if (!progressFilter) return '';
+    const tracks = db.tracks.filter(t => t.caseId === progressFilter);
+    if (tracks.length === 0) return '';
+    return `<div class="card" style="margin-top:16px">
+      <div class="card-head" style="display:flex;justify-content:space-between;align-items:center">
+        <span>📂 追蹤軸總覽 <span class="badge badge-blue">${tracks.length}</span></span>
+        <button class="btn btn-outline btn-sm" onclick="navigate('case-detail','${progressFilter}')">前往個案詳情</button>
+      </div>
+      <div class="card-body" style="padding:0">
+        ${tracks.map(t => {
+          const progCount = db.progress.filter(p => p.trackId === t.id).length;
+          return `<div style="padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer" onclick="navigate('case-detail','${progressFilter}')">
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:600">${esc(t.name)}</div>
+              <div style="display:flex;gap:8px;margin-top:4px;align-items:center">
+                <span class="badge ${typeColor[t.type]||'badge-gray'}" style="font-size:14px">${esc(t.type)}</span>
+                <span class="badge ${stageColor[t.status]||'badge-gray'}" style="font-size:14px">${esc(t.status)}</span>
+                <span style="font-size:14px;color:var(--text-3)">進度 ${progCount} 筆</span>
+              </div>
+            </div>
+            <div style="text-align:right;font-size:14px;color:var(--text-3)">
+              ${t.deadline ? '<div>⚠️ 期限 ' + fmtDate(t.deadline) + '</div>' : ''}
+              ${t.amount ? '<div>💰 ' + esc(t.amount) + '</div>' : ''}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }
+
   function todoSection() {
     let todos = (db.todos||[]).filter(t => !t.done);
     if (progressFilter) todos = todos.filter(t => t.caseId === progressFilter);
@@ -1256,7 +1287,7 @@ progress() {
     </table>`;
   }
 
-  const viewContent = progressView === 'calendar' ? calendarView() : (listView() + todoSection());
+  const viewContent = progressView === 'calendar' ? calendarView() : (listView() + trackOverview() + todoSection());
   return `<div class="topbar">
     <div class="topbar-title">進度追蹤</div>
     <div class="topbar-actions">
