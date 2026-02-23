@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:32:19.877Z",
+  "_date": "2026-02-23T15:34:39.475Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -475,6 +475,27 @@
       "insurer": "新光產險",
       "accidentDate": "",
       "status": "未申請",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
+    },
+    {
+      "id": "1140411_莊素珠(肺癌)",
+      "type": "失能險",
+      "name": "莊素珠",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "台灣人壽",
+      "accidentDate": "",
+      "status": "申訴中",
       "receiveDate": "2026-02-23",
       "deadline": "",
       "deadlineNote": "",
