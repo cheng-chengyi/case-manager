@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T07:02:06.985Z",
+  "_date": "2026-02-23T07:02:26.568Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -226,12 +226,12 @@
       "receiveDate": "2026-02-20",
       "deadline": "",
       "deadlineNote": "",
-      "plannedDate": "2026-04-30",
+      "plannedDate": "",
       "plannedDateNote": "完成給付",
       "amount": "",
       "note": "",
       "created": "2026-02-20",
-      "updated": "2026-02-20"
+      "updated": "2026-02-23"
     },
     {
       "id": "1120923_陳盛隆(車禍腦傷)",
