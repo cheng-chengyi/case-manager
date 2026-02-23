@@ -526,8 +526,8 @@ let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth(); // 0-based
 let progressView = 'list';
 let progressFilter = '';
-let progressSortCol = 'date';
-let progressSortDir = 'desc';
+let progressSortCol = 'case';
+let progressSortDir = 'asc';
 
 function navigate(view, caseId = null) {
   if (view !== 'cases') filterStatus = null;
