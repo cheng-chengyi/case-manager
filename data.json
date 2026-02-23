@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T08:03:20.487Z",
+  "_date": "2026-02-23T08:05:55.636Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -377,6 +377,27 @@
       "plannedDateNote": "",
       "amount": "",
       "note": "",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
+    },
+    {
+      "id": "1141121_李台明(胃癌)",
+      "type": "失能險",
+      "name": "李台明",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "安達人壽",
+      "accidentDate": "",
+      "status": "已拒賠",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "Line 太太 劉玉美",
       "created": "2026-02-23",
       "updated": "2026-02-23"
     }
