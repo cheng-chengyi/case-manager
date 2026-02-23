@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T09:00:14.317Z",
+  "_date": "2026-02-23T09:09:33.187Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -433,6 +433,27 @@
       "insurer": "台灣人壽",
       "accidentDate": "",
       "status": "申訴中",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
+    },
+    {
+      "id": "1140504_林秋碧(直腸癌併腦轉移)",
+      "type": "失能險",
+      "name": "林秋碧",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "台灣人壽",
+      "accidentDate": "",
+      "status": "未申請",
       "receiveDate": "2026-02-23",
       "deadline": "",
       "deadlineNote": "",
