@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T09:18:42.137Z",
+  "_date": "2026-02-23T09:19:03.745Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1119,7 +1119,16 @@
       "plannedDateNote": "",
       "amount": "",
       "note": "",
-      "created": "2026-02-23"
+      "created": "2026-02-23",
+      "todos": [
+        {
+          "title": "是否要委任律師?",
+          "dueDate": "2026-03-01",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        }
+      ]
     }
   ],
   "progress": [
