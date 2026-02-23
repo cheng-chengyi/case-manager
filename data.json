@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T08:26:34.567Z",
+  "_date": "2026-02-23T08:53:58.930Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -988,6 +988,23 @@
           "doneDate": ""
         }
       ]
+    },
+    {
+      "id": "TR-1140912_蘇紹華(免疫系統)-1",
+      "caseId": "1140912_蘇紹華(免疫系統)",
+      "name": "蘇紹華_台灣人壽_申訴函",
+      "type": "失能險",
+      "insurer": "台灣人壽",
+      "contact": "",
+      "contactPhone": "",
+      "status": "申訴中",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23"
     }
   ],
   "progress": [
@@ -1202,6 +1219,18 @@
       "date": "2026-02-23",
       "stage": "申訴中",
       "desc": "建立追蹤軸：謝秀敏_三商美邦人壽_申訴函",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0035",
+      "caseId": "1140912_蘇紹華(免疫系統)",
+      "trackId": "TR-1140912_蘇紹華(免疫系統)-1",
+      "date": "2026-02-23",
+      "stage": "申訴中",
+      "desc": "建立追蹤軸：蘇紹華_台灣人壽_申訴函",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
