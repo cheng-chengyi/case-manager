@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T07:50:00.100Z",
+  "_date": "2026-02-23T08:03:20.487Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -369,7 +369,7 @@
       "address": "",
       "insurer": "富邦產險",
       "accidentDate": "",
-      "status": "未申請",
+      "status": "審核中",
       "receiveDate": "2026-02-23",
       "deadline": "",
       "deadlineNote": "",
