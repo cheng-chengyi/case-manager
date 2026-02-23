@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T06:16:09.167Z",
+  "_date": "2026-02-23T06:18:57.352Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -756,8 +756,8 @@
           "title": "聯絡友邦人壽賴小姐1st",
           "dueDate": "",
           "remind": "",
-          "done": true,
-          "doneDate": "2026-02-23"
+          "done": false,
+          "doneDate": ""
         }
       ]
     },
