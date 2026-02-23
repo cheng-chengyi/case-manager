@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:41:31.003Z",
+  "_date": "2026-02-23T15:42:30.160Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1293,6 +1293,41 @@
       "created": "2026-02-23",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1130924_余國優(職災墜落)-1",
+      "caseId": "1130924_余國優(職災墜落)",
+      "name": "余國優_勞資爭議申請_新北市政府",
+      "type": "勞資爭議事項",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "2026-05-31",
+      "deadlineNote": "",
+      "plannedDate": "2026-06-30",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23"
+    },
+    {
+      "id": "TR-1130924_余國優(職災墜落)-2",
+      "caseId": "1130924_余國優(職災墜落)",
+      "name": "余國優_勞資爭議申請_新北市政府（複製）",
+      "type": "勞資爭議事項",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "2026-05-31",
+      "deadlineNote": "",
+      "plannedDate": "2026-06-30",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "todos": [],
+      "created": "2026-02-23"
     }
   ],
   "progress": [
@@ -1591,6 +1626,18 @@
       "date": "2026-02-23",
       "stage": "未申請",
       "desc": "建立追蹤軸：曾姿穎_國泰人壽_意外險失能申請",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0042",
+      "caseId": "1130924_余國優(職災墜落)",
+      "trackId": "TR-1130924_余國優(職災墜落)-1",
+      "date": "2026-02-23",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：余國優_勞資爭議申請_新北市政府",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
