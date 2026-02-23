@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:35:31.458Z",
+  "_date": "2026-02-23T15:37:03.975Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -496,6 +496,27 @@
       "insurer": "台灣人壽",
       "accidentDate": "",
       "status": "申訴中",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
+    },
+    {
+      "id": "1131030_曾姿穎(T12)",
+      "type": "意外險",
+      "name": "曾姿穎",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "",
+      "accidentDate": "",
+      "status": "未申請",
       "receiveDate": "2026-02-23",
       "deadline": "",
       "deadlineNote": "",
