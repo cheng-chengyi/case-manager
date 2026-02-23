@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:37:37.774Z",
+  "_date": "2026-02-23T15:39:02.923Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1235,6 +1235,23 @@
       "amount": "",
       "note": "",
       "created": "2026-02-23"
+    },
+    {
+      "id": "TR-1131030_曾姿穎(車禍T11骨折)-1",
+      "caseId": "1131030_曾姿穎(車禍T11骨折)",
+      "name": "曾姿穎_國泰人壽_意外險失能申請",
+      "type": "意外險",
+      "insurer": "國泰人壽",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-04-30",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23"
     }
   ],
   "progress": [
@@ -1521,6 +1538,18 @@
       "date": "2026-02-23",
       "stage": "未申請",
       "desc": "建立追蹤軸：莊素珠_台灣人壽_失能險保證給付",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0041",
+      "caseId": "1131030_曾姿穎(車禍T11骨折)",
+      "trackId": "TR-1131030_曾姿穎(車禍T11骨折)-1",
+      "date": "2026-02-23",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：曾姿穎_國泰人壽_意外險失能申請",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
