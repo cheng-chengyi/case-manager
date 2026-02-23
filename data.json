@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T09:16:00.094Z",
+  "_date": "2026-02-23T09:18:42.137Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1103,6 +1103,23 @@
       ],
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1140731_張文浩(職災墜落)-4",
+      "caseId": "1140731_張文浩(職災墜落)",
+      "name": "張文浩_民事訴訟醫療糾紛_新樓醫院 ",
+      "type": "醫療險",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23"
     }
   ],
   "progress": [
@@ -1353,6 +1370,18 @@
       "date": "2026-02-23",
       "stage": "未申請",
       "desc": "建立追蹤軸：林秋碧_台灣人壽申訴函",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0038",
+      "caseId": "1140731_張文浩(職災墜落)",
+      "trackId": "TR-1140731_張文浩(職災墜落)-4",
+      "date": "2026-02-23",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：張文浩_民事訴訟醫療糾紛_新樓醫院 ",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
