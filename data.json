@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:34:39.475Z",
+  "_date": "2026-02-23T15:35:31.458Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1197,6 +1197,23 @@
           "doneDate": ""
         }
       ]
+    },
+    {
+      "id": "TR-1140411_莊素珠(肺癌)-1",
+      "caseId": "1140411_莊素珠(肺癌)",
+      "name": "莊素珠_台灣人壽_失能險保證給付",
+      "type": "失能險",
+      "insurer": "",
+      "contact": "李先生",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "2026-02-25",
+      "deadlineNote": "",
+      "plannedDate": "2026-02-26",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23"
     }
   ],
   "progress": [
@@ -1471,6 +1488,18 @@
       "date": "2026-02-23",
       "stage": "未申請",
       "desc": "建立追蹤軸：梅凱翔_台大雲林分院_勞動能力減損",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0040",
+      "caseId": "1140411_莊素珠(肺癌)",
+      "trackId": "TR-1140411_莊素珠(肺癌)-1",
+      "date": "2026-02-23",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：莊素珠_台灣人壽_失能險保證給付",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
