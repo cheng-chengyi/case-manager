@@ -1,4 +1,4 @@
-const CACHE_NAME = 'case-mgmt-v1';
+const CACHE_NAME = 'case-mgmt-v2';
 const URLS_TO_CACHE = ['./index.html', './manifest.json'];
 
 // Install - cache core files
