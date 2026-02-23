@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T07:38:09.401Z",
+  "_date": "2026-02-23T07:40:22.935Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -347,6 +347,27 @@
       "insuredUnit": "",
       "address": "",
       "insurer": "",
+      "accidentDate": "",
+      "status": "未申請",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
+    },
+    {
+      "id": "1130218_鍾宜蓁(車禍腦傷)",
+      "type": "強制險",
+      "name": "鍾宜蓁",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "富邦產險",
       "accidentDate": "",
       "status": "未申請",
       "receiveDate": "2026-02-23",
