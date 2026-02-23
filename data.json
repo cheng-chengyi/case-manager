@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T07:49:50.235Z",
+  "_date": "2026-02-23T07:50:00.100Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1192,24 +1192,6 @@
           "title": "聯絡當事人的舅媽",
           "dueDate": "2026-02-23",
           "done": true
-        }
-      ],
-      "done": false,
-      "doneDate": null,
-      "created": "2026-02-20"
-    },
-    {
-      "id": "T0008",
-      "title": "蔡勝綋_台灣產物_意外險_申訴函",
-      "dueDate": "2026-03-31",
-      "remind": "2026-03-24",
-      "caseId": "1130718_蔡勝綋(車禍腦傷)",
-      "note": "",
-      "subtasks": [
-        {
-          "title": "完成申訴函",
-          "dueDate": "2026-03-31",
-          "done": false
         }
       ],
       "done": false,
