@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T09:12:04.768Z",
+  "_date": "2026-02-23T09:12:15.499Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1094,6 +1094,31 @@
           "doneDate": ""
         }
       ]
+    },
+    {
+      "id": "TR-1140504_林秋碧(直腸癌併腦轉移)-2",
+      "caseId": "1140504_林秋碧(直腸癌併腦轉移)",
+      "name": "林秋碧_台灣人壽申訴函（複製）",
+      "type": "",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "2026-03-15",
+      "deadlineNote": "",
+      "plannedDate": "2026-02-22",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "todos": [
+        {
+          "title": "林秋碧_台灣人壽_完成申訴函",
+          "dueDate": "2026-03-15",
+          "done": false,
+          "doneDate": ""
+        }
+      ],
+      "created": "2026-02-23"
     }
   ],
   "progress": [
