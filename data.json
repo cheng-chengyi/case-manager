@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T08:22:48.984Z",
+  "_date": "2026-02-23T08:26:34.567Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -419,6 +419,27 @@
       "plannedDateNote": "",
       "amount": "",
       "note": "Line_梁義清",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
+    },
+    {
+      "id": "1140912_蘇紹華(免疫系統)",
+      "type": "失能險",
+      "name": "蘇紹華",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "台灣人壽",
+      "accidentDate": "",
+      "status": "申訴中",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
       "created": "2026-02-23",
       "updated": "2026-02-23"
     }
