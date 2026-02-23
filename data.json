@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T09:19:03.745Z",
+  "_date": "2026-02-23T15:29:35.260Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -452,6 +452,27 @@
       "insuredUnit": "",
       "address": "",
       "insurer": "台灣人壽",
+      "accidentDate": "",
+      "status": "未申請",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
+    },
+    {
+      "id": "1140829_梅凱翔(車禍骨骨骨折)",
+      "type": "車禍處理程序",
+      "name": "梅凱翔",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "新光產險",
       "accidentDate": "",
       "status": "未申請",
       "receiveDate": "2026-02-23",
