@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:39:20.857Z",
+  "_date": "2026-02-23T15:41:31.003Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -515,6 +515,27 @@
       "insuredUnit": "",
       "address": "",
       "insurer": "",
+      "accidentDate": "",
+      "status": "未申請",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
+    },
+    {
+      "id": "1130924_余國優(職災墜落)",
+      "type": "勞資爭議事項",
+      "name": "余國優",
+      "phone": "",
+      "employer": "大唐保全",
+      "insuredUnit": "大唐保全",
+      "address": "",
+      "insurer": "國泰產險",
       "accidentDate": "",
       "status": "未申請",
       "receiveDate": "2026-02-23",
