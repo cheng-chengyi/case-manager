@@ -46,21 +46,21 @@
   /* Sidebar */
   .sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
   .sidebar-logo h1 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 15px; line-height: 1.4; }
-  .sidebar-logo p { color: var(--text-3); font-size: 13px; margin-top: 4px; }
+  .sidebar-logo p { color: var(--text-3); font-size:14px; margin-top: 4px; }
   .nav-section { padding: 16px 12px 8px; }
-  .nav-label { color: var(--text-3); font-size: 13px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; padding: 0 8px; margin-bottom: 6px; }
+  .nav-label { color: var(--text-3); font-size:14px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; padding: 0 8px; margin-bottom: 6px; }
   .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 10px; border-radius: 8px; cursor: pointer; color: var(--text-2); font-size: 15px; transition: all 0.18s; margin-bottom: 2px; }
   .nav-item:hover { background: var(--surface-2); color: var(--navy); }
   .nav-item.active { background: rgba(0,114,178,0.12); color: #0072B2; font-weight: 600; border-left: 3px solid #0072B2; padding-left: 7px; }
   .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
   .sidebar-footer { margin-top: auto; padding: 16px; border-top: 1px solid var(--border); }
-  .sidebar-footer p { color: var(--text-3); font-size: 13px; text-align: center; }
+  .sidebar-footer p { color: var(--text-3); font-size:14px; text-align: center; }
 
   /* Top bar */
   .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 28px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
   .topbar-title { font-size: 15px; font-weight: 600; color: var(--navy); }
   .topbar-actions { display: flex; gap: 10px; align-items: center; }
-  .btn { padding: 7px 16px; border-radius: 7px; font-size: 13px; font-family: inherit; cursor: pointer; border: none; font-weight: 500; transition: all 0.18s; display: inline-flex; align-items: center; gap: 6px; }
+  .btn { padding: 7px 16px; border-radius: 7px; font-size:14px; font-family: inherit; cursor: pointer; border: none; font-weight: 500; transition: all 0.18s; display: inline-flex; align-items: center; gap: 6px; }
   .btn-primary { background: var(--navy); color: #fff; }
   .btn-primary:hover { background: var(--navy-2); }
   .btn-gold { background: var(--gold); color: var(--navy); font-weight: 600; }
@@ -68,7 +68,7 @@
   .btn-outline { background: transparent; color: var(--text-2); border: 1px solid var(--border); }
   .btn-outline:hover { border-color: var(--navy); color: var(--navy); }
   .btn-danger { background: var(--danger); color: #fff; }
-  .btn-sm { padding: 5px 12px; font-size: 13px; }
+  .btn-sm { padding: 5px 12px; font-size:14px; }
   .btn-icon { width: 32px; height: 32px; padding: 0; border-radius: 6px; justify-content: center; }
 
   /* Content area */
@@ -82,9 +82,9 @@
   .stat-card.active::before { background: var(--success); }
   .stat-card.pending::before { background: var(--warning); }
   .stat-card.closed::before { background: var(--text-3); }
-  .stat-label { font-size: 13px; color: var(--text-3); font-weight: 500; margin-bottom: 8px; }
+  .stat-label { font-size:14px; color: var(--text-3); font-weight: 500; margin-bottom: 8px; }
   .stat-num { font-size: 32px; font-weight: 700; color: var(--navy); line-height: 1; }
-  .stat-sub { font-size:13px; color: var(--text-3); margin-top: 6px; }
+  .stat-sub { font-size:14px; color: var(--text-3); margin-top: 6px; }
   .stat-icon { position: absolute; right: 16px; top: 16px; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
   .stat-card.all .stat-icon { background: rgba(15,31,61,0.08); }
   .stat-card.active .stat-icon { background: rgba(0,114,178,0.1); }
@@ -96,7 +96,7 @@
   .type-chip { background: var(--surface); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border); cursor: pointer; transition: all 0.18s; }
   .type-chip:hover { border-color: var(--navy); transform: translateY(-1px); }
   .type-chip.selected { border-color: var(--gold); background: rgba(201,168,76,0.06); }
-  .type-chip-label { font-size: 13px; color: var(--text-3); margin-bottom: 4px; }
+  .type-chip-label { font-size:14px; color: var(--text-3); margin-bottom: 4px; }
   .type-chip-count { font-size: 24px; font-weight: 700; }
   .type-chip.labor .type-chip-count { color: #2b6cb0; }
   .type-chip.injury-ins .type-chip-count { color: #D55E00; }
@@ -110,16 +110,16 @@
   .table-card { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; }
   .table-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .search-box { display: flex; align-items: center; gap: 8px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; flex: 1; max-width: 300px; }
-  .search-box input { border: none; background: transparent; font-family: inherit; font-size: 13px; color: var(--text); outline: none; width: 100%; }
+  .search-box input { border: none; background: transparent; font-family: inherit; font-size:14px; color: var(--text); outline: none; width: 100%; }
   .search-box input::placeholder { color: var(--text-3); }
   table { width: 100%; border-collapse: collapse; }
-  th { background: var(--surface-2); color: var(--text-3); font-size:13px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); }
-  td { padding: 13px 16px; font-size: 13px; color: var(--text); border-bottom: 1px solid var(--border); vertical-align: middle; }
+  th { background: var(--surface-2); color: var(--text-3); font-size:14px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+  td { padding: 13px 16px; font-size:14px; color: var(--text); border-bottom: 1px solid var(--border); vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: rgba(15,31,61,0.025); cursor: pointer; }
   
   /* Badges */
-  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size:13px; font-weight: 600; }
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size:14px; font-weight: 600; }
   .badge-blue { background: rgba(43,108,176,0.12); color: #2b6cb0; }
   .badge-red { background: rgba(213,94,0,0.12); color: #D55E00; }
   .badge-purple { background: rgba(107,70,193,0.12); color: #6b46c1; }
@@ -148,11 +148,11 @@
   .form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
   .form-full { grid-column: 1/-1; }
   .field { display: flex; flex-direction: column; gap: 5px; }
-  .field label { font-size: 13px; font-weight: 600; color: var(--text-2); }
-  .field input, .field select, .field textarea { padding: 9px 12px; border: 1px solid var(--border); border-radius: 7px; font-family: inherit; font-size: 13px; color: var(--text); background: var(--surface); outline: none; transition: border 0.18s; }
+  .field label { font-size:14px; font-weight: 600; color: var(--text-2); }
+  .field input, .field select, .field textarea { padding: 9px 12px; border: 1px solid var(--border); border-radius: 7px; font-family: inherit; font-size:14px; color: var(--text); background: var(--surface); outline: none; transition: border 0.18s; }
   .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(15,31,61,0.08); }
   .field textarea { resize: vertical; min-height: 80px; }
-  .section-divider { margin: 18px 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--border); font-size: 13px; font-weight: 700; color: var(--navy); letter-spacing: 0.5px; text-transform: uppercase; }
+  .section-divider { margin: 18px 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--border); font-size:14px; font-weight: 700; color: var(--navy); letter-spacing: 0.5px; text-transform: uppercase; }
 
   /* Detail view */
   .detail-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
@@ -160,11 +160,11 @@
   .detail-aside {}
   .card { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border); overflow: hidden; margin-bottom: 16px; }
   .track-highlight { box-shadow: 0 0 0 3px rgba(0,114,178,0.4), var(--shadow); border-color: #0072B2; transition: box-shadow 0.2s, border-color 0.2s; }
-  .card-head { padding: 14px 18px; border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 700; color: var(--navy); display: flex; align-items: center; justify-content: space-between; }
+  .card-head { padding: 14px 18px; border-bottom: 1px solid var(--border); font-size:14px; font-weight: 700; color: var(--navy); display: flex; align-items: center; justify-content: space-between; }
   .card-body { padding: 16px 18px; }
   .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .info-item label { font-size:13px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
-  .info-item value, .info-item .val { display: block; font-size: 13px; color: var(--text); margin-top: 3px; font-weight: 500; }
+  .info-item label { font-size:14px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+  .info-item value, .info-item .val { display: block; font-size:14px; color: var(--text); margin-top: 3px; font-weight: 500; }
   
   /* Timeline */
   .timeline { list-style: none; padding-left: 0; }
@@ -174,18 +174,18 @@
   .timeline-dot { position: absolute; left: 4px; top: 4px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--navy); background: var(--surface); }
   .timeline-dot.done { background: var(--success); border-color: var(--success); }
   .timeline-dot.active { background: var(--gold); border-color: var(--gold); }
-  .timeline-date { font-size:13px; color: var(--text-3); font-weight: 500; }
-  .timeline-stage { font-size: 13px; font-weight: 700; color: var(--navy); margin: 2px 0; }
-  .timeline-desc { font-size: 13px; color: var(--text-2); }
-  .timeline-next { font-size:13px; color: var(--teal); margin-top: 4px; }
+  .timeline-date { font-size:14px; color: var(--text-3); font-weight: 500; }
+  .timeline-stage { font-size:14px; font-weight: 700; color: var(--navy); margin: 2px 0; }
+  .timeline-desc { font-size:14px; color: var(--text-2); }
+  .timeline-next { font-size:14px; color: var(--teal); margin-top: 4px; }
 
   /* Deadline alert */
   .deadline-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-radius: 8px; margin-bottom: 8px; border: 1px solid; }
   .deadline-urgent { background: rgba(213,94,0,0.06); border-color: rgba(213,94,0,0.25); }
   .deadline-soon { background: rgba(214,158,46,0.06); border-color: rgba(214,158,46,0.25); }
   .deadline-ok { background: rgba(0,114,178,0.06); border-color: rgba(0,114,178,0.2); }
-  .deadline-label { font-size: 13px; font-weight: 600; }
-  .deadline-days { font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 12px; }
+  .deadline-label { font-size:14px; font-weight: 600; }
+  .deadline-days { font-size:14px; font-weight: 700; padding: 2px 10px; border-radius: 12px; }
   .days-urgent { background: rgba(213,94,0,0.15); color: #D55E00; }
   .days-soon { background: rgba(214,158,46,0.15); color: #b7791f; }
   .days-ok { background: rgba(0,114,178,0.12); color: #0072B2; }
@@ -193,7 +193,7 @@
   /* Empty state */
   .empty { text-align: center; padding: 60px 20px; color: var(--text-3); }
   .empty svg { width: 48px; height: 48px; margin: 0 auto 12px; opacity: 0.3; }
-  .empty p { font-size: 13px; }
+  .empty p { font-size:14px; }
 
   /* Progress bar */
   .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-top: 6px; }
@@ -204,7 +204,7 @@
 
   /* Tabs */
   .tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; gap: 0; }
-  .tab { padding: 10px 18px; font-size: 13px; font-weight: 500; color: var(--text-3); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.18s; }
+  .tab { padding: 10px 18px; font-size:14px; font-weight: 500; color: var(--text-3); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.18s; }
   .tab:hover { color: var(--navy); }
   .tab.active { color: var(--navy); border-bottom-color: var(--gold); font-weight: 700; }
 
@@ -214,9 +214,9 @@
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   
   /* Misc */
-  .text-muted { color: var(--text-3); font-size:13px; }
+  .text-muted { color: var(--text-3); font-size:14px; }
   .divider { height: 1px; background: var(--border); margin: 16px 0; }
-  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size:13px; background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border); margin: 2px; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size:14px; background: var(--surface-2); color: var(--text-2); border: 1px solid var(--border); margin: 2px; }
 
   @media (max-width: 1100px) {
     .stats-grid { grid-template-columns: repeat(2,1fr); }
@@ -230,9 +230,9 @@
     .sidebar .nav-item { font-size: 15px; padding: 13px 12px; }
     .sidebar-logo h1 { font-size: 21px; }
     .sidebar-logo p { font-size: 15px; }
-    .nav-label { font-size: 13px; }
+    .nav-label { font-size:14px; }
     #sidebar-date { font-size: 15px !important; }
-    .sidebar-footer p { font-size: 13px; }
+    .sidebar-footer p { font-size:14px; }
     .content { font-size: 16px; }
     .content .card-head { font-size: 16px; }
     .content .stats-grid .stat-number { font-size: 32px; }
@@ -241,8 +241,8 @@
     .content .type-chip-label { font-size: 15px; }
     .content .type-chip-count { font-size: 22px; }
     .content .deadline-label { font-size: 15px; }
-    .content .deadline-item div[style*="font-size:13px"] { font-size: 13px !important; }
-    .content .badge { font-size:13px; }
+    .content .deadline-item div[style*="font-size:14px"] { font-size:14px !important; }
+    .content .badge { font-size:14px; }
     .content th, .content td { font-size: 15px; }
     .topbar { font-size: 18px; }
     .topbar .topbar-title { font-size: 20px; }
@@ -321,7 +321,7 @@
     .field label { font-size: 15px; }
     .field input, .field select, .field textarea { font-size: 16px; }
     .btn { font-size: 15px; padding: 10px 18px; }
-    .badge { font-size: 13px; }
+    .badge { font-size:14px; }
     .nav-item { font-size: 16px; padding: 12px 10px; }
   }
 
@@ -345,7 +345,7 @@
     <div class="sidebar-logo" onclick="navigate('dashboard')" style="cursor:pointer">
       <h1>個案管理系統</h1>
       <p>勞保・職災・商業保險・勞資爭議</p>
-      <div id="sidebar-date" style="color:var(--text-2);font-size:13px;margin-top:8px;font-weight:500"></div>
+      <div id="sidebar-date" style="color:var(--text-2);font-size:14px;margin-top:8px;font-weight:500"></div>
     </div>
     <div class="nav-section">
       <div class="nav-label">主要功能</div>
@@ -607,7 +607,7 @@ dashboard() {
     </div>
   </div>
   <div class="content">
-    <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px">📊 案件狀態統計</div>
+    <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:8px">📊 案件狀態統計</div>
     <div class="stats-grid">
       <div class="stat-card all" onclick="navigate('cases')" style="cursor:pointer">
         <div class="stat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f1f3d" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
@@ -635,7 +635,7 @@ dashboard() {
       </div>
     </div>
 
-    <div style="font-size:13px;font-weight:700;color:var(--navy);margin:16px 0 8px">📂 案件類型分佈</div>
+    <div style="font-size:14px;font-weight:700;color:var(--navy);margin:16px 0 8px">📂 案件類型分佈</div>
     <div class="type-chips">
       ${typeGroups.map(g => `
         <div class="type-chip ${g.cls}" onclick='filterType=${JSON.stringify(g.types)};navigate("cases")' style="cursor:pointer">
@@ -660,8 +660,8 @@ dashboard() {
               const tagIcon = isDeadline ? '⚠️ 截止日期' : '📋 預計完成';
               return `<div class="deadline-item ${cls}" onclick="navigate('case-detail','${item.caseId}')" style="cursor:pointer">
                 <div>
-                  <div class="deadline-label">${esc(item.name)} <span style="font-size:13px;color:${tagColor};font-weight:700;margin-left:6px">${tagIcon}</span></div>
-                  <div style="font-size:13px;color:var(--text-3);margin-top:2px">${esc(item.note)} · ${fmtDate(item.date)}${item.trackName ? ' · '+esc(item.trackName) : ''}</div>
+                  <div class="deadline-label">${esc(item.name)} <span style="font-size:14px;color:${tagColor};font-weight:700;margin-left:6px">${tagIcon}</span></div>
+                  <div style="font-size:14px;color:var(--text-3);margin-top:2px">${esc(item.note)} · ${fmtDate(item.date)}${item.trackName ? ' · '+esc(item.trackName) : ''}</div>
                 </div>
                 ${daysBadge(item.days)}
               </div>`;
@@ -676,10 +676,10 @@ dashboard() {
             ${[...db.cases].sort((a,b) => b.updated.localeCompare(a.updated)).slice(0,5).map(c => `
               <div onclick="navigate('case-detail','${c.id}')" style="padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s" onmouseenter="this.style.background='rgba(15,31,61,0.025)'" onmouseleave="this.style.background=''">
                 <div style="display:flex;align-items:center;justify-content:space-between">
-                  <div style="font-size:13px;font-weight:600">${esc(c.name)} <span style="color:var(--text-3);font-weight:400">${esc(c.id)}</span></div>
+                  <div style="font-size:14px;font-weight:600">${esc(c.name)} <span style="color:var(--text-3);font-weight:400">${esc(c.id)}</span></div>
                   <span class="badge ${statusColor[c.status]}">${c.status}</span>
                 </div>
-                <div style="font-size:13px;color:var(--text-3);margin-top:3px">${c.type} · 更新：${fmtDate(c.updated)}</div>
+                <div style="font-size:14px;color:var(--text-3);margin-top:3px">${c.type} · 更新：${fmtDate(c.updated)}</div>
               </div>
             `).join('')}
           </div>
@@ -764,10 +764,10 @@ cases() {
               <td><span style="font-family:'Playfair Display';font-weight:600;color:var(--navy)">${esc(c.id)}</span></td>
               <td><strong>${esc(c.name)}</strong></td>
               <td><span class="badge ${typeColor[c.type]}">${esc(c.type)}</span></td>
-              <td style="max-width:140px"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">${esc(c.employer)}</div>${c.insurer?`<div style="font-size:13px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">${esc(c.insurer)}</div>`:""}</td>
+              <td style="max-width:140px"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">${esc(c.employer)}</div>${c.insurer?`<div style="font-size:14px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px">${esc(c.insurer)}</div>`:""}</td>
               <td><span class="badge ${statusColor[c.status]}">${c.status}</span></td>
-              <td>${c.plannedDate ? `<div style="font-size:13px;font-weight:600;color:#0EA5B0">${fmtDate(c.plannedDate)}</div><div style="font-size:13px;color:var(--text-3)">${esc(c.plannedDateNote)}</div>${daysBadge(daysP)}` : '<span style="color:var(--text-3);font-size:13px">未設定</span>'}</td>
-              <td>${c.deadline ? `<div style="font-size:13px;font-weight:600;color:#D55E00">${fmtDate(c.deadline)}</div><div style="font-size:13px;color:var(--text-3)">${esc(c.deadlineNote)}</div>${daysBadge(days)}` : '<span style="color:var(--text-3);font-size:13px">未設定</span>'}</td>
+              <td>${c.plannedDate ? `<div style="font-size:14px;font-weight:600;color:#0EA5B0">${fmtDate(c.plannedDate)}</div><div style="font-size:14px;color:var(--text-3)">${esc(c.plannedDateNote)}</div>${daysBadge(daysP)}` : '<span style="color:var(--text-3);font-size:14px">未設定</span>'}</td>
+              <td>${c.deadline ? `<div style="font-size:14px;font-weight:600;color:#D55E00">${fmtDate(c.deadline)}</div><div style="font-size:14px;color:var(--text-3)">${esc(c.deadlineNote)}</div>${daysBadge(days)}` : '<span style="color:var(--text-3);font-size:14px">未設定</span>'}</td>
               <td onclick="event.stopPropagation()" style="white-space:nowrap">
                 <button class="btn btn-outline btn-sm" onclick="openEditCase('${c.id}');event.stopPropagation()">編輯</button>
               </td>
@@ -796,14 +796,14 @@ cases() {
     var daysP = daysUntil(tr.plannedDate);
 
     var deadlineRow = tr.deadline
-      ? '<div style="font-size:13px"><span style="color:#D55E00;font-weight:600">🔔 提醒日期：</span>'
+      ? '<div style="font-size:14px"><span style="color:#D55E00;font-weight:600">🔔 提醒日期：</span>'
         + fmtDate(tr.deadline) + ' ' + daysBadge(days) + '</div>' : '';
     var plannedRow = tr.plannedDate
-      ? '<div style="font-size:13px"><span style="color:#0EA5B0;font-weight:600">📋 預計完成：</span>'
+      ? '<div style="font-size:14px"><span style="color:#0EA5B0;font-weight:600">📋 預計完成：</span>'
         + fmtDate(tr.plannedDate) + ' ' + daysBadge(daysP) + '</div>' : '';
 
     var noteHtml = tr.note
-      ? '<div style="font-size:13px;color:var(--text-2);padding:10px 12px;background:var(--surface-2);border-radius:6px;margin-bottom:10px">'+esc(tr.note)+'</div>' : '';
+      ? '<div style="font-size:14px;color:var(--text-2);padding:10px 12px;background:var(--surface-2);border-radius:6px;margin-bottom:10px">'+esc(tr.note)+'</div>' : '';
 
     return '<div class="card" id="track-'+tr.id+'" style="border-top:3px solid '+col+';margin-bottom:20px">'
       + '<div class="card-head" style="background:'+bg+';padding:14px 18px">'
@@ -812,10 +812,10 @@ cases() {
       + '<span style="font-size:15px;font-weight:700;color:'+col+'">'+esc(tr.name)+'</span>'
       + '<span class="badge '+(typeColor[tr.type]||'badge-gray')+'">'+esc(tr.type)+'</span>'
       + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'">'+esc(tr.status)+'</span>'
-      + '<span style="margin-left:auto;font-size:13px;font-weight:700;color:'+col+'" class="amount">NT$ '+fmt(tr.amount)+'</span>'
+      + '<span style="margin-left:auto;font-size:14px;font-weight:700;color:'+col+'" class="amount">NT$ '+fmt(tr.amount)+'</span>'
       + '</div>'
       + (deadlineRow||plannedRow ? '<div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap">'+deadlineRow+plannedRow+'</div>' : '')
-      + (tr.contact ? '<div style="margin-top:8px;font-size:13px;color:var(--text-2)">👤 承辦：<strong>'+esc(tr.contact)+'</strong>'+(tr.contactPhone?' ☎ '+esc(tr.contactPhone):'')+'</div>' : '')
+      + (tr.contact ? '<div style="margin-top:8px;font-size:14px;color:var(--text-2)">👤 承辦：<strong>'+esc(tr.contact)+'</strong>'+(tr.contactPhone?' ☎ '+esc(tr.contactPhone):'')+'</div>' : '')
       + '</div>'
       + '<div class="card-body" style="padding:12px 20px">'
       + noteHtml
@@ -831,25 +831,25 @@ cases() {
     : tracks.map(function(tr,i){ return renderTrack(tr,i); }).join('');
 
   var sidebarTracks = tracks.length === 0
-    ? '<div class="text-muted" style="text-align:center;padding:12px;font-size:13px">尚無追蹤軸</div>'
+    ? '<div class="text-muted" style="text-align:center;padding:12px;font-size:14px">尚無追蹤軸</div>'
     : tracks.map(function(tr,i){
         var col2 = trackColors[i%trackColors.length];
         var bg2 = trackBgColors[i%trackBgColors.length];
         return '<div style="padding:8px 10px;border-radius:8px;margin-bottom:6px;background:'+bg2+';border:1px solid rgba(0,0,0,0.05)">'
           + '<div style="display:flex;align-items:center;gap:8px;cursor:pointer" onclick="_trackAction(this)" data-action="scrollTo" data-track="'+tr.id+'">'
           + '<div style="width:8px;height:8px;border-radius:50%;background:'+col2+';flex-shrink:0"></div>'
-          + '<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(tr.name)+'</div>'
-          + '<div style="font-size:13px;color:var(--text-3)">'+esc(tr.type)+'</div></div>'
-          + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'" style="font-size:13px">'+tr.status+'</span>'
+          + '<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(tr.name)+'</div>'
+          + '<div style="font-size:14px;color:var(--text-3)">'+esc(tr.type)+'</div></div>'
+          + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'" style="font-size:14px">'+tr.status+'</span>'
           + '</div>'
           + '<div style="display:flex;gap:4px;margin-top:6px;padding-left:16px">'
-          + '<button class="btn btn-outline btn-sm" style="font-size:13px;padding:3px 8px" onclick="_trackAction(this)" data-action="editTrack" data-track="'+tr.id+'">✏️ 編輯</button>'
-          + '<button class="btn btn-outline btn-sm" style="font-size:13px;padding:3px 8px" onclick="_trackAction(this)" data-action="copyTrack" data-track="'+tr.id+'">📋 複製</button>'
-          + '<button class="btn btn-outline btn-sm" style="font-size:13px;padding:3px 8px;color:#D55E00" onclick="if(confirm(\'確定刪除追蹤軸「'+tr.name.replace(/'/g,"\\'")+'」？\'))deleteTrack(\''+tr.id+'\')">🗑 刪除</button>'
+          + '<button class="btn btn-outline btn-sm" style="font-size:14px;padding:3px 8px" onclick="_trackAction(this)" data-action="editTrack" data-track="'+tr.id+'">✏️ 編輯</button>'
+          + '<button class="btn btn-outline btn-sm" style="font-size:14px;padding:3px 8px" onclick="_trackAction(this)" data-action="copyTrack" data-track="'+tr.id+'">📋 複製</button>'
+          + '<button class="btn btn-outline btn-sm" style="font-size:14px;padding:3px 8px;color:#D55E00" onclick="if(confirm(\'確定刪除追蹤軸「'+tr.name.replace(/'/g,"\\'")+'」？\'))deleteTrack(\''+tr.id+'\')">🗑 刪除</button>'
           + '</div></div>';
       }).join('')
     + '<div style="padding-top:10px;border-top:1px solid var(--border);margin-top:6px">'
-    + '<div style="font-size:13px;color:var(--text-3)">各軸總計預估金額</div>'
+    + '<div style="font-size:14px;color:var(--text-3)">各軸總計預估金額</div>'
     + '<div class="amount" style="font-size:20px;font-weight:700;color:var(--navy);margin-top:4px">NT$ '+fmt(totalAmount)+'</div></div>';
 
   var dateQuickHtml = '';
@@ -860,15 +860,15 @@ cases() {
       if (tr.deadline) {
         var d = daysUntil(tr.deadline);
         rows += '<div class="deadline-item '+(d<=14?'deadline-urgent':d<=30?'deadline-soon':'deadline-ok')+'" style="margin-bottom:6px">'
-          + '<div><div style="font-size:13px;font-weight:700">'+tr.name+'</div>'
-          + '<div style="font-size:13px;color:var(--text-3)">🔔 '+(tr.deadlineNote||'提醒日期')+' '+fmtDate(tr.deadline)+'</div></div>'
+          + '<div><div style="font-size:14px;font-weight:700">'+tr.name+'</div>'
+          + '<div style="font-size:14px;color:var(--text-3)">🔔 '+(tr.deadlineNote||'提醒日期')+' '+fmtDate(tr.deadline)+'</div></div>'
           + daysBadge(d) + '</div>';
       }
       if (tr.plannedDate) {
         var d2 = daysUntil(tr.plannedDate);
         rows += '<div class="deadline-item '+(d2<=7?'deadline-soon':'deadline-ok')+'" style="margin-bottom:6px">'
-          + '<div><div style="font-size:13px;font-weight:700">'+tr.name+'</div>'
-          + '<div style="font-size:13px;color:var(--text-3)">📋 '+(tr.plannedDateNote||'預計完成')+' '+fmtDate(tr.plannedDate)+'</div></div>'
+          + '<div><div style="font-size:14px;font-weight:700">'+tr.name+'</div>'
+          + '<div style="font-size:14px;color:var(--text-3)">📋 '+(tr.plannedDateNote||'預計完成')+' '+fmtDate(tr.plannedDate)+'</div></div>'
           + daysBadge(d2) + '</div>';
       }
       return rows;
@@ -893,7 +893,7 @@ cases() {
     <div class="card" style="margin-bottom:16px">
       <div class="card-head">
         當事人基本資料
-        <span style="font-size:13px;color:var(--text-3);font-weight:400">共 ${tracks.length} 條追蹤軸・總預估 NT$ ${fmt(totalAmount)}</span>
+        <span style="font-size:14px;color:var(--text-3);font-weight:400">共 ${tracks.length} 條追蹤軸・總預估 NT$ ${fmt(totalAmount)}</span>
       </div>
       <div class="card-body">
         <div class="info-grid">
@@ -906,7 +906,7 @@ cases() {
           <div class="info-item"><label>事故/起始日</label><value>${fmtDate(c.accidentDate)}</value></div>
           <div class="info-item"><label>受理日期</label><value>${fmtDate(c.receiveDate)}</value></div>
         </div>
-        ${c.note ? '<div class="divider"></div><div style="font-size:13px;color:var(--text-2)">'+esc(c.note)+'</div>' : ''}
+        ${c.note ? '<div class="divider"></div><div style="font-size:14px;color:var(--text-2)">'+esc(c.note)+'</div>' : ''}
       </div>
     </div>
 
@@ -915,54 +915,54 @@ cases() {
           <div class="card-head">追蹤軸總覽</div>
           <div class="card-body" style="padding:0">
             ${tracks.length === 0
-              ? '<div style="padding:30px;text-align:center;color:var(--text-3);font-size:13px"><p>尚無追蹤軸</p><button class="btn btn-gold" style="margin-top:12px" onclick="openAddTrack(\''+c.id+'\')">＋ 新增第一條追蹤軸</button></div>'
+              ? '<div style="padding:30px;text-align:center;color:var(--text-3);font-size:14px"><p>尚無追蹤軸</p><button class="btn btn-gold" style="margin-top:12px" onclick="openAddTrack(\''+c.id+'\')">＋ 新增第一條追蹤軸</button></div>'
               : tracks.map(function(tr,i){
                 var col2 = trackColors[i%trackColors.length];
                 var bg2 = trackBgColors[i%trackBgColors.length];
                 var days = daysUntil(tr.deadline);
                 var daysP = daysUntil(tr.plannedDate);
-                var deadlineInfo = tr.deadline ? '<span style="font-size:13px;color:#D55E00">🔔 '+fmtDate(tr.deadline)+' '+daysBadge(days)+'</span>' : '';
-                var plannedInfo = tr.plannedDate ? '<span style="font-size:13px;color:#0EA5B0">📋 '+fmtDate(tr.plannedDate)+' '+daysBadge(daysP)+'</span>' : '';
-                var contactInfo = tr.contact ? '<span style="font-size:13px;color:var(--text-3)">👤 '+esc(tr.contact)+(tr.contactPhone?' ☎ '+esc(tr.contactPhone):'')+'</span>' : '';
+                var deadlineInfo = tr.deadline ? '<span style="font-size:14px;color:#D55E00">🔔 '+fmtDate(tr.deadline)+' '+daysBadge(days)+'</span>' : '';
+                var plannedInfo = tr.plannedDate ? '<span style="font-size:14px;color:#0EA5B0">📋 '+fmtDate(tr.plannedDate)+' '+daysBadge(daysP)+'</span>' : '';
+                var contactInfo = tr.contact ? '<span style="font-size:14px;color:var(--text-3)">👤 '+esc(tr.contact)+(tr.contactPhone?' ☎ '+esc(tr.contactPhone):'')+'</span>' : '';
                 var trackTodos = (tr.todos||[]);
                 var pendingTodos = trackTodos.filter(function(t){return !t.done});
                 var doneTodos = trackTodos.filter(function(t){return t.done});
                 var todoHtml = '<div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border)">'
                   + '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">'
-                  + '<span style="font-size:13px;font-weight:600;color:var(--text-2)">☑️ 待辦 '+pendingTodos.length+'/'+ trackTodos.length+'</span>'
+                  + '<span style="font-size:14px;font-weight:600;color:var(--text-2)">☑️ 待辦 '+pendingTodos.length+'/'+ trackTodos.length+'</span>'
                   + '</div>'
                   + trackTodos.map(function(todo,ti){
                     var nowStr2 = new Date().toISOString().slice(0,10);
                     var isOd = todo.dueDate && todo.dueDate < nowStr2 && !todo.done;
                     var remindHit = todo.remind && todo.remind <= nowStr2 && !todo.done;
-                    return '<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:12px;'+(todo.done?'opacity:0.5':'')+'">'
+                    return '<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:14px;'+(todo.done?'opacity:0.5':'')+'">'
                       + '<input type="checkbox" '+(todo.done?'checked':'')+' onchange="toggleTrackTodo(\''+tr.id+'\','+ti+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2;flex-shrink:0">'
                       + '<span style="flex:1;'+(todo.done?'text-decoration:line-through;color:var(--text-3)':'')+(isOd?';color:#D55E00':'')+(remindHit&&!todo.done?';font-weight:600':'')+'">'+( remindHit&&!todo.done?'⏰ ':'')+esc(todo.title)+'</span>'
-                      + (todo.done && todo.doneDate ? '<span style="font-size:12px;color:#56a65c" title="完成日期">✅'+fmtDate(todo.doneDate)+'</span>' : '')
-                      + (todo.dueDate ? '<span style="font-size:12px;color:'+(isOd?'#D55E00':'var(--text-3)')+'">📅'+fmtDate(todo.dueDate)+'</span>' : '')
-                      + (todo.remind ? '<span style="font-size:12px;color:'+(remindHit?'#D55E00':'var(--text-3)')+'">🔔'+fmtDate(todo.remind)+'</span>' : '')
-                      + '<button onclick="openEditTrackTodo(\''+tr.id+'\','+ti+')" style="background:none;border:none;cursor:pointer;font-size:13px;color:#0072B2;padding:0 2px" title="編輯">✏️</button>'
-                      + '<button onclick="removeTrackTodo(\''+tr.id+'\','+ti+')" style="background:none;border:none;cursor:pointer;font-size:13px;color:#D55E00;padding:0 2px" title="刪除">✕</button>'
+                      + (todo.done && todo.doneDate ? '<span style="font-size:14px;color:#56a65c" title="完成日期">✅'+fmtDate(todo.doneDate)+'</span>' : '')
+                      + (todo.dueDate ? '<span style="font-size:14px;color:'+(isOd?'#D55E00':'var(--text-3)')+'">📅'+fmtDate(todo.dueDate)+'</span>' : '')
+                      + (todo.remind ? '<span style="font-size:14px;color:'+(remindHit?'#D55E00':'var(--text-3)')+'">🔔'+fmtDate(todo.remind)+'</span>' : '')
+                      + '<button onclick="openEditTrackTodo(\''+tr.id+'\','+ti+')" style="background:none;border:none;cursor:pointer;font-size:14px;color:#0072B2;padding:0 2px" title="編輯">✏️</button>'
+                      + '<button onclick="removeTrackTodo(\''+tr.id+'\','+ti+')" style="background:none;border:none;cursor:pointer;font-size:14px;color:#D55E00;padding:0 2px" title="刪除">✕</button>'
                       + '</div>';
                   }).join('')
-                  + '<button class="btn btn-outline btn-sm" style="font-size:12px;padding:2px 8px;margin-top:4px" onclick="openAddTrackTodo(\''+tr.id+'\')">＋ 新增待辦</button>'
+                  + '<button class="btn btn-outline btn-sm" style="font-size:14px;padding:2px 8px;margin-top:4px" onclick="openAddTrackTodo(\''+tr.id+'\')">＋ 新增待辦</button>'
                   + '</div>';
                 return '<div id="track-'+tr.id+'" style="padding:14px 18px;border-bottom:1px solid var(--border);border-left:4px solid '+col2+'">'
                   + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
                   + '<div style="width:8px;height:8px;border-radius:50%;background:'+col2+';flex-shrink:0"></div>'
                   + '<span style="font-size:14px;font-weight:700">'+esc(tr.name)+'</span>'
-                  + '<span class="badge '+(typeColor[tr.type]||'badge-gray')+'" style="font-size:13px">'+esc(tr.type)+'</span>'
-                  + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'" style="font-size:13px">'+esc(tr.status)+'</span>'
-                  + '<span style="font-size:13px;font-weight:600;color:'+col2+';margin-left:auto" class="amount">NT$ '+fmt(tr.amount)+'</span>'
+                  + '<span class="badge '+(typeColor[tr.type]||'badge-gray')+'" style="font-size:14px">'+esc(tr.type)+'</span>'
+                  + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'" style="font-size:14px">'+esc(tr.status)+'</span>'
+                  + '<span style="font-size:14px;font-weight:600;color:'+col2+';margin-left:auto" class="amount">NT$ '+fmt(tr.amount)+'</span>'
                   + '</div>'
                   + ((deadlineInfo||plannedInfo||contactInfo) ? '<div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap">'+deadlineInfo+plannedInfo+contactInfo+'</div>' : '')
-                  + (tr.note ? '<div style="font-size:13px;color:var(--text-3);margin-top:4px">'+esc(tr.note)+'</div>' : '')
+                  + (tr.note ? '<div style="font-size:14px;color:var(--text-3);margin-top:4px">'+esc(tr.note)+'</div>' : '')
                   + todoHtml
                   + '<div style="display:flex;gap:6px;margin-top:8px">'
-                  + '<button class="btn btn-outline btn-sm" style="font-size:13px;border-color:'+col2+';color:'+col2+'" onclick="_trackAction(this)" data-action="addProgress" data-case="'+c.id+'" data-track="'+tr.id+'">＋ 新增進度</button>'
-                  + '<button class="btn btn-outline btn-sm" style="font-size:13px" onclick="_trackAction(this)" data-action="editTrack" data-track="'+tr.id+'">✏️ 編輯</button>'
-                  + '<button class="btn btn-outline btn-sm" style="font-size:13px" onclick="_trackAction(this)" data-action="copyTrack" data-track="'+tr.id+'">📋 複製</button>'
-                  + '<button class="btn btn-outline btn-sm" style="font-size:13px;color:#D55E00" onclick="if(confirm(\'確定刪除追蹤軸「'+tr.name.replace(/'/g,"\\\\'")+'」？\'))deleteTrack(\''+tr.id+'\')">🗑 刪除</button>'
+                  + '<button class="btn btn-outline btn-sm" style="font-size:14px;border-color:'+col2+';color:'+col2+'" onclick="_trackAction(this)" data-action="addProgress" data-case="'+c.id+'" data-track="'+tr.id+'">＋ 新增進度</button>'
+                  + '<button class="btn btn-outline btn-sm" style="font-size:14px" onclick="_trackAction(this)" data-action="editTrack" data-track="'+tr.id+'">✏️ 編輯</button>'
+                  + '<button class="btn btn-outline btn-sm" style="font-size:14px" onclick="_trackAction(this)" data-action="copyTrack" data-track="'+tr.id+'">📋 複製</button>'
+                  + '<button class="btn btn-outline btn-sm" style="font-size:14px;color:#D55E00" onclick="if(confirm(\'確定刪除追蹤軸「'+tr.name.replace(/'/g,"\\\\'")+'」？\'))deleteTrack(\''+tr.id+'\')">🗑 刪除</button>'
                   + '</div></div>';
               }).join('')
             }
@@ -975,9 +975,9 @@ cases() {
       var nowStr = new Date().toISOString().slice(0,10);
       var pendingTodos = caseTodos.filter(function(t){ return !t.done; });
       var doneTodos = caseTodos.filter(function(t){ return t.done; });
-      return '<div class="card" style="margin-top:16px"><div class="card-head" style="display:flex;align-items:center;justify-content:space-between">相關待辦事項 <span class="badge badge-yellow">'+pendingTodos.length+' 項未完成</span><button class="btn btn-outline btn-sm" style="font-size:13px;border-color:var(--gold);color:var(--gold)" onclick="openAddTodo(\''+c.id+'\')">＋ 新增待辦</button></div>'
+      return '<div class="card" style="margin-top:16px"><div class="card-head" style="display:flex;align-items:center;justify-content:space-between">相關待辦事項 <span class="badge badge-yellow">'+pendingTodos.length+' 項未完成</span><button class="btn btn-outline btn-sm" style="font-size:14px;border-color:var(--gold);color:var(--gold)" onclick="openAddTodo(\''+c.id+'\')">＋ 新增待辦</button></div>'
         + '<div class="card-body" style="padding:0">'
-        + (pendingTodos.length === 0 ? '<div style="padding:16px;text-align:center;color:var(--text-3);font-size:13px">所有待辦已完成 🎉</div>' :
+        + (pendingTodos.length === 0 ? '<div style="padding:16px;text-align:center;color:var(--text-3);font-size:14px">所有待辦已完成 🎉</div>' :
           pendingTodos.sort(function(a,b){ return (a.dueDate||'9999').localeCompare(b.dueDate||'9999'); }).map(function(t){
             var isOverdue = t.dueDate && t.dueDate < nowStr;
             var subtasksHtml = '';
@@ -985,31 +985,31 @@ cases() {
               t.subtasks.sort(function(a,b){ return (a.dueDate||'9999').localeCompare(b.dueDate||'9999'); });
               subtasksHtml = '<div style="margin-top:6px;padding-left:4px">' + t.subtasks.map(function(s,i){
                 var sOverdue = s.dueDate && s.dueDate < nowStr && !s.done;
-                return '<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px">'
+                return '<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:14px">'
                   + '<input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2">'
                   + '<span style="flex:1;'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+'">'+esc(s.title)+'</span>'
-                  + (s.dueDate ? '<span style="font-size:13px;color:'+(sOverdue?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>' : '')
+                  + (s.dueDate ? '<span style="font-size:14px;color:'+(sOverdue?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>' : '')
                   + '</div>';
               }).join('') + '</div>';
             }
             return '<div style="padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px">'
               + '<input type="checkbox" onchange="toggleTodo(\''+t.id+'\')" style="width:16px;height:16px;margin-top:2px;cursor:pointer;accent-color:#0072B2;flex-shrink:0">'
               + '<div style="flex:1;min-width:0">'
-              + '<div style="font-size:13px;font-weight:600;'+(isOverdue?'color:#D55E00':'')+'">'+esc(t.title)
-              + (t.subtasks&&t.subtasks.length ? ' <span style="font-size:13px;font-weight:400;color:var(--text-3)">'+t.subtasks.filter(function(s){return s.done}).length+'/'+t.subtasks.length+'</span>' : '')
+              + '<div style="font-size:14px;font-weight:600;'+(isOverdue?'color:#D55E00':'')+'">'+esc(t.title)
+              + (t.subtasks&&t.subtasks.length ? ' <span style="font-size:14px;font-weight:400;color:var(--text-3)">'+t.subtasks.filter(function(s){return s.done}).length+'/'+t.subtasks.length+'</span>' : '')
               + '</div>'
-              + (t.note ? '<div style="font-size:13px;color:var(--text-3);margin-top:2px">'+esc(t.note)+'</div>' : '')
+              + (t.note ? '<div style="font-size:14px;color:var(--text-3);margin-top:2px">'+esc(t.note)+'</div>' : '')
               + subtasksHtml
-              + '<div style="display:flex;gap:10px;margin-top:4px;font-size:13px;color:var(--text-3)">'
+              + '<div style="display:flex;gap:10px;margin-top:4px;font-size:14px;color:var(--text-3)">'
               + (t.dueDate ? '<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>' : '')
               + (t.remind ? '<span>⏰ '+fmtDate(t.remind)+'</span>' : '')
               + '</div></div>'
               + '<div style="display:flex;gap:4px;flex-shrink:0">'
-              + '<button class="btn btn-outline btn-sm" style="font-size:13px;padding:2px 6px" onclick="openEditTodo(\''+t.id+'\')">✏️</button>'
-              + '<button class="btn btn-outline btn-sm" style="font-size:13px;padding:2px 6px;color:#D55E00" onclick="deleteTodo(\''+t.id+'\')">🗑</button>'
+              + '<button class="btn btn-outline btn-sm" style="font-size:14px;padding:2px 6px" onclick="openEditTodo(\''+t.id+'\')">✏️</button>'
+              + '<button class="btn btn-outline btn-sm" style="font-size:14px;padding:2px 6px;color:#D55E00" onclick="deleteTodo(\''+t.id+'\')">🗑</button>'
               + '</div></div>';
           }).join(''))
-        + (doneTodos.length ? '<div style="padding:10px 18px;border-top:1px solid var(--border);font-size:13px;color:var(--text-3)">✅ 已完成 '+doneTodos.length+' 項</div>' : '')
+        + (doneTodos.length ? '<div style="padding:10px 18px;border-top:1px solid var(--border);font-size:14px;color:var(--text-3)">✅ 已完成 '+doneTodos.length+' 項</div>' : '')
         + '</div></div>';
     })()}
 
@@ -1034,14 +1034,14 @@ progress() {
             const c = db.cases.find(x => x.id === p.caseId);
             const tr = p.trackId ? db.tracks.find(t => t.id === p.trackId) : null;
             return `<tr onclick="navigate('case-detail','${p.caseId}')" style="cursor:pointer">
-              <td><strong>${esc(p.caseId)}</strong><div style="font-size:13px;color:var(--text-3)">${c?esc(c.name):''}</div></td>
-              <td style="max-width:130px">${tr ? `<div style="font-size:13px;font-weight:600">${esc(tr.name)}</div><span class="badge ${typeColor[tr.type]||'badge-gray'}" style="font-size:13px">${esc(tr.type)}</span>` : '<span style="color:var(--text-3);font-size:13px">—</span>'}</td>
+              <td><strong>${esc(p.caseId)}</strong><div style="font-size:14px;color:var(--text-3)">${c?esc(c.name):''}</div></td>
+              <td style="max-width:130px">${tr ? `<div style="font-size:14px;font-weight:600">${esc(tr.name)}</div><span class="badge ${typeColor[tr.type]||'badge-gray'}" style="font-size:14px">${esc(tr.type)}</span>` : '<span style="color:var(--text-3);font-size:14px">—</span>'}</td>
               <td style="white-space:nowrap">${fmtDate(p.date)}</td>
               <td><span class="badge ${stageColor[p.stage]||'badge-gray'}">${esc(p.stage)}</span></td>
               <td style="max-width:180px">${esc(p.desc)}</td>
               <td>${p.sendRecv ? `<span class="badge ${p.sendRecv==='收件'?'badge-green':'badge-teal'}">${esc(p.sendRecv)}</span>` : '-'}</td>
-              <td style="max-width:130px">${esc(p.nextStep)||'-'}${p.nextDate?`<div style="font-size:13px;color:var(--text-3)">${fmtDate(p.nextDate)}</div>`:''}</td>
-              <td style="max-width:110px;color:var(--text-3);font-size:13px">${esc(p.note)||'-'}</td>
+              <td style="max-width:130px">${esc(p.nextStep)||'-'}${p.nextDate?`<div style="font-size:14px;color:var(--text-3)">${fmtDate(p.nextDate)}</div>`:''}</td>
+              <td style="max-width:110px;color:var(--text-3);font-size:14px">${esc(p.note)||'-'}</td>
             </tr>`;
           }).join('')}
         </tbody>
@@ -1066,12 +1066,12 @@ progress() {
           return `<div style="padding:10px 16px;border-bottom:1px solid var(--border)">
             <div style="display:flex;align-items:center;gap:8px">
               <input type="checkbox" onchange="toggleTodo('${t.id}')" style="width:16px;height:16px;cursor:pointer;accent-color:#0072B2">
-              <span style="font-size:13px;font-weight:600;${isOverdue?'color:#D55E00':''}">${esc(t.title)}</span>
-              ${subTotal?'<span style="font-size:13px;color:var(--text-3)">'+subDone+'/'+subTotal+'</span>':''}
-              ${t.dueDate?'<span style="font-size:13px;margin-left:auto;color:'+(isOverdue?'#D55E00':'var(--text-3)')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
+              <span style="font-size:14px;font-weight:600;${isOverdue?'color:#D55E00':''}">${esc(t.title)}</span>
+              ${subTotal?'<span style="font-size:14px;color:var(--text-3)">'+subDone+'/'+subTotal+'</span>':''}
+              ${t.dueDate?'<span style="font-size:14px;margin-left:auto;color:'+(isOverdue?'#D55E00':'var(--text-3)')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
             </div>
             ${subTotal?'<div style="padding-left:24px;margin-top:4px">'+
-              (t.subtasks||[]).map((s,i)=>'<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:13px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+'">'+esc(s.title)+'</span>'+(s.dueDate?'<span style="font-size:13px;color:var(--text-3);margin-left:auto">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')
+              (t.subtasks||[]).map((s,i)=>'<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:14px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:14px;height:14px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+'">'+esc(s.title)+'</span>'+(s.dueDate?'<span style="font-size:14px;color:var(--text-3);margin-left:auto">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')
             +'</div>':''}
           </div>`;
         }).join('')}
@@ -1125,23 +1125,23 @@ progress() {
     const prevMonthDays = new Date(y, m, 0).getDate();
     for (let i=startDay-1; i>=0; i--) {
       const d = prevMonthDays - i;
-      cellArr.push('<div style="min-height:90px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:13px;color:var(--text-3)">'+d+'</div></div>');
+      cellArr.push('<div style="min-height:90px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:14px;color:var(--text-3)">'+d+'</div></div>');
     }
     for (let d=1; d<=daysInMonth; d++) {
       const ds = y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
       const evts = eventsByDate[ds] || [];
       const isToday = ds === today;
       cellArr.push(`<div style="min-height:90px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:${isToday?'rgba(0,114,178,0.06)':'#fff'};${isToday?'border-color:#0072B2':''}">
-        <div style="font-size:13px;font-weight:${isToday?'700':'500'};color:${isToday?'#0072B2':'var(--text-2)'};margin-bottom:2px">${d}</div>
-        ${evts.slice(0,3).map(e => `<div onclick="navigate('${e.type==='todo'?'todos':'case-detail'}','${e.caseId}')" style="font-size:13px;padding:2px 4px;margin-bottom:1px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid ${e.dot};background:${e.bg||'rgba(0,0,0,0.03)'};color:var(--text)">${e.type==='deadline'?'⚠️ ':e.type==='planned'?'📋 ':e.type==='todo'?'☑️ ':'● '}${e.label}</div>`).join('')}
-        ${evts.length>3?`<div style="font-size:13px;color:var(--text-3)">+${evts.length-3}項</div>`:''}
+        <div style="font-size:14px;font-weight:${isToday?'700':'500'};color:${isToday?'#0072B2':'var(--text-2)'};margin-bottom:2px">${d}</div>
+        ${evts.slice(0,3).map(e => `<div onclick="navigate('${e.type==='todo'?'todos':'case-detail'}','${e.caseId}')" style="font-size:14px;padding:2px 4px;margin-bottom:1px;border-radius:3px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid ${e.dot};background:${e.bg||'rgba(0,0,0,0.03)'};color:var(--text)">${e.type==='deadline'?'⚠️ ':e.type==='planned'?'📋 ':e.type==='todo'?'☑️ ':'● '}${e.label}</div>`).join('')}
+        ${evts.length>3?`<div style="font-size:14px;color:var(--text-3)">+${evts.length-3}項</div>`:''}
       </div>`);
     }
     // 下月補足
     const totalCells = startDay + daysInMonth;
     const remaining = (7 - totalCells % 7) % 7;
     for (let nd=1; nd<=remaining; nd++) {
-      cellArr.push('<div style="min-height:90px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:13px;color:var(--text-3)">'+nd+'</div></div>');
+      cellArr.push('<div style="min-height:90px;padding:4px 6px;overflow:hidden;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);opacity:0.5"><div style="font-size:14px;color:var(--text-3)">'+nd+'</div></div>');
     }
     // 產生表格行
     let tableRows = '';
@@ -1156,14 +1156,14 @@ progress() {
       <button class="btn btn-outline btn-sm" onclick="calMonth++;if(calMonth>11){calMonth=0;calYear++}render()">▶</button>
       <button class="btn btn-outline btn-sm" style="margin-left:8px" onclick="calYear=${now.getFullYear()};calMonth=${now.getMonth()};render()">今天</button>
     </div>
-    <div style="display:flex;gap:16px;margin-bottom:12px;font-size:13px;color:var(--text-2);flex-wrap:wrap">
+    <div style="display:flex;gap:16px;margin-bottom:12px;font-size:14px;color:var(--text-2);flex-wrap:wrap">
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(0,114,178,0.5);margin-right:4px;vertical-align:middle"></span>● 進度紀錄</span>
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(213,94,0,0.5);margin-right:4px;vertical-align:middle"></span>⚠️ 截止日期</span>
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(14,165,176,0.5);margin-right:4px;vertical-align:middle"></span>📋 預計完成</span>
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(201,168,76,0.5);margin-right:4px;vertical-align:middle"></span>☑️ 待辦事項</span>
     </div>
     <table style="width:100%;border-collapse:separate;border-spacing:3px;table-layout:fixed">
-      <thead><tr>${['一','二','三','四','五','六','日'].map(w=>'<th style="text-align:center;font-size:13px;font-weight:700;color:var(--text-3);padding:4px;background:none;border:none;text-transform:none;letter-spacing:0">'+w+'</th>').join('')}</tr></thead>
+      <thead><tr>${['一','二','三','四','五','六','日'].map(w=>'<th style="text-align:center;font-size:14px;font-weight:700;color:var(--text-3);padding:4px;background:none;border:none;text-transform:none;letter-spacing:0">'+w+'</th>').join('')}</tr></thead>
       <tbody>${tableRows}</tbody>
     </table>`;
   }
@@ -1252,18 +1252,18 @@ deadlines() {
       <input type="checkbox" ${done?'checked':''} onclick="event.stopPropagation();${checkAction}" style="width:16px;height:16px;margin-top:3px;cursor:pointer;accent-color:#56a65c;flex-shrink:0" title="${done?'取消完成':'標記完成'}">
       <div style="flex:1;min-width:0;cursor:pointer" onclick="${clickTarget}">
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-          <span style="font-size:13px;font-weight:700;color:${item.color};background:${item.bg};padding:1px 8px;border-radius:4px">${item.label}</span>
-          <span style="font-size:13px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${esc(item.name)}</span>
-          <span style="font-size:13px;color:var(--text-3)">${esc(item.caseId)}</span>
+          <span style="font-size:14px;font-weight:700;color:${item.color};background:${item.bg};padding:1px 8px;border-radius:4px">${item.label}</span>
+          <span style="font-size:14px;font-weight:700;${done?'text-decoration:line-through;color:var(--text-3)':''}">${esc(item.name)}</span>
+          <span style="font-size:14px;color:var(--text-3)">${esc(item.caseId)}</span>
         </div>
-        ${item.trackName ? `<div style="font-size:13px;color:var(--text-3);margin-top:2px">追蹤軸：${esc(item.trackName)}</div>` : ''}
-        <div style="font-size:13px;color:var(--text-3);margin-top:2px">${esc(item.note)} · ${fmtDate(item.date)}</div>
+        ${item.trackName ? `<div style="font-size:14px;color:var(--text-3);margin-top:2px">追蹤軸：${esc(item.trackName)}</div>` : ''}
+        <div style="font-size:14px;color:var(--text-3);margin-top:2px">${esc(item.note)} · ${fmtDate(item.date)}</div>
         <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-          <span class="badge ${typeColor[item.caseType]||'badge-gray'}" style="font-size:12px">${esc(item.caseType)}</span>
-          ${done && item.doneDate ? '<span style="font-size:13px;color:#56a65c">✅ 完成於 '+fmtDate(item.doneDate)+'</span>' : ''}
+          <span class="badge ${typeColor[item.caseType]||'badge-gray'}" style="font-size:14px">${esc(item.caseType)}</span>
+          ${done && item.doneDate ? '<span style="font-size:14px;color:#56a65c">✅ 完成於 '+fmtDate(item.doneDate)+'</span>' : ''}
         </div>
       </div>
-      <div style="flex-shrink:0;text-align:right">${done ? '<span class="badge badge-green" style="font-size:13px">已完成</span>' : daysBadge(item.days)}</div>
+      <div style="flex-shrink:0;text-align:right">${done ? '<span class="badge badge-green" style="font-size:14px">已完成</span>' : daysBadge(item.days)}</div>
     </div>`;
   }
 
@@ -1277,7 +1277,7 @@ deadlines() {
   function section(label, color, bg, items) {
     if (!items.length) return '';
     return `<div style="margin-bottom:16px">
-      <div style="font-size:12px;font-weight:700;color:${color};margin-bottom:8px;padding:5px 12px;background:${bg};border-radius:6px;display:flex;align-items:center;justify-content:space-between">${label}<span style="font-size:13px;font-weight:400">${items.length} 筆</span></div>
+      <div style="font-size:14px;font-weight:700;color:${color};margin-bottom:8px;padding:5px 12px;background:${bg};border-radius:6px;display:flex;align-items:center;justify-content:space-between">${label}<span style="font-size:14px;font-weight:400">${items.length} 筆</span></div>
       ${items.map(itemCard).join('')}
     </div>`;
   }
@@ -1285,15 +1285,15 @@ deadlines() {
   return `
   <div class="topbar">
     <div class="topbar-title">期限管理</div>
-    <div class="topbar-actions" style="font-size:13px;color:var(--text-3)">共 ${pendingItems.length} 筆期限</div>
+    <div class="topbar-actions" style="font-size:14px;color:var(--text-3)">共 ${pendingItems.length} 筆期限</div>
   </div>
   <div class="content">
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding:10px 14px;background:var(--surface-2);border-radius:10px">
-      <span style="font-size:13px;font-weight:600;color:var(--text-2);margin-right:4px">類型：</span>
-      <span style="font-size:13px;color:#D55E00;font-weight:600">⚠️ 截止日期</span>
-      <span style="font-size:13px;color:#0EA5B0;font-weight:600">📋 預計完成</span>
-      <span style="font-size:13px;color:#E69F00;font-weight:600">🔔 提醒</span>
-      <span style="font-size:13px;color:var(--gold);font-weight:600">☑️ 追蹤待辦／待辦到期</span>
+      <span style="font-size:14px;font-weight:600;color:var(--text-2);margin-right:4px">類型：</span>
+      <span style="font-size:14px;color:#D55E00;font-weight:600">⚠️ 截止日期</span>
+      <span style="font-size:14px;color:#0EA5B0;font-weight:600">📋 預計完成</span>
+      <span style="font-size:14px;color:#E69F00;font-weight:600">🔔 提醒</span>
+      <span style="font-size:14px;color:var(--gold);font-weight:600">☑️ 追蹤待辦／待辦到期</span>
     </div>
 
     ${section('🚫 已逾期', '#5C1A1A', 'rgba(92,26,26,0.08)', overdue)}
@@ -1308,11 +1308,11 @@ deadlines() {
       <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(86,166,92,0.08);border-radius:10px;border:1px solid rgba(86,166,92,0.25);cursor:pointer" onclick="var el=document.getElementById('done-section');el.style.display=el.style.display==='none'?'block':'none';this.querySelector('.toggle-arrow').textContent=el.style.display==='none'?'▶':'▼'">
         <span style="font-size:20px">✅</span>
         <div>
-          <div style="font-size:13px;font-weight:700;color:#56a65c">已完成</div>
-          <div style="font-size:13px;color:var(--text-3)">點擊展開/收合</div>
+          <div style="font-size:14px;font-weight:700;color:#56a65c">已完成</div>
+          <div style="font-size:14px;color:var(--text-3)">點擊展開/收合</div>
         </div>
-        <span style="margin-left:auto;font-size:13px;font-weight:700;color:#56a65c">${doneItems.length} 筆</span>
-        <span class="toggle-arrow" style="font-size:13px;color:var(--text-3)">▶</span>
+        <span style="margin-left:auto;font-size:14px;font-weight:700;color:#56a65c">${doneItems.length} 筆</span>
+        <span class="toggle-arrow" style="font-size:14px;color:var(--text-3)">▶</span>
       </div>
       <div id="done-section" style="display:none;margin-top:12px">
         ${doneItems.map(itemCard).join('')}
@@ -1355,7 +1355,7 @@ todos() {
     </div>
   </div>
   <div class="content">
-    ${alerts.length ? `<div style="padding:12px 16px;background:rgba(213,94,0,0.08);border:1px solid rgba(213,94,0,0.2);border-radius:10px;margin-bottom:16px;font-size:13px;color:#D55E00">
+    ${alerts.length ? `<div style="padding:12px 16px;background:rgba(213,94,0,0.08);border:1px solid rgba(213,94,0,0.2);border-radius:10px;margin-bottom:16px;font-size:14px;color:#D55E00">
       ⏰ 有 <strong>${alerts.length}</strong> 項待辦已到提醒日期！
     </div>` : ''}
 
@@ -1363,7 +1363,7 @@ todos() {
     <div class="card" style="margin-bottom:20px">
       <div class="card-head">未完成 <span class="badge badge-blue">${pending.length}</span></div>
       <div class="card-body" style="padding:0">
-        ${sortedPending.length === 0 ? '<div style="padding:30px;text-align:center;color:var(--text-3);font-size:13px">沒有待辦事項 🎉</div>' :
+        ${sortedPending.length === 0 ? '<div style="padding:30px;text-align:center;color:var(--text-3);font-size:14px">沒有待辦事項 🎉</div>' :
           sortedPending.map(t => {
             const isOverdue = t.dueDate && t.dueDate < now.toISOString().slice(0,10);
             const isAlerted = t.remind && t.remind <= now.toISOString().slice(0,10);
@@ -1371,13 +1371,13 @@ todos() {
               <div style="display:flex;align-items:flex-start;gap:10px">
                 <input type="checkbox" onchange="toggleTodo('${t.id}')" style="width:18px;height:18px;margin-top:2px;cursor:pointer;flex-shrink:0;accent-color:#0072B2">
                 <div style="flex:1;min-width:0">
-                  <div style="font-size:13px;font-weight:600;${isOverdue?'color:#D55E00':''}">
+                  <div style="font-size:14px;font-weight:600;${isOverdue?'color:#D55E00':''}">
                     ${isAlerted?'⏰ ':''}${esc(t.title)}
-                    ${(t.subtasks&&t.subtasks.length)?'<span style="font-size:13px;font-weight:400;color:var(--text-3);margin-left:6px">'+t.subtasks.filter(s=>s.done).length+'/'+t.subtasks.length+'</span>':''}
+                    ${(t.subtasks&&t.subtasks.length)?'<span style="font-size:14px;font-weight:400;color:var(--text-3);margin-left:6px">'+t.subtasks.filter(s=>s.done).length+'/'+t.subtasks.length+'</span>':''}
                   </div>
-                  ${t.note?'<div style="font-size:13px;color:var(--text-3);margin-top:4px;white-space:pre-line">'+esc(t.note)+'</div>':''}
-                  ${(t.subtasks&&t.subtasks.length)?'<div style="margin-top:8px;padding-left:4px">'+t.subtasks.map((s,i)=>'<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:15px;height:15px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+';flex:1">'+esc(s.title)+'</span>'+(s.dueDate?'<span style="font-size:13px;color:'+(s.dueDate<now.toISOString().slice(0,10)&&!s.done?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')+'</div>':''}
-                  <div style="display:flex;gap:12px;margin-top:6px;font-size:13px;color:var(--text-3);flex-wrap:wrap">
+                  ${t.note?'<div style="font-size:14px;color:var(--text-3);margin-top:4px;white-space:pre-line">'+esc(t.note)+'</div>':''}
+                  ${(t.subtasks&&t.subtasks.length)?'<div style="margin-top:8px;padding-left:4px">'+t.subtasks.map((s,i)=>'<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:14px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:15px;height:15px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+';flex:1">'+esc(s.title)+'</span>'+(s.dueDate?'<span style="font-size:14px;color:'+(s.dueDate<now.toISOString().slice(0,10)&&!s.done?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')+'</div>':''}
+                  <div style="display:flex;gap:12px;margin-top:6px;font-size:14px;color:var(--text-3);flex-wrap:wrap">
                     ${t.remind?'<span>⏰ '+fmtDate(t.remind)+'</span>':''}
                     ${t.dueDate?'<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
                     ${t.caseId?'<span>📎 '+t.caseId+'</span>':''}
@@ -1399,22 +1399,22 @@ todos() {
     <div class="card">
       <div class="card-head" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between" onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='none'?'block':'none'">
         <div>✅ 已完成 <span class="badge badge-gray">${done.length}</span>
-        <span style="font-size:13px;color:var(--text-3);margin-left:8px">點擊展開/收合</span></div>
+        <span style="font-size:14px;color:var(--text-3);margin-left:8px">點擊展開/收合</span></div>
       </div>
       <div class="card-body" style="padding:0;display:none">
         <div style="padding:8px 18px;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;background:var(--surface-2)">
-          <label style="font-size:13px;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px">
+          <label style="font-size:14px;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px">
             <input type="checkbox" id="todo-select-all" onchange="document.querySelectorAll('.todo-done-cb').forEach(function(c){c.checked=this.checked}.bind(this))" style="cursor:pointer"> 全選
           </label>
-          <button class="btn btn-sm btn-outline" style="font-size:13px;color:#D55E00;margin-left:auto" onclick="var ids=[];document.querySelectorAll('.todo-done-cb:checked').forEach(function(c){ids.push(c.dataset.id)});if(!ids.length){alert('請先勾選要刪除的項目');return}if(confirm('確定刪除已選的 '+ids.length+' 項？')){ids.forEach(function(id){db.todos=db.todos.filter(function(t){return t.id!==id})});saveData(db);render()}">🗑 刪除已選</button>
-          <button class="btn btn-sm btn-outline" style="font-size:13px;color:#D55E00" onclick="if(confirm('確定刪除全部 ${done.length} 項已完成待辦？')){db.todos=db.todos.filter(function(t){return !t.done});saveData(db);render()}">🗑 全部刪除</button>
+          <button class="btn btn-sm btn-outline" style="font-size:14px;color:#D55E00;margin-left:auto" onclick="var ids=[];document.querySelectorAll('.todo-done-cb:checked').forEach(function(c){ids.push(c.dataset.id)});if(!ids.length){alert('請先勾選要刪除的項目');return}if(confirm('確定刪除已選的 '+ids.length+' 項？')){ids.forEach(function(id){db.todos=db.todos.filter(function(t){return t.id!==id})});saveData(db);render()}">🗑 刪除已選</button>
+          <button class="btn btn-sm btn-outline" style="font-size:14px;color:#D55E00" onclick="if(confirm('確定刪除全部 ${done.length} 項已完成待辦？')){db.todos=db.todos.filter(function(t){return !t.done});saveData(db);render()}">🗑 全部刪除</button>
         </div>
         ${done.map(t => `<div style="display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--border);opacity:0.6">
           <input type="checkbox" class="todo-done-cb" data-id="${t.id}" style="width:16px;height:16px;cursor:pointer;flex-shrink:0">
           <input type="checkbox" checked onchange="toggleTodo('${t.id}')" style="width:18px;height:18px;cursor:pointer;flex-shrink:0;accent-color:#0072B2" title="取消完成">
-          <div style="flex:1;font-size:13px;text-decoration:line-through;color:var(--text-3)">${esc(t.title)}</div>
-          <div style="font-size:13px;color:var(--text-3)">${t.doneDate ? fmtDate(t.doneDate) : ''}</div>
-          <button class="btn btn-sm btn-outline" onclick="deleteTodo('${t.id}')" title="刪除" style="color:#D55E00;font-size:13px;padding:2px 6px">🗑</button>
+          <div style="flex:1;font-size:14px;text-decoration:line-through;color:var(--text-3)">${esc(t.title)}</div>
+          <div style="font-size:14px;color:var(--text-3)">${t.doneDate ? fmtDate(t.doneDate) : ''}</div>
+          <button class="btn btn-sm btn-outline" onclick="deleteTodo('${t.id}')" title="刪除" style="color:#D55E00;font-size:14px;padding:2px 6px">🗑</button>
         </div>`).join('')}
       </div>
     </div>` : ''}
@@ -1460,11 +1460,11 @@ archive() {
         <div class="card-head">💾 儲存空間概況</div>
         <div class="card-body">
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center;margin-bottom:16px">
-            <div><div style="font-size:28px;font-weight:700;color:var(--navy)">${db.cases.length}</div><div style="font-size:13px;color:var(--text-3)">全部個案</div></div>
-            <div><div style="font-size:28px;font-weight:700;color:#0072B2">${activeCases.length}</div><div style="font-size:13px;color:var(--text-3)">進行中</div></div>
-            <div><div style="font-size:28px;font-weight:700;color:var(--text-3)">${closedCases.length}</div><div style="font-size:13px;color:var(--text-3)">已結案/撤案</div></div>
+            <div><div style="font-size:28px;font-weight:700;color:var(--navy)">${db.cases.length}</div><div style="font-size:14px;color:var(--text-3)">全部個案</div></div>
+            <div><div style="font-size:28px;font-weight:700;color:#0072B2">${activeCases.length}</div><div style="font-size:14px;color:var(--text-3)">進行中</div></div>
+            <div><div style="font-size:28px;font-weight:700;color:var(--text-3)">${closedCases.length}</div><div style="font-size:14px;color:var(--text-3)">已結案/撤案</div></div>
           </div>
-          <div style="font-size:13px;color:var(--text-2);margin-bottom:6px">localStorage 使用：${storageKB} KB / 5,120 KB（${storagePct}%）</div>
+          <div style="font-size:14px;color:var(--text-2);margin-bottom:6px">localStorage 使用：${storageKB} KB / 5,120 KB（${storagePct}%）</div>
           <div class="progress-bar"><div class="progress-fill" style="width:${storagePct}%;background:${parseFloat(storagePct)>80?'var(--danger)':parseFloat(storagePct)>50?'var(--warning)':'var(--gold)'}"></div></div>
         </div>
       </div>
@@ -1476,8 +1476,8 @@ archive() {
           ${closedCases.length ? '<span class="badge badge-yellow">'+closedCases.length+' 筆可歸檔</span>' : '<span class="badge badge-gray">無可歸檔個案</span>'}
         </div>
         <div class="card-body">
-          ${closedCases.length === 0 ? '<div style="text-align:center;padding:20px;color:var(--text-3);font-size:13px">目前沒有已結案或撤案的個案</div>' : `
-          <div style="padding:10px 14px;background:rgba(0,114,178,0.05);border-radius:8px;font-size:13px;color:var(--text-2);margin-bottom:14px;border-left:3px solid #0072B2">
+          ${closedCases.length === 0 ? '<div style="text-align:center;padding:20px;color:var(--text-3);font-size:14px">目前沒有已結案或撤案的個案</div>' : `
+          <div style="padding:10px 14px;background:rgba(0,114,178,0.05);border-radius:8px;font-size:14px;color:var(--text-2);margin-bottom:14px;border-left:3px solid #0072B2">
             歸檔會先下載一份 JSON 備份檔，確認下載後再從系統中刪除。<br>
             備份檔包含完整的個案資料和追蹤軸，日後可透過「匯入」還原。
           </div>
@@ -1487,8 +1487,8 @@ archive() {
               return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px">'
                 + '<input type="checkbox" class="archive-cb" value="'+c.id+'" checked style="width:16px;height:16px;cursor:pointer">'
                 + '<div style="flex:1;min-width:0">'
-                + '<div style="font-size:13px;font-weight:600">'+esc(c.name)+' <span style="color:var(--text-3);font-weight:400">'+esc(c.id)+'</span></div>'
-                + '<div style="font-size:13px;color:var(--text-3)">'+esc(c.type)+' · '+tCount+' 條追蹤軸 · <span class="badge '+(c.status==='已給付'||c.status==='已調解完成'?'status-closed':'status-closed')+'">'+esc(c.status)+'</span></div>'
+                + '<div style="font-size:14px;font-weight:600">'+esc(c.name)+' <span style="color:var(--text-3);font-weight:400">'+esc(c.id)+'</span></div>'
+                + '<div style="font-size:14px;color:var(--text-3)">'+esc(c.type)+' · '+tCount+' 條追蹤軸 · <span class="badge '+(c.status==='已給付'||c.status==='已調解完成'?'status-closed':'status-closed')+'">'+esc(c.status)+'</span></div>'
                 + '</div></div>';
             }).join('')}
           </div>
@@ -1505,7 +1505,7 @@ archive() {
         <div class="card-head">☁️ GitHub 雲端同步</div>
         <div class="card-body">
           ${localStorage.getItem('gh_token') ? `
-          <div style="font-size:13px;color:var(--text-2);margin-bottom:12px">✅ 已設定 Token · <span style="color:var(--text-3)">${localStorage.getItem('gh_repo')||'cheng-chengyi/case-manager'}</span>
+          <div style="font-size:14px;color:var(--text-2);margin-bottom:12px">✅ 已設定 Token · <span style="color:var(--text-3)">${localStorage.getItem('gh_repo')||'cheng-chengyi/case-manager'}</span>
             <button class="btn btn-sm btn-outline" style="margin-left:8px" onclick="localStorage.removeItem('gh_token');render()">重新設定</button>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -1513,12 +1513,12 @@ archive() {
             <button class="btn btn-outline" onclick="ghPull()" style="width:100%">⬇️ 從雲端下載</button>
           </div>
           ` : `
-          <div style="font-size:13px;color:var(--text-3);margin-bottom:12px;line-height:1.6">
+          <div style="font-size:14px;color:var(--text-3);margin-bottom:12px;line-height:1.6">
             透過 GitHub 在多台電腦間同步資料。需設定 Personal Access Token。
           </div>
           <div class="form-grid" style="margin-bottom:12px">
-            <div class="field"><label>GitHub Token</label><input type="password" id="gh-token" value="" placeholder="ghp_..." style="font-size:13px"></div>
-            <div class="field"><label>Repository</label><input type="text" id="gh-repo" value="${localStorage.getItem('gh_repo')||'cheng-chengyi/case-manager'}" placeholder="user/repo" style="font-size:13px"></div>
+            <div class="field"><label>GitHub Token</label><input type="password" id="gh-token" value="" placeholder="ghp_..." style="font-size:14px"></div>
+            <div class="field"><label>Repository</label><input type="text" id="gh-repo" value="${localStorage.getItem('gh_repo')||'cheng-chengyi/case-manager'}" placeholder="user/repo" style="font-size:14px"></div>
           </div>
           <button class="btn btn-sm btn-outline" onclick="localStorage.setItem('gh_token',document.getElementById('gh-token').value);localStorage.setItem('gh_repo',document.getElementById('gh-repo').value);alert('✅ 已儲存設定');render()" style="margin-bottom:14px">💾 儲存設定</button>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -1526,7 +1526,7 @@ archive() {
             <button class="btn btn-outline" onclick="ghPull()" style="width:100%">⬇️ 從雲端下載</button>
           </div>
           `}
-          <div id="gh-status" style="font-size:13px;color:var(--text-3);margin-top:8px;text-align:center"></div>
+          <div id="gh-status" style="font-size:14px;color:var(--text-3);margin-top:8px;text-align:center"></div>
         </div>
       </div>
 
@@ -1535,7 +1535,7 @@ archive() {
         <div class="card-head">📥 匯出備份</div>
         <div class="card-body">
           <button class="btn btn-gold" onclick="exportAllJson()" style="width:100%">📥 匯出全部資料（JSON）</button>
-          <div style="font-size:13px;color:var(--text-3);margin-top:8px;text-align:center">下載目前系統內所有個案、追蹤軸資料</div>
+          <div style="font-size:14px;color:var(--text-3);margin-top:8px;text-align:center">下載目前系統內所有個案、追蹤軸資料</div>
         </div>
       </div>
 
@@ -1548,10 +1548,10 @@ archive() {
             <!-- 左：還原歸檔 -->
             <div style="padding:18px;border-right:1px solid var(--border)">
               <div style="font-size:15px;font-weight:700;color:#0072B2;margin-bottom:4px">♻️ 還原歸檔個案</div>
-              <div style="font-size:13px;color:var(--text-2);margin-bottom:14px;line-height:1.6">
+              <div style="font-size:14px;color:var(--text-2);margin-bottom:14px;line-height:1.6">
                 把之前歸檔的個案<strong>加回來</strong>。<br>現有進行中的個案<strong style="color:#0072B2">不受影響</strong>。
               </div>
-              <div style="padding:10px;background:rgba(0,114,178,0.05);border-radius:8px;font-size:13px;color:var(--text-3);margin-bottom:14px">
+              <div style="padding:10px;background:rgba(0,114,178,0.05);border-radius:8px;font-size:14px;color:var(--text-3);margin-bottom:14px">
                 <div style="margin-bottom:4px"><strong>行為：</strong>Merge（合併）</div>
                 <div style="margin-bottom:4px"><strong>適合：</strong>查舊案、重啟已結案個案</div>
                 <div><strong>風險：</strong><span style="color:#0072B2">低</span> — 僅相同 ID 會被覆蓋</div>
@@ -1563,10 +1563,10 @@ archive() {
             <!-- 右：全量還原 -->
             <div style="padding:18px">
               <div style="font-size:15px;font-weight:700;color:#D55E00;margin-bottom:4px">🔄 全量還原</div>
-              <div style="font-size:13px;color:var(--text-2);margin-bottom:14px;line-height:1.6">
+              <div style="font-size:14px;color:var(--text-2);margin-bottom:14px;line-height:1.6">
                 從備份檔<strong>完整還原</strong>。<br>現有資料<strong style="color:#D55E00">全部被取代</strong>。
               </div>
-              <div style="padding:10px;background:rgba(213,94,0,0.04);border-radius:8px;font-size:13px;color:var(--text-3);margin-bottom:14px">
+              <div style="padding:10px;background:rgba(213,94,0,0.04);border-radius:8px;font-size:14px;color:var(--text-3);margin-bottom:14px">
                 <div style="margin-bottom:4px"><strong>行為：</strong>覆蓋（清空後匯入）</div>
                 <div style="margin-bottom:4px"><strong>適合：</strong>換電腦、瀏覽器資料遺失</div>
                 <div><strong>風險：</strong><span style="color:#D55E00">高</span> — 現有資料全部消失</div>
@@ -1641,8 +1641,8 @@ function openNewCase() {
       <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="f-insurer" list="insurer-dl" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('f-insurer').value='';document.getElementById('f-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
     </div>
     <div class="form-grid cols-3">
-      <div class="field"><label>事故/起始日期</label><input type="date" id="f-accident" onchange="var h=document.getElementById('hint-f-accident');if(h)h.textContent=rocHint('f-accident');"><div id="hint-f-accident" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-      <div class="field"><label>受理日期</label><input type="date" id="f-receive" value="${new Date().toISOString().slice(0,10)}" onchange="var h=document.getElementById('hint-f-receive');if(h)h.textContent=rocHint('f-receive');"><div id="hint-f-receive" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+      <div class="field"><label>事故/起始日期</label><input type="date" id="f-accident" onchange="var h=document.getElementById('hint-f-accident');if(h)h.textContent=rocHint('f-accident');"><div id="hint-f-accident" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+      <div class="field"><label>受理日期</label><input type="date" id="f-receive" value="${new Date().toISOString().slice(0,10)}" onchange="var h=document.getElementById('hint-f-receive');if(h)h.textContent=rocHint('f-receive');"><div id="hint-f-receive" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
     </div>
     <div class="section-divider">案件資訊</div>
     <div class="form-grid cols-3">
@@ -1654,16 +1654,16 @@ function openNewCase() {
       <div class="field"><label>預估金額（元）</label><input type="number" id="f-amount"></div>
     </div>
     <div style="margin-top:14px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
-      <div style="font-size:13px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期（內部規劃）</div>
+      <div style="font-size:14px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期（內部規劃）</div>
       <div class="form-grid">
-        <div class="field"><label>預計完成日期 <span style="color:var(--text-3);font-weight:400;font-size:13px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-planned" onchange="var h=document.getElementById('hint-f-planned');if(h)h.textContent=rocHint('f-planned');"><div id="hint-f-planned" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>預計完成日期 <span style="color:var(--text-3);font-weight:400;font-size:14px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-planned" onchange="var h=document.getElementById('hint-f-planned');if(h)h.textContent=rocHint('f-planned');"><div id="hint-f-planned" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>完成項目說明</label><input type="text" id="f-planned-note" placeholder="如：預計備妥文件、預計送件"></div>
       </div>
     </div>
     <div style="margin-top:10px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
-      <div style="font-size:13px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期（法定/機關要求）</div>
+      <div style="font-size:14px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期（法定/機關要求）</div>
       <div class="form-grid">
-        <div class="field"><label>截止日期 <span style="color:var(--text-3);font-weight:400;font-size:13px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-deadline" onchange="var h=document.getElementById('hint-f-deadline');if(h)h.textContent=rocHint('f-deadline');"><div id="hint-f-deadline" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>截止日期 <span style="color:var(--text-3);font-weight:400;font-size:14px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-deadline" onchange="var h=document.getElementById('hint-f-deadline');if(h)h.textContent=rocHint('f-deadline');"><div id="hint-f-deadline" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>截止說明</label><input type="text" id="f-deadline-note" placeholder="如：勞保局補件截止、法院開庭日"></div>
       </div>
     </div>
@@ -1737,8 +1737,8 @@ function openEditCase(id) {
       <div class="field"><label>保險公司/主管機關</label><div style="display:flex;gap:6px"><input type="text" id="f-insurer" list="insurer-dl" value="${esc(c.insurer||'')}" placeholder="輸入或選擇..." style="flex:1"><button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('f-insurer').value='';document.getElementById('f-insurer').focus()" style="flex-shrink:0;padding:5px 8px" title="清除">✕</button></div></div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>事故/起始日期</label><input type="date" id="f-accident" value="${c.accidentDate}" onchange="var h=document.getElementById('hint-f-accident');if(h)h.textContent=rocHint('f-accident');"><div id="hint-f-accident" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-      <div class="field"><label>受理日期</label><input type="date" id="f-receive" value="${c.receiveDate}" onchange="var h=document.getElementById('hint-f-receive');if(h)h.textContent=rocHint('f-receive');"><div id="hint-f-receive" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+      <div class="field"><label>事故/起始日期</label><input type="date" id="f-accident" value="${c.accidentDate}" onchange="var h=document.getElementById('hint-f-accident');if(h)h.textContent=rocHint('f-accident');"><div id="hint-f-accident" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+      <div class="field"><label>受理日期</label><input type="date" id="f-receive" value="${c.receiveDate}" onchange="var h=document.getElementById('hint-f-receive');if(h)h.textContent=rocHint('f-receive');"><div id="hint-f-receive" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
     </div>
     <div class="section-divider">案件資訊</div>
     <div class="form-grid cols-3">
@@ -1750,16 +1750,16 @@ function openEditCase(id) {
       <div class="field"><label>預估金額（元）</label><input type="number" id="f-amount" value="${c.amount}"></div>
     </div>
     <div style="margin-top:14px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
-      <div style="font-size:13px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期（內部規劃）</div>
+      <div style="font-size:14px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期（內部規劃）</div>
       <div class="form-grid">
-        <div class="field"><label>預計完成日期 <span style="color:var(--text-3);font-weight:400;font-size:13px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-planned" value="${c.plannedDate||''}" onchange="var h=document.getElementById('hint-f-planned');if(h)h.textContent=rocHint('f-planned');"><div id="hint-f-planned" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>預計完成日期 <span style="color:var(--text-3);font-weight:400;font-size:14px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-planned" value="${c.plannedDate||''}" onchange="var h=document.getElementById('hint-f-planned');if(h)h.textContent=rocHint('f-planned');"><div id="hint-f-planned" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>完成項目說明</label><input type="text" id="f-planned-note" value="${esc(c.plannedDateNote||'')}"></div>
       </div>
     </div>
     <div style="margin-top:10px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
-      <div style="font-size:13px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期（法定/機關要求）</div>
+      <div style="font-size:14px;font-weight:700;color:#D55E00;margin-bottom:10px">⚠️ 完成截止日期（法定/機關要求）</div>
       <div class="form-grid">
-        <div class="field"><label>截止日期 <span style="color:var(--text-3);font-weight:400;font-size:13px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-deadline" value="${c.deadline}" onchange="var h=document.getElementById('hint-f-deadline');if(h)h.textContent=rocHint('f-deadline');"><div id="hint-f-deadline" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>截止日期 <span style="color:var(--text-3);font-weight:400;font-size:14px">（以西元年輸入，自動顯示民國）</span></label><input type="date" id="f-deadline" value="${c.deadline}" onchange="var h=document.getElementById('hint-f-deadline');if(h)h.textContent=rocHint('f-deadline');"><div id="hint-f-deadline" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>截止說明</label><input type="text" id="f-deadline-note" value="${esc(c.deadlineNote)}"></div>
       </div>
     </div>
@@ -1856,7 +1856,7 @@ function copyTrack(trackId) {
 function openAddTrack(caseId) {
   var c = db.cases.find(function(x){ return x.id === caseId; });
   openFormModal('新增追蹤軸 — ' + (c ? c.name : caseId), `
-    <div style="padding:10px 12px;background:rgba(201,168,76,0.08);border-radius:8px;font-size:13px;color:var(--text-2);margin-bottom:14px">
+    <div style="padding:10px 12px;background:rgba(201,168,76,0.08);border-radius:8px;font-size:14px;color:var(--text-2);margin-bottom:14px">
       同一個案主可同時並行多條追蹤軸，各有自己的期限與備註。
     </div>
     <div class="form-grid">
@@ -1902,14 +1902,14 @@ function openAddTrack(caseId) {
       <div class="field"><label>預估金額（元）</label><input type="number" id="ft-amount" placeholder="0"></div>
     </div>
     <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
-      <div style="font-size:13px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
+      <div style="font-size:14px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
       <div class="form-grid">
-        <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" placeholder="如：勞保局補件截止"></div>
       </div>
       <div style="border-top:1px dashed rgba(213,94,0,0.2);margin-top:10px;padding-top:10px">
         <div class="form-grid">
-          <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+          <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
           <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" placeholder="如：預計備妥文件"></div>
         </div>
       </div>
@@ -1987,9 +1987,9 @@ function openEditTrack(trackId) {
       </div>
     </div>
     <div id="ft-closed-row" style="display:${(tr.status==='已給付'||tr.status==='已調解完成'||tr.status==='撤案')?'block':'none'};margin-top:8px;padding:12px 14px;background:rgba(0,114,178,0.05);border:1px solid rgba(0,114,178,0.2);border-radius:8px;margin-bottom:8px">
-      <div style="font-size:13px;font-weight:700;color:#0072B2;margin-bottom:8px">✓ 結案日期</div>
+      <div style="font-size:14px;font-weight:700;color:#0072B2;margin-bottom:8px">✓ 結案日期</div>
       <div class="form-grid">
-        <div class="field"><label>結案日期</label><input type="date" id="ft-closed-date" value="${tr.closedDate||''}" onchange="var h=document.getElementById('hint-ft-closed-date');if(h)h.textContent=rocHint('ft-closed-date');"><div id="hint-ft-closed-date" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>結案日期</label><input type="date" id="ft-closed-date" value="${tr.closedDate||''}" onchange="var h=document.getElementById('hint-ft-closed-date');if(h)h.textContent=rocHint('ft-closed-date');"><div id="hint-ft-closed-date" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>結案說明</label><input type="text" id="ft-closed-note" value="${esc(tr.closedNote||'')}" placeholder="如：核定給付、調解成立"></div>
       </div>
     </div>
@@ -2002,14 +2002,14 @@ function openEditTrack(trackId) {
       <div class="field"><label>預估金額（元）</label><input type="number" id="ft-amount" value="${tr.amount||''}"></div>
     </div>
     <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
-      <div style="font-size:13px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
+      <div style="font-size:14px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
       <div class="form-grid">
-        <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" value="${tr.deadline||''}" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" value="${tr.deadline||''}" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
         <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" value="${esc(tr.deadlineNote||'')}"></div>
       </div>
       <div style="border-top:1px dashed rgba(213,94,0,0.2);margin-top:10px;padding-top:10px">
         <div class="form-grid">
-          <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+          <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
           <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" value="${esc(tr.plannedDateNote||'')}"></div>
         </div>
       </div>
@@ -2155,7 +2155,7 @@ function openAddProgress(caseIdDefault, trackIdDefault) {
       </div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>日期 *</label><input type="date" id="fp-date" value="${new Date().toISOString().slice(0,10)}" onchange="var h=document.getElementById('hint-fp-date');if(h)h.textContent=rocHint('fp-date');"><div id="hint-fp-date" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+      <div class="field"><label>日期 *</label><input type="date" id="fp-date" value="${new Date().toISOString().slice(0,10)}" onchange="var h=document.getElementById('hint-fp-date');if(h)h.textContent=rocHint('fp-date');"><div id="hint-fp-date" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
       <div class="field"><label>進度階段 *</label>
         <select id="fp-stage">
           ${['未申請','待補件','審核中','已給付','已拒賠','申訴中','評議中','未調解','已調解完成','調解不成立','偵查庭','刑事訴訟','民事訴訟','爭議審議','訴願中','撤案'].map(s=>`<option>${s}</option>`).join('')}
@@ -2170,7 +2170,7 @@ function openAddProgress(caseIdDefault, trackIdDefault) {
       <div class="field"><label>下一步</label><input type="text" id="fp-next" placeholder="下一步動作"></div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>下次重要日期</label><input type="date" id="fp-next-date" onchange="var h=document.getElementById('hint-fp-next-date');if(h)h.textContent=rocHint('fp-next-date');"><div id="hint-fp-next-date" style="font-size:13px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+      <div class="field"><label>下次重要日期</label><input type="date" id="fp-next-date" onchange="var h=document.getElementById('hint-fp-next-date');if(h)h.textContent=rocHint('fp-next-date');"><div id="hint-fp-next-date" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
       <div class="field"><label>備註</label><input type="text" id="fp-note"></div>
     </div>
   `, () => {
@@ -2474,8 +2474,8 @@ function addSubtaskRow(title, dueDate, done) {
   const row = document.createElement('div');
   row.dataset.done = done ? '1' : '0';
   row.style.cssText = 'display:flex;align-items:center;gap:6px;margin-bottom:6px';
-  row.innerHTML = '<input type="text" class="st-title" value="'+esc(title||'')+'" placeholder="細項名稱" style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px">'
-    + '<input type="date" class="st-date" value="'+(dueDate||'')+'" style="width:140px;padding:7px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px">'
+  row.innerHTML = '<input type="text" class="st-title" value="'+esc(title||'')+'" placeholder="細項名稱" style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:14px">'
+    + '<input type="date" class="st-date" value="'+(dueDate||'')+'" style="width:140px;padding:7px 8px;border:1px solid var(--border);border-radius:6px;font-size:14px">'
     + '<button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;color:#D55E00;cursor:pointer;font-size:16px;padding:4px">✕</button>';
   list.appendChild(row);
 }
@@ -2503,11 +2503,11 @@ function openAddTodo(prefillCaseId) {
       </div>
       <div style="padding:12px 14px;background:rgba(0,114,178,0.04);border:1px solid rgba(0,114,178,0.15);border-radius:10px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <label style="font-size:13px;font-weight:600;color:#0072B2">📋 細項（子待辦）</label>
+          <label style="font-size:14px;font-weight:600;color:#0072B2">📋 細項（子待辦）</label>
           <button type="button" class="btn btn-outline btn-sm" style="border-color:#0072B2;color:#0072B2" onclick="addSubtaskRow()">＋ 新增細項</button>
         </div>
         <div id="subtask-list"></div>
-        <div id="subtask-empty" style="font-size:13px;color:var(--text-3);text-align:center;padding:8px">點擊「＋ 新增細項」加入子待辦項目</div>
+        <div id="subtask-empty" style="font-size:14px;color:var(--text-3);text-align:center;padding:8px">點擊「＋ 新增細項」加入子待辦項目</div>
       </div>
       <div class="field"><label>備註</label><textarea id="td-note" rows="2" placeholder="備註說明..."></textarea></div>
     </div>
@@ -2543,7 +2543,7 @@ function openEditTodo(id) {
       </div>
       <div style="padding:12px 14px;background:rgba(0,114,178,0.04);border:1px solid rgba(0,114,178,0.15);border-radius:10px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <label style="font-size:13px;font-weight:600;color:#0072B2">📋 細項（子待辦）</label>
+          <label style="font-size:14px;font-weight:600;color:#0072B2">📋 細項（子待辦）</label>
           <button type="button" class="btn btn-outline btn-sm" style="border-color:#0072B2;color:#0072B2" onclick="addSubtaskRow()">＋ 新增細項</button>
         </div>
         <div id="subtask-list"></div>
@@ -2658,7 +2658,7 @@ function showReminderAlert(items, options = {}) {
     const borderColor = t._type === 'overdue' ? '#D55E00' : t._type === 'deadline' ? '#e8a020' : '#0072B2';
     return `<div style="padding:14px 18px;background:rgba(0,0,0,0.03);border-left:4px solid ${borderColor};border-radius:0 8px 8px 0;margin-bottom:10px">
       <div style="font-size:15px;font-weight:700">${esc(t.title)}</div>
-      <div style="font-size:13px;color:#666;margin-top:4px">${esc(t.subtitle || '')}</div>
+      <div style="font-size:14px;color:#666;margin-top:4px">${esc(t.subtitle || '')}</div>
     </div>`;
   }).join('');
 
@@ -2667,7 +2667,7 @@ function showReminderAlert(items, options = {}) {
       <div style="background:linear-gradient(135deg,${color},${colorEnd});padding:28px 24px;text-align:center">
         <div style="font-size:48px;margin-bottom:8px">${icon}</div>
         <div style="font-size:22px;font-weight:700;color:#fff">${title}</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.8);margin-top:4px">共 ${items.length} 項需要注意</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.8);margin-top:4px">共 ${items.length} 項需要注意</div>
       </div>
       <div style="padding:20px 24px;max-height:300px;overflow-y:auto">${itemsHtml}</div>
       <div style="padding:16px 24px;border-top:1px solid #eee;display:flex;gap:10px;justify-content:center">
