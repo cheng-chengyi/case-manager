@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T08:05:55.636Z",
+  "_date": "2026-02-23T08:19:38.183Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -398,6 +398,27 @@
       "plannedDateNote": "",
       "amount": "",
       "note": "Line 太太 劉玉美",
+      "created": "2026-02-23",
+      "updated": "2026-02-23"
+    },
+    {
+      "id": "1141030_謝秀敏(肝昏迷)",
+      "type": "失能險",
+      "name": "謝秀敏",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "三商美邦人壽",
+      "accidentDate": "",
+      "status": "未申請",
+      "receiveDate": "2026-02-23",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "Line_梁義清",
       "created": "2026-02-23",
       "updated": "2026-02-23"
     }
