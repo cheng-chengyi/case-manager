@@ -526,6 +526,8 @@ let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth(); // 0-based
 let progressView = 'list';
 let progressFilter = '';
+let progressSortCol = 'date';
+let progressSortDir = 'desc';
 
 function navigate(view, caseId = null) {
   if (view !== 'cases') filterStatus = null;
@@ -1080,15 +1082,43 @@ progress() {
   if (progressFilter) progs = progs.filter(p => p.caseId === progressFilter);
 
   function listView() {
+    const sortIcon = (col) => progressSortCol === col ? (progressSortDir === 'asc' ? ' ▲' : ' ▼') : '';
+    const thStyle = 'cursor:pointer;user-select:none;white-space:nowrap';
+    const sorted = [...progs].sort((a, b) => {
+      let va, vb;
+      const c1 = db.cases.find(x => x.id === a.caseId);
+      const c2 = db.cases.find(x => x.id === b.caseId);
+      const t1 = a.trackId ? db.tracks.find(t => t.id === a.trackId) : null;
+      const t2 = b.trackId ? db.tracks.find(t => t.id === b.trackId) : null;
+      switch (progressSortCol) {
+        case 'case': va = a.caseId||''; vb = b.caseId||''; break;
+        case 'track': va = t1?t1.name:''; vb = t2?t2.name:''; break;
+        case 'date': va = a.date||''; vb = b.date||''; break;
+        case 'stage': va = a.stage||''; vb = b.stage||''; break;
+        case 'desc': va = a.desc||''; vb = b.desc||''; break;
+        case 'sendRecv': va = a.sendRecv||''; vb = b.sendRecv||''; break;
+        case 'next': va = a.nextStep||''; vb = b.nextStep||''; break;
+        case 'note': va = a.note||''; vb = b.note||''; break;
+        default: va = a.date||''; vb = b.date||'';
+      }
+      const cmp = va.localeCompare(vb);
+      return progressSortDir === 'asc' ? cmp : -cmp;
+    });
     return `<div class="table-card">
       <table>
         <thead><tr>
-          <th>個案</th><th>追蹤軸</th><th>日期</th><th>進度階段</th><th>辦理事項說明</th>
-          <th>收/送件</th><th>下一步</th><th>備註</th>
+          <th style="${thStyle}" onclick="toggleProgressSort('case')">個案${sortIcon('case')}</th>
+          <th style="${thStyle}" onclick="toggleProgressSort('track')">追蹤軸${sortIcon('track')}</th>
+          <th style="${thStyle}" onclick="toggleProgressSort('date')">日期${sortIcon('date')}</th>
+          <th style="${thStyle}" onclick="toggleProgressSort('stage')">進度階段${sortIcon('stage')}</th>
+          <th style="${thStyle}" onclick="toggleProgressSort('desc')">辦理事項說明${sortIcon('desc')}</th>
+          <th style="${thStyle}" onclick="toggleProgressSort('sendRecv')">收/送件${sortIcon('sendRecv')}</th>
+          <th style="${thStyle}" onclick="toggleProgressSort('next')">下一步${sortIcon('next')}</th>
+          <th style="${thStyle}" onclick="toggleProgressSort('note')">備註${sortIcon('note')}</th>
         </tr></thead>
         <tbody>
-        ${progs.length === 0 ? `<tr><td colspan="8"><div class="empty"><p>尚無進度記錄</p></div></td></tr>` :
-          [...progs].sort((a,b) => b.date.localeCompare(a.date)).map(p => {
+        ${sorted.length === 0 ? `<tr><td colspan="8"><div class="empty"><p>尚無進度記錄</p></div></td></tr>` :
+          sorted.map(p => {
             const c = db.cases.find(x => x.id === p.caseId);
             const tr = p.trackId ? db.tracks.find(t => t.id === p.trackId) : null;
             return `<tr onclick="navigate('case-detail','${p.caseId}')" style="cursor:pointer">
@@ -1711,6 +1741,16 @@ templates: function() {
 };
 
 // ─── Template Functions ───────────────────────────────────────
+
+function toggleProgressSort(col) {
+  if (progressSortCol === col) {
+    progressSortDir = progressSortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    progressSortCol = col;
+    progressSortDir = col === 'date' ? 'desc' : 'asc';
+  }
+  render();
+}
 
 function copyTemplate(btn, text) {
   navigator.clipboard.writeText(text).then(() => {
