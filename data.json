@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-23T15:45:38.041Z",
+  "_date": "2026-02-24T00:21:23.596Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -252,7 +252,7 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20",
-      "updated": "2026-02-20"
+      "updated": "2026-02-24"
     },
     {
       "id": "1140428_楊雅米(車禍腦傷)",
@@ -1359,6 +1359,23 @@
       "created": "2026-02-23",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1130626_黃嬋妃(連枷胸)-1",
+      "caseId": "1130626_黃嬋妃(連枷胸)",
+      "name": "黃蟬妃_高雄長庚神經內科門診",
+      "type": "意外險",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "2026-03-15",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-16",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-24"
     }
   ],
   "progress": [
@@ -1669,6 +1686,18 @@
       "date": "2026-02-23",
       "stage": "未申請",
       "desc": "建立追蹤軸：余國優_勞資爭議申請_新北市政府",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0043",
+      "caseId": "1130626_黃嬋妃(連枷胸)",
+      "trackId": "TR-1130626_黃嬋妃(連枷胸)-1",
+      "date": "2026-02-24",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：黃蟬妃_高雄長庚神經內科門診",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
