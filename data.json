@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-26T02:09:52.716Z",
+  "_date": "2026-02-26T02:09:55.735Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -511,8 +511,8 @@
           "title": "提供台灣人壽門診病歷",
           "dueDate": "",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-02-26"
         }
       ]
     },
