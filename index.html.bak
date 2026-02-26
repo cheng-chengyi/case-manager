@@ -2583,36 +2583,22 @@ async function ghAutoPull() {
     const json = decodeURIComponent(escape(atob(f.content)));
     const remote = JSON.parse(json);
     if (!remote.cases) return;
-    const remoteCases = remote.cases || [];
-    const localCases = db.cases || [];
-    // 合併策略：以 ID 為 key，本機有的保留，雲端有但本機沒有的加入
-    const localIds = new Set(localCases.map(function(c){ return c.id; }));
-    const remoteIds = new Set(remoteCases.map(function(c){ return c.id; }));
-    // 雲端有但本機沒有的個案
-    const missingCases = remoteCases.filter(function(c){ return !localIds.has(c.id); });
-    const missingIds = new Set(missingCases.map(function(c){ return c.id; }));
-    const missingTracks = (remote.tracks||[]).filter(function(t){ return missingIds.has(t.caseId); });
-    const missingProgress = (remote.progress||[]).filter(function(p){ return missingIds.has(p.caseId); });
-    // 本機有但雲端沒有的（不要刪除！保留本機資料）
-    const localOnly = localCases.filter(function(c){ return !remoteIds.has(c.id); });
-    if (missingCases.length > 0) {
-      // 雲端有新資料，合併進來
-      db.cases = localCases.concat(missingCases);
-      db.tracks = (db.tracks||[]).concat(missingTracks);
-      db.progress = (db.progress||[]).concat(missingProgress);
-      saveData(db);
+    // 比較遠端和本機誰較新
+    const remoteTime = new Date(remote._date || 0).getTime();
+    const localData = localStorage.getItem(STORAGE_KEY);
+    const local = localData ? JSON.parse(localData) : null;
+    const localTime = local && local._date ? new Date(local._date).getTime() : 0;
+    if (remoteTime > localTime) {
+      // 遠端較新，自動更新本機
+      db.cases = remote.cases || [];
+      db.tracks = remote.tracks || [];
+      db.progress = remote.progress || [];
+      db.todos = remote.todos || [];
+      db._date = remote._date;
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); } catch(e) {}
       render();
-      var ind = document.getElementById('sync-indicator');
-      if (ind) { ind.textContent = '☁️ +' + missingCases.length; ind.style.color = '#0072B2'; setTimeout(function(){ ind.textContent = '☁️'; ind.style.color = 'var(--text-3)'; }, 3000); }
     }
-    if (localOnly.length > 0) {
-      // 本機有雲端沒有的，自動推送上去
-      ghPushSilent(db);
-    }
-  } catch(e) {
-    var ind = document.getElementById('sync-indicator');
-    if (ind) { ind.textContent = '⚠️ 同步失敗'; ind.style.color = '#D55E00'; setTimeout(function(){ ind.textContent = '☁️'; ind.style.color = 'var(--text-3)'; }, 5000); }
-  }
+  } catch(e) { /* 靜默失敗 */ }
 }
 
 async function ghPush() {
@@ -2653,27 +2639,13 @@ async function ghPull() {
     const json = decodeURIComponent(escape(atob(f.content)));
     const data = JSON.parse(json);
     if (!data.cases) throw new Error('資料格式不正確');
-    var localCount = db.cases.length;
-    var remoteCount = data.cases.length;
-    var choice = confirm('雲端有 ' + remoteCount + ' 筆，本機有 ' + localCount + ' 筆。\n\n按「確定」= 合併（不遺失任何資料）\n按「取消」= 不動作');
-    if (!choice) { ghStatus('已取消'); return; }
-    // 合併：以本機為主，加入雲端有但本機沒有的
-    var localIds = new Set(db.cases.map(function(c){ return c.id; }));
-    var added = 0;
-    data.cases.forEach(function(c) {
-      if (!localIds.has(c.id)) { db.cases.push(c); added++; }
-    });
-    var localTrackIds = new Set((db.tracks||[]).map(function(t){ return t.id; }));
-    (data.tracks||[]).forEach(function(t) {
-      if (!localTrackIds.has(t.id)) { db.tracks.push(t); }
-    });
-    var localProgressIds = new Set((db.progress||[]).map(function(p){ return p.id || (p.caseId+p.date+p.stage); }));
-    (data.progress||[]).forEach(function(p) {
-      var pid = p.id || (p.caseId+p.date+p.stage);
-      if (!localProgressIds.has(pid)) { db.progress.push(p); }
-    });
+    if (!confirm('從雲端下載會覆蓋本機資料（' + db.cases.length + ' 筆 → ' + data.cases.length + ' 筆），確定？')) { ghStatus('已取消'); return; }
+    db.cases = data.cases || [];
+    db.tracks = data.tracks || [];
+    db.progress = data.progress || [];
+    db.todos = data.todos || [];
     saveData(db);
-    ghStatus('✅ 合併完成！新增 ' + added + ' 筆，目前共 ' + db.cases.length + ' 筆');
+    ghStatus('✅ 下載成功！共 ' + db.cases.length + ' 筆個案 ' + new Date().toLocaleTimeString());
     render();
   } catch(err) {
     ghStatus('❌ 下載失敗：' + err.message, true);
