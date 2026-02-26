@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-26T02:18:54.397Z",
+  "_date": "2026-02-26T02:19:13.784Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -347,27 +347,6 @@
       "insuredUnit": "",
       "address": "",
       "insurer": "勞保局",
-      "accidentDate": "",
-      "status": "未申請",
-      "receiveDate": "2026-02-23",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "",
-      "plannedDateNote": "",
-      "amount": "",
-      "note": "",
-      "created": "2026-02-23",
-      "updated": "2026-02-23"
-    },
-    {
-      "id": "1140923_鄭淑惠(行人車禍)",
-      "type": "車禍處理程序",
-      "name": "鄭淑惠",
-      "phone": "",
-      "employer": "",
-      "insuredUnit": "",
-      "address": "",
-      "insurer": "",
       "accidentDate": "",
       "status": "未申請",
       "receiveDate": "2026-02-23",
@@ -1096,23 +1075,6 @@
       "closedNote": ""
     },
     {
-      "id": "TR-1140923_鄭淑惠(行人車禍)-1",
-      "caseId": "1140923_鄭淑惠(行人車禍)",
-      "name": "鄭淑惠_對方尚龍翔匯款",
-      "type": "",
-      "insurer": "",
-      "contact": "",
-      "contactPhone": "",
-      "status": "未申請",
-      "deadline": "2026-03-10",
-      "deadlineNote": "",
-      "plannedDate": "2026-03-12",
-      "plannedDateNote": "匯款完成",
-      "amount": "",
-      "note": "",
-      "created": "2026-02-23"
-    },
-    {
       "id": "TR-1130218_鍾宜蓁(車禍腦傷)-1",
       "caseId": "1130218_鍾宜蓁(車禍腦傷)",
       "name": "鍾宜蓁_富邦產物",
@@ -1553,18 +1515,6 @@
       "date": "2026-02-23",
       "stage": "審核中",
       "desc": "建立追蹤軸：陳志明_申請勞保老年給付",
-      "sendRecv": "",
-      "nextStep": "",
-      "nextDate": "",
-      "note": ""
-    },
-    {
-      "id": "P0032",
-      "caseId": "1140923_鄭淑惠(行人車禍)",
-      "trackId": "TR-1140923_鄭淑惠(行人車禍)-1",
-      "date": "2026-02-23",
-      "stage": "未申請",
-      "desc": "建立追蹤軸：鄭淑惠_對方尚龍翔匯款",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
