@@ -200,7 +200,7 @@
   .progress-fill { height: 100%; border-radius: 3px; background: var(--gold); }
 
   /* Amount */
-  .amount { font-family: 'Playfair Display', serif; }
+
 
   /* Tabs */
   .tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; gap: 0; }
@@ -490,7 +490,7 @@ const stageColor = {
   '調解不成立': 'badge-red', '偵查庭': 'badge-teal', '刑事訴訟': 'badge-red',
   '民事訴訟': 'badge-red', '爭議審議': 'badge-blue', '訴願中': 'badge-blue', '撤案': 'badge-gray'
 };
-function fmt(n) { return n ? parseInt(n).toLocaleString('zh-TW') : '-'; }
+
 function esc(s) { if (s == null) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 function fmtDate(d) {
   if (!d) return '-';
@@ -861,7 +861,6 @@ cases() {
   const c = db.cases.find(x => x.id === selectedCase);
   if (!c) return '<div class="content"><p>找不到個案</p></div>';
   const tracks = db.tracks.filter(t => t.caseId === c.id);
-  const totalAmount = tracks.reduce((s,t) => s + (parseInt(t.amount)||0), 0) || parseInt(c.amount)||0;
   const trackColors = ['#2b6cb0','#D55E00','#0072B2','#6b46c1','#E69F00','#0EA5B0','#b7791f'];
   const trackBgColors = ['rgba(43,108,176,0.06)','rgba(213,94,0,0.06)','rgba(0,114,178,0.06)',
     'rgba(107,70,193,0.06)','rgba(230,159,0,0.06)','rgba(14,165,176,0.06)','rgba(183,121,31,0.06)'];
@@ -889,7 +888,6 @@ cases() {
       + '<span style="font-size:15px;font-weight:700;color:'+col+'">'+esc(tr.name)+'</span>'
       + '<span class="badge '+(typeColor[tr.type]||'badge-gray')+'">'+esc(tr.type)+'</span>'
       + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'">'+esc(tr.status)+'</span>'
-      + '<span style="margin-left:auto;font-size:14px;font-weight:700;color:'+col+'" class="amount">NT$ '+fmt(tr.amount)+'</span>'
       + '</div>'
       + (deadlineRow||plannedRow ? '<div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap">'+deadlineRow+plannedRow+'</div>' : '')
       + (tr.contact ? '<div style="margin-top:8px;font-size:14px;color:var(--text-2)">👤 承辦：<strong>'+esc(tr.contact)+'</strong>'+(tr.contactPhone?' ☎ '+esc(tr.contactPhone):'')+'</div>' : '')
@@ -924,10 +922,7 @@ cases() {
           + '<button class="btn btn-outline btn-sm" style="font-size:14px;padding:3px 8px" onclick="_trackAction(this)" data-action="copyTrack" data-track="'+tr.id+'">📋 複製</button>'
           + '<button class="btn btn-outline btn-sm" style="font-size:14px;padding:3px 8px;color:#D55E00" onclick="if(confirm(\'確定刪除追蹤軸「'+tr.name.replace(/'/g,"\\'")+'」？\'))deleteTrack(\''+tr.id+'\')">🗑 刪除</button>'
           + '</div></div>';
-      }).join('')
-    + '<div style="padding-top:10px;border-top:1px solid var(--border);margin-top:6px">'
-    + '<div style="font-size:14px;color:var(--text-3)">各軸總計預估金額</div>'
-    + '<div class="amount" style="font-size:20px;font-weight:700;color:var(--navy);margin-top:4px">NT$ '+fmt(totalAmount)+'</div></div>';
+      }).join('');
 
   var dateQuickHtml = '';
   var hasDateTracks = tracks.filter(function(tr){ return tr.deadline||tr.plannedDate; });
@@ -970,7 +965,7 @@ cases() {
     <div class="card" style="margin-bottom:16px">
       <div class="card-head">
         當事人基本資料
-        <span style="font-size:14px;color:var(--text-3);font-weight:400">共 ${tracks.length} 條追蹤軸・總預估 NT$ ${fmt(totalAmount)}</span>
+        <span style="font-size:14px;color:var(--text-3);font-weight:400">共 ${tracks.length} 條追蹤軸</span>
       </div>
       <div class="card-body">
         <div class="info-grid">
@@ -1030,7 +1025,6 @@ cases() {
                   + '<span style="font-size:14px;font-weight:700">'+esc(tr.name)+'</span>'
                   + '<span class="badge '+(typeColor[tr.type]||'badge-gray')+'" style="font-size:14px">'+esc(tr.type)+'</span>'
                   + '<span class="badge '+(statusColor[tr.status]||'badge-gray')+'" style="font-size:14px">'+esc(tr.status)+'</span>'
-                  + '<span style="font-size:14px;font-weight:600;color:'+col2+';margin-left:auto" class="amount">NT$ '+fmt(tr.amount)+'</span>'
                   + '</div>'
                   + ((deadlineInfo||plannedInfo||contactInfo) ? '<div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap">'+deadlineInfo+plannedInfo+contactInfo+'</div>' : '')
                   + (tr.note ? '<div style="font-size:14px;color:var(--text-3);margin-top:4px">'+esc(tr.note)+'</div>' : '')
@@ -1177,7 +1171,6 @@ progress() {
             </div>
             <div style="text-align:right;font-size:14px;color:var(--text-3)">
               ${t.deadline ? '<div>⚠️ 期限 ' + fmtDate(t.deadline) + '</div>' : ''}
-              ${t.amount ? '<div>💰 ' + esc(t.amount) + '</div>' : ''}
             </div>
           </div>`;
         }).join('')}
@@ -1936,7 +1929,6 @@ function openNewCase() {
           ${['未申請','待補件','審核中','已給付','已拒賠','申訴中','評議中','未調解','已調解完成','調解不成立','偵查庭','刑事訴訟','民事訴訟','爭議審議','訴願中','撤案'].map(s=>`<option ${s==='未申請'?'selected':''}>${s}</option>`).join('')}
         </select>
       </div>
-      <div class="field"><label>預估金額（元）</label><input type="number" id="f-amount"></div>
     </div>
     <div style="margin-top:14px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
       <div style="font-size:14px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期（內部規劃）</div>
@@ -1963,7 +1955,6 @@ function openNewCase() {
       deadlineNote: '',
       plannedDate: document.getElementById('f-planned').value,
       plannedDateNote: document.getElementById('f-planned-note').value,
-      amount: document.getElementById('f-amount').value,
       note: document.getElementById('f-note').value,
       created: localToday(),
       updated: localToday()
@@ -2025,7 +2016,6 @@ function openEditCase(id) {
           ${['未申請','待補件','審核中','已給付','已拒賠','申訴中','評議中','未調解','已調解完成','調解不成立','偵查庭','刑事訴訟','民事訴訟','爭議審議','訴願中','撤案'].map(s=>`<option ${s===c.status?'selected':''}>${s}</option>`).join('')}
         </select>
       </div>
-      <div class="field"><label>預估金額（元）</label><input type="number" id="f-amount" value="${c.amount}"></div>
     </div>
     <div style="margin-top:14px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
       <div style="font-size:14px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期（內部規劃）</div>
@@ -2059,7 +2049,6 @@ function openEditCase(id) {
     c.receiveDate = document.getElementById('f-receive').value;
     c.plannedDate = document.getElementById('f-planned').value;
     c.plannedDateNote = document.getElementById('f-planned-note').value;
-    c.amount = document.getElementById('f-amount').value;
     c.note = document.getElementById('f-note').value;
     c.updated = localToday();
     saveData(db);
@@ -2110,7 +2099,7 @@ function copyTrack(trackId) {
     status: src.status || '未申請',
     deadline: src.deadline || '', deadlineNote: src.deadlineNote || '',
     plannedDate: src.plannedDate || '', plannedDateNote: src.plannedDateNote || '',
-    amount: src.amount, note: src.note || '',
+    note: src.note || '',
     todos: (src.todos||[]).map(function(t){ return {title:t.title, dueDate:t.dueDate, done:false, doneDate:''}; }),
     created: localToday()
   };
@@ -2168,7 +2157,6 @@ function openAddTrack(caseId) {
     </div>
     <div class="form-grid">
       <div class="field"><label>承辦人電話</label><input type="text" id="ft-contact-phone" placeholder="分機或手機"></div>
-      <div class="field"><label>預估金額（元）</label><input type="number" id="ft-amount" placeholder="0"></div>
     </div>
     <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
       <div style="font-size:14px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
@@ -2198,7 +2186,6 @@ function openAddTrack(caseId) {
       deadlineNote: document.getElementById('ft-deadline-note').value,
       plannedDate: document.getElementById('ft-planned').value,
       plannedDateNote: document.getElementById('ft-planned-note').value,
-      amount: document.getElementById('ft-amount').value,
       note: document.getElementById('ft-note').value,
       created: localToday()
     };
@@ -2268,7 +2255,6 @@ function openEditTrack(trackId) {
     </div>
     <div class="form-grid">
       <div class="field"><label>承辦人電話</label><input type="text" id="ft-contact-phone" value="${esc(tr.contactPhone||'')}" placeholder="分機或手機"></div>
-      <div class="field"><label>預估金額（元）</label><input type="number" id="ft-amount" value="${tr.amount||''}"></div>
     </div>
     <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
       <div style="font-size:14px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
@@ -2295,7 +2281,6 @@ function openEditTrack(trackId) {
     tr.status = document.getElementById('ft-status').value;
     var tcd = document.getElementById('ft-closed-date'); if (tcd) tr.closedDate = tcd.value || '';
     var tcn = document.getElementById('ft-closed-note'); if (tcn) tr.closedNote = tcn.value || '';
-    tr.amount = document.getElementById('ft-amount').value;
     tr.deadline = document.getElementById('ft-deadline').value;
     tr.deadlineNote = document.getElementById('ft-deadline-note').value;
     tr.plannedDate = document.getElementById('ft-planned').value;
