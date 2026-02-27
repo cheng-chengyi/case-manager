@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-27T23:31:36.784Z",
+  "_date": "2026-02-27T23:37:33.778Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1135,6 +1135,13 @@
         {
           "title": "聯絡富邦產物2nd",
           "dueDate": "2026-02-26",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        },
+        {
+          "title": "聯絡富邦產物3rd",
+          "dueDate": "2026-03-20",
           "remind": "",
           "done": false,
           "doneDate": ""
