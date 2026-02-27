@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-27T23:42:46.680Z",
+  "_date": "2026-02-27T23:43:10.211Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1043,6 +1043,13 @@
         {
           "title": "確認是否收到友邦人壽拒賠函",
           "dueDate": "2026-03-06",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        },
+        {
+          "title": "送出友邦人壽申訴函",
+          "dueDate": "2026-04-10",
           "remind": "",
           "done": false,
           "doneDate": ""
