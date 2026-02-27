@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-02-27T23:27:27.061Z",
+  "_date": "2026-02-27T23:27:40.696Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -795,25 +795,6 @@
       "closedNote": ""
     },
     {
-      "id": "TR-1130718_蔡勝綋(車禍腦傷)-1",
-      "caseId": "1130718_蔡勝綋(車禍腦傷)",
-      "name": "蔡勝綋_新光產物_駕駛人傷害險",
-      "type": "意外險",
-      "insurer": "新光產險",
-      "contact": "",
-      "contactPhone": "",
-      "status": "審核中",
-      "deadline": "2026-02-26",
-      "deadlineNote": "",
-      "plannedDate": "2026-08-31",
-      "plannedDateNote": "",
-      "amount": "",
-      "note": "",
-      "created": "2026-02-20",
-      "closedDate": "",
-      "closedNote": ""
-    },
-    {
       "id": "TR-1130718_蔡勝綋(車禍腦傷)-2",
       "caseId": "1130718_蔡勝綋(車禍腦傷)",
       "name": "蔡勝綋_新光產物_意外險+駕駛人傷害險",
@@ -1463,18 +1444,6 @@
       "date": "2026-02-20",
       "stage": "已調解完成",
       "desc": "建立追蹤軸：對造_尚龍翔_賠償12,000元",
-      "sendRecv": "",
-      "nextStep": "",
-      "nextDate": "",
-      "note": ""
-    },
-    {
-      "id": "P0023",
-      "caseId": "1130718_蔡勝綋(車禍腦傷)",
-      "trackId": "TR-1130718_蔡勝綋(車禍腦傷)-1",
-      "date": "2026-02-20",
-      "stage": "審核中",
-      "desc": "建立追蹤軸：蔡勝綋_新光產物_駕駛人傷害險",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
