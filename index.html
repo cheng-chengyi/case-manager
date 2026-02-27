@@ -419,6 +419,13 @@ function localToday() {
   return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 
+// 期限管理類型篩選（null = 全部顯示）
+var dlTypeFilter = null;
+function toggleDlType(type) {
+  dlTypeFilter = dlTypeFilter === type ? null : type;
+  render();
+}
+
 function loadData() {
   try {
     const s = localStorage.getItem(STORAGE_KEY);
@@ -504,8 +511,12 @@ function rocHint(inputId) {
 }
 function daysUntil(d) {
   if (!d) return null;
-  const diff = Math.ceil((new Date(d) - new Date()) / 86400000);
-  return diff;
+  // 用本地日期計算，避免 UTC 時區差異
+  const parts = d.split('-');
+  const target = new Date(+parts[0], +parts[1]-1, +parts[2]);
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.ceil((target - today) / 86400000);
 }
 function daysBadge(days) {
   if (days === null) return '';
@@ -1360,9 +1371,18 @@ deadlines() {
     });
   });
 
+  // 類型篩選
+  const typeFilterMap = {
+    'deadline': ['deadline'],
+    'planned': ['planned'],
+    'remind': ['remind'],
+    'todo': ['trackTodo', 'todo']
+  };
+  const filteredItems = dlTypeFilter ? allItems.filter(i => typeFilterMap[dlTypeFilter].includes(i.dtype)) : allItems;
+
   // 按日期排序（由近到遠）
-  const pendingItems = allItems.filter(i => !i.done).sort((a,b) => a.date.localeCompare(b.date));
-  const doneItems = allItems.filter(i => i.done).sort((a,b) => a.date.localeCompare(b.date));
+  const pendingItems = filteredItems.filter(i => !i.done).sort((a,b) => a.date.localeCompare(b.date));
+  const doneItems = filteredItems.filter(i => i.done).sort((a,b) => a.date.localeCompare(b.date));
 
   function itemCard(item) {
     const done = item.done;
@@ -1413,12 +1433,12 @@ deadlines() {
     <div class="topbar-actions" style="font-size:14px;color:var(--text-3)">共 ${pendingItems.length} 筆期限</div>
   </div>
   <div class="content">
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding:10px 14px;background:var(--surface-2);border-radius:10px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding:10px 14px;background:var(--surface-2);border-radius:10px;align-items:center">
       <span style="font-size:14px;font-weight:600;color:var(--text-2);margin-right:4px">類型：</span>
-      <span style="font-size:14px;color:#D55E00;font-weight:600">⚠️ 截止日期</span>
-      <span style="font-size:14px;color:#0EA5B0;font-weight:600">📋 預計完成</span>
-      <span style="font-size:14px;color:#E69F00;font-weight:600">🔔 提醒</span>
-      <span style="font-size:14px;color:var(--gold);font-weight:600">☑️ 追蹤待辦／待辦到期</span>
+      <span onclick="toggleDlType('deadline')" style="font-size:14px;color:#D55E00;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:6px;border:2px solid ${dlTypeFilter==='deadline'?'#D55E00':'transparent'};background:${dlTypeFilter==='deadline'?'rgba(213,94,0,0.1)':'transparent'};transition:all .15s">⚠️ 截止日期</span>
+      <span onclick="toggleDlType('planned')" style="font-size:14px;color:#0EA5B0;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:6px;border:2px solid ${dlTypeFilter==='planned'?'#0EA5B0':'transparent'};background:${dlTypeFilter==='planned'?'rgba(14,165,176,0.1)':'transparent'};transition:all .15s">📋 預計完成</span>
+      <span onclick="toggleDlType('remind')" style="font-size:14px;color:#E69F00;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:6px;border:2px solid ${dlTypeFilter==='remind'?'#E69F00':'transparent'};background:${dlTypeFilter==='remind'?'rgba(230,159,0,0.1)':'transparent'};transition:all .15s">🔔 提醒</span>
+      <span onclick="toggleDlType('todo')" style="font-size:14px;color:var(--gold);font-weight:600;cursor:pointer;padding:3px 10px;border-radius:6px;border:2px solid ${dlTypeFilter==='todo'?'var(--gold)':'transparent'};background:${dlTypeFilter==='todo'?'rgba(201,168,76,0.1)':'transparent'};transition:all .15s">☑️ 追蹤待辦／待辦到期</span>
     </div>
 
     ${section('🚫 已逾期', '#5C1A1A', 'rgba(92,26,26,0.08)', overdue)}
