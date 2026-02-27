@@ -413,6 +413,12 @@ const defaultCases = [];
 const defaultTracks = [];
 
 
+// 取得本地日期字串（避免 toISOString 的 UTC 時區問題）
+function localToday() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
 function loadData() {
   try {
     const s = localStorage.getItem(STORAGE_KEY);
@@ -992,7 +998,7 @@ cases() {
                   + '<span style="font-size:14px;font-weight:600;color:var(--text-2)">☑️ 待辦 '+pendingTodos.length+'/'+ trackTodos.length+'</span>'
                   + '</div>'
                   + trackTodos.map(function(todo,ti){
-                    var nowStr2 = new Date().toISOString().slice(0,10);
+                    var nowStr2 = localToday();
                     var isOd = todo.dueDate && todo.dueDate < nowStr2 && !todo.done;
                     var remindHit = todo.remind && todo.remind <= nowStr2 && !todo.done;
                     return '<div style="display:flex;align-items:center;gap:6px;padding:2px 0;font-size:14px;'+(todo.done?'opacity:0.5':'')+'">'
@@ -1032,7 +1038,7 @@ cases() {
 
     ${(function(){
       var caseTodos = (db.todos||[]).filter(function(t){ return t.caseId === c.id || (!t.caseId && (t.title||'').indexOf(c.name) >= 0); });
-      var nowStr = new Date().toISOString().slice(0,10);
+      var nowStr = localToday();
       var pendingTodos = caseTodos.filter(function(t){ return !t.done; });
       var doneTodos = caseTodos.filter(function(t){ return t.done; });
       return '<div class="card" style="margin-top:16px"><div class="card-head" style="display:flex;align-items:center;justify-content:space-between">相關待辦事項 <span class="badge badge-yellow">'+pendingTodos.length+' 項未完成</span><button class="btn btn-outline btn-sm" style="font-size:14px;border-color:var(--gold);color:var(--gold)" onclick="openAddTodo(\''+c.id+'\')">＋ 新增待辦</button></div>'
@@ -1179,7 +1185,7 @@ progress() {
       </div>
       <div class="card-body" style="padding:0">
         ${todos.map(t => {
-          const isOverdue = t.dueDate && t.dueDate < new Date().toISOString().slice(0,10);
+          const isOverdue = t.dueDate && t.dueDate < localToday();
           const subDone = (t.subtasks||[]).filter(s=>s.done).length;
           const subTotal = (t.subtasks||[]).length;
           return `<div style="padding:10px 16px;border-bottom:1px solid var(--border)">
@@ -1235,7 +1241,7 @@ progress() {
     const y = calYear || now.getFullYear(), m = calMonth != null ? calMonth : now.getMonth();
     const first = new Date(y, m, 1);
     const daysInMonth = new Date(y, m+1, 0).getDate();
-    const today = now.toISOString().slice(0,10);
+    const today = localToday();
     const mLabel = (y-1911)+'年'+(m+1)+'月';
     let cellArr = [];
     // 週一開始：getDay() 0=日 -> 轉成 0=一
@@ -1448,12 +1454,12 @@ todos() {
 
   // 檢查提醒
   const now = new Date();
-  const alerts = pending.filter(t => t.remind && t.remind <= now.toISOString().slice(0,10));
+  const alerts = pending.filter(t => t.remind && t.remind <= localToday());
 
   const sortedPending = [...pending].sort((a,b) => {
     const now2 = new Date();
-    const aAlert = a.remind && a.remind.slice(0,10) <= now2.toISOString().slice(0,10) ? 0 : 1;
-    const bAlert = b.remind && b.remind.slice(0,10) <= now2.toISOString().slice(0,10) ? 0 : 1;
+    const aAlert = a.remind && a.remind.slice(0,10) <= localToday() ? 0 : 1;
+    const bAlert = b.remind && b.remind.slice(0,10) <= localToday() ? 0 : 1;
     if (aAlert !== bAlert) return aAlert - bAlert;
     const aDate = a.dueDate || a.remind || '9999';
     const bDate = b.dueDate || b.remind || '9999';
@@ -1484,8 +1490,8 @@ todos() {
       <div class="card-body" style="padding:0">
         ${sortedPending.length === 0 ? '<div style="padding:30px;text-align:center;color:var(--text-3);font-size:14px">沒有待辦事項 🎉</div>' :
           sortedPending.map(t => {
-            const isOverdue = t.dueDate && t.dueDate < now.toISOString().slice(0,10);
-            const isAlerted = t.remind && t.remind <= now.toISOString().slice(0,10);
+            const isOverdue = t.dueDate && t.dueDate < localToday();
+            const isAlerted = t.remind && t.remind <= localToday();
             return `<div style="padding:14px 18px;border-bottom:1px solid var(--border);${isAlerted?'background:rgba(213,94,0,0.04)':''}">
               <div style="display:flex;align-items:flex-start;gap:10px">
                 <input type="checkbox" onchange="toggleTodo('${t.id}')" style="width:18px;height:18px;margin-top:2px;cursor:pointer;flex-shrink:0;accent-color:#0072B2">
@@ -1495,7 +1501,7 @@ todos() {
                     ${(t.subtasks&&t.subtasks.length)?'<span style="font-size:14px;font-weight:400;color:var(--text-3);margin-left:6px">'+t.subtasks.filter(s=>s.done).length+'/'+t.subtasks.length+'</span>':''}
                   </div>
                   ${t.note?'<div style="font-size:14px;color:var(--text-3);margin-top:4px;white-space:pre-line">'+esc(t.note)+'</div>':''}
-                  ${(t.subtasks&&t.subtasks.length)?'<div style="margin-top:8px;padding-left:4px">'+t.subtasks.map((s,i)=>'<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:14px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:15px;height:15px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+';flex:1">'+esc(s.title)+'</span>'+(s.dueDate?'<span style="font-size:14px;color:'+(s.dueDate<now.toISOString().slice(0,10)&&!s.done?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')+'</div>':''}
+                  ${(t.subtasks&&t.subtasks.length)?'<div style="margin-top:8px;padding-left:4px">'+t.subtasks.map((s,i)=>'<div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:14px"><input type="checkbox" '+(s.done?'checked':'')+' onchange="toggleSubtask(\''+t.id+'\','+i+')" style="width:15px;height:15px;cursor:pointer;accent-color:#0072B2"><span style="'+(s.done?'text-decoration:line-through;color:var(--text-3)':'')+';flex:1">'+esc(s.title)+'</span>'+(s.dueDate?'<span style="font-size:14px;color:'+(s.dueDate<localToday()&&!s.done?'#D55E00':'var(--text-3)')+'">'+fmtDate(s.dueDate)+'</span>':'')+'</div>').join('')+'</div>':''}
                   <div style="display:flex;gap:12px;margin-top:6px;font-size:14px;color:var(--text-3);flex-wrap:wrap">
                     ${t.remind?'<span>⏰ '+fmtDate(t.remind)+'</span>':''}
                     ${t.dueDate?'<span style="'+(isOverdue?'color:#D55E00;font-weight:600':'')+'">📅 '+fmtDate(t.dueDate)+'</span>':''}
@@ -1901,7 +1907,7 @@ function openNewCase() {
     </div>
     <div class="form-grid cols-3">
       <div class="field"><label>事故/起始日期</label><input type="date" id="f-accident" onchange="var h=document.getElementById('hint-f-accident');if(h)h.textContent=rocHint('f-accident');"><div id="hint-f-accident" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-      <div class="field"><label>受理日期</label><input type="date" id="f-receive" value="${new Date().toISOString().slice(0,10)}" onchange="var h=document.getElementById('hint-f-receive');if(h)h.textContent=rocHint('f-receive');"><div id="hint-f-receive" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+      <div class="field"><label>受理日期</label><input type="date" id="f-receive" value="${localToday()}" onchange="var h=document.getElementById('hint-f-receive');if(h)h.textContent=rocHint('f-receive');"><div id="hint-f-receive" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
     </div>
     <div class="section-divider">案件資訊</div>
     <div class="form-grid cols-3">
@@ -1939,8 +1945,8 @@ function openNewCase() {
       plannedDateNote: document.getElementById('f-planned-note').value,
       amount: document.getElementById('f-amount').value,
       note: document.getElementById('f-note').value,
-      created: new Date().toISOString().slice(0,10),
-      updated: new Date().toISOString().slice(0,10)
+      created: localToday(),
+      updated: localToday()
     };
     if (!newCase.name || !newCase.type) { alert('姓名和個案類型為必填！'); return false; }
     db.cases.push(newCase);
@@ -2035,7 +2041,7 @@ function openEditCase(id) {
     c.plannedDateNote = document.getElementById('f-planned-note').value;
     c.amount = document.getElementById('f-amount').value;
     c.note = document.getElementById('f-note').value;
-    c.updated = new Date().toISOString().slice(0,10);
+    c.updated = localToday();
     saveData(db);
     return true;
   });
@@ -2086,11 +2092,11 @@ function copyTrack(trackId) {
     plannedDate: src.plannedDate || '', plannedDateNote: src.plannedDateNote || '',
     amount: src.amount, note: src.note || '',
     todos: (src.todos||[]).map(function(t){ return {title:t.title, dueDate:t.dueDate, done:false, doneDate:''}; }),
-    created: new Date().toISOString().slice(0,10)
+    created: localToday()
   };
   db.tracks.push(newTr);
   var c = db.cases.find(function(x){ return x.id === src.caseId; });
-  if (c) c.updated = new Date().toISOString().slice(0,10);
+  if (c) c.updated = localToday();
   saveData(db);
   render();
   alert('已複製追蹤軸「' + src.name + '」，請編輯修改名稱和日期。');
@@ -2174,7 +2180,7 @@ function openAddTrack(caseId) {
       plannedDateNote: document.getElementById('ft-planned-note').value,
       amount: document.getElementById('ft-amount').value,
       note: document.getElementById('ft-note').value,
-      created: new Date().toISOString().slice(0,10)
+      created: localToday()
     };
     db.tracks.push(tr);
     // 自動建立第一筆進度記錄
@@ -2182,13 +2188,13 @@ function openAddTrack(caseId) {
       id: genProgressId(),
       caseId: caseId,
       trackId: tr.id,
-      date: new Date().toISOString().slice(0,10),
+      date: localToday(),
       stage: tr.status || '未申請',
       desc: '建立追蹤軸：' + tr.name,
       sendRecv: '', nextStep: '', nextDate: '', note: ''
     });
     var c2 = db.cases.find(function(x){ return x.id === caseId; });
-    if (c2) c2.updated = new Date().toISOString().slice(0,10);
+    if (c2) c2.updated = localToday();
     saveData(db);
     return true;
   });
@@ -2335,7 +2341,7 @@ function toggleTrackTodo(trackId, idx) {
   var tr = db.tracks.find(function(t){ return t.id === trackId; });
   if (!tr || !tr.todos || !tr.todos[idx]) return;
   tr.todos[idx].done = !tr.todos[idx].done;
-  tr.todos[idx].doneDate = tr.todos[idx].done ? new Date().toISOString().slice(0,10) : '';
+  tr.todos[idx].doneDate = tr.todos[idx].done ? localToday() : '';
   saveData(db);
   render();
 }
@@ -2361,20 +2367,20 @@ function markDeadlineDone(id, type) {
   if (tr) {
     if (type === 'deadline') {
       tr.deadlineDone = !tr.deadlineDone;
-      tr.deadlineDoneDate = tr.deadlineDone ? new Date().toISOString().slice(0,10) : '';
+      tr.deadlineDoneDate = tr.deadlineDone ? localToday() : '';
     } else if (type === 'planned') {
       tr.plannedDone = !tr.plannedDone;
-      tr.plannedDoneDate = tr.plannedDone ? new Date().toISOString().slice(0,10) : '';
+      tr.plannedDoneDate = tr.plannedDone ? localToday() : '';
     }
   } else {
     var c = db.cases.find(function(x){ return x.id === id; });
     if (c) {
       if (type === 'deadline') {
         c.deadlineDone = !c.deadlineDone;
-        c.deadlineDoneDate = c.deadlineDone ? new Date().toISOString().slice(0,10) : '';
+        c.deadlineDoneDate = c.deadlineDone ? localToday() : '';
       } else if (type === 'planned') {
         c.plannedDone = !c.plannedDone;
-        c.plannedDoneDate = c.plannedDone ? new Date().toISOString().slice(0,10) : '';
+        c.plannedDoneDate = c.plannedDone ? localToday() : '';
       }
     }
   }
@@ -2398,7 +2404,7 @@ function openAddProgress(caseIdDefault, trackIdDefault) {
       </div>
     </div>
     <div class="form-grid">
-      <div class="field"><label>日期 *</label><input type="date" id="fp-date" value="${new Date().toISOString().slice(0,10)}" onchange="var h=document.getElementById('hint-fp-date');if(h)h.textContent=rocHint('fp-date');"><div id="hint-fp-date" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+      <div class="field"><label>日期 *</label><input type="date" id="fp-date" value="${localToday()}" onchange="var h=document.getElementById('hint-fp-date');if(h)h.textContent=rocHint('fp-date');"><div id="hint-fp-date" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
       <div class="field"><label>進度階段 *</label>
         <select id="fp-stage">
           ${['未申請','待補件','審核中','已給付','已拒賠','申訴中','評議中','未調解','已調解完成','調解不成立','偵查庭','刑事訴訟','民事訴訟','爭議審議','訴願中','撤案'].map(s=>`<option>${s}</option>`).join('')}
@@ -2434,7 +2440,7 @@ function openAddProgress(caseIdDefault, trackIdDefault) {
     };
     db.progress.push(p);
     var c2 = db.cases.find(x => x.id === caseId);
-    if (c2) c2.updated = new Date().toISOString().slice(0,10);
+    if (c2) c2.updated = localToday();
     saveData(db);
     return true;
   });
@@ -2502,7 +2508,7 @@ function archiveSelected() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = '歸檔_' + ids.join('_') + '_' + new Date().toISOString().slice(0,10) + '.json';
+  a.download = '歸檔_' + ids.join('_') + '_' + localToday() + '.json';
   a.click();
   URL.revokeObjectURL(url);
 
@@ -2533,7 +2539,7 @@ function exportAllJson() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = '個案管理_全量備份_' + new Date().toISOString().slice(0,10) + '.json';
+  a.download = '個案管理_全量備份_' + localToday() + '.json';
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -2793,7 +2799,7 @@ function openAddTodo(prefillCaseId) {
       note: document.getElementById('td-note').value,
       subtasks: collectSubtasks(),
       done: false, doneDate: null,
-      created: new Date().toISOString().slice(0,10)
+      created: localToday()
     });
     saveData(db); return true;
   });
@@ -2842,7 +2848,7 @@ function toggleTodo(id) {
   const t = db.todos.find(x => x.id === id);
   if (!t) return;
   t.done = !t.done;
-  t.doneDate = t.done ? new Date().toISOString().slice(0,10) : null;
+  t.doneDate = t.done ? localToday() : null;
   saveData(db);
   render();
 }
@@ -2864,7 +2870,7 @@ function copyTodo(id) {
     caseId: t.caseId, note: t.note,
     subtasks: (t.subtasks||[]).map(s => ({ title: s.title, dueDate: s.dueDate, done: false })),
     done: false, doneDate: null,
-    created: new Date().toISOString().slice(0,10)
+    created: localToday()
   });
   saveData(db);
   render();
