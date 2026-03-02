@@ -446,6 +446,14 @@ function ghAutoSync(data) {
   _ghSyncTimer = setTimeout(function() { ghPushSilent(data); }, 2000);
 }
 let db = loadData();
+// 排除清單：永久封鎖假設資料
+var _EXCLUDED_IDS = new Set(["A001","A002","A003","A004","A005","1140923_鄭淑惠(行人車禍)"]);
+if (db.cases && db.cases.some(function(c){ return _EXCLUDED_IDS.has(c.id); })) {
+  db.cases = db.cases.filter(function(c){ return !_EXCLUDED_IDS.has(c.id); });
+  db.tracks = (db.tracks||[]).filter(function(t){ return !_EXCLUDED_IDS.has(t.caseId); });
+  db.progress = (db.progress||[]).filter(function(p){ return !_EXCLUDED_IDS.has(p.caseId); });
+  try { localStorage.setItem("cm_data", JSON.stringify(db)); } catch(e) {}
+}
 if (!db.cases) db.cases = defaultCases;
 if (!db.tracks) db.tracks = defaultTracks;
 if (!db.progress) db.progress = [];
@@ -2594,8 +2602,17 @@ async function ghAutoPull() {
     const json = decodeURIComponent(escape(atob(f.content)));
     const remote = JSON.parse(json);
     if (!remote.cases) return;
-    const remoteCases = remote.cases || [];
-    const localCases = db.cases || [];
+    // 排除清單：永久封鎖假設資料和已知應排除的 ID
+    const EXCLUDED_IDS = new Set(['A001','A002','A003','A004','A005','1140923_鄭淑惠(行人車禍)']);
+    const remoteCases = (remote.cases || []).filter(function(c){ return !EXCLUDED_IDS.has(c.id); });
+    const localCases = (db.cases || []).filter(function(c){ return !EXCLUDED_IDS.has(c.id); });
+    // 如果本機有被排除的資料，清掉並存檔
+    if (localCases.length < (db.cases||[]).length) {
+      db.cases = localCases;
+      db.tracks = (db.tracks||[]).filter(function(t){ return !EXCLUDED_IDS.has(t.caseId); });
+      db.progress = (db.progress||[]).filter(function(p){ return !EXCLUDED_IDS.has(p.caseId); });
+      saveData(db);
+    }
     // 合併策略：以 ID 為 key，本機有的保留，雲端有但本機沒有的加入
     const localIds = new Set(localCases.map(function(c){ return c.id; }));
     const remoteIds = new Set(remoteCases.map(function(c){ return c.id; }));
@@ -2664,6 +2681,11 @@ async function ghPull() {
     const json = decodeURIComponent(escape(atob(f.content)));
     const data = JSON.parse(json);
     if (!data.cases) throw new Error('資料格式不正確');
+    // 排除清單：過濾假設資料
+    var EXCLUDED_IDS = new Set(['A001','A002','A003','A004','A005','1140923_鄭淑惠(行人車禍)']);
+    data.cases = data.cases.filter(function(c){ return !EXCLUDED_IDS.has(c.id); });
+    data.tracks = (data.tracks||[]).filter(function(t){ return !EXCLUDED_IDS.has(t.caseId); });
+    data.progress = (data.progress||[]).filter(function(p){ return !EXCLUDED_IDS.has(p.caseId); });
     var localCount = db.cases.length;
     var remoteCount = data.cases.length;
     var choice = confirm('雲端有 ' + remoteCount + ' 筆，本機有 ' + localCount + ' 筆。\n\n按「確定」= 合併（不遺失任何資料）\n按「取消」= 不動作');
