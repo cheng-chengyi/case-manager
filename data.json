@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-02T15:25:23.990Z",
+  "_date": "2026-03-02T15:25:25.984Z",
   "cases": [
     {
       "id": "A001",
@@ -2105,7 +2105,8 @@
       "subtasks": [],
       "done": false,
       "doneDate": null,
-      "created": "2026-02-15"
+      "created": "2026-02-15",
+      "_notified": true
     },
     {
       "id": "T0002",
