@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-04T23:33:57.314Z",
+  "_date": "2026-03-06T11:25:19.200Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1715,5 +1715,68 @@
       "note": ""
     }
   ],
-  "todos": []
+  "todos": [
+    {
+      "id": "T0001",
+      "title": "提供PDF給職災重建中心 朱奕築小姐",
+      "dueDate": "2026-03-02",
+      "remind": "2026-02-23",
+      "caseId": "",
+      "note": "",
+      "subtasks": [],
+      "done": true,
+      "doneDate": "2026-02-23",
+      "created": "2026-02-15",
+      "_notified": true
+    },
+    {
+      "id": "T0002",
+      "title": "富邦人壽中二區林宏育 1150313課程，印製講義150份",
+      "dueDate": "2026-03-05",
+      "remind": "2026-03-04",
+      "caseId": "",
+      "note": "",
+      "subtasks": [],
+      "done": true,
+      "doneDate": "2026-03-06",
+      "created": "2026-02-15",
+      "_notified": true
+    },
+    {
+      "id": "T0003",
+      "title": "調整claude付費模型",
+      "dueDate": "2026-03-10",
+      "remind": "2026-03-08",
+      "caseId": "",
+      "note": "",
+      "subtasks": [],
+      "done": false,
+      "doneDate": null,
+      "created": "2026-02-19"
+    },
+    {
+      "id": "T0004",
+      "title": "確認余林素娥原先全球人壽給付嗅覺喪失保額正確嗎？  正確",
+      "dueDate": "2026-02-26",
+      "remind": "",
+      "caseId": "1121209_余林素娥(車禍)",
+      "note": "全球人壽台南分公司 06-6017600#7629 李小姐",
+      "subtasks": [],
+      "done": true,
+      "doneDate": "2026-02-23",
+      "created": "2026-02-19"
+    },
+    {
+      "id": "T0007",
+      "title": "調整GCP到美國地區",
+      "dueDate": "2026-05-10",
+      "remind": "",
+      "caseId": "",
+      "note": "",
+      "subtasks": [],
+      "done": false,
+      "doneDate": null,
+      "created": "2026-02-23"
+    }
+  ]
 }
