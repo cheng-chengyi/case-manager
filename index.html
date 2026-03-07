@@ -2613,28 +2613,73 @@ async function ghAutoPull() {
       db.progress = (db.progress||[]).filter(function(p){ return !EXCLUDED_IDS.has(p.caseId); });
       saveData(db);
     }
-    // 合併策略：以 ID 為 key，本機有的保留，雲端有但本機沒有的加入
-    const localIds = new Set(localCases.map(function(c){ return c.id; }));
-    const remoteIds = new Set(remoteCases.map(function(c){ return c.id; }));
-    // 雲端有但本機沒有的個案
-    const missingCases = remoteCases.filter(function(c){ return !localIds.has(c.id); });
-    const missingIds = new Set(missingCases.map(function(c){ return c.id; }));
-    const missingTracks = (remote.tracks||[]).filter(function(t){ return missingIds.has(t.caseId); });
-    const missingProgress = (remote.progress||[]).filter(function(p){ return missingIds.has(p.caseId); });
-    // 本機有但雲端沒有的（不要刪除！保留本機資料）
-    const localOnly = localCases.filter(function(c){ return !remoteIds.has(c.id); });
-    if (missingCases.length > 0) {
-      // 雲端有新資料，合併進來
-      db.cases = localCases.concat(missingCases);
-      db.tracks = (db.tracks||[]).concat(missingTracks);
-      db.progress = (db.progress||[]).concat(missingProgress);
+    var changed = false;
+    var addedCases = 0, addedTracks = 0, addedProgress = 0, addedTodos = 0;
+    // 1. 合併個案：雲端有但本機沒有的加入
+    var localCaseIds = new Set(localCases.map(function(c){ return c.id; }));
+    var remoteCaseIds = new Set(remoteCases.map(function(c){ return c.id; }));
+    var newCases = remoteCases.filter(function(c){ return !localCaseIds.has(c.id); });
+    if (newCases.length > 0) {
+      db.cases = localCases.concat(newCases);
+      addedCases = newCases.length;
+      changed = true;
+    } else {
+      db.cases = localCases;
+    }
+    // 2. 逐筆合併 tracks（用 id 去重）
+    var localTrackIds = new Set((db.tracks||[]).map(function(t){ return t.id; }));
+    var remoteTracks = (remote.tracks||[]).filter(function(t){ return !EXCLUDED_IDS.has(t.caseId); });
+    remoteTracks.forEach(function(t) {
+      if (t.id && !localTrackIds.has(t.id)) {
+        db.tracks.push(t);
+        addedTracks++;
+        changed = true;
+      }
+    });
+    // 3. 逐筆合併 progress（用 id 或 caseId+date+stage 去重）
+    var localProgressKeys = new Set((db.progress||[]).map(function(p){ return p.id || (p.caseId+p.date+p.stage); }));
+    var remoteProgress = (remote.progress||[]).filter(function(p){ return !EXCLUDED_IDS.has(p.caseId); });
+    remoteProgress.forEach(function(p) {
+      var key = p.id || (p.caseId+p.date+p.stage);
+      if (!localProgressKeys.has(key)) {
+        db.progress.push(p);
+        addedProgress++;
+        changed = true;
+      }
+    });
+    // 4. 逐筆合併 todos（用 id 去重）
+    if (!db.todos) db.todos = [];
+    var localTodoIds = new Set(db.todos.map(function(t){ return t.id; }));
+    var remoteTodos = (remote.todos||[]).filter(function(t){ return !EXCLUDED_IDS.has(t.caseId); });
+    remoteTodos.forEach(function(t) {
+      if (t.id && !localTodoIds.has(t.id)) {
+        db.todos.push(t);
+        addedTodos++;
+        changed = true;
+      }
+    });
+    // 儲存並顯示結果
+    if (changed) {
       saveData(db);
       render();
+      var parts = [];
+      if (addedCases > 0) parts.push(addedCases + '案');
+      if (addedTracks > 0) parts.push(addedTracks + '追蹤');
+      if (addedProgress > 0) parts.push(addedProgress + '進度');
+      if (addedTodos > 0) parts.push(addedTodos + '待辦');
+      var msg = parts.length > 0 ? '☁️ +' + parts.join('+') : '☁️ 已同步';
       var ind = document.getElementById('sync-indicator');
-      if (ind) { ind.textContent = '☁️ +' + missingCases.length; ind.style.color = '#0072B2'; setTimeout(function(){ ind.textContent = '☁️'; ind.style.color = 'var(--text-3)'; }, 3000); }
+      if (ind) { ind.textContent = msg; ind.style.color = '#0072B2'; setTimeout(function(){ ind.textContent = '☁️'; ind.style.color = 'var(--text-3)'; }, 3000); }
     }
-    if (localOnly.length > 0) {
-      // 本機有雲端沒有的，自動推送上去
+    // 本機有但雲端沒有的，自動推送上去
+    var localOnly = db.cases.filter(function(c){ return !remoteCaseIds.has(c.id); });
+    var remoteTrackIds = new Set((remote.tracks||[]).map(function(rt){return rt.id}));
+    var remoteProgressKeys = new Set((remote.progress||[]).map(function(rp){return rp.id||(rp.caseId+rp.date+rp.stage)}));
+    var remoteTodoIds = new Set((remote.todos||[]).map(function(rt){return rt.id}));
+    var localExtraTracks = (db.tracks||[]).some(function(t){ return t.id && !remoteTrackIds.has(t.id); });
+    var localExtraProgress = (db.progress||[]).some(function(p){ return !remoteProgressKeys.has(p.id||(p.caseId+p.date+p.stage)); });
+    var localExtraTodos = (db.todos||[]).some(function(t){ return t.id && !remoteTodoIds.has(t.id); });
+    if (localOnly.length > 0 || localExtraTracks || localExtraProgress || localExtraTodos) {
       ghPushSilent(db);
     }
   } catch(e) {
@@ -2705,8 +2750,19 @@ async function ghPull() {
       var pid = p.id || (p.caseId+p.date+p.stage);
       if (!localProgressIds.has(pid)) { db.progress.push(p); }
     });
+    // 合併 todos
+    if (!db.todos) db.todos = [];
+    var localTodoIds = new Set(db.todos.map(function(t){ return t.id; }));
+    var addedTodos = 0;
+    (data.todos||[]).forEach(function(t) {
+      if (t.id && !localTodoIds.has(t.id)) { db.todos.push(t); addedTodos++; }
+    });
     saveData(db);
-    ghStatus('✅ 合併完成！新增 ' + added + ' 筆，目前共 ' + db.cases.length + ' 筆');
+    var parts = [];
+    if (added > 0) parts.push(added + ' 筆個案');
+    if (addedTodos > 0) parts.push(addedTodos + ' 筆待辦');
+    var summary = parts.length > 0 ? '新增 ' + parts.join('、') + '，' : '';
+    ghStatus('✅ 合併完成！' + summary + '目前共 ' + db.cases.length + ' 筆');
     render();
   } catch(err) {
     ghStatus('❌ 下載失敗：' + err.message, true);
