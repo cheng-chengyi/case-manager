@@ -1,0 +1,9 @@
+{
+  "name": "case-manager",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static case manager app for GitHub Pages",
+  "scripts": {
+    "check": "node --check sw.js"
+  }
+}

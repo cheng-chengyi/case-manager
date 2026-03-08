@@ -33,3 +33,14 @@ Examples:
 This project is deployed as static files on GitHub Pages.
 - Response headers such as `Strict-Transport-Security`, `X-Frame-Options`, and `X-Content-Type-Options` cannot be fully controlled in repository files.
 - Prefer app-level controls (`Content-Security-Policy` meta, `frame-ancestors`, limited external origins) and place stricter edge headers behind a CDN/proxy if required.
+
+
+## Security header policy (GitHub Pages)
+- Effective in static HTML:
+  - `Content-Security-Policy` via `<meta http-equiv="Content-Security-Policy">`
+  - `Referrer-Policy` via `<meta name="referrer">`
+- Not reliably enforceable as HTML meta and should be configured at edge/CDN/proxy when required:
+  - `Strict-Transport-Security`
+  - `X-Frame-Options`
+  - `X-Content-Type-Options`
+  - `Permissions-Policy`
