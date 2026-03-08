@@ -44,3 +44,8 @@ This project is deployed as static files on GitHub Pages.
   - `X-Frame-Options`
   - `X-Content-Type-Options`
   - `Permissions-Policy`
+
+
+## Automation helpers
+- Security audit script: `bash scripts/security-audit.sh "${TARGET_URL}"`
+- Ops/release checklist: `docs/OPS_CHECKLIST.md`
