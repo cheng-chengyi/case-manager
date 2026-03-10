@@ -3045,7 +3045,7 @@ let _reminderShownToday = {};
 
 function checkAllReminders() {
   const now = new Date();
-  const today = now.toISOString().slice(0, 10);
+  const today = localToday();
   const alertItems = [];
 
   // 1) 待辦事項提醒
