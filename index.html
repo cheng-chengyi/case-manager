@@ -458,6 +458,11 @@ if (!db.cases) db.cases = defaultCases;
 if (!db.tracks) db.tracks = defaultTracks;
 if (!db.progress) db.progress = [];
 if (!db.todos) db.todos = [];
+// 同步舊資料：提醒日期與預計完成日期雙向連動
+(db.tracks||[]).forEach(function(tr){
+  if (tr.deadlineDone && tr.plannedDate && !tr.plannedDone) { tr.plannedDone = true; tr.plannedDoneDate = tr.plannedDoneDate || tr.deadlineDoneDate || ''; }
+  if (tr.plannedDone && tr.deadline && !tr.deadlineDone) { tr.deadlineDone = true; tr.deadlineDoneDate = tr.deadlineDoneDate || tr.plannedDoneDate || ''; }
+});
 var _pid = 1;
 db.progress.forEach(function(p){ if (!p.id) p.id = 'P' + String(_pid++).padStart(4,'0'); });
 function genProgressId() {
