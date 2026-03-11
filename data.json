@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-11T00:58:52.941Z",
+  "_date": "2026-03-11T00:58:55.841Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -756,8 +756,8 @@
           "title": "已聯絡承辦人李先生",
           "dueDate": "",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-03-11"
         }
       ]
     },
