@@ -386,6 +386,10 @@
     </div>
     <div class="nav-section">
       <div class="nav-label">資料管理</div>
+      <div class="nav-item" onclick="navigate('archived-cases')" id="nav-archived-cases">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+        歸檔個案
+      </div>
       <div class="nav-item" onclick="navigate('archive')" id="nav-archive">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
         歸檔與備份
@@ -601,7 +605,7 @@ function render() {
 function renderCaseTable() {
   var tbody = document.getElementById('case-table-body');
   if (!tbody) { render(); return; }
-  var list = db.cases;
+  var list = db.cases.filter(function(c){ return !c.archived; });
   if (filterType) {
     if (Array.isArray(filterType)) list = list.filter(function(c){ return filterType.indexOf(c.type) >= 0; });
     else list = list.filter(function(c){ return c.type === filterType; });
@@ -654,7 +658,7 @@ const views = {
 
 // ── Dashboard ──────────────────────────────────────────────────
 dashboard() {
-  const cases = db.cases;
+  const cases = db.cases.filter(c => !c.archived);
   const total = cases.length;
   const _closedStatuses = ['已給付','已調解完成','已結案','撤案'];
   const active = cases.filter(c => !_closedStatuses.includes(c.status) && c.status !== '未申請').length;
@@ -670,7 +674,7 @@ dashboard() {
   
   // 彙整近期期限：追蹤軸優先，無追蹤軸時 fallback 到案件層級
   const _dlItems = [];
-  const _activeCaseIds = new Set(cases.filter(c => !_closedStatuses.includes(c.status)).map(c => c.id));
+  const _activeCaseIds = new Set(cases.filter(c => !_closedStatuses.includes(c.status) && !c.archived).map(c => c.id));
   db.tracks.filter(t => _activeCaseIds.has(t.caseId) && !_closedStatuses.includes(t.status)).forEach(t => {
     const c = cases.find(x => x.id === t.caseId);
     if (!c) return;
@@ -780,7 +784,8 @@ dashboard() {
 
 // ── Cases List ─────────────────────────────────────────────────
 cases() {
-  let list = db.cases;
+  let list = db.cases.filter(c => !c.archived);
+  const archivedList = db.cases.filter(c => !!c.archived);
   if (filterType) {
     if (Array.isArray(filterType)) list = list.filter(c => filterType.includes(c.type));
     else list = list.filter(c => c.type === filterType);
@@ -866,10 +871,30 @@ cases() {
         </tbody>
       </table>
     </div>
+    ${archivedList.length > 0 ? `
+    <div class="card" style="margin-top:20px;opacity:0.8">
+      <div class="card-head" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:var(--surface-2)" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';this.querySelector('.archive-toggle').textContent=b.style.display==='none'?'▶':'▼'">
+        <span>📦 歸檔個案 <span class="badge badge-gray">${archivedList.length} 筆</span></span>
+        <span class="archive-toggle" style="font-size:14px;color:var(--text-3)">▶</span>
+      </div>
+      <div class="card-body" style="display:none;padding:0">
+        ${archivedList.map(c => `
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border)">
+            <div style="flex:1;min-width:0">
+              <span style="font-size:14px;font-weight:600;cursor:pointer;color:var(--navy)" onclick="navigate('case-detail','${c.id}')">${esc(c.name)}</span>
+              <span style="font-size:14px;color:var(--text-3);margin-left:6px">${esc(c.id)}</span>
+              <span class="badge ${statusColor[c.status]}" style="margin-left:6px">${c.status}</span>
+            </div>
+            <button class="btn btn-outline btn-sm" style="font-size:14px;color:#0072B2;flex-shrink:0" onclick="if(confirm('確定重新啟用「${c.name.replace(/'/g,"\\'")}」？')){var x=db.cases.find(function(z){return z.id==='${c.id}'});if(x){x.archived=false;saveData(db);render()}}">🔄 重新啟用</button>
+          </div>
+        `).join('')}
+        <div style="padding:10px 16px;text-align:center">
+          <button class="btn btn-outline btn-sm" onclick="navigate('archived-cases')" style="font-size:14px">查看全部歸檔個案 →</button>
+        </div>
+      </div>
+    </div>` : ''}
   </div>`;
 },
-
-// ── Case Detail ─────────────────────────────────────────────────
 'case-detail'() {
   const c = db.cases.find(x => x.id === selectedCase);
   if (!c) return '<div class="content"><p>找不到個案</p></div>';
@@ -972,6 +997,7 @@ cases() {
     </div>
     <div class="topbar-actions">
       <button class="btn btn-outline btn-sm" onclick="openEditCase('${c.id}')">編輯個案</button>
+      ${c.archived ? `<button class="btn btn-outline btn-sm" style="color:#0072B2" onclick="if(confirm('確定重新啟用「${c.name.replace(/'/g,"\\'")}」？')){var x=db.cases.find(function(z){return z.id==='${c.id}'});if(x){x.archived=false;x.archivedDate='';saveData(db);navigate('cases')}}">🔄 重新啟用</button>` : `<button class="btn btn-outline btn-sm" style="color:var(--text-3)" onclick="if(confirm('確定將「${c.name.replace(/'/g,"\\'")}」歸檔？歸檔後可在歸檔個案中重新啟用。')){var x=db.cases.find(function(z){return z.id==='${c.id}'});if(x){x.archived=true;x.archivedDate=localToday();saveData(db);navigate('cases')}}">📦 歸檔</button>`}
       <button class="btn btn-outline btn-sm" onclick="openAddTrack('${c.id}')" style="border-color:var(--teal);color:var(--teal)">＋ 新增追蹤軸</button>
       <button class="btn btn-gold btn-sm" onclick="openAddProgress('${c.id}','')">＋ 新增進度</button>
     </div>
@@ -1349,7 +1375,7 @@ progress() {
 // ── Deadlines ──────────────────────────────────────────────────
 deadlines() {
   // 同時讀取追蹤軸 + 個案層級的日期
-  const activeCases = db.cases.filter(c => c.status !== '已給付' && c.status !== '已調解完成' && c.status !== '撤案');
+  const activeCases = db.cases.filter(c => c.status !== '已給付' && c.status !== '已調解完成' && c.status !== '撤案' && !c.archived);
   const activeCaseIds = new Set(activeCases.map(c => c.id));
 
   // 統一彙整所有期限項目
@@ -1599,6 +1625,40 @@ gcal() {
   <div class="content">
     <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border)">
       <iframe src="https://calendar.google.com/calendar/embed?src=bms.cheng%40gmail.com&ctz=Asia%2FTaipei&wkst=2&showTitle=0&showNav=1&showPrint=0&showTabs=1&showCalendars=0" style="border:0;width:100%;height:calc(100vh - 140px);min-height:500px" frameborder="0" scrolling="no"></iframe>
+    </div>
+  </div>`;
+},
+
+// ── Archived Cases ────────────────────────────────────────────
+'archived-cases'() {
+  const list = db.cases.filter(c => !!c.archived);
+  return `
+  <div class="topbar">
+    <div class="topbar-title">歸檔個案 <span class="text-muted">（${list.length} 筆）</span></div>
+  </div>
+  <div class="content">
+    <div class="table-card">
+      ${list.length === 0 ? '<div style="padding:40px;text-align:center;color:var(--text-3);font-size:14px">目前沒有歸檔個案</div>' : `
+      <table>
+        <thead><tr>
+          <th>個案編號</th><th>當事人</th><th>個案類型</th><th>接案狀態</th><th>歸檔日期</th><th>操作</th>
+        </tr></thead>
+        <tbody>
+        ${list.map(c => `
+          <tr>
+            <td><span style="font-family:'Playfair Display';font-weight:600;color:var(--navy)">${esc(c.id)}</span></td>
+            <td><strong style="cursor:pointer" onclick="navigate('case-detail','${c.id}')">${esc(c.name)}</strong></td>
+            <td><span class="badge ${typeColor[c.type]}">${esc(c.type)}</span></td>
+            <td><span class="badge ${statusColor[c.status]}">${c.status}</span></td>
+            <td style="font-size:14px;color:var(--text-3)">${c.archivedDate ? fmtDate(c.archivedDate) : '—'}</td>
+            <td style="white-space:nowrap">
+              <button class="btn btn-outline btn-sm" style="color:#0072B2" onclick="if(confirm('確定重新啟用「${c.name.replace(/'/g,"\\'")}」？')){var x=db.cases.find(function(z){return z.id==='${c.id}'});if(x){x.archived=false;x.archivedDate='';saveData(db);render()}}">🔄 重新啟用</button>
+              <button class="btn btn-outline btn-sm" onclick="navigate('case-detail','${c.id}')">查看</button>
+            </td>
+          </tr>
+        `).join('')}
+        </tbody>
+      </table>`}
     </div>
   </div>`;
 },
