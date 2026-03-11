@@ -1005,8 +1005,8 @@ cases() {
                 var daysP = daysUntil(tr.plannedDate);
                 var dlDone2 = !!tr.deadlineDone;
                 var plDone2 = !!tr.plannedDone;
-                var deadlineInfo = tr.deadline ? '<span style="font-size:14px;color:#D55E00;display:inline-flex;align-items:center;gap:4px;'+(dlDone2?'opacity:0.5':'')+'"><input type="checkbox" '+(dlDone2?'checked':'')+' onchange="event.stopPropagation();markDeadlineDone(\''+tr.id+'\',\'deadline\')" style="width:13px;height:13px;cursor:pointer;accent-color:#D55E00">🔔 '+fmtDate(tr.deadline)+' '+(dlDone2?'<span style="color:#56a65c">✅'+fmtDate(tr.deadlineDoneDate)+'</span>':daysBadge(days))+'</span>' : '';
-                var plannedInfo = tr.plannedDate ? '<span style="font-size:14px;color:#0EA5B0;display:inline-flex;align-items:center;gap:4px;'+(plDone2?'opacity:0.5':'')+'"><input type="checkbox" '+(plDone2?'checked':'')+' onchange="event.stopPropagation();markDeadlineDone(\''+tr.id+'\',\'planned\')" style="width:13px;height:13px;cursor:pointer;accent-color:#0EA5B0">📋 '+fmtDate(tr.plannedDate)+' '+(plDone2?'<span style="color:#56a65c">✅'+fmtDate(tr.plannedDoneDate)+'</span>':daysBadge(daysP))+'</span>' : '';
+                var deadlineInfo = tr.deadline ? '<span style="font-size:14px;color:#D55E00;display:inline-flex;align-items:center;gap:4px;'+(dlDone2?'opacity:0.5':'')+'"><input type="checkbox" '+(dlDone2?'checked':'')+' onchange="event.stopPropagation();markDeadlineDone(\''+tr.id+'\',\'deadline\')" style="width:13px;height:13px;cursor:pointer;accent-color:#D55E00">⚠️ 提醒日期 '+fmtDate(tr.deadline)+' '+(dlDone2?'<span style="color:#56a65c">✅'+fmtDate(tr.deadlineDoneDate)+'</span>':daysBadge(days))+'</span>' : '';
+                var plannedInfo = tr.plannedDate ? '<span style="font-size:14px;color:#0EA5B0;display:inline-flex;align-items:center;gap:4px;'+(plDone2?'opacity:0.5':'')+'"><input type="checkbox" '+(plDone2?'checked':'')+' onchange="event.stopPropagation();markDeadlineDone(\''+tr.id+'\',\'planned\')" style="width:13px;height:13px;cursor:pointer;accent-color:#0EA5B0">📋 預計完成 '+fmtDate(tr.plannedDate)+' '+(plDone2?'<span style="color:#56a65c">✅'+fmtDate(tr.plannedDoneDate)+'</span>':daysBadge(daysP))+'</span>' : '';
                 var contactInfo = tr.contact ? '<span style="font-size:14px;color:var(--text-3)">👤 '+esc(tr.contact)+(tr.contactPhone?' ☎ '+esc(tr.contactPhone):'')+'</span>' : '';
                 var trackTodos = (tr.todos||[]);
                 var pendingTodos = trackTodos.filter(function(t){return !t.done});
@@ -2401,6 +2401,10 @@ function markDeadlineDone(id, type) {
       tr.plannedDone = !tr.plannedDone;
       tr.plannedDoneDate = tr.plannedDone ? localToday() : '';
     }
+    // 雙向連動：任一完成→另一個也完成；任一取消→另一個也取消
+    var newState = type === 'deadline' ? tr.deadlineDone : tr.plannedDone;
+    if (tr.deadline) { tr.deadlineDone = newState; tr.deadlineDoneDate = newState ? (tr.deadlineDoneDate || localToday()) : ''; }
+    if (tr.plannedDate) { tr.plannedDone = newState; tr.plannedDoneDate = newState ? (tr.plannedDoneDate || localToday()) : ''; }
   } else {
     var c = db.cases.find(function(x){ return x.id === id; });
     if (c) {
@@ -2411,6 +2415,9 @@ function markDeadlineDone(id, type) {
         c.plannedDone = !c.plannedDone;
         c.plannedDoneDate = c.plannedDone ? localToday() : '';
       }
+      var newState2 = type === 'deadline' ? c.deadlineDone : c.plannedDone;
+      if (c.deadline) { c.deadlineDone = newState2; c.deadlineDoneDate = newState2 ? (c.deadlineDoneDate || localToday()) : ''; }
+      if (c.plannedDate) { c.plannedDone = newState2; c.plannedDoneDate = newState2 ? (c.plannedDoneDate || localToday()) : ''; }
     }
   }
   saveData(db);
