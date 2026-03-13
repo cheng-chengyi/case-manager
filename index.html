@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; frame-src https://calendar.google.com; manifest-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1a365d">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,7 +13,9 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>個案管理系統｜勞保・職災・商業保險・勞資爭議</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
 <style>
   :root {
     --navy: #0f1f3d;
@@ -430,6 +434,46 @@ function toggleDlType(type) {
   render();
 }
 
+function openExternal(url) {
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+function getGhToken() {
+  return sessionStorage.getItem('gh_token') || localStorage.getItem('gh_token') || '';
+}
+
+function getGhRepo() {
+  return localStorage.getItem('gh_repo') || 'cheng-chengyi/case-manager';
+}
+
+function clearGhToken() {
+  sessionStorage.removeItem('gh_token');
+  localStorage.removeItem('gh_token');
+  render();
+}
+
+function saveGhSettings() {
+  var tokenEl = document.getElementById('gh-token');
+  var repoEl = document.getElementById('gh-repo');
+  var rememberEl = document.getElementById('gh-remember-token');
+  var token = tokenEl ? tokenEl.value.trim() : '';
+  var repo = repoEl ? repoEl.value.trim() : '';
+  var remember = !!(rememberEl && rememberEl.checked);
+
+  if (!token || !repo) {
+    alert('請輸入 GitHub Token 與 Repository');
+    return;
+  }
+
+  sessionStorage.setItem('gh_token', token);
+  if (remember) localStorage.setItem('gh_token', token);
+  else localStorage.removeItem('gh_token');
+
+  localStorage.setItem('gh_repo', repo);
+  alert(remember ? '✅ 已儲存設定（含此裝置的長期 Token）' : '✅ 已儲存設定（本次瀏覽工作階段）');
+  render();
+}
+
 function loadData() {
   try {
     const s = localStorage.getItem(STORAGE_KEY);
@@ -617,7 +661,7 @@ function renderCaseTable() {
   }
   if (searchQuery) {
     var q = searchQuery.toLowerCase();
-    list = list.filter(function(c){ return c.name.includes(q) || c.id.toLowerCase().includes(q) || c.employer.includes(q) || (c.insuredUnit||'').includes(q) || (c.insurer||'').includes(q); });
+    list = list.filter(function(c){ return c.name.toLowerCase().includes(q) || c.id.toLowerCase().includes(q) || c.employer.toLowerCase().includes(q) || (c.insuredUnit||'').toLowerCase().includes(q) || (c.insurer||'').toLowerCase().includes(q); });
   }
   if (caseSortBy) {
     list = [].concat(list).sort(function(a,b){
@@ -795,7 +839,7 @@ cases() {
   else if (filterStatus) list = list.filter(c => c.status === filterStatus);
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
-    list = list.filter(c => c.name.includes(q) || c.id.toLowerCase().includes(q) || c.employer.includes(q) || (c.insuredUnit||'').includes(q) || (c.insurer||'').includes(q));
+    list = list.filter(c => c.name.includes(q) || c.id.toLowerCase().includes(q) || c.employer.includes(q) || (c.insuredUnit||'').toLowerCase().includes(q) || (c.insurer||'').toLowerCase().includes(q));
   }
   // 排序
   if (caseSortBy) {
@@ -1619,7 +1663,7 @@ gcal() {
   return `<div class="topbar">
     <div class="topbar-title">Google 行事曆</div>
     <div class="topbar-actions">
-      <button class="btn btn-outline btn-sm" onclick="window.open('https://calendar.google.com','_blank')">↗ 開啟 Google 日曆</button>
+      <button class="btn btn-outline btn-sm" onclick="openExternal('https://calendar.google.com')">↗ 開啟 Google 日曆</button>
     </div>
   </div>
   <div class="content">
@@ -1731,9 +1775,9 @@ archive() {
       <div class="card" style="margin-bottom:20px">
         <div class="card-head">☁️ GitHub 雲端同步</div>
         <div class="card-body">
-          ${localStorage.getItem('gh_token') ? `
-          <div style="font-size:14px;color:var(--text-2);margin-bottom:12px">✅ 已設定 Token · <span style="color:var(--text-3)">${localStorage.getItem('gh_repo')||'cheng-chengyi/case-manager'}</span>
-            <button class="btn btn-sm btn-outline" style="margin-left:8px" onclick="localStorage.removeItem('gh_token');render()">重新設定</button>
+          ${getGhToken() ? `
+          <div style="font-size:14px;color:var(--text-2);margin-bottom:12px">✅ 已設定 Token · <span style="color:var(--text-3)">${getGhRepo()}</span>
+            <button class="btn btn-sm btn-outline" style="margin-left:8px" onclick="clearGhToken()">重新設定</button>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <button class="btn btn-gold" onclick="ghPush()" style="width:100%">⬆️ 上傳到雲端</button>
@@ -1745,9 +1789,11 @@ archive() {
           </div>
           <div class="form-grid" style="margin-bottom:12px">
             <div class="field"><label>GitHub Token</label><input type="password" id="gh-token" value="" placeholder="ghp_..." style="font-size:14px"></div>
-            <div class="field"><label>Repository</label><input type="text" id="gh-repo" value="${localStorage.getItem('gh_repo')||'cheng-chengyi/case-manager'}" placeholder="user/repo" style="font-size:14px"></div>
+            <div class="field"><label>Repository</label><input type="text" id="gh-repo" value="${getGhRepo()}" placeholder="user/repo" style="font-size:14px"></div>
           </div>
-          <button class="btn btn-sm btn-outline" onclick="localStorage.setItem('gh_token',document.getElementById('gh-token').value);localStorage.setItem('gh_repo',document.getElementById('gh-repo').value);alert('✅ 已儲存設定');render()" style="margin-bottom:14px">💾 儲存設定</button>
+          <div style="font-size:13px;color:var(--text-3);margin-bottom:8px">建議使用 Fine-grained PAT（僅限此 repo 的 Contents: Read and write）。</div>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-2);margin-bottom:10px"><input id="gh-remember-token" type="checkbox"> 記住 Token 於此裝置（預設僅本次瀏覽）</label>
+          <button class="btn btn-sm btn-outline" onclick="saveGhSettings()" style="margin-bottom:14px">💾 儲存設定</button>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <button class="btn btn-gold" onclick="ghPush()" style="width:100%">⬆️ 上傳到雲端</button>
             <button class="btn btn-outline" onclick="ghPull()" style="width:100%">⬇️ 從雲端下載</button>
@@ -2653,8 +2699,8 @@ function ghStatus(msg, isError) {
 
 // 背景靜默推送（不彈訊息）
 async function ghPushSilent(data) {
-  const token = localStorage.getItem('gh_token');
-  const repo = localStorage.getItem('gh_repo');
+  const token = getGhToken();
+  const repo = getGhRepo();
   if (!token || !repo) return;
   try {
     const payload = { _type:'cloud_sync', _date:new Date().toISOString(), cases:data.cases, tracks:data.tracks, progress:data.progress, todos:data.todos };
@@ -2680,8 +2726,8 @@ async function ghPushSilent(data) {
 
 // 頁面載入自動拉取
 async function ghAutoPull() {
-  const token = localStorage.getItem('gh_token');
-  const repo = localStorage.getItem('gh_repo');
+  const token = getGhToken();
+  const repo = getGhRepo();
   if (!token || !repo) return;
   try {
     const res = await fetch('https://api.github.com/repos/'+repo+'/contents/data.json', { headers:{'Authorization':'Bearer '+token} });
@@ -2777,8 +2823,8 @@ async function ghAutoPull() {
 }
 
 async function ghPush() {
-  const token = localStorage.getItem('gh_token');
-  const repo = localStorage.getItem('gh_repo');
+  const token = getGhToken();
+  const repo = getGhRepo();
   if (!token || !repo) { alert('請先設定 GitHub Token 和 Repository'); return; }
   ghStatus('⏳ 上傳中...');
   try {
@@ -2803,8 +2849,8 @@ async function ghPush() {
 }
 
 async function ghPull() {
-  const token = localStorage.getItem('gh_token');
-  const repo = localStorage.getItem('gh_repo');
+  const token = getGhToken();
+  const repo = getGhRepo();
   if (!token || !repo) { alert('請先設定 GitHub Token 和 Repository'); return; }
   ghStatus('⏳ 下載中...');
   try {
