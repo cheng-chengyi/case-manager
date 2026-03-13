@@ -1415,7 +1415,7 @@ deadlines() {
   });
   (db.todos||[]).filter(t => !t.done && t.subtasks).forEach(t => {
     (t.subtasks||[]).filter(s => !s.done && s.dueDate).forEach(s => {
-      allItems.push({ id:t.id, caseId:t.caseId||'', name:t.title+' › '+s.title, caseType:'待辦細項', date:s.dueDate, note:'', days:daysUntil(s.dueDate), trackName:null, done:false, doneDate:'', dtype:'todo', label:'☑️ 待辦到期', color:'var(--gold)', bg:'rgba(201,168,76,0.06)', isTodo:true });
+      allItems.push({ id:t.id, caseId:t.caseId||'', name:t.title+' › '+s.title, caseType:'待辦事項', date:s.dueDate, note:'', days:daysUntil(s.dueDate), trackName:null, done:false, doneDate:'', dtype:'todo', label:'☑️ 待辦到期', color:'var(--gold)', bg:'rgba(201,168,76,0.06)', isTodo:true });
     });
   });
 
@@ -3169,7 +3169,7 @@ function checkAllReminders() {
           }
         }
       }
-      // 子細項到期日 7 天內
+      // 子待辦到期日 7 天內
       if (t.subtasks) {
         t.subtasks.filter(s => !s.done && s.dueDate).forEach((s,i) => {
           const daysSub = Math.ceil((new Date(s.dueDate) - now) / 86400000);
@@ -3178,13 +3178,13 @@ function checkAllReminders() {
             _reminderShownToday[keySub] = true;
             if (daysSub < 0) {
               alertItems.push({
-                title: '🚨 細項已逾期：' + s.title,
+                title: '🚨 待辦事項已逾期：' + s.title,
                 subtitle: t.title + '・已逾期 ' + Math.abs(daysSub) + ' 天',
                 _type: 'overdue'
               });
             } else {
               alertItems.push({
-                title: '📋 細項即將到期：' + s.title,
+                title: '📋 待辦事項即將到期：' + s.title,
                 subtitle: t.title + '・還剩 ' + daysSub + ' 天',
                 _type: 'deadline'
               });
