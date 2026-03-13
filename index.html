@@ -750,7 +750,7 @@ dashboard() {
               const isDeadline = item.dtype === 'deadline';
               const cls = isDeadline ? (item.days <= 14 ? 'deadline-urgent' : item.days <= 30 ? 'deadline-soon' : 'deadline-ok') : (item.days <= 7 ? 'deadline-soon' : 'deadline-ok');
               const tagColor = isDeadline ? '#D55E00' : '#0EA5B0';
-              const tagIcon = isDeadline ? '⚠️ 截止日期' : '📋 預計完成';
+              const tagIcon = isDeadline ? '🔔 提醒日期' : '📋 預計完成';
               return `<div class="deadline-item ${cls}" onclick="navigate('case-detail','${item.caseId}')" style="cursor:pointer">
                 <div>
                   <div class="deadline-label">${esc(item.name)} <span style="font-size:14px;color:${tagColor};font-weight:700;margin-left:6px">${tagIcon}</span></div>
@@ -1342,7 +1342,7 @@ progress() {
     </div>
     <div style="display:flex;gap:16px;margin-bottom:12px;font-size:14px;color:var(--text-2);flex-wrap:wrap">
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(0,114,178,0.5);margin-right:4px;vertical-align:middle"></span>● 進度紀錄</span>
-      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(213,94,0,0.5);margin-right:4px;vertical-align:middle"></span>⚠️ 截止日期</span>
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(213,94,0,0.5);margin-right:4px;vertical-align:middle"></span>🔔 提醒日期</span>
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(14,165,176,0.5);margin-right:4px;vertical-align:middle"></span>📋 預計完成</span>
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(201,168,76,0.5);margin-right:4px;vertical-align:middle"></span>☑️ 待辦事項</span>
     </div>
@@ -1384,12 +1384,12 @@ deadlines() {
   db.tracks.filter(t => activeCaseIds.has(t.caseId) && t.status !== '已給付' && t.status !== '已調解完成' && t.status !== '撤案').forEach(t => {
     const c = db.cases.find(x => x.id === t.caseId);
     if (!c) return;
-    if (t.deadline) allItems.push({ id:t.id, caseId:t.caseId, name:c.name, caseType:t.type, date:t.deadline, note:t.deadlineNote||t.name, days:daysUntil(t.deadline), trackName:t.name, done:!!t.deadlineDone, doneDate:t.deadlineDoneDate||'', dtype:'deadline', label:'⚠️ 截止日期', color:'#D55E00', bg:'rgba(213,94,0,0.06)' });
+    if (t.deadline) allItems.push({ id:t.id, caseId:t.caseId, name:c.name, caseType:t.type, date:t.deadline, note:t.deadlineNote||t.name, days:daysUntil(t.deadline), trackName:t.name, done:!!t.deadlineDone, doneDate:t.deadlineDoneDate||'', dtype:'deadline', label:'🔔 提醒日期', color:'#D55E00', bg:'rgba(213,94,0,0.06)' });
     if (t.plannedDate) allItems.push({ id:t.id, caseId:t.caseId, name:c.name, caseType:t.type, date:t.plannedDate, note:t.plannedDateNote||t.name, days:daysUntil(t.plannedDate), trackName:t.name, done:!!t.plannedDone, doneDate:t.plannedDoneDate||'', dtype:'planned', label:'📋 預計完成', color:'#0EA5B0', bg:'rgba(14,165,176,0.06)' });
   });
   // 個案層級 fallback
   activeCases.filter(c => c.deadline && !db.tracks.some(t=>t.caseId===c.id&&t.deadline)).forEach(c => {
-    allItems.push({ id:c.id, caseId:c.id, name:c.name, caseType:c.type, date:c.deadline, note:c.deadlineNote||'', days:daysUntil(c.deadline), trackName:null, done:!!c.deadlineDone, doneDate:c.deadlineDoneDate||'', dtype:'deadline', label:'⚠️ 截止日期', color:'#D55E00', bg:'rgba(213,94,0,0.06)' });
+    allItems.push({ id:c.id, caseId:c.id, name:c.name, caseType:c.type, date:c.deadline, note:c.deadlineNote||'', days:daysUntil(c.deadline), trackName:null, done:!!c.deadlineDone, doneDate:c.deadlineDoneDate||'', dtype:'deadline', label:'🔔 提醒日期', color:'#D55E00', bg:'rgba(213,94,0,0.06)' });
   });
   activeCases.filter(c => c.plannedDate && !db.tracks.some(t=>t.caseId===c.id&&t.plannedDate)).forEach(c => {
     allItems.push({ id:c.id, caseId:c.id, name:c.name, caseType:c.type, date:c.plannedDate, note:c.plannedDateNote||'', days:daysUntil(c.plannedDate), trackName:null, done:!!c.plannedDone, doneDate:c.plannedDoneDate||'', dtype:'planned', label:'📋 預計完成', color:'#0EA5B0', bg:'rgba(14,165,176,0.06)' });
@@ -1483,7 +1483,7 @@ deadlines() {
   <div class="content">
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding:10px 14px;background:var(--surface-2);border-radius:10px;align-items:center">
       <span style="font-size:14px;font-weight:600;color:var(--text-2);margin-right:4px">類型：</span>
-      <span onclick="toggleDlType('deadline')" style="font-size:14px;color:#D55E00;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:6px;border:2px solid ${dlTypeFilter==='deadline'?'#D55E00':'transparent'};background:${dlTypeFilter==='deadline'?'rgba(213,94,0,0.1)':'transparent'};transition:all .15s">⚠️ 截止日期</span>
+      <span onclick="toggleDlType('deadline')" style="font-size:14px;color:#D55E00;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:6px;border:2px solid ${dlTypeFilter==='deadline'?'#D55E00':'transparent'};background:${dlTypeFilter==='deadline'?'rgba(213,94,0,0.1)':'transparent'};transition:all .15s">🔔 提醒日期</span>
       <span onclick="toggleDlType('planned')" style="font-size:14px;color:#0EA5B0;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:6px;border:2px solid ${dlTypeFilter==='planned'?'#0EA5B0':'transparent'};background:${dlTypeFilter==='planned'?'rgba(14,165,176,0.1)':'transparent'};transition:all .15s">📋 預計完成</span>
       <span onclick="toggleDlType('remind')" style="font-size:14px;color:#E69F00;font-weight:600;cursor:pointer;padding:3px 10px;border-radius:6px;border:2px solid ${dlTypeFilter==='remind'?'#E69F00':'transparent'};background:${dlTypeFilter==='remind'?'rgba(230,159,0,0.1)':'transparent'};transition:all .15s">🔔 提醒</span>
       <span onclick="toggleDlType('todo')" style="font-size:14px;color:var(--gold);font-weight:600;cursor:pointer;padding:3px 10px;border-radius:6px;border:2px solid ${dlTypeFilter==='todo'?'var(--gold)':'transparent'};background:${dlTypeFilter==='todo'?'rgba(201,168,76,0.1)':'transparent'};transition:all .15s">☑️ 追蹤待辦／待辦到期</span>
@@ -3195,7 +3195,7 @@ function checkAllReminders() {
     });
   }
 
-  // 2) 個案截止日期 — 7天內到期或已逾期
+  // 2) 個案提醒日期 — 7天內到期或已逾期
   const activeTracks = db.tracks.filter(tr => {
     const c = db.cases.find(x => x.id === tr.caseId);
     return c && c.status !== '已給付' && c.status !== '已調解完成' && c.status !== '撤案';
