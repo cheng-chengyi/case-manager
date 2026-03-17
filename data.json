@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-13T03:31:11.585Z",
+  "_date": "2026-03-17T05:50:40.607Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -746,18 +746,11 @@
           "doneDate": "2026-02-26"
         },
         {
-          "title": "等台灣人壽匯款",
-          "dueDate": "2026-03-31",
+          "title": "AAA",
+          "dueDate": "2026-02-27",
           "remind": "",
           "done": false,
           "doneDate": ""
-        },
-        {
-          "title": "已聯絡承辦人李先生",
-          "dueDate": "",
-          "remind": "",
-          "done": true,
-          "doneDate": "2026-03-11"
         }
       ]
     },
@@ -778,11 +771,7 @@
       "note": "",
       "created": "2026-02-20",
       "closedDate": "",
-      "closedNote": "",
-      "deadlineDone": true,
-      "deadlineDoneDate": "2026-03-11",
-      "plannedDone": false,
-      "plannedDoneDate": ""
+      "closedNote": ""
     },
     {
       "id": "TR-1130718_蔡勝綋(車禍腦傷)-2",
@@ -1191,13 +1180,6 @@
         {
           "title": "謝秀敏完成評議申請書",
           "dueDate": "2026-03-20",
-          "remind": "",
-          "done": false,
-          "doneDate": ""
-        },
-        {
-          "title": "等三商美邦人壽申訴駁回寄達",
-          "dueDate": "2026-03-18",
           "remind": "",
           "done": false,
           "doneDate": ""
