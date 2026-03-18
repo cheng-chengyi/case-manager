@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-18T02:21:58.968Z",
+  "_date": "2026-03-18T02:22:03.419Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -673,8 +673,8 @@
           "title": "已送出第1次災保傷病給付",
           "dueDate": "",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-03-18"
         }
       ]
     },
