@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-20T02:13:42.098Z",
+  "_date": "2026-03-20T02:14:27.032Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1990,7 +1990,13 @@
       "remind": "",
       "caseId": "",
       "note": "",
-      "subtasks": [],
+      "subtasks": [
+        {
+          "title": "三商美邦人壽 線上課程 完成初稿",
+          "dueDate": "2026-03-27",
+          "done": false
+        }
+      ],
       "done": false,
       "doneDate": null,
       "created": "2026-03-20"
