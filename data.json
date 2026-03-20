@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-20T02:03:41.286Z",
+  "_date": "2026-03-20T02:03:44.536Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1334,8 +1334,8 @@
           "title": "林秋碧_台灣人壽_寄出申訴函",
           "dueDate": "2026-03-23",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-03-20"
         }
       ],
       "closedDate": "",
