@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-20T01:20:59.927Z",
+  "_date": "2026-03-20T01:30:25.643Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -568,6 +568,26 @@
       "note": "",
       "created": "2026-02-23",
       "updated": "2026-02-23"
+    },
+    {
+      "id": "1141208_高樹根(車禍腦傷)",
+      "type": "車禍處理程序",
+      "name": "高樹根",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "臺灣產險",
+      "accidentDate": "2025-12-08",
+      "status": "審核中",
+      "receiveDate": "2026-03-20",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "note": "王芠晏先生\n\n臺端與本公司所承保之BFV-5395號車發生交通事故，已於本公司受理在案。\n請與本公司理賠經辦王芠晏聯絡，謝謝!電話06-2217-600#212、215，案號156014L02009。",
+      "created": "2026-03-20",
+      "updated": "2026-03-20"
     }
   ],
   "tracks": [
