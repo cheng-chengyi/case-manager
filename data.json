@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-20T23:57:02.149Z",
+  "_date": "2026-03-20T23:57:37.647Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1648,7 +1648,7 @@
     {
       "id": "TR-1121209_余林素娥(車禍)-4",
       "caseId": "1121209_余林素娥(車禍)",
-      "name": "職災保險失能給付_神經失能（複製）",
+      "name": "職災保險失能給付_嗅覺失能_爭議事項審議",
       "type": "職保失能給付",
       "insurer": "勞保局",
       "contact": "",
@@ -1656,11 +1656,13 @@
       "status": "審核中",
       "deadline": "",
       "deadlineNote": "",
-      "plannedDate": "2026-04-30",
+      "plannedDate": "2026-05-31",
       "plannedDateNote": "",
       "note": "",
       "todos": [],
-      "created": "2026-03-21"
+      "created": "2026-03-21",
+      "closedDate": "",
+      "closedNote": ""
     }
   ],
   "progress": [
