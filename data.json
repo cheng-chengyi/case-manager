@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-20T02:09:31.698Z",
+  "_date": "2026-03-20T02:09:58.748Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1138,13 +1138,15 @@
       "contact": "",
       "contactPhone": "",
       "status": "爭議審議",
-      "deadline": "2026-04-30",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-05-31",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
-      "created": "2026-02-20"
+      "created": "2026-02-20",
+      "closedDate": "",
+      "closedNote": ""
     },
     {
       "id": "TR-1120328_毛上瑋(職災墜落)-2",
