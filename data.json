@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-20T02:04:40.603Z",
+  "_date": "2026-03-20T02:05:05.685Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1315,9 +1315,9 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-03-15",
+      "deadline": "",
       "deadlineNote": "",
-      "plannedDate": "2026-03-23",
+      "plannedDate": "2026-04-20",
       "plannedDateNote": "",
       "amount": "",
       "note": "115.03.16 寄出申訴函",
