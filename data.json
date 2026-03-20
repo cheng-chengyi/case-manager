@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-20T02:14:27.032Z",
+  "_date": "2026-03-20T23:51:24.183Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -63,7 +63,7 @@
       "amount": "",
       "note": "",
       "created": "2026-02-19",
-      "updated": "2026-02-19"
+      "updated": "2026-03-21"
     },
     {
       "id": "1140731_張文浩(職災墜落)",
@@ -1628,6 +1628,22 @@
       "created": "2026-03-20",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1121209_余林素娥(車禍)-3",
+      "caseId": "1121209_余林素娥(車禍)",
+      "name": "職災保險失能給付_神經失能",
+      "type": "職保失能給付",
+      "insurer": "勞保局",
+      "contact": "",
+      "contactPhone": "",
+      "status": "審核中",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-04-30",
+      "plannedDateNote": "",
+      "note": "",
+      "created": "2026-03-21"
     }
   ],
   "progress": [
@@ -1938,6 +1954,18 @@
       "date": "2026-03-20",
       "stage": "未申請",
       "desc": "建立追蹤軸：高樹跟訴訟提告調解進度",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0046",
+      "caseId": "1121209_余林素娥(車禍)",
+      "trackId": "TR-1121209_余林素娥(車禍)-3",
+      "date": "2026-03-21",
+      "stage": "審核中",
+      "desc": "建立追蹤軸：職災保險失能給付_神經失能",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
