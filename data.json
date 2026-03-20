@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-20T01:31:33.725Z",
+  "_date": "2026-03-20T01:32:12.124Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -166,9 +166,9 @@
       "plannedDate": "2026-03-12",
       "plannedDateNote": "",
       "amount": "",
-      "note": "",
+      "note": "尚龍翔於115.03.10匯款完成",
       "created": "2026-02-20",
-      "updated": "2026-02-20",
+      "updated": "2026-03-20",
       "archived": true,
       "archivedDate": "2026-03-20"
     },
