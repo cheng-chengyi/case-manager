@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-20T02:09:58.748Z",
+  "_date": "2026-03-20T02:11:30.099Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1982,30 +1982,6 @@
       "done": true,
       "doneDate": "2026-02-26",
       "created": "2026-02-19"
-    },
-    {
-      "id": "T0006",
-      "title": "張文浩_民事訴訟醫療糾紛_新樓醫院",
-      "dueDate": "",
-      "remind": "",
-      "caseId": "1140731_張文浩(職災墜落)",
-      "note": "是否要進行",
-      "subtasks": [
-        {
-          "title": "聯絡當事人的舅媽",
-          "dueDate": "2026-02-23",
-          "done": true
-        },
-        {
-          "title": "先申訴看看",
-          "dueDate": "2026-04-16",
-          "done": false
-        }
-      ],
-      "done": false,
-      "doneDate": null,
-      "created": "2026-02-20",
-      "_notified": true
     }
   ]
 }
