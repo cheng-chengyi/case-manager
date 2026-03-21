@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T01:07:56.138Z",
+  "_date": "2026-03-21T06:06:25.935Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1745,11 +1745,11 @@
       "id": "TR-1140829_梅凱翔(車禍骨骨骨折)-2",
       "caseId": "1140829_梅凱翔(車禍骨骨骨折)",
       "name": "梅凱翔_新光產物賠償",
-      "type": "",
+      "type": "勞保生育給付",
       "insurer": "新光產險",
       "contact": "",
       "contactPhone": "",
-      "status": "未申請",
+      "status": "審核中",
       "deadline": "",
       "deadlineNote": "",
       "plannedDate": "",
@@ -1764,7 +1764,9 @@
           "done": true,
           "doneDate": "2026-03-21"
         }
-      ]
+      ],
+      "closedDate": "",
+      "closedNote": ""
     }
   ],
   "progress": [
