@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T00:58:19.056Z",
+  "_date": "2026-03-21T00:58:26.373Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1417,8 +1417,8 @@
           "title": "確認是否匯款完成",
           "dueDate": "2026-03-06",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-03-21"
         }
       ],
       "deadlineDone": false,
