@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T00:52:51.859Z",
+  "_date": "2026-03-21T00:53:04.409Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1465,7 +1465,7 @@
       "insurer": "國泰人壽",
       "contact": "",
       "contactPhone": "",
-      "status": "未申請",
+      "status": "審核中",
       "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-04-30",
