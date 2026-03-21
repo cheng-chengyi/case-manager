@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T00:57:43.990Z",
+  "_date": "2026-03-21T00:58:05.541Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1420,7 +1420,11 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
+      "plannedDone": false,
+      "plannedDoneDate": ""
     },
     {
       "id": "TR-1131030_曾姿穎(車禍T11骨折)-1",
