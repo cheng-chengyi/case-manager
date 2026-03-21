@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T00:53:39.358Z",
+  "_date": "2026-03-21T00:57:43.990Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1728,6 +1728,22 @@
       "plannedDateNote": "",
       "note": "",
       "created": "2026-03-21"
+    },
+    {
+      "id": "TR-1131030_曾姿穎(車禍T11骨折)-3",
+      "caseId": "1131030_曾姿穎(車禍T11骨折)",
+      "name": "曾姿穎_泰安產物_強制險失能12級爭取至7級",
+      "type": "",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "note": "",
+      "created": "2026-03-21"
     }
   ],
   "progress": [
@@ -2086,6 +2102,18 @@
       "date": "2026-03-21",
       "stage": "未申請",
       "desc": "ＡＡＡ",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0050",
+      "caseId": "1131030_曾姿穎(車禍T11骨折)",
+      "trackId": "TR-1131030_曾姿穎(車禍T11骨折)-3",
+      "date": "2026-03-21",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：曾姿穎_泰安產物_強制險失能12級爭取至7級",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
