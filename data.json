@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T01:07:37.322Z",
+  "_date": "2026-03-21T01:07:56.138Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1755,7 +1755,16 @@
       "plannedDate": "",
       "plannedDateNote": "",
       "note": "",
-      "created": "2026-03-21"
+      "created": "2026-03-21",
+      "todos": [
+        {
+          "title": "強制險醫療給付入帳",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-21"
+        }
+      ]
     }
   ],
   "progress": [
