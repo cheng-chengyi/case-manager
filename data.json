@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T00:01:43.313Z",
+  "_date": "2026-03-21T00:33:42.311Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -147,7 +147,7 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20",
-      "updated": "2026-02-20"
+      "updated": "2026-03-21"
     },
     {
       "id": "1140923_鄭淑惠(車禍)",
@@ -1686,6 +1686,22 @@
       "plannedDateNote": "",
       "note": "",
       "created": "2026-03-21"
+    },
+    {
+      "id": "TR-1130403_楊泰祥(巴金森氏症)-1",
+      "caseId": "1130403_楊泰祥(巴金森氏症)",
+      "name": "勞保失能給付_爭議審議",
+      "type": "",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-04-30",
+      "plannedDateNote": "",
+      "note": "",
+      "created": "2026-03-21"
     }
   ],
   "progress": [
@@ -2020,6 +2036,18 @@
       "date": "2026-03-21",
       "stage": "爭議審議",
       "desc": "建立追蹤軸：林婕愉_勞保失能給付_神經失能",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0048",
+      "caseId": "1130403_楊泰祥(巴金森氏症)",
+      "trackId": "TR-1130403_楊泰祥(巴金森氏症)-1",
+      "date": "2026-03-21",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：勞保失能給付_爭議審議",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
