@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T01:02:38.590Z",
+  "_date": "2026-03-21T01:02:56.723Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1021,7 +1021,16 @@
       "plannedDateNote": "",
       "amount": "",
       "note": "",
-      "created": "2026-02-20"
+      "created": "2026-02-20",
+      "todos": [
+        {
+          "title": "拿取病歷資料",
+          "dueDate": "2026-03-24",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        }
+      ]
     },
     {
       "id": "TR-1140428_楊雅米(車禍腦傷)-3",
