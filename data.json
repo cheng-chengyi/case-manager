@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T01:02:26.806Z",
+  "_date": "2026-03-21T01:02:38.590Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1022,34 +1022,6 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20"
-    },
-    {
-      "id": "TR-1140428_楊雅米(車禍腦傷)-2",
-      "caseId": "1140428_楊雅米(車禍腦傷)",
-      "name": "楊雅米 國泰產險 申請強制險失能給付（複製）",
-      "type": "強制險",
-      "insurer": "國泰產險",
-      "contact": "",
-      "contactPhone": "",
-      "status": "未申請",
-      "deadline": "",
-      "deadlineNote": "準備開立診斷書",
-      "plannedDate": "2026-03-27",
-      "plannedDateNote": "",
-      "amount": "",
-      "note": "",
-      "created": "2026-02-20",
-      "closedDate": "",
-      "closedNote": "",
-      "todos": [
-        {
-          "title": "國泰產物強制險送件",
-          "dueDate": "2026-03-27",
-          "remind": "",
-          "done": false,
-          "doneDate": ""
-        }
-      ]
     },
     {
       "id": "TR-1140428_楊雅米(車禍腦傷)-3",
