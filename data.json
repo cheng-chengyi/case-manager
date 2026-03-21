@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T00:51:48.208Z",
+  "_date": "2026-03-21T00:51:51.791Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1443,15 +1443,15 @@
           "title": "國泰人壽失能給付送件",
           "dueDate": "",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-03-21"
         },
         {
           "title": "國泰人壽失能給付訪視",
           "dueDate": "",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-03-21"
         }
       ]
     },
