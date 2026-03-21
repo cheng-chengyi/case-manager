@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-20T23:57:37.647Z",
+  "_date": "2026-03-21T00:00:05.832Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -191,7 +191,7 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20",
-      "updated": "2026-02-20"
+      "updated": "2026-03-21"
     },
     {
       "id": "1130718_蔡勝綋(車禍腦傷)",
@@ -1663,6 +1663,22 @@
       "created": "2026-03-21",
       "closedDate": "",
       "closedNote": ""
+    },
+    {
+      "id": "TR-1130108_林婕愉(小腦中風)-1",
+      "caseId": "1130108_林婕愉(小腦中風)",
+      "name": "林婕愉_勞保失能給付_神經失能",
+      "type": "勞保失能給付",
+      "insurer": "勞保局",
+      "contact": "",
+      "contactPhone": "",
+      "status": "爭議審議",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-05-31",
+      "plannedDateNote": "",
+      "note": "",
+      "created": "2026-03-21"
     }
   ],
   "progress": [
@@ -1985,6 +2001,18 @@
       "date": "2026-03-21",
       "stage": "審核中",
       "desc": "建立追蹤軸：職災保險失能給付_神經失能",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0047",
+      "caseId": "1130108_林婕愉(小腦中風)",
+      "trackId": "TR-1130108_林婕愉(小腦中風)-1",
+      "date": "2026-03-21",
+      "stage": "爭議審議",
+      "desc": "建立追蹤軸：林婕愉_勞保失能給付_神經失能",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
