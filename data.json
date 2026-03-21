@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-21T01:05:09.256Z",
+  "_date": "2026-03-21T01:07:37.322Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -487,7 +487,7 @@
       "amount": "",
       "note": "",
       "created": "2026-02-23",
-      "updated": "2026-02-23"
+      "updated": "2026-03-21"
     },
     {
       "id": "1140411_莊素珠(肺癌)",
@@ -1740,6 +1740,22 @@
       "plannedDateNote": "",
       "note": "",
       "created": "2026-03-21"
+    },
+    {
+      "id": "TR-1140829_梅凱翔(車禍骨骨骨折)-2",
+      "caseId": "1140829_梅凱翔(車禍骨骨骨折)",
+      "name": "梅凱翔_新光產物賠償",
+      "type": "",
+      "insurer": "新光產險",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "note": "",
+      "created": "2026-03-21"
     }
   ],
   "progress": [
@@ -2110,6 +2126,18 @@
       "date": "2026-03-21",
       "stage": "未申請",
       "desc": "建立追蹤軸：曾姿穎_泰安產物_強制險失能12級爭取至7級",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0051",
+      "caseId": "1140829_梅凱翔(車禍骨骨骨折)",
+      "trackId": "TR-1140829_梅凱翔(車禍骨骨骨折)-2",
+      "date": "2026-03-21",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：梅凱翔_新光產物賠償",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
