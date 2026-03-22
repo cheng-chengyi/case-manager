@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-22T01:57:08.192Z",
+  "_date": "2026-03-22T01:57:48.091Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -445,7 +445,7 @@
       "amount": "",
       "note": "",
       "created": "2026-02-23",
-      "updated": "2026-02-23"
+      "updated": "2026-03-22"
     },
     {
       "id": "1140504_林秋碧(直腸癌併腦轉移)",
@@ -1796,6 +1796,22 @@
           "doneDate": ""
         }
       ]
+    },
+    {
+      "id": "TR-1140912_蘇紹華(免疫系統)-2",
+      "caseId": "1140912_蘇紹華(免疫系統)",
+      "name": "蘇紹華 評議申進度",
+      "type": "失能險",
+      "insurer": "台灣人壽",
+      "contact": "",
+      "contactPhone": "",
+      "status": "評議中",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-06-30",
+      "plannedDateNote": "",
+      "note": "",
+      "created": "2026-03-22"
     }
   ],
   "progress": [
@@ -2190,6 +2206,18 @@
       "date": "2026-03-22",
       "stage": "未申請",
       "desc": "建立追蹤軸：鄞家府 評議申進度",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0053",
+      "caseId": "1140912_蘇紹華(免疫系統)",
+      "trackId": "TR-1140912_蘇紹華(免疫系統)-2",
+      "date": "2026-03-22",
+      "stage": "評議中",
+      "desc": "建立追蹤軸：蘇紹華 評議申進度",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
