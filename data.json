@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-22T01:33:43.829Z",
+  "_date": "2026-03-22T01:33:46.961Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -612,7 +612,9 @@
       "note": "",
       "created": "2026-02-12",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-03-22"
     },
     {
       "id": "TR-1141226_陳佳慧(乳癌)-1",
