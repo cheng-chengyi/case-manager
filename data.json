@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-27T01:13:19.559Z",
+  "_date": "2026-03-27T01:13:23.610Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1273,8 +1273,8 @@
           "title": "謝秀敏完成評議申請書，已於115.03.23寄出",
           "dueDate": "2026-03-20",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-03-27"
         }
       ],
       "deadlineDone": true,
