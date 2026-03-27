@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-27T14:23:38.994Z",
+  "_date": "2026-03-27T14:24:40.512Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -150,6 +150,29 @@
       "updated": "2026-02-23"
     },
     {
+      "id": "1140923_鄭淑惠(車禍)",
+      "type": "車禍處理程序",
+      "name": "鄭淑惠",
+      "phone": "",
+      "employer": "",
+      "insuredUnit": "",
+      "address": "",
+      "insurer": "",
+      "accidentDate": "2025-09-23",
+      "status": "已調解完成",
+      "receiveDate": "2026-02-20",
+      "deadline": "2026-02-12",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-12",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "updated": "2026-02-20",
+      "archived": true,
+      "archivedDate": "2026-03-20"
+    },
+    {
       "id": "1130108_林婕愉(小腦中風)",
       "type": "勞保失能給付",
       "name": "林婕愉",
@@ -252,7 +275,9 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20",
-      "updated": "2026-02-24"
+      "updated": "2026-02-24",
+      "archived": true,
+      "archivedDate": "2026-03-20"
     },
     {
       "id": "1140428_楊雅米(車禍腦傷)",
@@ -549,27 +574,6 @@
       "updated": "2026-02-23"
     },
     {
-      "id": "1140923_鄭淑惠(車禍)",
-      "type": "車禍處理程序",
-      "name": "鄭淑惠",
-      "phone": "",
-      "employer": "",
-      "insuredUnit": "",
-      "address": "",
-      "insurer": "",
-      "accidentDate": "2025-09-23",
-      "status": "已調解完成",
-      "receiveDate": "2026-02-20",
-      "deadline": "2026-02-12",
-      "deadlineNote": "",
-      "plannedDate": "2026-03-12",
-      "plannedDateNote": "",
-      "amount": "",
-      "note": "",
-      "created": "2026-02-20",
-      "updated": "2026-02-20"
-    },
-    {
       "id": "1141208_高樹根(車禍腦傷)",
       "type": "車禍處理程序",
       "name": "高樹根",
@@ -607,6 +611,10 @@
       "amount": "",
       "note": "",
       "created": "2026-02-12",
+      "closedDate": "",
+      "closedNote": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-03-22",
       "deadlineDone": false,
       "deadlineDoneDate": ""
     },
@@ -628,6 +636,15 @@
       "created": "2026-02-13",
       "closedDate": "",
       "closedNote": "",
+      "todos": [
+        {
+          "title": "安達產物第1次照會",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-20"
+        }
+      ],
       "deadlineDone": false,
       "deadlineDoneDate": ""
     },
@@ -689,6 +706,29 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20",
+      "todos": [
+        {
+          "title": "已送出勞保局意見信箱",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-18"
+        },
+        {
+          "title": "已送出第1次災保傷病給付",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-18"
+        },
+        {
+          "title": "已送出第2次災保傷病給付",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-21"
+        }
+      ],
       "deadlineDone": false,
       "deadlineDoneDate": ""
     },
@@ -710,6 +750,36 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": "",
+      "todos": [
+        {
+          "title": "已送出勞保局意見信箱",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-18"
+        },
+        {
+          "title": "已送出第1次災保失能給付_切除膀胱",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-18"
+        },
+        {
+          "title": "已送出第2次災保失能給付_輕便工作",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-21"
+        },
+        {
+          "title": "預計職保失能給付切除膀胱匯款",
+          "dueDate": "2026-03-27",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        }
+      ],
       "deadlineDone": false,
       "deadlineDoneDate": ""
     },
@@ -783,12 +853,37 @@
         }
       ],
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-03-27"
     },
     {
-      "id": "TR-1130718_蔡勝綋(車禍腦傷)-1",
+      "id": "TR-1140923_鄭淑惠(車禍)-1",
+      "caseId": "1140923_鄭淑惠(車禍)",
+      "name": "對造_尚龍翔_賠償12,000元",
+      "type": "車禍處理程序",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "已調解完成",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-12",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "closedDate": "",
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-03-20"
+    },
+    {
+      "id": "TR-1130718_蔡勝綋(車禍腦傷)-2",
       "caseId": "1130718_蔡勝綋(車禍腦傷)",
-      "name": "蔡勝綋_新光產物_駕駛人傷害險+意外險",
+      "name": "蔡勝綋_新光產物_意外險+駕駛人傷害險",
       "type": "意外險",
       "insurer": "新光產險",
       "contact": "",
@@ -803,17 +898,26 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": "",
+      "plannedDone": false,
+      "plannedDoneDate": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "todos": [
         {
-          "title": "蔡勝綋_新光產物_意外險+駕傷險_申訴函",
+          "title": "寄出申訴函",
           "dueDate": "2026-03-02",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-07"
+        },
+        {
+          "title": "申訴函確認是否駁回",
+          "dueDate": "2026-04-03",
           "remind": "",
           "done": false,
           "doneDate": ""
         }
-      ],
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
+      ]
     },
     {
       "id": "TR-1130718_蔡勝綋(車禍腦傷)-3",
@@ -952,6 +1056,31 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20",
+      "todos": [
+        {
+          "title": "拿取病歷資料",
+          "dueDate": "2026-03-24",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-27"
+        },
+        {
+          "title": "楊雅米_強制險失能給付_送件",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-27"
+        },
+        {
+          "title": "楊雅米_強制險失能給付_核定",
+          "dueDate": "2026-04-30",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        }
+      ],
+      "closedDate": "",
+      "closedNote": "",
       "deadlineDone": false,
       "deadlineDoneDate": ""
     },
@@ -1029,6 +1158,8 @@
           "doneDate": ""
         }
       ],
+      "closedDate": "",
+      "closedNote": "",
       "deadlineDone": false,
       "deadlineDoneDate": ""
     },
@@ -1048,6 +1179,8 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20",
+      "closedDate": "",
+      "closedNote": "",
       "deadlineDone": false,
       "deadlineDoneDate": ""
     },
@@ -1089,6 +1222,8 @@
       "amount": "",
       "note": "",
       "created": "2026-02-23",
+      "closedDate": "",
+      "closedNote": "",
       "deadlineDone": false,
       "deadlineDoneDate": ""
     },
@@ -1111,6 +1246,8 @@
       "created": "2026-02-23",
       "closedDate": "",
       "closedNote": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-03-17",
       "deadlineDone": false,
       "deadlineDoneDate": ""
     },
@@ -1175,7 +1312,11 @@
         }
       ],
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-03-27",
+      "closedDate": "",
+      "closedNote": ""
     },
     {
       "id": "TR-1140912_蘇紹華(免疫系統)-1",
@@ -1204,34 +1345,6 @@
         {
           "title": "蘇紹華_台灣人壽_評議申請書",
           "dueDate": "2026-04-30",
-          "remind": "",
-          "done": false,
-          "doneDate": ""
-        }
-      ],
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
-    },
-    {
-      "id": "TR-1140731_張文浩(職災墜落)-3",
-      "caseId": "1140731_張文浩(職災墜落)",
-      "name": "確認張文浩勞動能力減損 ",
-      "type": "職災補償賠償",
-      "insurer": "",
-      "contact": "",
-      "contactPhone": "",
-      "status": "未申請",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "2026-05-31",
-      "plannedDateNote": "",
-      "amount": "",
-      "note": "",
-      "created": "2026-02-23",
-      "todos": [
-        {
-          "title": "佳里奇美醫院復健科_看診及災保失能診斷書",
-          "dueDate": "2026-02-24",
           "remind": "",
           "done": false,
           "doneDate": ""
@@ -1275,35 +1388,9 @@
       "closedDate": "",
       "closedNote": "",
       "deadlineDone": false,
-      "deadlineDoneDate": ""
-    },
-    {
-      "id": "TR-1140731_張文浩(職災墜落)-4",
-      "caseId": "1140731_張文浩(職災墜落)",
-      "name": "張文浩_民事訴訟醫療糾紛_新樓醫院 ",
-      "type": "醫療險",
-      "insurer": "",
-      "contact": "",
-      "contactPhone": "",
-      "status": "未申請",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "",
-      "plannedDateNote": "",
-      "amount": "",
-      "note": "",
-      "created": "2026-02-23",
-      "todos": [
-        {
-          "title": "是否要委任律師?",
-          "dueDate": "2026-03-01",
-          "remind": "",
-          "done": false,
-          "doneDate": ""
-        }
-      ],
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-03-20"
     },
     {
       "id": "TR-1140829_梅凱翔(車禍骨骨骨折)-1",
@@ -1349,8 +1436,28 @@
       "amount": "",
       "note": "",
       "created": "2026-02-23",
+      "todos": [
+        {
+          "title": "聯絡承辦人",
+          "dueDate": "2026-03-02",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-02-28"
+        },
+        {
+          "title": "確認是否匯款完成",
+          "dueDate": "2026-03-06",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-21"
+        }
+      ],
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "plannedDone": false,
+      "plannedDoneDate": "",
+      "closedDate": "",
+      "closedNote": ""
     },
     {
       "id": "TR-1131030_曾姿穎(車禍T11骨折)-1",
@@ -1368,6 +1475,24 @@
       "amount": "",
       "note": "",
       "created": "2026-02-23",
+      "todos": [
+        {
+          "title": "國泰人壽失能給付送件",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-21"
+        },
+        {
+          "title": "國泰人壽失能給付訪視",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-03-21"
+        }
+      ],
+      "closedDate": "",
+      "closedNote": "",
       "deadlineDone": false,
       "deadlineDoneDate": ""
     },
@@ -1443,83 +1568,32 @@
       "deadlineDoneDate": ""
     },
     {
-      "id": "TR-1130626_黃嬋妃(連枷胸)-1",
-      "caseId": "1130626_黃嬋妃(連枷胸)",
-      "name": "黃蟬妃_高雄長庚神經內科門診",
-      "type": "意外險",
+      "id": "TR-1140731_張文浩(職災墜落)-3",
+      "caseId": "1140731_張文浩(職災墜落)",
+      "name": "確認張文浩勞動能力減損 ",
+      "type": "職災補償賠償",
       "insurer": "",
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
       "deadline": "",
       "deadlineNote": "",
-      "plannedDate": "2026-03-16",
+      "plannedDate": "2026-05-31",
       "plannedDateNote": "",
-      "amount": "",
       "note": "",
-      "created": "2026-02-24",
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
-    },
-    {
-      "id": "TR-1140923_鄭淑惠(車禍)-1",
-      "caseId": "1140923_鄭淑惠(車禍)",
-      "name": "對造_尚龍翔_賠償12,000元",
-      "type": "車禍處理程序",
-      "insurer": "",
-      "contact": "",
-      "contactPhone": "",
-      "status": "已調解完成",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "2026-03-12",
-      "plannedDateNote": "",
-      "amount": "",
-      "note": "",
-      "created": "2026-02-20",
-      "closedDate": "",
-      "closedNote": "",
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
-    },
-    {
-      "id": "TR-1130718_蔡勝綋(車禍腦傷)-2",
-      "caseId": "1130718_蔡勝綋(車禍腦傷)",
-      "name": "蔡勝綋_新光產物_意外險+駕駛人傷害險",
-      "type": "意外險",
-      "insurer": "新光產險",
-      "contact": "",
-      "contactPhone": "",
-      "status": "已拒賠",
-      "deadline": "",
-      "deadlineNote": "",
-      "plannedDate": "2026-08-31",
-      "plannedDateNote": "",
-      "amount": "",
-      "note": "",
-      "created": "2026-02-20",
-      "closedDate": "",
-      "closedNote": "",
-      "plannedDone": false,
-      "plannedDoneDate": "",
-      "deadlineDone": false,
-      "deadlineDoneDate": "",
+      "created": "2026-02-23",
       "todos": [
         {
-          "title": "寄出申訴函",
-          "dueDate": "2026-03-02",
-          "remind": "",
-          "done": true,
-          "doneDate": "2026-03-07"
-        },
-        {
-          "title": "申訴函確認是否駁回",
-          "dueDate": "2026-04-03",
+          "title": "佳里奇美醫院復健科_看診及災保失能診斷書",
+          "dueDate": "2026-02-24",
           "remind": "",
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
+      "amount": ""
     },
     {
       "id": "TR-1141208_高樹根(車禍腦傷)-1",
@@ -1831,6 +1905,83 @@
       ],
       "deadlineDone": false,
       "deadlineDoneDate": ""
+    },
+    {
+      "id": "TR-1130718_蔡勝綋(車禍腦傷)-1",
+      "caseId": "1130718_蔡勝綋(車禍腦傷)",
+      "name": "蔡勝綋_新光產物_駕駛人傷害險+意外險",
+      "type": "意外險",
+      "insurer": "新光產險",
+      "contact": "",
+      "contactPhone": "",
+      "status": "已拒賠",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-08-31",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
+      "closedDate": "",
+      "closedNote": "",
+      "todos": [
+        {
+          "title": "蔡勝綋_新光產物_意外險+駕傷險_申訴函",
+          "dueDate": "2026-03-02",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        }
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
+    },
+    {
+      "id": "TR-1140731_張文浩(職災墜落)-4",
+      "caseId": "1140731_張文浩(職災墜落)",
+      "name": "張文浩_民事訴訟醫療糾紛_新樓醫院 ",
+      "type": "醫療險",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-23",
+      "todos": [
+        {
+          "title": "是否要委任律師?",
+          "dueDate": "2026-03-01",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        }
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
+    },
+    {
+      "id": "TR-1130626_黃嬋妃(連枷胸)-1",
+      "caseId": "1130626_黃嬋妃(連枷胸)",
+      "name": "黃蟬妃_高雄長庚神經內科門診",
+      "type": "意外險",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-16",
+      "plannedDateNote": "",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-24",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     }
   ],
   "progress": [
@@ -1907,12 +2058,12 @@
       "note": ""
     },
     {
-      "id": "P0023",
-      "caseId": "1130718_蔡勝綋(車禍腦傷)",
-      "trackId": "TR-1130718_蔡勝綋(車禍腦傷)-1",
+      "id": "P0022",
+      "caseId": "1140923_鄭淑惠(車禍)",
+      "trackId": "TR-1140923_鄭淑惠(車禍)-1",
       "date": "2026-02-20",
-      "stage": "審核中",
-      "desc": "建立追蹤軸：蔡勝綋_新光產物_駕駛人傷害險",
+      "stage": "已調解完成",
+      "desc": "建立追蹤軸：對造_尚龍翔_賠償12,000元",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
@@ -2051,36 +2202,12 @@
       "note": ""
     },
     {
-      "id": "P0036",
-      "caseId": "1140731_張文浩(職災墜落)",
-      "trackId": "TR-1140731_張文浩(職災墜落)-3",
-      "date": "2026-02-23",
-      "stage": "未申請",
-      "desc": "建立追蹤軸：確認張文浩勞動能力減損 ",
-      "sendRecv": "",
-      "nextStep": "",
-      "nextDate": "",
-      "note": ""
-    },
-    {
       "id": "P0037",
       "caseId": "1140504_林秋碧(直腸癌併腦轉移)",
       "trackId": "TR-1140504_林秋碧(直腸癌併腦轉移)-1",
       "date": "2026-02-23",
       "stage": "未申請",
       "desc": "建立追蹤軸：林秋碧_台灣人壽申訴函",
-      "sendRecv": "",
-      "nextStep": "",
-      "nextDate": "",
-      "note": ""
-    },
-    {
-      "id": "P0038",
-      "caseId": "1140731_張文浩(職災墜落)",
-      "trackId": "TR-1140731_張文浩(職災墜落)-4",
-      "date": "2026-02-23",
-      "stage": "未申請",
-      "desc": "建立追蹤軸：張文浩_民事訴訟醫療糾紛_新樓醫院 ",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
@@ -2141,18 +2268,6 @@
       "date": "2026-02-24",
       "stage": "未申請",
       "desc": "建立追蹤軸：黃蟬妃_高雄長庚神經內科門診",
-      "sendRecv": "",
-      "nextStep": "",
-      "nextDate": "",
-      "note": ""
-    },
-    {
-      "id": "P0022",
-      "caseId": "1140923_鄭淑惠(車禍)",
-      "trackId": "TR-1140923_鄭淑惠(車禍)-1",
-      "date": "2026-02-20",
-      "stage": "已調解完成",
-      "desc": "建立追蹤軸：對造_尚龍翔_賠償12,000元",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
@@ -2289,6 +2404,42 @@
       "nextStep": "",
       "nextDate": "",
       "note": ""
+    },
+    {
+      "id": "P0023",
+      "caseId": "1130718_蔡勝綋(車禍腦傷)",
+      "trackId": "TR-1130718_蔡勝綋(車禍腦傷)-1",
+      "date": "2026-02-20",
+      "stage": "審核中",
+      "desc": "建立追蹤軸：蔡勝綋_新光產物_駕駛人傷害險",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0036",
+      "caseId": "1140731_張文浩(職災墜落)",
+      "trackId": "TR-1140731_張文浩(職災墜落)-3",
+      "date": "2026-02-23",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：確認張文浩勞動能力減損 ",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0038",
+      "caseId": "1140731_張文浩(職災墜落)",
+      "trackId": "TR-1140731_張文浩(職災墜落)-4",
+      "date": "2026-02-23",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：張文浩_民事訴訟醫療糾紛_新樓醫院 ",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
     }
   ],
   "todos": [
@@ -2331,18 +2482,6 @@
       "created": "2026-02-19"
     },
     {
-      "id": "T0007",
-      "title": "調整GCP到美國地區",
-      "dueDate": "2026-05-10",
-      "remind": "",
-      "caseId": "",
-      "note": "",
-      "subtasks": [],
-      "done": false,
-      "doneDate": null,
-      "created": "2026-02-23"
-    },
-    {
       "id": "T0005",
       "title": "三商美邦人壽 線上課程錄影",
       "dueDate": "2026-04-22",
@@ -2359,6 +2498,18 @@
       "done": false,
       "doneDate": null,
       "created": "2026-03-20"
+    },
+    {
+      "id": "T0007",
+      "title": "調整GCP到美國地區",
+      "dueDate": "2026-05-10",
+      "remind": "",
+      "caseId": "",
+      "note": "",
+      "subtasks": [],
+      "done": false,
+      "doneDate": null,
+      "created": "2026-02-23"
     }
   ]
 }
