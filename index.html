@@ -2384,10 +2384,7 @@ function openAddTrackTodo(trackId) {
   openFormModal('新增追蹤軸待辦', `
     <div style="display:flex;flex-direction:column;gap:12px">
       <div class="field"><label>待辦內容 *</label><input type="text" id="ttt-title" placeholder="輸入待辦事項..."></div>
-      <div class="form-grid">
-        <div class="field"><label>提醒日期</label><input type="date" id="ttt-remind"></div>
-        <div class="field"><label>到期日</label><input type="date" id="ttt-due"></div>
-      </div>
+      <div class="field"><label>到期日</label><input type="date" id="ttt-due"></div>
     </div>
   `, function() {
     var title = document.getElementById('ttt-title').value.trim();
@@ -2398,7 +2395,7 @@ function openAddTrackTodo(trackId) {
     tr.todos.push({
       title: title,
       dueDate: document.getElementById('ttt-due').value,
-      remind: document.getElementById('ttt-remind').value,
+      remind: '',
       done: false, doneDate: ''
     });
     saveData(db);
@@ -2416,16 +2413,12 @@ function openEditTrackTodo(trackId, idx) {
   var todo = tr.todos[idx];
   openFormModal('編輯追蹤軸待辦', '<div style="display:flex;flex-direction:column;gap:12px">'
     + '<div class="field"><label>待辦內容 *</label><input type="text" id="ttt-title" value="'+esc(todo.title)+'"></div>'
-    + '<div class="form-grid">'
-    + '<div class="field"><label>提醒日期</label><input type="date" id="ttt-remind" value="'+(todo.remind||'')+'"></div>'
     + '<div class="field"><label>到期日</label><input type="date" id="ttt-due" value="'+(todo.dueDate||'')+'"></div>'
-    + '</div>'
     + '</div>', function() {
     var title = document.getElementById('ttt-title').value.trim();
     if (!title) { alert('請輸入待辦內容！'); return false; }
     todo.title = title;
     todo.dueDate = document.getElementById('ttt-due').value;
-    todo.remind = document.getElementById('ttt-remind').value;
     saveData(db);
     return true;
   });
