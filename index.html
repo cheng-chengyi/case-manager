@@ -2690,49 +2690,37 @@ async function ghAutoPull() {
       saveData(db);
     }
     var changed = false;
-    var addedCases = 0, addedTracks = 0, addedProgress = 0, addedTodos = 0;
-    // 1. 合併個案：雲端有但本機沒有的加入
-    var localCaseIds = new Set(localCases.map(function(c){ return c.id; }));
+    var addedCases = 0, updatedCases = 0, addedTracks = 0, addedProgress = 0, addedTodos = 0;
+    // 1. 合併個案：新增 + 更新
+    var localCaseMap = {}; localCases.forEach(function(c){ localCaseMap[c.id] = c; });
     var remoteCaseIds = new Set(remoteCases.map(function(c){ return c.id; }));
-    var newCases = remoteCases.filter(function(c){ return !localCaseIds.has(c.id); });
-    if (newCases.length > 0) {
-      db.cases = localCases.concat(newCases);
-      addedCases = newCases.length;
-      changed = true;
-    } else {
-      db.cases = localCases;
-    }
-    // 2. 逐筆合併 tracks（用 id 去重）
-    var localTrackIds = new Set((db.tracks||[]).map(function(t){ return t.id; }));
+    remoteCases.forEach(function(c) {
+      if (!localCaseMap[c.id]) { localCases.push(c); addedCases++; changed = true; }
+      else { Object.assign(localCaseMap[c.id], c); updatedCases++; changed = true; }
+    });
+    db.cases = localCases;
+    // 2. 合併 tracks：新增 + 更新
+    var localTrackMap = {}; (db.tracks||[]).forEach(function(t){ localTrackMap[t.id] = t; });
     var remoteTracks = (remote.tracks||[]).filter(function(t){ return !EXCLUDED_IDS.has(t.caseId); });
     remoteTracks.forEach(function(t) {
-      if (t.id && !localTrackIds.has(t.id)) {
-        db.tracks.push(t);
-        addedTracks++;
-        changed = true;
-      }
+      if (t.id && !localTrackMap[t.id]) { db.tracks.push(t); addedTracks++; changed = true; }
+      else if (t.id) { Object.assign(localTrackMap[t.id], t); changed = true; }
     });
-    // 3. 逐筆合併 progress（用 id 或 caseId+date+stage 去重）
-    var localProgressKeys = new Set((db.progress||[]).map(function(p){ return p.id || (p.caseId+p.date+p.stage); }));
+    // 3. 合併 progress：新增 + 更新
+    var localProgressMap = {}; (db.progress||[]).forEach(function(p){ var k = p.id || (p.caseId+p.date+p.stage); localProgressMap[k] = p; });
     var remoteProgress = (remote.progress||[]).filter(function(p){ return !EXCLUDED_IDS.has(p.caseId); });
     remoteProgress.forEach(function(p) {
       var key = p.id || (p.caseId+p.date+p.stage);
-      if (!localProgressKeys.has(key)) {
-        db.progress.push(p);
-        addedProgress++;
-        changed = true;
-      }
+      if (!localProgressMap[key]) { db.progress.push(p); addedProgress++; changed = true; }
+      else { Object.assign(localProgressMap[key], p); changed = true; }
     });
-    // 4. 逐筆合併 todos（用 id 去重）
+    // 4. 合併 todos：新增 + 更新
     if (!db.todos) db.todos = [];
-    var localTodoIds = new Set(db.todos.map(function(t){ return t.id; }));
+    var localTodoMap = {}; db.todos.forEach(function(t){ if(t.id) localTodoMap[t.id] = t; });
     var remoteTodos = (remote.todos||[]).filter(function(t){ return !EXCLUDED_IDS.has(t.caseId); });
     remoteTodos.forEach(function(t) {
-      if (t.id && !localTodoIds.has(t.id)) {
-        db.todos.push(t);
-        addedTodos++;
-        changed = true;
-      }
+      if (t.id && !localTodoMap[t.id]) { db.todos.push(t); addedTodos++; changed = true; }
+      else if (t.id) { Object.assign(localTodoMap[t.id], t); changed = true; }
     });
     // 儲存並顯示結果
     if (changed) {
