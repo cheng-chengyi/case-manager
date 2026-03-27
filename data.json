@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-27T03:27:43.878Z",
+  "_date": "2026-03-27T03:39:59.961Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1026,10 +1026,10 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-03-09",
-      "deadlineNote": "準備開立診斷書",
-      "plannedDate": "2026-03-27",
-      "plannedDateNote": "",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-04-30",
+      "plannedDateNote": "準備開立診斷書",
       "amount": "",
       "note": "",
       "created": "2026-02-20",
@@ -1055,7 +1055,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "closedDate": "",
+      "closedNote": ""
     },
     {
       "id": "TR-1140428_楊雅米(車禍腦傷)-3",
