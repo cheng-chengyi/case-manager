@@ -2247,17 +2247,11 @@ function openAddTrack(caseId) {
     <div class="form-grid">
       <div class="field"><label>承辦人電話</label><input type="text" id="ft-contact-phone" placeholder="分機或手機"></div>
     </div>
-    <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
-      <div style="font-size:14px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
+    <div style="margin-top:12px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
+      <div style="font-size:14px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期</div>
       <div class="form-grid">
-        <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" placeholder="如：勞保局補件截止"></div>
-      </div>
-      <div style="border-top:1px dashed rgba(213,94,0,0.2);margin-top:10px;padding-top:10px">
-        <div class="form-grid">
-          <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-          <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" placeholder="如：預計備妥文件"></div>
-        </div>
+        <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" placeholder="如：勞保局補件截止"></div>
       </div>
     </div>
     <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note"></div>
@@ -2271,8 +2265,8 @@ function openAddTrack(caseId) {
       contact: document.getElementById('ft-contact').value,
       contactPhone: document.getElementById('ft-contact-phone').value,
       status: document.getElementById('ft-status').value,
-      deadline: document.getElementById('ft-deadline').value,
-      deadlineNote: document.getElementById('ft-deadline-note').value,
+      deadline: '',
+      deadlineNote: '',
       plannedDate: document.getElementById('ft-planned').value,
       plannedDateNote: document.getElementById('ft-planned-note').value,
       note: document.getElementById('ft-note').value,
@@ -2345,17 +2339,11 @@ function openEditTrack(trackId) {
     <div class="form-grid">
       <div class="field"><label>承辦人電話</label><input type="text" id="ft-contact-phone" value="${esc(tr.contactPhone||'')}" placeholder="分機或手機"></div>
     </div>
-    <div style="margin-top:12px;padding:12px 14px;background:rgba(213,94,0,0.04);border:1px solid rgba(213,94,0,0.2);border-radius:8px">
-      <div style="font-size:14px;font-weight:700;color:#D55E00;margin-bottom:10px">🔔 提醒日期</div>
+    <div style="margin-top:12px;padding:12px 14px;background:rgba(14,165,176,0.04);border:1px solid rgba(14,165,176,0.2);border-radius:8px">
+      <div style="font-size:14px;font-weight:700;color:#0EA5B0;margin-bottom:10px">📋 預計完成日期</div>
       <div class="form-grid">
-        <div class="field"><label>提醒日期</label><input type="date" id="ft-deadline" value="${tr.deadline||''}" onchange="var h=document.getElementById('hint-ft-deadline');if(h)h.textContent=rocHint('ft-deadline');"><div id="hint-ft-deadline" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-        <div class="field"><label>提醒說明</label><input type="text" id="ft-deadline-note" value="${esc(tr.deadlineNote||'')}"></div>
-      </div>
-      <div style="border-top:1px dashed rgba(213,94,0,0.2);margin-top:10px;padding-top:10px">
-        <div class="form-grid">
-          <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
-          <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" value="${esc(tr.plannedDateNote||'')}"></div>
-        </div>
+        <div class="field"><label>預計完成日期</label><input type="date" id="ft-planned" value="${tr.plannedDate||''}" onchange="var h=document.getElementById('hint-ft-planned');if(h)h.textContent=rocHint('ft-planned');"><div id="hint-ft-planned" style="font-size:14px;color:#0EA5B0;margin-top:3px;font-weight:600;min-height:16px"></div></div>
+        <div class="field"><label>預計完成說明</label><input type="text" id="ft-planned-note" value="${esc(tr.plannedDateNote||tr.deadlineNote||'')}"></div>
       </div>
     </div>
     <div class="field" style="margin-top:12px"><label>備註</label><input type="text" id="ft-note" value="${esc(tr.note||'')}"></div>
@@ -2370,8 +2358,8 @@ function openEditTrack(trackId) {
     tr.status = document.getElementById('ft-status').value;
     var tcd = document.getElementById('ft-closed-date'); if (tcd) tr.closedDate = tcd.value || '';
     var tcn = document.getElementById('ft-closed-note'); if (tcn) tr.closedNote = tcn.value || '';
-    tr.deadline = document.getElementById('ft-deadline').value;
-    tr.deadlineNote = document.getElementById('ft-deadline-note').value;
+    tr.deadline = '';
+    tr.deadlineNote = '';
     tr.plannedDate = document.getElementById('ft-planned').value;
     tr.plannedDateNote = document.getElementById('ft-planned-note').value;
     tr.note = document.getElementById('ft-note').value;
@@ -2560,7 +2548,7 @@ function openFormModal(title, body, onConfirm) {
   document.body.appendChild(overlay);
   window._modalConfirm = onConfirm;
   setTimeout(() => {
-    ['f-accident','f-receive','f-deadline','f-planned','fp-date','fp-next-date','ft-deadline','ft-planned','f-closed-date','ft-closed-date'].forEach(function(id) {
+    ['f-accident','f-receive','f-deadline','f-planned','fp-date','fp-next-date','ft-planned','f-closed-date','ft-closed-date'].forEach(function(id) {
       var el = document.getElementById(id);
       var hint = document.getElementById('hint-'+id);
       if (el && hint && el.value) hint.textContent = rocHint(id);
