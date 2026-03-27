@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-27T01:12:12.479Z",
+  "_date": "2026-03-27T01:12:30.227Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1276,7 +1276,11 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": true,
+      "deadlineDoneDate": "2026-03-27",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-03-27"
     },
     {
       "id": "TR-1140912_蘇紹華(免疫系統)-1",
