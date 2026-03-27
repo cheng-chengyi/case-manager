@@ -462,10 +462,17 @@ if (!db.cases) db.cases = defaultCases;
 if (!db.tracks) db.tracks = defaultTracks;
 if (!db.progress) db.progress = [];
 if (!db.todos) db.todos = [];
-// 同步舊資料：提醒日期與預計完成日期雙向連動
+// 同步舊資料：清除已移除的提醒日期欄位，遷移說明至預計完成說明
 (db.tracks||[]).forEach(function(tr){
   if (tr.deadlineDone && tr.plannedDate && !tr.plannedDone) { tr.plannedDone = true; tr.plannedDoneDate = tr.plannedDoneDate || tr.deadlineDoneDate || ''; }
   if (tr.plannedDone && tr.deadline && !tr.deadlineDone) { tr.deadlineDone = true; tr.deadlineDoneDate = tr.deadlineDoneDate || tr.plannedDoneDate || ''; }
+  // 遷移：提醒說明 → 預計完成說明（僅當預計完成說明為空時）
+  if (tr.deadlineNote && !tr.plannedDateNote) tr.plannedDateNote = tr.deadlineNote;
+  // 清除已移除的提醒日期欄位
+  tr.deadline = ''; tr.deadlineNote = '';
+  tr.deadlineDone = false; tr.deadlineDoneDate = '';
+  // 清除追蹤軸待辦的 remind 欄位
+  if (tr.todos && tr.todos.length) tr.todos.forEach(function(td){ td.remind = ''; });
 });
 var _pid = 1;
 db.progress.forEach(function(p){ if (!p.id) p.id = 'P' + String(_pid++).padStart(4,'0'); });
