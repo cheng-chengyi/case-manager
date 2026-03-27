@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-27T15:01:25.962Z",
+  "_date": "2026-03-27T15:10:46.077Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -2002,6 +2002,22 @@
       "created": "2026-02-24",
       "deadlineDone": false,
       "deadlineDoneDate": ""
+    },
+    {
+      "id": "TR-1141029_顏甄(車禍)-1",
+      "caseId": "1141029_顏甄(車禍)",
+      "name": "顏甄_旺旺友聯_車禍調解",
+      "type": "車禍處理程序",
+      "insurer": "旺旺友聯產險",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "note": "",
+      "created": "2026-03-27"
     }
   ],
   "progress": [
@@ -2456,6 +2472,18 @@
       "date": "2026-02-23",
       "stage": "未申請",
       "desc": "建立追蹤軸：張文浩_民事訴訟醫療糾紛_新樓醫院 ",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0055",
+      "caseId": "1141029_顏甄(車禍)",
+      "trackId": "TR-1141029_顏甄(車禍)-1",
+      "date": "2026-03-27",
+      "stage": "未申請",
+      "desc": "建立追蹤軸：顏甄_旺旺友聯_車禍調解",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
