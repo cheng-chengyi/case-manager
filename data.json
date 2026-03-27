@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-27T03:39:59.961Z",
+  "_date": "2026-03-27T03:48:18.460Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -605,7 +605,7 @@
       "contactPhone": "02-81709888#6159",
       "status": "已拒賠",
       "deadline": "",
-      "deadlineNote": "送出評議申請書",
+      "deadlineNote": "",
       "plannedDate": "2026-03-10",
       "plannedDateNote": "提出評議申請書",
       "amount": "",
@@ -614,7 +614,9 @@
       "closedDate": "",
       "closedNote": "",
       "plannedDone": true,
-      "plannedDoneDate": "2026-03-22"
+      "plannedDoneDate": "2026-03-22",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1141226_陳佳慧(乳癌)-1",
@@ -625,7 +627,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-06-30",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-06-30",
       "plannedDateNote": "",
@@ -642,7 +644,9 @@
           "done": true,
           "doneDate": "2026-03-20"
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1121209_余林素娥(車禍)-1",
@@ -661,7 +665,9 @@
       "note": "",
       "created": "2026-02-19",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1121209_余林素娥(車禍)-2",
@@ -680,7 +686,9 @@
       "note": "",
       "created": "2026-02-19",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140731_張文浩(職災墜落)-1",
@@ -691,7 +699,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "審核中",
-      "deadline": "2026-03-31",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "",
       "plannedDateNote": "",
@@ -720,7 +728,9 @@
           "done": true,
           "doneDate": "2026-03-21"
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140731_張文浩(職災墜落)-2",
@@ -731,7 +741,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "審核中",
-      "deadline": "2026-03-31",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "",
       "plannedDateNote": "",
@@ -769,7 +779,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1131017_賴思伃(肺癌)-1",
@@ -780,15 +792,17 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-03-20",
-      "deadlineNote": "收文陳述意見",
+      "deadline": "",
+      "deadlineNote": "",
       "plannedDate": "2026-03-27",
       "plannedDateNote": "寄出陳述意見書",
       "amount": "",
       "note": "",
       "created": "2026-02-20",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140419_李紹中(腦傷車禍)-1",
@@ -799,7 +813,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "爭議審議",
-      "deadline": "2026-04-30",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-05-29",
       "plannedDateNote": "",
@@ -807,7 +821,9 @@
       "note": "",
       "created": "2026-02-20",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140419_李紹中(腦傷車禍)-2",
@@ -835,7 +851,11 @@
           "done": true,
           "doneDate": "2026-02-26"
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-03-27"
     },
     {
       "id": "TR-1140923_鄭淑惠(車禍)-1",
@@ -846,7 +866,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "已調解完成",
-      "deadline": "2026-03-12",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-03-12",
       "plannedDateNote": "",
@@ -855,8 +875,8 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": "",
-      "deadlineDone": true,
-      "deadlineDoneDate": "2026-03-20",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "plannedDone": true,
       "plannedDoneDate": "2026-03-20"
     },
@@ -869,7 +889,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "已拒賠",
-      "deadline": "2026-03-31",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-08-31",
       "plannedDateNote": "",
@@ -908,7 +928,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-03-31",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-08-31",
       "plannedDateNote": "",
@@ -932,7 +952,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1130718_蔡勝綋(車禍腦傷)-4",
@@ -943,7 +965,7 @@
       "contact": "洪先生",
       "contactPhone": "",
       "status": "審核中",
-      "deadline": "2026-03-24",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-03-31",
       "plannedDateNote": "",
@@ -960,7 +982,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1131023_歐諭(腦中風)-1",
@@ -971,7 +995,7 @@
       "contact": "台中分公司保服課 張先生",
       "contactPhone": "04-22522505#3476",
       "status": "審核中",
-      "deadline": "2026-04-30",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-05-31",
       "plannedDateNote": "",
@@ -979,7 +1003,9 @@
       "note": "",
       "created": "2026-02-20",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1120923_陳盛隆(車禍腦傷)-1",
@@ -996,7 +1022,9 @@
       "plannedDateNote": "",
       "amount": "",
       "note": "",
-      "created": "2026-02-20"
+      "created": "2026-02-20",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1120923_陳盛隆(車禍腦傷)-2",
@@ -1007,7 +1035,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-03-31",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-06-30",
       "plannedDateNote": "",
@@ -1015,7 +1043,9 @@
       "note": "",
       "created": "2026-02-20",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140428_楊雅米(車禍腦傷)-1",
@@ -1057,7 +1087,9 @@
         }
       ],
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140428_楊雅米(車禍腦傷)-3",
@@ -1068,15 +1100,17 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-04-30",
-      "deadlineNote": "準備開立診斷書",
+      "deadline": "",
+      "deadlineNote": "",
       "plannedDate": "2026-05-31",
-      "plannedDateNote": "",
+      "plannedDateNote": "準備開立診斷書",
       "amount": "",
       "note": "",
       "created": "2026-02-20",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140428_楊雅米(車禍腦傷)-4",
@@ -1087,15 +1121,17 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-04-30",
-      "deadlineNote": "準備開立診斷書",
+      "deadline": "",
+      "deadlineNote": "",
       "plannedDate": "2026-05-31",
-      "plannedDateNote": "",
+      "plannedDateNote": "準備開立診斷書",
       "amount": "",
       "note": "",
       "created": "2026-02-20",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1141014_蘇新蔭(T12骨折)-1",
@@ -1137,7 +1173,9 @@
         }
       ],
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1120328_毛上瑋(職災墜落)-1",
@@ -1156,7 +1194,9 @@
       "note": "",
       "created": "2026-02-20",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1120328_毛上瑋(職災墜落)-2",
@@ -1176,7 +1216,9 @@
       "todos": [],
       "created": "2026-02-20",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1120325_陳志明(職災墜落)-1",
@@ -1195,7 +1237,9 @@
       "note": "",
       "created": "2026-02-23",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1120325_陳志明(職災墜落)-2",
@@ -1206,7 +1250,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "審核中",
-      "deadline": "2026-03-27",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-03-31",
       "plannedDateNote": "",
@@ -1218,8 +1262,8 @@
       "closedNote": "",
       "plannedDone": true,
       "plannedDoneDate": "2026-03-17",
-      "deadlineDone": true,
-      "deadlineDoneDate": "2026-03-17"
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1130218_鍾宜蓁(車禍腦傷)-1",
@@ -1266,7 +1310,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1141030_謝秀敏(肝昏迷)-1",
@@ -1300,8 +1346,8 @@
           "doneDate": ""
         }
       ],
-      "deadlineDone": true,
-      "deadlineDoneDate": "2026-03-27",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "plannedDone": true,
       "plannedDoneDate": "2026-03-27",
       "closedDate": "",
@@ -1338,7 +1384,9 @@
           "done": true,
           "doneDate": "2026-03-22"
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140504_林秋碧(直腸癌併腦轉移)-1",
@@ -1381,8 +1429,8 @@
       ],
       "closedDate": "",
       "closedNote": "",
-      "deadlineDone": true,
-      "deadlineDoneDate": "2026-03-20",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "plannedDone": true,
       "plannedDoneDate": "2026-03-20"
     },
@@ -1395,7 +1443,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-03-10",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-04-15",
       "plannedDateNote": "",
@@ -1410,7 +1458,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140411_莊素珠(肺癌)-1",
@@ -1484,7 +1534,9 @@
         }
       ],
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1131030_曾姿穎(車禍T11骨折)-2",
@@ -1512,7 +1564,9 @@
       ],
       "created": "2026-02-23",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1130924_余國優(職災墜落)-1",
@@ -1523,13 +1577,15 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-05-31",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-06-30",
       "plannedDateNote": "",
       "amount": "",
       "note": "",
-      "created": "2026-02-23"
+      "created": "2026-02-23",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1130924_余國優(職災墜落)-2",
@@ -1540,7 +1596,7 @@
       "contact": "",
       "contactPhone": "",
       "status": "未申請",
-      "deadline": "2026-05-31",
+      "deadline": "",
       "deadlineNote": "",
       "plannedDate": "2026-09-30",
       "plannedDateNote": "",
@@ -1557,7 +1613,9 @@
       ],
       "created": "2026-02-23",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140731_張文浩(職災墜落)-3",
@@ -1582,7 +1640,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1141208_高樹根(車禍腦傷)-1",
@@ -1616,7 +1676,9 @@
         }
       ],
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1141208_高樹根(車禍腦傷)-2",
@@ -1643,7 +1705,9 @@
         }
       ],
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1141208_高樹根(車禍腦傷)-3",
@@ -1670,7 +1734,9 @@
       ],
       "created": "2026-03-20",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1121209_余林素娥(車禍)-3",
@@ -1686,7 +1752,9 @@
       "plannedDate": "2026-04-30",
       "plannedDateNote": "",
       "note": "",
-      "created": "2026-03-21"
+      "created": "2026-03-21",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1121209_余林素娥(車禍)-4",
@@ -1705,7 +1773,9 @@
       "todos": [],
       "created": "2026-03-21",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1130108_林婕愉(小腦中風)-1",
@@ -1721,7 +1791,9 @@
       "plannedDate": "2026-05-31",
       "plannedDateNote": "",
       "note": "",
-      "created": "2026-03-21"
+      "created": "2026-03-21",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1130403_楊泰祥(巴金森氏症)-1",
@@ -1737,7 +1809,9 @@
       "plannedDate": "2026-04-30",
       "plannedDateNote": "",
       "note": "",
-      "created": "2026-03-21"
+      "created": "2026-03-21",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1131030_曾姿穎(車禍T11骨折)-3",
@@ -1753,7 +1827,9 @@
       "plannedDate": "",
       "plannedDateNote": "",
       "note": "",
-      "created": "2026-03-21"
+      "created": "2026-03-21",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140829_梅凱翔(車禍骨骨骨折)-2",
@@ -1780,7 +1856,9 @@
         }
       ],
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140930_鄞家府(口腔癌)-2",
@@ -1812,7 +1890,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1140912_蘇紹華(免疫系統)-2",
@@ -1837,7 +1917,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1141121_李台明(胃癌)-1",
@@ -1869,7 +1951,9 @@
           "done": false,
           "doneDate": ""
         }
-      ]
+      ],
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     }
   ],
   "progress": [
