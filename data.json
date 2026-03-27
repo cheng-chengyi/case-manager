@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-27T00:55:31.963Z",
+  "_date": "2026-03-27T01:11:25.143Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -403,7 +403,7 @@
       "amount": "",
       "note": "Line 太太 劉玉美",
       "created": "2026-02-23",
-      "updated": "2026-02-23"
+      "updated": "2026-03-27"
     },
     {
       "id": "1141030_謝秀敏(肝昏迷)",
@@ -1793,6 +1793,22 @@
       "plannedDateNote": "",
       "note": "",
       "created": "2026-03-22"
+    },
+    {
+      "id": "TR-1141121_李台明(胃癌)-1",
+      "caseId": "1141121_李台明(胃癌)",
+      "name": " 安達人壽_申訴追蹤",
+      "type": "失能險",
+      "insurer": "安達人壽",
+      "contact": "",
+      "contactPhone": "",
+      "status": "申訴中",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "",
+      "plannedDateNote": "",
+      "note": "",
+      "created": "2026-03-27"
     }
   ],
   "progress": [
@@ -2199,6 +2215,18 @@
       "date": "2026-03-22",
       "stage": "評議中",
       "desc": "建立追蹤軸：蘇紹華 評議申進度",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0054",
+      "caseId": "1141121_李台明(胃癌)",
+      "trackId": "TR-1141121_李台明(胃癌)-1",
+      "date": "2026-03-27",
+      "stage": "申訴中",
+      "desc": "建立追蹤軸： 安達人壽_申訴追蹤",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
