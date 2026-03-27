@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-27T01:12:30.227Z",
+  "_date": "2026-03-27T01:12:52.743Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1255,15 +1255,15 @@
     {
       "id": "TR-1141030_謝秀敏(肝昏迷)-1",
       "caseId": "1141030_謝秀敏(肝昏迷)",
-      "name": "謝秀敏_三商美邦人壽_申訴函",
+      "name": "謝秀敏_三商美邦人壽_申訴函及評議",
       "type": "失能險",
       "insurer": "三商美邦人壽",
       "contact": "何小姐",
       "contactPhone": "02-23455511#31625",
       "status": "申訴中",
-      "deadline": "2026-03-10",
+      "deadline": "",
       "deadlineNote": "",
-      "plannedDate": "2026-03-25",
+      "plannedDate": "",
       "plannedDateNote": "完成評議申請書",
       "amount": "",
       "note": "",
@@ -1280,7 +1280,9 @@
       "deadlineDone": true,
       "deadlineDoneDate": "2026-03-27",
       "plannedDone": true,
-      "plannedDoneDate": "2026-03-27"
+      "plannedDoneDate": "2026-03-27",
+      "closedDate": "",
+      "closedNote": ""
     },
     {
       "id": "TR-1140912_蘇紹華(免疫系統)-1",
