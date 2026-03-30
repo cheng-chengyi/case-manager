@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-03-27T15:15:41.934Z",
+  "_date": "2026-03-30T11:02:06.427Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -631,12 +631,12 @@
       "amount": "",
       "note": "",
       "created": "2026-02-12",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "closedDate": "",
       "closedNote": "",
       "plannedDone": true,
-      "plannedDoneDate": "2026-03-22",
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "plannedDoneDate": "2026-03-22"
     },
     {
       "id": "TR-1141226_陳佳慧(乳癌)-1",
@@ -656,6 +656,8 @@
       "created": "2026-02-13",
       "closedDate": "",
       "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "todos": [
         {
           "title": "安達產物第1次照會",
@@ -664,9 +666,7 @@
           "done": true,
           "doneDate": "2026-03-20"
         }
-      ],
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
+      ]
     },
     {
       "id": "TR-1121209_余林素娥(車禍)-1",
@@ -726,6 +726,8 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "todos": [
         {
           "title": "已送出勞保局意見信箱",
@@ -748,9 +750,7 @@
           "done": true,
           "doneDate": "2026-03-21"
         }
-      ],
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
+      ]
     },
     {
       "id": "TR-1140731_張文浩(職災墜落)-2",
@@ -770,6 +770,8 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "todos": [
         {
           "title": "已送出勞保局意見信箱",
@@ -799,9 +801,7 @@
           "done": false,
           "doneDate": ""
         }
-      ],
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
+      ]
     },
     {
       "id": "TR-1131017_賴思伃(肺癌)-1",
@@ -987,6 +987,8 @@
       "created": "2026-02-20",
       "closedDate": "",
       "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "todos": [
         {
           "title": "國泰產物通知第3級，合併升等強制險第2級",
@@ -995,9 +997,7 @@
           "done": true,
           "doneDate": "2026-03-02"
         }
-      ],
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
+      ]
     },
     {
       "id": "TR-1131023_歐諭(腦中風)-1",
@@ -1076,6 +1076,8 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "todos": [
         {
           "title": "拿取病歷資料",
@@ -1099,6 +1101,25 @@
           "doneDate": ""
         }
       ],
+      "closedDate": "",
+      "closedNote": ""
+    },
+    {
+      "id": "TR-1140428_楊雅米(車禍腦傷)-2",
+      "caseId": "1140428_楊雅米(車禍腦傷)",
+      "name": "楊雅米 國泰產險 申請強制險失能給付（複製）",
+      "type": "強制險",
+      "insurer": "國泰產險",
+      "contact": "",
+      "contactPhone": "",
+      "status": "未申請",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-03-27",
+      "plannedDateNote": "準備開立診斷書",
+      "amount": "",
+      "note": "",
+      "created": "2026-02-20",
       "closedDate": "",
       "closedNote": "",
       "deadlineDone": false,
@@ -1199,10 +1220,10 @@
       "amount": "",
       "note": "",
       "created": "2026-02-20",
-      "closedDate": "",
-      "closedNote": "",
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "closedDate": "",
+      "closedNote": ""
     },
     {
       "id": "TR-1120328_毛上瑋(職災墜落)-2",
@@ -1242,10 +1263,10 @@
       "amount": "",
       "note": "",
       "created": "2026-02-23",
-      "closedDate": "",
-      "closedNote": "",
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "closedDate": "",
+      "closedNote": ""
     },
     {
       "id": "TR-1120325_陳志明(職災墜落)-2",
@@ -1266,10 +1287,10 @@
       "created": "2026-02-23",
       "closedDate": "",
       "closedNote": "",
-      "plannedDone": true,
-      "plannedDoneDate": "2026-03-17",
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-03-17"
     },
     {
       "id": "TR-1130218_鍾宜蓁(車禍腦傷)-1",
@@ -1495,6 +1516,8 @@
       "amount": "",
       "note": "",
       "created": "2026-02-23",
+      "deadlineDone": false,
+      "deadlineDoneDate": "",
       "todos": [
         {
           "title": "國泰人壽失能給付送件",
@@ -1512,9 +1535,7 @@
         }
       ],
       "closedDate": "",
-      "closedNote": "",
-      "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "closedNote": ""
     },
     {
       "id": "TR-1131030_曾姿穎(車禍T11骨折)-2",
@@ -2515,6 +2536,19 @@
       "done": true,
       "doneDate": "2026-03-06",
       "created": "2026-02-15",
+      "_notified": true
+    },
+    {
+      "id": "T0003",
+      "title": "調整claude付費模型",
+      "dueDate": "2026-03-10",
+      "remind": "2026-03-08T09:49",
+      "caseId": "",
+      "note": "",
+      "subtasks": [],
+      "done": false,
+      "doneDate": null,
+      "created": "2026-02-19",
       "_notified": true
     },
     {
