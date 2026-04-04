@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-04T00:21:43.168Z",
+  "_date": "2026-04-04T00:23:06.266Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -2042,7 +2042,16 @@
       "deadlineDone": false,
       "deadlineDoneDate": "",
       "plannedDone": true,
-      "plannedDoneDate": "2026-04-04"
+      "plannedDoneDate": "2026-04-04",
+      "todos": [
+        {
+          "title": "已於115.03.26 送件 國泰產物岡山通訊處 申請強制險失能",
+          "dueDate": "",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        }
+      ]
     }
   ],
   "progress": [
