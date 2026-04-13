@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T04:15:38.603Z",
+  "_date": "2026-04-13T04:15:51.770Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1474,7 +1474,7 @@
     {
       "id": "TR-1140829_梅凱翔(車禍骨骨骨折)-1",
       "caseId": "1140829_梅凱翔(車禍骨骨骨折)",
-      "name": "梅凱翔_台大雲林分院_勞動能力減損",
+      "name": "梅凱翔_台大新竹分院_勞動能力減損",
       "type": "車禍處理程序",
       "insurer": "新光產險",
       "contact": "",
@@ -1497,7 +1497,11 @@
         }
       ],
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "closedDate": "",
+      "closedNote": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-04-13"
     },
     {
       "id": "TR-1140411_莊素珠(肺癌)-1",
