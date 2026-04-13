@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T04:13:14.786Z",
+  "_date": "2026-04-13T04:13:50.618Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -2175,8 +2175,8 @@
     {
       "id": "TR-1121209_余林素娥(車禍)-5",
       "caseId": "1121209_余林素娥(車禍)",
-      "name": "職災保險失能給付_神經失能",
-      "type": "",
+      "name": "職災保險傷病給付_已駁回",
+      "type": "勞保生育給付",
       "insurer": "",
       "contact": "",
       "contactPhone": "",
@@ -2186,7 +2186,9 @@
       "plannedDate": "",
       "plannedDateNote": "",
       "note": "",
-      "created": "2026-04-13"
+      "created": "2026-04-13",
+      "closedDate": "",
+      "closedNote": ""
     }
   ],
   "progress": [
