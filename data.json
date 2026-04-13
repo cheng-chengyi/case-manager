@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T04:10:07.211Z",
+  "_date": "2026-04-13T04:11:28.194Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -665,6 +665,13 @@
           "remind": "",
           "done": true,
           "doneDate": "2026-03-20"
+        },
+        {
+          "title": "安達產物繼續照會",
+          "dueDate": "2026-06-30",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
         }
       ],
       "deadlineDone": false,
