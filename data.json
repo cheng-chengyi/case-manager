@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T03:45:55.497Z",
+  "_date": "2026-04-13T03:46:15.166Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1263,7 +1263,9 @@
       "closedDate": "",
       "closedNote": "",
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-04-13"
     },
     {
       "id": "TR-1120325_陳志明(職災墜落)-2",
