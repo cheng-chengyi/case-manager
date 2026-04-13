@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T04:09:40.709Z",
+  "_date": "2026-04-13T04:10:07.211Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -749,6 +749,13 @@
           "remind": "",
           "done": true,
           "doneDate": "2026-03-21"
+        },
+        {
+          "title": "等職災傷病給付核定",
+          "dueDate": "2026-04-30",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
         }
       ],
       "deadlineDone": false,
