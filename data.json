@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T04:11:56.243Z",
+  "_date": "2026-04-13T04:12:11.310Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1832,6 +1832,13 @@
       "todos": [
         {
           "title": "爭議審定書_駁回",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-04-13"
+        },
+        {
+          "title": "已寄出訴願書",
           "dueDate": "",
           "remind": "",
           "done": true,
