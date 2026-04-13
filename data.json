@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T04:05:11.661Z",
+  "_date": "2026-04-13T04:05:28.793Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -798,8 +798,8 @@
           "title": "預計職保失能給付切除膀胱匯款",
           "dueDate": "2026-03-27",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-04-13"
         }
       ],
       "deadlineDone": false,
