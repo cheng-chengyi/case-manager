@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T04:15:09.070Z",
+  "_date": "2026-04-13T04:15:38.603Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1492,8 +1492,8 @@
           "title": "梅凱翔_台大雲林分院準備掛號",
           "dueDate": "2026-03-13",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-04-13"
         }
       ],
       "deadlineDone": false,
@@ -1922,6 +1922,13 @@
           "remind": "",
           "done": true,
           "doneDate": "2026-03-21"
+        },
+        {
+          "title": "已送件評估賠償金額",
+          "dueDate": "2026-04-30",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
         }
       ],
       "closedDate": "",
