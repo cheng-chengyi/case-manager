@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T04:14:34.720Z",
+  "_date": "2026-04-13T04:14:54.303Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -1215,12 +1215,21 @@
           "remind": "",
           "done": true,
           "doneDate": "2026-04-13"
+        },
+        {
+          "title": "要提出申訴",
+          "dueDate": "2026-04-30",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
         }
       ],
       "closedDate": "",
       "closedNote": "",
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "plannedDone": true,
+      "plannedDoneDate": "2026-04-13"
     },
     {
       "id": "TR-1120328_毛上瑋(職災墜落)-1",
