@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T04:15:51.770Z",
+  "_date": "2026-04-13T05:41:09.784Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -2192,7 +2192,9 @@
       "plannedDate": "2026-04-30",
       "plannedDateNote": "",
       "note": "",
-      "created": "2026-04-13"
+      "created": "2026-04-13",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     },
     {
       "id": "TR-1121209_余林素娥(車禍)-5",
@@ -2210,7 +2212,9 @@
       "note": "",
       "created": "2026-04-13",
       "closedDate": "",
-      "closedNote": ""
+      "closedNote": "",
+      "deadlineDone": false,
+      "deadlineDoneDate": ""
     }
   ],
   "progress": [
