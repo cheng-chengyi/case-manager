@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T03:05:33.891Z",
+  "_date": "2026-04-13T03:45:55.497Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -380,9 +380,11 @@
       "plannedDate": "",
       "plannedDateNote": "",
       "amount": "",
-      "note": "",
+      "note": "115.04.08 給付強制險3級差額130萬，結案",
       "created": "2026-02-23",
-      "updated": "2026-02-23"
+      "updated": "2026-04-13",
+      "archived": true,
+      "archivedDate": "2026-04-13"
     },
     {
       "id": "1141121_李台明(胃癌)",
@@ -589,9 +591,9 @@
       "deadlineNote": "",
       "plannedDate": "",
       "plannedDateNote": "",
-      "note": "王芠晏先生臺端與本公司所承保之BFV-5395號車發生交通事故，已於本公司受理在案。\n請與本公司理賠經辦王芠晏聯絡，謝謝!電話06-2217-600#212、215，案號156014L02009。\n\n最後一次手術日 115.03.06",
+      "note": "王芠晏先生臺端與本公司所承保之BFV-5395號車發生交通事故，已於本公司受理在案。\n請與本公司理賠經辦王芠晏聯絡，謝謝!電話06-2217-600#212、215，案號156014L02009。\n\n對造 陳品硯先生  台南市南區新興路461巷8弄3號三樓之1 0903568182\n\n最後一次手術日 115.03.06",
       "created": "2026-03-20",
-      "updated": "2026-03-20"
+      "updated": "2026-04-13"
     },
     {
       "id": "1141029_顏甄(車禍)",
@@ -1018,7 +1020,23 @@
       "closedDate": "",
       "closedNote": "",
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "todos": [
+        {
+          "title": "聯絡承辦人",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-04-13"
+        },
+        {
+          "title": "聯絡承辦人",
+          "dueDate": "2026-04-30",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        }
+      ]
     },
     {
       "id": "TR-1120923_陳盛隆(車禍腦傷)-1",
@@ -1299,8 +1317,8 @@
           "title": "聯絡富邦產物2nd",
           "dueDate": "2026-02-26",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-04-13"
         }
       ],
       "deadlineDone": false,
@@ -1394,12 +1412,19 @@
           "title": "林秋碧_台灣人壽_完成申訴函",
           "dueDate": "2026-03-15",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-04-13"
         },
         {
           "title": "林秋碧_台灣人壽_寄出申訴函",
           "dueDate": "2026-03-23",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-04-13"
+        },
+        {
+          "title": "請0800回覆 申訴部承辦人是誰",
+          "dueDate": "2026-04-17",
           "remind": "",
           "done": false,
           "doneDate": ""
@@ -1470,6 +1495,20 @@
           "remind": "",
           "done": true,
           "doneDate": "2026-03-21"
+        },
+        {
+          "title": "聯絡承辦人",
+          "dueDate": "",
+          "remind": "",
+          "done": true,
+          "doneDate": "2026-04-13"
+        },
+        {
+          "title": "聯絡承辦人",
+          "dueDate": "2026-04-30",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
         }
       ],
       "deadlineDone": false,
@@ -1640,7 +1679,7 @@
         },
         {
           "title": "強制險醫療給付審核",
-          "dueDate": "2026-04-10",
+          "dueDate": "2026-04-30",
           "remind": "",
           "done": false,
           "doneDate": ""
@@ -2019,7 +2058,16 @@
       "note": "",
       "created": "2026-03-27",
       "deadlineDone": false,
-      "deadlineDoneDate": ""
+      "deadlineDoneDate": "",
+      "todos": [
+        {
+          "title": "強制險醫療審核中",
+          "dueDate": "2026-04-30",
+          "remind": "",
+          "done": false,
+          "doneDate": ""
+        }
+      ]
     },
     {
       "id": "TR-1140428_楊雅米(車禍腦傷)-2",
