@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-13T03:46:15.166Z",
+  "_date": "2026-04-13T03:47:11.649Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -361,7 +361,7 @@
       "amount": "",
       "note": "",
       "created": "2026-02-23",
-      "updated": "2026-02-23"
+      "updated": "2026-04-13"
     },
     {
       "id": "1130218_鍾宜蓁(車禍腦傷)",
@@ -2109,6 +2109,22 @@
           "doneDate": ""
         }
       ]
+    },
+    {
+      "id": "TR-1120325_陳志明(職災墜落)-3",
+      "caseId": "1120325_陳志明(職災墜落)",
+      "name": "陳志明_職災保險傷病給付進度",
+      "type": "職保傷病給付",
+      "insurer": "",
+      "contact": "",
+      "contactPhone": "",
+      "status": "審核中",
+      "deadline": "",
+      "deadlineNote": "",
+      "plannedDate": "2026-04-30",
+      "plannedDateNote": "",
+      "note": "",
+      "created": "2026-04-13"
     }
   ],
   "progress": [
@@ -2575,6 +2591,18 @@
       "date": "2026-03-27",
       "stage": "未申請",
       "desc": "建立追蹤軸：顏甄_旺旺友聯_車禍調解",
+      "sendRecv": "",
+      "nextStep": "",
+      "nextDate": "",
+      "note": ""
+    },
+    {
+      "id": "P0056",
+      "caseId": "1120325_陳志明(職災墜落)",
+      "trackId": "TR-1120325_陳志明(職災墜落)-3",
+      "date": "2026-04-13",
+      "stage": "審核中",
+      "desc": "建立追蹤軸：陳志明_職災保險傷病給付進度",
       "sendRecv": "",
       "nextStep": "",
       "nextDate": "",
