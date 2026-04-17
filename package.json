@@ -1,0 +1,10 @@
+{
+  "name": "case-manager",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static case manager app for GitHub Pages",
+  "scripts": {
+    "check": "node --check sw.js",
+    "audit:security": "bash scripts/security-audit.sh \"${TARGET_URL:-https://cheng-chengyi.github.io/case-manager/}\""
+  }
+}
