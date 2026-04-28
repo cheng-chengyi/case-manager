@@ -1,6 +1,6 @@
 {
   "_type": "cloud_sync",
-  "_date": "2026-04-28T00:05:19.686Z",
+  "_date": "2026-04-28T00:06:12.270Z",
   "cases": [
     {
       "id": "1140930_鄞家府(口腔癌)",
@@ -821,8 +821,8 @@
           "title": "勞保局只給7級，目前爭議審議中",
           "dueDate": "2026-06-30",
           "remind": "",
-          "done": false,
-          "doneDate": ""
+          "done": true,
+          "doneDate": "2026-04-28"
         }
       ],
       "deadlineDone": false,
